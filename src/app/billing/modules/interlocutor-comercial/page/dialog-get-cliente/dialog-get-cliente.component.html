@@ -1,0 +1,51 @@
+<main class="dialog-container">
+  <section class="dialog-title">
+    Busqueda de Interlocutor Comercial
+  </section>
+  <section class="flex w-full justify-around items-center relative">
+    <input type="search" class="w-full h-10 pl-8 pr-2 py-1
+      border-2 border-slate-800 rounded-sm text-slate-700
+      dark:text-gray-400 dark:bg-gray-700
+      hover:border-sky-700
+      focus:outline-none focus:ring-1 focus:ring-sky-700 focus:border-sky-700"
+      placeholder="Escribir Codigo / Razon Social"
+      [formControl]="input">
+    <fa-icon [icon]="faMagnifyingGlass" size="xl" class="text-gray-600 absolute left-2 dark:text-gray-400"></fa-icon>
+  </section>
+  <section class="section-table">
+    <div class="container-dialog-table">
+      <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
+        <tr class="header-table" cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr class="row-table" cdk-row
+          *cdkRowDef="let row; columns: displayedColumns"
+          (click)="closeDialog(row)">
+        </tr>
+        <ng-container cdkColumnDef="codbuspar">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">{{ row.codbuspar }}</td>
+        </ng-container>
+        <ng-container cdkColumnDef="busnam">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Razon Social</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">{{ row.busnam }}</td>
+        </ng-container>
+        <ng-container cdkColumnDef="nroidedoc">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>RUC/DNI</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">{{ row.nroidedoc }}</td>
+        </ng-container>
+      </table>
+    </div>
+    <div class="footer-table-external">
+      Total Record : {{ dataSource.getCount() }}
+    </div>
+  </section>
+  <section class="w-[150px]">
+    <app-button-standard
+    (click)="closeDialog(null)"
+    optionBtn="close"
+    [colorBtn]="'red'"
+    [typeBtn]="'button'">
+    Close
+    </app-button-standard>
+  </section>
+</main>
+

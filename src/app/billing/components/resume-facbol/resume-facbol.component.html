@@ -1,0 +1,95 @@
+<section class="grid grid-cols-2 justify-items-end">
+  <div class="col-span-1"></div>
+  <div class="col-span-1">
+    <form action="#" class="flex-row space-y-1" [formGroup]="formResumeFacBol">
+      <div class="flex space-x-2">
+        <label for="implistprice" class="label-input-sm text-left"
+          >List Price</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+          cursymbol
+        }}</span>
+        <input
+          type="number"
+          class="input-disabled-import"
+          formControlName="implistprice"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="impdesctotal" class="label-input-sm text-left"
+          >Total Discount</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+          cursymbol
+        }}</span>
+        <input
+          type="number"
+          class="input-disabled-import"
+          formControlName="impdesctotal"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="impsaleprice" class="label-input-sm text-left"
+          >Sale Price</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+          cursymbol
+        }}</span>
+        <input
+          type="number"
+          class="input-disabled-import"
+          formControlName="impsaleprice"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="imptribtotal" class="label-input-sm text-left">Total Tax</label>
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+          cursymbol
+        }}</span>
+        <input
+          type="number"
+          class="input-disabled-import"
+          formControlName="imptribtotal"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="imptotal" class="label-input-sm text-left">Total</label>
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+          cursymbol
+        }}</span>
+        <input
+          type="number"
+          class="input-disabled-import"
+          formControlName="imptotal"
+        />
+      </div>
+    </form>
+  </div>
+</section>
+<section class="grid grid-cols-2 pt-6">
+  <div class="flex justify-start space-x-4">
+    <app-button-standard
+      [disabledBtn]="isStatusInvoiceRegister"
+      optionBtn="calculate"
+      colorBtn="sky"
+      (click)="calculate()"
+      >Ayuda</app-button-standard
+    >
+  </div>
+  <div class="flex justify-end space-x-4">
+    <app-button-standard
+      [disabledBtn]="isStatusInvoiceRegister"
+      optionBtn="calculate"
+      colorBtn="sky"
+      (click)="calculate()"
+      >Calcular</app-button-standard
+    >
+    <app-button-standard
+      [disabledBtn]="isStatusInvoiceRegister"
+      optionBtn="save"
+      colorBtn="sky"
+      (click)="save()"
+      >Gaurdar</app-button-standard
+    >
+  </div>
+</section>

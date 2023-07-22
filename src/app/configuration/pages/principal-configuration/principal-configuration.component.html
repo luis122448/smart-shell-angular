@@ -1,0 +1,423 @@
+<form class="sub-main-container px-4" [formGroup]="formCrudCompany">
+  <section class="grid grid-cols-2 lg:grid-cols-3 pt-6">
+    <article class="col-span-1 space-y-2">
+      <div class="flex">
+        <label for="typidedoc" class="label-input-sm label-required"
+          >Type of Identity Document</label
+        >
+        <select
+          name="typidedoc"
+          id="typidedoc"
+          class="select-default"
+          formControlName="typidedoc"
+          [class.select-invalid]="isInputInvalid('typidedoc')"
+          placeholder="Type of Identity Document*"
+        >
+          <option
+            value=""
+            class="option-default"
+            disabled
+            selected
+            hidden
+            [class.option-invalid]="isInputInvalid('typidedoc')"
+          >
+            -- Elegir --
+          </option>
+          <option value=1 class="option-default">DNI</option>
+          <option value=2 class="option-default">RUC</option>
+          <option value=3 class="option-default">Carnet de Extranjería</option>
+          <option value=4 class="option-default">Otro</option>
+        </select>
+      </div>
+      <div class="flex">
+        <label for="nroidedoc" class="label-input-sm label-required"
+          >Id Number</label
+        >
+        <input
+          id="nroidedoc"
+          type="text"
+          class="input-default"
+          formControlName="nroidedoc"
+          [class.input-invalid]="isInputInvalid('nroidedoc')"
+          placeholder="Id Number*"
+        />
+      </div>
+      <div class="flex">
+        <label for="comnam" class="label-input-sm label-required"
+          >Company Name</label
+        >
+        <input
+          id="comnam"
+          type="text"
+          class="input-default"
+          formControlName="comnam"
+          [class.input-invalid]="isInputInvalid('comnam')"
+          placeholder="Company Name*"
+        />
+      </div>
+      <div class="flex">
+        <label for="addres" class="label-input-sm label-required"
+          >Address</label
+        >
+        <input
+          id="addres"
+          type="text"
+          class="input-default"
+          formControlName="addres"
+          [class.input-invalid]="isInputInvalid('addres')"
+          placeholder="Address*"
+        />
+      </div>
+      <div class="flex">
+        <label for="poscod" class="label-input-sm label-required"
+          >Post Code</label
+        >
+        <input
+          id="poscod"
+          type="text"
+          class="input-default"
+          formControlName="poscod"
+          [class.input-invalid]="isInputInvalid('poscod')"
+          placeholder="Post Code*"
+        />
+      </div>
+    </article>
+    <article class="col-span-1 h-full w-full space-y-4">
+      <div class="flex w-full items-center justify-center">
+        <div *ngIf="imageCompanyImageURL === imageNoUpload; else imageCompanyImage">
+          <label
+            for="imageCompanyImage"
+          class="flex h-48 w-48 label-image"
+          >
+            <div class="flex flex-col items-center justify-center pb-6 pt-5">
+              <svg
+                class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span> or drag and
+                drop
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                Only JPG (MAX. 400x400px)
+              </p>
+            </div>
+            <input
+              id="imageCompanyImage"
+              type="file"
+              class="hidden"
+              (change)="selectedImage($event,'image')"
+            />
+          </label>
+        </div>
+        <ng-template #imageCompanyImage>
+          <div class="h-48 w-48 relative">
+            <app-button-operac
+              optionBtn="close"
+              colorBtn="red"
+              class="absolute top-0 right-0"
+              (click)="resetImage('image')"
+            ></app-button-operac>
+            <label
+              for="imageCompanyImage"
+            class="flex h-48 w-48 label-image"
+              >
+              <img
+                [src]="imageCompanyImageURL"
+                alt=""
+                class="h-48 w-48 object-cover bg-slate-100"
+              />
+            </label>
+          </div>
+        </ng-template>
+      </div>
+    </article>
+    <article class="lg:col-span-1 w-full">
+      <p>Remember</p>
+      <span>
+        <li>Fields marked with (*) are required</li>
+        <li>Respect the dimensions marks for uploading images, for an optimal visualization</li>
+        <li>Only uploading images with .jpg format is supported</li>
+      </span>
+    </article>
+  </section>
+  <section class="dialog-sub-title">
+    Section Image :
+  </section>
+  <section class="grid grid-cols-5 gap-x-6">
+    <article class="col-span-1 lg:col-span-2 grid grid-rows-2 gap-y-4">
+      <div class="col-span-1">
+        <div class="flex w-full items-center justify-center space-x-4">
+          <div *ngIf="imageCompanyIconURL === imageNoUpload; else imageCompanyIcon">
+            <label
+              for="imageCompanyIcon"
+            class="flex h-24 w-24 label-image"
+            >
+              <div class="flex flex-col items-center justify-center pb-6 pt-5">
+                <svg
+                  class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                  />
+                </svg>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  Only JPG (MAX. 200x200px)
+                </p>
+              </div>
+              <input
+                id="imageCompanyIcon"
+                type="file"
+                class="hidden"
+                (change)="selectedImage($event,'icon')"
+              />
+            </label>
+          </div>
+          <ng-template #imageCompanyIcon>
+            <div class="w-24 h-24 relative">
+              <app-button-operac
+                optionBtn="close"
+                colorBtn="red"
+                class="absolute top-0 right-0"
+                (click)="resetImage('icon')"
+              ></app-button-operac>
+              <label
+                for="imageCompanyIcon"
+              class="flex h-24 w-24 label-image"
+                >
+                <img
+                  [src]="imageCompanyIconURL"
+                  alt=""
+                  class="h-24 w-24 m-auto object-cover bg-slate-100"
+                />
+              </label>
+            </div>
+          </ng-template>
+          <div class="w-0 h-0 invisible overflow-hidden lg:visible lg:w-auto lg:h-24">
+            <p>Requirement</p>
+            <li>Image used for the page icon</li>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1">
+        <div class="flex w-full items-center justify-center space-x-4">
+          <div *ngIf="imageCompanyLogoURL === imageNoUpload; else imageCompanyLogo">
+            <label
+              for="imageCompanyLogo"
+            class="flex h-24 w-24 label-image"
+            >
+              <div class="flex flex-col items-center justify-center pb-6 pt-5">
+                <svg
+                  class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                  />
+                </svg>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  Only JPG (MAX. 200x200px)
+                </p>
+              </div>
+              <input
+                id="imageCompanyLogo"
+                type="file"
+                class="hidden"
+                (change)="selectedImage($event,'logo')"
+              />
+            </label>
+          </div>
+          <ng-template #imageCompanyLogo>
+            <div class="w-24 h-24 relative">
+              <app-button-operac
+                optionBtn="close"
+                colorBtn="red"
+                class="absolute top-0 right-0"
+                (click)="resetImage('logo')"
+              ></app-button-operac>
+              <label
+                for="imageCompanyLogo"
+                class="flex h-24 w-24 label-image"
+                >
+                <img
+                  [src]="imageCompanyLogoURL"
+                  alt=""
+                  class="m-auto object-cover w-24 h-24 bg-slate-100"
+                />
+              </label>
+            </div>
+          </ng-template>
+          <div class="w-0 h-0 invisible overflow-hidden lg:visible lg:w-auto lg:h-24">
+            <p>Requirement</p>
+            <li>Image used for the page logo</li>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="col-span-4 lg:col-span-3 h-full w-full space-y-4">
+      <div class="flex-col w-full items-center justify-center space-y-4">
+        <div *ngIf="imageCompanyGlossURL === imageNoUpload; else imageCompanyGloss">
+          <label
+            for="imageCompanyGloss"
+          class="flex h-24 w-96 label-image mx-auto"
+          >
+            <div class="flex flex-col items-center justify-center pb-6 pt-5">
+              <svg
+                class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span> or drag and
+                drop
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                Only JPG (MAX. 800x400px)
+              </p>
+            </div>
+            <input
+              id="imageCompanyGloss"
+              type="file"
+              class="hidden"
+              (change)="selectedImage($event,'gloss')"
+            />
+          </label>
+        </div>
+        <ng-template #imageCompanyGloss>
+          <div class="w-96 h-24 relative mx-auto">
+            <app-button-operac
+              optionBtn="close"
+              colorBtn="red"
+              class="absolute top-0 right-0"
+              (click)="resetImage('gloss')"
+            ></app-button-operac>
+            <label
+              for="imageCompanyGloss"
+            class="flex w-96 h-24 label-image"
+              >
+              <img
+                [src]="imageCompanyGlossURL"
+                alt=""
+                class="object-cover w-96 h-24 bg-slate-100"
+              />
+            </label>
+          </div>
+        </ng-template>
+        <div class="h-24 w-full">
+          <p>Requirement</p>
+          <li>Image used as a header, in printing documents (Invoice, Ticket, ...) </li>
+          <li>It is recommended to respect the measurement of 960px by 240px definition</li>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <label class="dialog-sub-title">Audit Information : </label>
+  </section>
+  <section class="grid grid-cols-2 gap-x-4">
+    <div class="space-y-2">
+      <div class="flex">
+      <label for="createby" class="label-input-sm"
+        >Create by : </label
+      >
+      <input
+        id="createby"
+        type="text"
+        class="input-default"
+        formControlName="createby"
+      />
+    </div>
+    <div class="flex">
+      <label for="createat" class="label-input-sm"
+        >Create at : </label
+      >
+      <input
+        id="createat"
+        type="text"
+        class="input-default"
+        disabled
+        [value]="formatDate(createat?.value)"
+      />
+    </div>
+    </div>
+    <div class="space-y-2">
+      <div class="flex">
+      <label for="updateby" class="label-input-sm"
+        >Update by : </label
+      >
+      <input
+        id="updateby"
+        type="text"
+        class="input-default"
+        formControlName="updateby"
+      />
+    </div>
+    <div class="flex">
+      <label for="updateat" class="label-input-sm"
+        >Update at : </label
+      >
+      <input
+        id="updateat"
+        type="text"
+        class="input-default"
+        disabled
+        [value]="formatDate(updateat?.value)"
+      />
+    </div>
+    </div>
+  </section>
+  <section class="flex justify-end space-x-6">
+    <app-button-standard
+      (click)="saveCompany()"
+      colorBtn="green"
+      optionBtn="save"
+      typeBtn="button"
+    >
+      Save
+    </app-button-standard>
+    <!-- <app-button-standard
+      (click)="closeDialog()"
+      colorBtn="red"
+      optionBtn="close"
+      typeBtn="button"
+    >
+      Close
+    </app-button-standard> -->
+  </section>
+</form>

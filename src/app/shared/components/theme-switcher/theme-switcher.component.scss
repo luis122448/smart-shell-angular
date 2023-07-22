@@ -1,0 +1,5 @@
+#themeSwitcher:checked + label .switchball{
+  background-color: transparent;
+  transform: translateX(24px);
+  transition: transform 0.3s linear;
+}

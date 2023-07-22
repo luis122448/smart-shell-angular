@@ -1,0 +1,24 @@
+<main class="h-full w-full flex justify-center overflow-hidden">
+  <menu class="left-container">
+    <app-siderbar-left></app-siderbar-left>
+  </menu>
+  <div [ngSwitch]="isStatusInvoice" class="main-container">
+    <app-header></app-header>
+    <div class="body-container">
+      <app-register-facbol *ngSwitchCase="'register'"></app-register-facbol>
+      <app-search-facbol *ngSwitchCase="'search'"></app-search-facbol>
+    </div>
+    <app-footer></app-footer>
+  </div>
+  <menu class="rigth-container">
+    <app-siderbar-rigth></app-siderbar-rigth>
+  </menu>
+  <ngx-spinner
+    bdColor="rgba(0,0,0,0.5)"
+    size="large"
+    color="#ffffff"
+    type="ball-spin-clockwise"
+    [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</main>

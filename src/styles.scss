@@ -1,0 +1,354 @@
+/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::ng-deep .mat-snack-bar-container {
+  margin: 0;
+  padding: 0;
+}
+
+.mat-snack-bar-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-snack-bar {
+  box-shadow: none !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.dense-1 {
+  @include mat.all-component-densities(-1);
+}
+
+.dense-2 {
+  @include mat.all-component-densities(-2);
+}
+
+.dense-3 {
+  @include mat.all-component-densities(-3);
+}
+
+// TextArea
+.textarea-default {
+  @apply h-14 w-full rounded-sm border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
+  disabled:bg-slate-300 disabled:font-semibold
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  focus:border-sky-700 focus:outline-none
+  focus:ring-2 focus:ring-sky-700
+  dark:border-0 dark:bg-gray-700 dark:text-gray-400
+}
+
+.button-icon-input {
+  @apply border-2 border-slate-800 bg-slate-700 px-2
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700 dark:bg-gray-700 dark:text-gray-400;
+}
+
+// Input
+.input-default {
+  @apply h-7 w-full rounded-sm border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
+  disabled:bg-slate-300 disabled:font-semibold
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  focus:border-sky-700 focus:outline-none
+  focus:ring-2 focus:ring-sky-700
+  dark:border-0 dark:bg-gray-700 dark:text-gray-400 dark:disabled:bg-slate-800
+}
+
+.input-auto {
+  @apply h-7 w-full rounded-sm border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
+  disabled:bg-slate-300 disabled:font-semibold
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  focus:border-sky-700 focus:outline-none
+  focus:ring-2 focus:ring-sky-700
+  dark:border-0 dark:bg-gray-700 dark:text-gray-400
+}
+
+.input-login {
+  @apply h-10 w-full rounded-md border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
+  disabled:bg-slate-300 disabled:font-semibold
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  focus:border-sky-700 focus:outline-none
+  focus:ring-2 focus:ring-sky-700
+  dark:border-0 dark:bg-gray-700 dark:text-gray-400
+}
+
+// Input Disable
+.input-disabled-auto{
+  @apply h-7 px-2 py-1 text-xs text-center rounded-s-md text-slate-800
+  disabled:bg-slate-300 disabled:text-slate-800
+  disabled:placeholder:text-slate-800
+  dark:disabled:border-none dark:disabled:bg-slate-800 dark:disabled:text-gray-400 dark:disabled:placeholder:text-gray-400
+}
+
+.input-disabled-import{
+  @apply h-6 px-2 py-1 text-xs text-right rounded-sm text-slate-800
+  disabled:bg-slate-300 disabled:text-slate-800
+  disabled:placeholder:text-slate-800
+  dark:disabled:border-none dark:disabled:bg-slate-800 dark:disabled:text-gray-400 dark:disabled:placeholder:text-gray-400;
+}
+
+.input-disabled{
+  @apply h-7 w-full px-2 py-1 text-xs text-center rounded-s-md text-slate-800
+  disabled:bg-slate-300 disabled:text-slate-800
+  disabled:placeholder:text-slate-800
+  dark:disabled:border-none dark:disabled:bg-slate-800 dark:disabled:text-gray-400 dark:disabled:placeholder:text-gray-400;
+}
+
+// .input-invalid {
+//   @apply placeholder-current border-red-600 placeholder:text-red-600 placeholder:tracking-wide placeholder:font-semibold
+//   dark:border-2
+//   dark:border-cyan-400 dark:placeholder:text-cyan-400
+// }
+.input-invalid {
+  @apply placeholder-current border-red-600 placeholder:text-red-600 placeholder:tracking-wide placeholder:font-semibold
+  dark:border-2
+  dark:border-sky-500 dark:placeholder:text-sky-500
+}
+
+// Button Icon Search Style
+.input-search {
+  @apply h-7 w-auto rounded-sm border-2 border-r border-slate-800 px-2 py-1 text-xs text-slate-800
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  disabled:bg-slate-300
+  dark:border-sky-800 dark:bg-gray-700 dark:text-gray-400 dark:disabled:bg-slate-800
+}
+
+// Select Styles
+.select-default {
+  @apply h-7 w-full rounded-sm border-2 border-slate-800 px-2 py-1 text-xs text-slate-800
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  focus:border-sky-700 focus:outline-none
+  focus:ring-2 focus:ring-sky-700
+  disabled:bg-slate-300 disabled:font-semibold dark:border-0 dark:bg-gray-700 dark:text-gray-400 dark:disabled:bg-slate-800
+}
+
+.select-auto {
+  @apply h-7 w-auto rounded-sm border-2 border-slate-800 px-2 py-1 text-xs text-slate-800
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700
+  focus:border-sky-700 focus:outline-none
+  focus:ring-2 focus:ring-sky-700
+  disabled:bg-slate-300 disabled:font-semibold dark:border-0 dark:bg-gray-700 dark:text-gray-400 dark:disabled:bg-slate-800
+}
+
+.select-invalid {
+  @apply placeholder-current border-red-600 text-red-600 tracking-wide font-semibold
+  dark:border-2 dark:border-sky-500 dark:text-sky-500 dark:disabled:bg-slate-800
+}
+
+// Options Styles
+.option-default {
+  @apply text-xs text-slate-700
+  dark:bg-gray-700 dark:text-gray-400
+}
+
+.option-invalid{
+  @apply font-semibold text-red-600
+  dark:text-sky-500
+}
+
+.button-icon-search {
+  @apply relative h-7 w-7 border-2 border-slate-800 bg-slate-700 text-white
+  hover:scale-110 hover:transform
+  dark:border-sky-700 dark:dark:bg-sky-700 dark:hover:ring-sky-700 dark:disabled:bg-slate-800
+}
+
+// Button Icon Styles
+// .button-icon-operac {
+//   @apply relative h-7 w-7 rounded-md border-2 border-slate-800 bg-slate-700 text-white
+//   hover:scale-110 hover:transform
+//   dark:border-sky-900 dark:bg-sky-900;
+// }
+
+.button-icon-overlay {
+  @apply h-7 w-7 rounded-md border-2 border-slate-800 text-white
+  hover:scale-110 hover:transform
+  dark:border-sky-900
+}
+
+.button-icon-operac {
+  @apply relative h-7 w-7 rounded-md border-2 border-slate-800 text-white
+  hover:scale-110 hover:transform
+  dark:border-sky-900
+}
+
+.button-icon-operac-delete {
+  @apply relative h-7 w-7 rounded-md border-2 border-red-600 bg-red-700 text-white
+  hover:scale-110 hover:transform
+  dark:border-red-700 dark:bg-red-800;
+}
+
+.icon-operac {
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-100
+  dark:text-slate-100;
+}
+
+// Style form Dialog Modals Crud
+.label-default {
+  @apply m-0 p-0 text-xs text-slate-800
+  dark:text-gray-400
+}
+
+.label-radio {
+  @apply m-0 p-0 text-xs w-full text-slate-800
+  dark:text-gray-400
+}
+
+.label-image{
+  @apply cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600
+}
+
+.label-required{
+  @apply after:content-['*'] after:ml-0.5 after:text-red-500
+}
+
+.label-input-xs{
+  @apply my-auto p-0 w-20 text-xs text-slate-800
+  dark:text-gray-400
+}
+
+.label-input-sm{
+  @apply my-auto p-0 w-40 text-xs text-slate-800
+  dark:text-gray-400
+}
+
+.label-input-lg{
+  @apply my-auto p-0 w-60 text-xs text-slate-800
+  dark:text-gray-400
+}
+
+.label-input-xl{
+  @apply my-auto p-0 w-80 text-xs text-slate-800
+  dark:text-gray-400
+}
+
+// CheckBox
+.checkbox-default{
+  @apply w-4 h-4 text-xs text-slate-800 bg-gray-100 border-gray-300 rounded
+  focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2
+  dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400
+}
+
+.radio-default{
+  @apply w-4 h-4 text-xs text-slate-800 bg-gray-100 border-gray-300 rounded
+  focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2
+  dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400
+}
+
+.text-inline {
+  @apply m-0 p-0 text-xs text-slate-800
+  dark:text-gray-400
+}
+
+.text-inline-sm {
+  @apply m-0 p-0 text-sm text-slate-800
+  dark:text-gray-400
+}
+
+.sidebar-section-text {
+  @apply m-0 p-0 text-sm text-slate-800
+  dark:text-gray-400
+}
+
+// .dialog-container {
+//   width: calc(100% - 160px);
+//   height: 800px;
+// }
+
+// @media (min-width: 1024px) {
+//   .dialog-container {
+//     width: calc(100% - 400px);
+//   }
+// }
+
+// @media (min-width: 1280px) {
+//   .dialog-container {
+//     width: calc(100% - 500px);
+//   }
+// }
+
+// .dialog-container {
+//   @apply h-5/6 w-screen md:w-[800px] lg:max-h-[800px] lg:w-[800px] xl:w-[1000px] m-auto overflow-auto
+//   bg-slate-100 px-8 py-8 space-y-6
+//   dark:bg-slate-900 dark:text-gray-400;
+// }
+
+.dialog-container {
+  @apply h-5/6 w-screen md:h-[800px] md:w-[800px] xl:w-[1000px] m-auto overflow-auto
+  bg-slate-100 px-8 py-8 space-y-6
+  dark:bg-slate-900 dark:text-gray-400;
+}
+
+
+.sub-dialog-container{
+  @apply pt-4 space-y-6
+}
+
+.dialog-title {
+  @apply m-0 text-left text-xl text-slate-700
+  dark:bg-none dark:text-gray-400;
+}
+
+.dialog-sub-title {
+  @apply m-0 text-left text-sm text-slate-700
+  dark:bg-none dark:text-gray-400;
+}
+.crud-container {
+  @apply h-5/6 w-screen md:h-[800px] md:w-[800px] xl:w-[1000px] m-auto overflow-auto
+  bg-slate-100 px-8 py-8 space-y-6
+  dark:bg-slate-900 dark:text-gray-400;
+}
+
+.default-container{
+  @apply m-auto bg-slate-100
+  dark:bg-slate-900 dark:text-gray-400;
+}
+
+.border-r-default{
+  @apply border-b-2 border-r-slate-700
+  dark:border-r-gray-400
+}
+
+.divide-line {
+ @apply divide-y divide-dotted divide-slate-500
+}

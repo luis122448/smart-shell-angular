@@ -1,0 +1,67 @@
+<ng-container [ngSwitch]="this.mensaje.status">
+  <section *ngSwitchCase="1"
+  class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+  <div class="flex justify-center">
+    <fa-icon [icon]="faCircleMinus" size="2xl" class="text-sky-600"></fa-icon>
+  </div>
+  <div class="text-center text-inline">{{ this.mensaje.message }}</div>
+  <div class="flex justify-center">
+    <app-button-standard
+      (click)="onClose()"
+      colorBtn="sky"
+      optionBtn="close"
+      typeBtn="button">
+      Cerrar
+    </app-button-standard>
+  </div>
+</section>
+  <section *ngSwitchCase="0"
+    class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+    <div class="flex justify-center">
+      <fa-icon [icon]="faCircleInfo" size="2xl" class="text-sky-600"></fa-icon>
+    </div>
+    <div class="text-center text-inline">{{ this.mensaje.message }}</div>
+    <div class="flex justify-center">
+      <app-button-standard
+        (click)="onClose()"
+        colorBtn="sky"
+        optionBtn="close"
+        typeBtn="button">
+        Cerrar
+      </app-button-standard>
+    </div>
+  </section>
+  <section *ngSwitchCase="-1"
+    class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+    <div class="flex justify-center">
+      <fa-icon [icon]="faCircleExclamation" size="2xl" class="text-yellow-700"></fa-icon>
+    </div>
+    <div class="text-center text-inline">{{ this.mensaje.message }}</div>
+    <div class="flex justify-center">
+      <app-button-standard
+        (click)="onClose()"
+        colorBtn="yellow"
+        optionBtn="close"
+        typeBtn="button">
+        Cerrar
+      </app-button-standard>
+    </div>
+  </section>
+  <ng-template ngSwitchDefault>
+    <section class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+      <div class="flex justify-center">
+        <fa-icon [icon]="faCircleXmark" size="2xl" class="text-red-600"></fa-icon>
+      </div>
+      <div class="text-center text-inline">{{ this.mensaje.message }}</div>
+      <div class="flex justify-center">
+        <app-button-standard
+          (click)="onClose()"
+          colorBtn="red"
+          optionBtn="close"
+          typeBtn="button">
+          Cerrar
+        </app-button-standard>
+      </div>
+    </section>
+  </ng-template>
+</ng-container>

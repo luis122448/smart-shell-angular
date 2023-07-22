@@ -1,0 +1,115 @@
+<main>
+  <h1 class="text-inline my-12 text-center">Smart Shell</h1>
+  <div *ngIf="LoginIn; else elseBlock">
+    <form
+      [formGroup]="fromAuthLogin"
+      novalidate
+      class="space-y-6"
+      (ngSubmit)="doLogin()"
+    >
+      <section>
+        <div class="relative">
+          <input
+            #nameInput
+            formControlName="coduser"
+            placeholder="Enter email"
+            type="text"
+            class="input-login"
+          />
+          <button
+            type="button"
+            class="absolute right-2 p-2"
+            (click)="nameInput.focus()"
+          >
+            <fa-icon [icon]="faPen"></fa-icon>
+          </button>
+        </div>
+        <app-alert-standard [class.invisible]="!isInputInvalid('coduser')"
+          >Especificar su Codigo de Usuario</app-alert-standard
+        >
+      </section>
+      <section>
+        <div class="relative">
+          <input
+            formControlName="password"
+            placeholder="Enter password"
+            [type]="showPassword ? 'text' : 'password'"
+            class="input-login"
+          />
+          <button
+            type="button"
+            class="absolute right-2 p-2"
+            (click)="showPassword = !showPassword"
+          >
+            <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+          </button>
+        </div>
+        <app-alert-standard [class.invisible]="!isInputInvalid('password')"
+          >Especificar su Contraseña</app-alert-standard
+        >
+      </section>
+      <section class="flex justify-center">
+        <app-button-standard typeBtn="submit" colorBtn="sky" optionBtn="go" >
+          Login</app-button-standard
+        >
+      </section>
+      <section>
+        <hr class="border-r-default my-4" />
+        <div
+          class="flex flex-col items-center justify-center space-x-0 space-y-2 md:flex-row md:space-x-2 md:space-y-0"
+        >
+          <a routerLink="/forgot-password" class="text-blue-600">Contraseña?</a>
+          <span class="hidden text-gray-500 md:block">•</span>
+          <a routerLink="/register" class="text-blue-600">Nuevo Usuario?</a>
+        </div>
+      </section>
+    </form>
+  </div>
+  <ng-template #elseBlock>
+    <div class="space-y-6">
+      <section>
+        <form
+          [formGroup]="formVerifyCode"
+          novalidate
+          (ngSubmit)="doVerifyCode()"
+        >
+          <div class="relative">
+            <input formControlName="coduser" type="text" class="input-login" />
+          </div>
+          <app-alert-standard class="invisible"></app-alert-standard>
+        </form>
+      </section>
+      <section>
+        <div class="flex justify-around space-x-3">
+          <input
+            *ngFor="let i of [0, 1, 2, 3, 4, 5]"
+            type="text"
+            class="input-login"
+            [(ngModel)]="verificationCode[i]"
+            (input)="onCodeInputChange(i, $event)"
+            maxlength="1"
+          />
+          <!-- (input)="onCodeInputChange(i, $event)" -->
+        </div>
+        <app-alert-standard [class.invisible]="!isInputInvalidVerify('codver')"
+          >Digitar su Codigo de Seguridad</app-alert-standard
+        >
+      </section>
+      <section class="flex justify-center">
+        <app-button-standard typeBtn="button" colorBtn="sky" (click)="doVerifyCode()" optionBtn="go">
+          Login</app-button-standard
+        >
+      </section>
+      <section>
+        <hr class="border-r-default my-4" />
+        <div
+          class="flex flex-col items-center justify-center space-x-0 space-y-2 md:flex-row md:space-x-2 md:space-y-0"
+        >
+          <a routerLink="/forgot-password" class="text-blue-600">Contraseña?</a>
+          <span class="hidden text-gray-500 md:block">•</span>
+          <a routerLink="/register" class="text-blue-600">Nuevo Usuario?</a>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+</main>

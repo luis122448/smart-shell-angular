@@ -1,0 +1,126 @@
+@import '@angular/material/theming';
+
+@mixin custom-element-generic() {
+  .mat-typography{
+    @apply m-0
+  }
+}
+
+@mixin custom-tabs-theme() {
+  // Mat Tab Styles
+  mat-tab{
+    @apply dark:text-gray-400 dark:bg-gray-700
+  }
+
+  .mat-tab-label-span  {
+    @apply m-0 p-0 text-sm text-slate-800
+    dark:text-gray-400
+  }
+
+  .mat-tab-label-container {
+    @apply w-full h-full flex items-center space-x-4 text-slate-700 font-semibold
+    dark:text-gray-400
+  }
+}
+
+@mixin custom-table-style(){
+  cdk-row, cdk-header-row, cdk-footer-row {
+    display: flex;
+  }
+
+  cdk-cell, cdk-header-cell, cdk-footer-cell {
+    flex: 1;
+  }
+
+  th {
+    @apply text-center
+  }
+
+  // Default Table
+  .container-default-table{
+    @apply h-full w-full overflow-auto
+  }
+
+  .main-default-table{
+    @apply h-full w-auto text-sm text-left text-gray-500 dark:text-gray-400
+  }
+
+  // Dialog Table
+  .container-dialog-table{
+  @apply h-1/2 max-h-[400px] sm:min-h-[200px] md:min-h-[250px] lg:min-h-[350px] overflow-auto
+  }
+
+  .main-dialog-table{
+    @apply w-full h-auto text-sm text-left text-gray-500 dark:text-gray-400
+  }
+
+  .header-table{
+    @apply text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10
+  }
+
+  .row-table{
+    @apply text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700
+  }
+
+  .footer-table{
+    @apply text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky bottom-0 z-10
+  }
+
+  .row-table-delete{
+    @apply text-red-600 font-semibold
+    dark:text-sky-500
+  }
+
+  .header-cell{
+    @apply px-4 py-2
+  }
+
+  .row-cell{
+    @apply px-4 py-2
+  }
+
+  .footer-cell{
+    @apply px-4 py-2
+  }
+
+  .row-operac-cell{
+    @apply w-32 mx-auto flex justify-around space-x-2 px-4 py-2
+  }
+
+  .footer-table-external{
+    @apply w-full text-xs font-bold py-3 px-9 text-right text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400
+  }
+}
+
+@mixin custom-paginator-style(){
+  mat-paginator {
+    @apply text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky bottom-0 z-10
+  }
+
+  mat-paginator .mat-paginator-range-label,
+  mat-paginator .mat-paginator-page-size,
+  mat-paginator .mat-paginator-page-size-label,
+  mat-paginator .mat-select-value {
+    @apply text-xs text-slate-800 dark:text-gray-400
+  }
+
+  mat-paginator .mat-paginator-navigation-button {
+    /* Estilos para los botones de navegación del paginador */
+  }
+
+  mat-paginator .mat-paginator-range-actions {
+    /* Estilos para los botones de acciones del paginador */
+  }
+
+  mat-paginator .mat-paginator-page-size-options {
+    /* Estilos para las opciones de tamaño de página del paginador */
+  }
+
+  mat-paginator .mat-paginator-page-size-trigger {
+    /* Estilos para el elemento desplegable de tamaño de página del paginador */
+  }
+
+  mat-paginator .mat-paginator-page-size-option {
+    /* Estilos para cada opción de tamaño de página del paginador */
+  }
+}

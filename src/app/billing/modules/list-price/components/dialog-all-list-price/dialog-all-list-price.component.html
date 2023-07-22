@@ -1,0 +1,93 @@
+<p>dialog-all-list-price works!</p>
+<main class="dialog-container">
+  <section class="dialog-title">
+    Price List
+  </section>
+  <section>
+
+  </section>
+  <section class="flex justify-start space-x-4">
+    <app-button-standard
+      (click)="searchListPrice()"
+      colorBtn="sky"
+      optionBtn="search"
+      typeBtn="button"
+    >
+      Buscar
+    </app-button-standard>
+    <app-button-standard
+      (click)="crudListPrice(null)"
+      colorBtn="green"
+      optionBtn="new"
+      typeBtn="button"
+      >Nuevo</app-button-standard
+    >
+  </section>
+  <section class="container-dialog-table">
+    <table class="main-dialog-table" cdk-table [dataSource]="dataSourceListPrice">
+      <tr
+        class="header-table"
+        cdk-header-row
+        *cdkHeaderRowDef="displayedColumns; sticky: true"
+      ></tr>
+      <tr
+        class="row-table"
+        cdk-row
+        *cdkRowDef="let row; columns: displayedColumns"
+        [class.row-table-delete]="row.status === 'N'"
+      ></tr>
+      <ng-container cdkColumnDef="codlistprice">
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+        <td class="row-cell" cdk-cell *cdkCellDef="let row">
+          {{ row.codlistprice }}
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="descri">
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Description</th>
+        <td class="row-cell" cdk-cell *cdkCellDef="let row">
+          {{ row.descri }}
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="codext">
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+          Code Alternative
+        </th>
+        <td class="row-cell" cdk-cell *cdkCellDef="let row">
+          {{ row.codext }}
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="operac">
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
+        <td
+          class="row-operac-cell"
+          cdk-cell
+          *cdkCellDef="let row"
+        >
+          <app-button-operac
+            *ngIf="row.status === 'Y'"
+            (click)="crudListPrice(row)"
+            optionBtn="edit"
+            colorBtn="sky"
+          >
+          </app-button-operac>
+          <app-button-operac
+            *ngIf="row.status === 'Y'"
+            (click)="deleteListPrice(row)"
+            optionBtn="delete"
+            colorBtn="red"
+          ></app-button-operac>
+        </td>
+      </ng-container>
+    </table>
+  </section>
+  <section class="flex justify-end">
+    <app-button-standard
+      (click)="closeDialog(null)"
+      colorBtn="red"
+      optionBtn="close"
+      typeBtn="button"
+    >
+      Close
+    </app-button-standard>
+  </section>
+</main>

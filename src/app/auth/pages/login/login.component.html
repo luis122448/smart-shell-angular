@@ -1,0 +1,30 @@
+<main class="grid h-full grid-cols-5 xl:grid-cols-7 default-container">
+  <section class="col-span-3 xl:col-span-5">
+    <img
+      loading="lazy"
+      class="h-full bg-cover"
+      src="../../../../assets/images/background/backgroundLogin.jpeg"
+      alt="logo"
+    />
+  </section>
+  <section class="dialog-container col-span-2 w-full">
+    <section class="fixed top-0 right-0">
+      <app-theme-switcher class=""></app-theme-switcher>
+    </section>
+    <section>
+      <app-login-form></app-login-form>
+    </section>
+    <section class="">
+      <app-footer class=""></app-footer>
+    </section>
+  </section>
+</main>
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="large"
+  color="#ffffff"
+  type="ball-spin-clockwise"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,331 @@
+<main class="dialog-container">
+  <mat-tab-group
+    [selectedIndex]="selectedTab.value"
+    (selectedIndexChange)="selectedTab.setValue($event)"
+  >
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faFileInvoice"></fa-icon>
+          <span class="mat-tab-label-span">Historial</span>
+        </div>
+      </ng-template>
+      <div class="sub-dialog-container">
+        <section class="flex w-full justify-center">
+          <form [formGroup]="formSearchExchangeRate" class="space-y-2">
+            <div class="grid grid-cols-2 gap-x-8">
+              <div class="grid grid-cols-3">
+                <label for="startat" class="label-input-sm">Fecha Inicio</label>
+                  <input
+                    id="startat"
+                    name="startat"
+                    type="date"
+                    class="input-auto col-span-2"
+                    formControlName="startat"
+                  />
+              </div>
+              <div class="grid grid-cols-3">
+                <label for="finalat" class="label-input-sm">Fecha Final</label>
+                  <input
+                    id="finalat"
+                    name="finalat"
+                    type="date"
+                    class="input-auto col-span-2"
+                    formControlName="finalat"
+                  />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-x-8">
+              <div class="grid grid-cols-3">
+                <div class="w-56"><label for="origen" class="label-input-sm">Moneda Origen</label></div>
+                <select id="origen" class="select-default col-span-2" formControlName="origen">
+                  <option value="PEN" class="option-default">PEN</option>
+                  <option value="USD" class="option-default">USD</option>
+                </select>
+              </div>
+              <div class="grid grid-cols-3">
+                <div class="w-56"><label for="destin" class="label-input-sm">Moneda Destino</label></div>
+                <select id="destin" class="select-default col-span-2" formControlName="destin">
+                  <option value="PEN" class="option-default">PEN</option>
+                  <option value="USD" class="option-default">USD</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </section>
+        <section class="flex justify-end space-x-4">
+          <app-button-standard
+            colorBtn="sky"
+            optionBtn="search"
+            typeBtn="button"
+            (click)="searchExchangeRate()"
+          >
+            Buscar
+          </app-button-standard>
+          <app-button-standard
+            colorBtn="green"
+            optionBtn="new"
+            typeBtn="button"
+            (click)="crudExchangeRate(null)"
+            >
+            Nuevo
+          </app-button-standard>
+        </section>
+        <section class="section-table">
+          <div class="container-dialog-table">
+            <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
+              <tr
+                class="header-table"
+                cdk-header-row
+                *cdkHeaderRowDef="displayedColumns; sticky: true"
+              ></tr>
+              <tr
+                class="row-table"
+                cdk-row
+                *cdkRowDef="let row; columns: displayedColumns"
+              ></tr>
+              <ng-container cdkColumnDef="registdate">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Fecha
+                </th>
+                <td
+                  cdk-cell
+                  class="row-cell min-w-[140px] text-center"
+                  *cdkCellDef="let row"
+                >
+                  {{ formatDate(row.registdate) }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="origen">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Moneda Origen
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.origen }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="destin">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Moneda Destino
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.destin }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="eventa">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Entidad Venta
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.eventa }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="ecompra">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Entidad Compra
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.ecompra }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="operac">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Accion
+                </th>
+                <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+                  <app-button-operac
+                    optionBtn="edit"
+                    colorBtn="sky"
+                    (click)="crudExchangeRate(row)"
+                  >
+                  </app-button-operac>
+                  <app-button-operac
+                    optionBtn="delete"
+                    colorBtn="red"
+                    (click)="deleteExchangeRate(row)"
+                  ></app-button-operac>
+                </td>
+              </ng-container>
+            </table>
+          </div>
+          <div>
+
+          </div>
+        </section>
+        <section class="flex justify-end">
+          <app-button-standard
+            (click)="closeDialog()"
+            [colorBtn]="'red'"
+            optionBtn="close"
+            [typeBtn]="'button'"
+          >
+            Close
+          </app-button-standard>
+        </section>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faFilePen"></fa-icon>
+          <span class="mat-tab-label-span">Registrar</span>
+        </div>
+      </ng-template>
+      <form [formGroup]="formCrudExchangeRate" class="sub-dialog-container">
+        <section>
+          <p>Importar de :</p>
+          <app-button-import-sunat (click)="importSunat()" typeBtn="button">
+          </app-button-import-sunat>
+        </section>
+        <section>
+          <div class="grid grid-cols-2 gap-x-8">
+            <label for="registdate" class="label-input-sm col-span-1">Fecha</label>
+            <input
+              id="registdate"
+              name="registdate"
+              type="date"
+              class="input-auto col-span-2"
+              formControlName="registdate"
+            />
+            <app-alert-standard
+              *ngIf="crudFecha?.invalid && crudFecha?.touched"
+            >
+              Campo Obligatorio*
+            </app-alert-standard>
+          </div>
+          <div class="grid grid-cols-2 gap-x-8">
+            <div>
+              <div class="flex">
+                <label for="" class="label-input-xl">Moneda Origen</label>
+                <select id="" class="input-default" formControlName="origen">
+                  <option value="PEN">PEN</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+              <!-- <app-alert-standard [class.invisible]="!isInputInvalid('origen')">
+                Campo Obligatorio*
+              </app-alert-standard> -->
+            </div>
+            <div>
+              <div class="flex">
+                <label for="" class="label-input-xl">Moneda Destino</label>
+                <select id="" class="input-default" formControlName="destin">
+                  <option value="PEN">PEN</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+              <!-- <app-alert-standard [class.invisible]="!isInputInvalid('destin')">
+                Campo Obligatorio*
+              </app-alert-standard> -->
+            </div>
+          </div>
+        </section>
+        <section class="grid grid-cols-3 grid-rows-2 gap-x-8 gap-y-4">
+          <div>
+            <label for="fventa" class="label-input-sm">Factor Venta</label>
+            <input
+              type="number"
+              min="0"
+              formControlName="fventa"
+              class="input-default"
+            />
+            <!-- <app-alert-standard [class.invisible]="!isInputInvalid('fventa')">
+              Formato inválido. Ingresa un número con 2 a 4 decimales*
+            </app-alert-standard> -->
+          </div>
+          <div>
+            <label for="fcompra" class="label-input-sm">Factor Compra</label>
+            <input
+              type="number"
+              min="0"
+              formControlName="fcompra"
+              class="input-default"
+            />
+            <!-- <app-alert-standard [class.invisible]="!isInputInvalid('fcompra')">
+              Formato inválido. Ingresa un número con 2 a 4 decimales*
+            </app-alert-standard> -->
+          </div>
+          <div>
+            <label for="cventa" class="label-input-sm"
+              >Contabilidad Venta</label
+            >
+            <input
+              type="number"
+              min="0"
+              formControlName="cventa"
+              class="input-default"
+            />
+            <!-- <app-alert-standard [class.invisible]="!isInputInvalid('cventa')">
+              Formato inválido. Ingresa un número con 2 a 4 decimales*
+            </app-alert-standard> -->
+          </div>
+          <div>
+            <label for="ccompra" class="label-input-sm"
+              >Contabilidad Compra</label
+            >
+            <input
+              type="number"
+              min="0"
+              formControlName="ccompra"
+              class="input-default"
+            />
+            <!-- <app-alert-standard [class.invisible]="!isInputInvalid('ccompra')">
+              Formato inválido. Ingresa un número con 2 a 4 decimales*
+            </app-alert-standard> -->
+          </div>
+          <div>
+            <label for="eventa" class="label-input-sm">Entidad Venta</label>
+            <input
+              type="number"
+              min="0"
+              formControlName="eventa"
+              class="input-default"
+            />
+            <app-alert-standard [class.invisible]="!isInputInvalid('eventa')">
+              Campo Obligatorio*
+            </app-alert-standard>
+          </div>
+          <div>
+            <label for="ecompra" class="label-input-sm">Entidad Compra</label>
+            <input
+              type="number"
+              min="0"
+              formControlName="ecompra"
+              class="input-default"
+            />
+            <app-alert-standard [class.invisible]="!isInputInvalid('ecompra')">
+              Campo Obligatorio*
+            </app-alert-standard>
+          </div>
+        </section>
+        <section class="flex justify-end space-x-4">
+          <app-button-standard
+            (click)="saveExchangeRate()"
+            [colorBtn]="'green'"
+            optionBtn="save"
+            [typeBtn]="'button'"
+          >
+            Guardar
+          </app-button-standard>
+          <app-button-standard
+            (click)="closeDialog()"
+            [colorBtn]="'red'"
+            optionBtn="close"
+            [typeBtn]="'button'"
+          >
+            Close
+          </app-button-standard>
+        </section>
+      </form>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faCircleInfo"></fa-icon>
+          <span class="mat-tab-label-span">Ayuda</span>
+        </div>
+      </ng-template>
+      No Implementado!
+    </mat-tab>
+  </mat-tab-group>
+</main>

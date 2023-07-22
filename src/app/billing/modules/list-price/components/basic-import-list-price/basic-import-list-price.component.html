@@ -1,0 +1,58 @@
+<form [formGroup]="formCrudListPriceArticle" class="h-full w-full py-6 px-4 space-y-6 relative">
+  <section class="grid grid-cols-2 gap-x-4">
+    <article class="col-span-1 space-y-2">
+      <div class="flex">
+        <label for="codlistprice" class="label-input-sm label-required"
+          >Price List</label
+        >
+        <select
+          name="codlistprice"
+          id="codlistprice"
+          class="select-default"
+          formControlName="codlistprice"
+          [class.select-invalid]="isInputInvalid('codlistprice')"
+        >
+          <option
+            [value]="listPrice?.codlistprice"
+            class="option-default"
+            selected
+            [class.option-invalid]="isInputInvalid('codlistprice')"
+          >
+            {{ listPrice?.descri }}
+          </option>
+        </select>
+      </div>
+    </article>
+    <article class="col-span-1 space-y-2">
+
+    </article>
+  </section>
+  <section class="flex justify-start space-x-6">
+    <app-button-standard
+      (click)="importListPriceArticle()"
+      colorBtn="green"
+      optionBtn="import"
+      typeBtn="button"
+    >
+      Import
+    </app-button-standard>
+    <app-button-standard
+      (click)="exportListPriceArticle()"
+      colorBtn="green"
+      optionBtn="export"
+      typeBtn="button"
+    >
+      Export
+    </app-button-standard>
+  </section>
+  <section class="flex justify-end space-x-6">
+    <app-button-standard
+      (click)="closeDialog()"
+      colorBtn="red"
+      optionBtn="close"
+      typeBtn="button"
+    >
+      Close
+    </app-button-standard>
+  </section>
+</form>

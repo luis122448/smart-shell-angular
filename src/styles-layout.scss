@@ -1,0 +1,75 @@
+// Layout Menu
+.main-container {
+  @apply m-auto h-screen flex-col justify-around bg-slate-100 dark:bg-slate-900 dark:text-gray-400;
+}
+
+.sub-main-container {
+  @apply space-y-6 bg-slate-100 dark:bg-slate-900 dark:text-gray-400;
+}
+
+.items-container {
+  @apply grid w-full grid-cols-2 space-x-2 px-4;
+}
+
+.left-container {
+  @apply z-10 h-full w-[80px]
+  lg:w-[200px]
+  xl:w-[250px]
+  2xl:w-[250px];
+}
+
+.rigth-container {
+  @apply z-10 h-full w-[80px]
+  lg:w-[200px]
+  xl:w-[250px]
+  2xl:w-[250px];
+}
+
+.sidebar-left {
+  @apply relative z-30 h-full w-[80px] space-y-2 divide-y divide-dotted divide-slate-500 bg-slate-50 px-4
+  py-4 shadow-xl
+  transition-all duration-500 dark:bg-slate-900
+  dark:text-slate-400 hover:max-lg:absolute
+  hover:max-lg:left-0
+  hover:max-lg:w-[200px]
+  lg:w-full;
+}
+
+.sidebar-rigth {
+  @apply relative z-30 h-full w-[80px] space-y-2 divide-y divide-dotted divide-slate-500 bg-slate-50 px-4
+  py-4 shadow-xl
+  transition-all duration-500 dark:bg-slate-900
+  dark:text-slate-400 hover:max-lg:absolute
+  hover:max-lg:right-0
+  hover:max-lg:w-[200px]
+  lg:w-full;
+}
+
+// Menu Sidebar
+.menu-sidebar {
+  @apply my-auto grid w-full grid-cols-5 rounded-md p-2
+  text-left text-slate-700
+  hover:bg-blue-100 hover:font-normal hover:text-blue-500
+  dark:text-gray-400
+  dark:hover:bg-slate-500 dark:hover:font-normal dark:hover:text-gray-50;
+}
+
+.menu-siderbar-icon {
+  @apply relative col-span-1 h-6 w-6 text-slate-700 dark:text-gray-400;
+}
+
+.menu-sidebar-text {
+  @apply col-span-4 text-xs text-slate-800 dark:text-gray-400;
+}
+
+.display-none {
+  @media (max-width: 1024px) {
+    display: none;
+  }
+  transition: all;
+  animation-duration: 500ms;
+}
+
+.footer-default {
+  @apply m-auto bg-slate-100 p-4 dark:bg-slate-900 dark:text-gray-400;
+}

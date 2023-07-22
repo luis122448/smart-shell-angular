@@ -1,0 +1,218 @@
+<section class="container-default-table">
+  <table
+  class="main-default-table"
+  cdk-table
+  [dataSource]="dataSourceSearchDocument"
+>
+  <tr
+    class="header-table"
+    cdk-header-row
+    *cdkHeaderRowDef="displayedColumns; sticky: true"
+  ></tr>
+  <tr
+    class="row-table"
+    cdk-row
+    *cdkRowDef="let row; columns: displayedColumns"
+  ></tr>
+  <ng-container cdkColumnDef="action">
+    <th class="header-cell max-w-[15px]" cdk-header-cell *cdkHeaderCellDef></th>
+    <td class="row-operac-cell max-w-[15px]" cdk-cell *cdkCellDef="let row">
+      <button
+        class="relative h-7 w-7"
+        (click)="row.isOpen = !row.isOpen"
+        type="button"
+        cdkOverlayOrigin
+        #trigger="cdkOverlayOrigin"
+      >
+        <fa-icon [icon]="faRectangleList" class="icon-operac"></fa-icon>
+      </button>
+      <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="row.isOpen"
+      >
+        <div
+          id="dropdown"
+          class="z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700"
+        >
+          <ul
+            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownDefaultButton"
+          >
+            <li>
+              <a
+                class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                (click)="onPrint(row.numint)"
+              >
+                <div class="relative h-7 w-7">
+                  <fa-icon
+                    [icon]="faPrint"
+                    class="icon-overlay"
+                  ></fa-icon>
+                </div>
+                Imprimir
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                (click)="onSendEmail(row.numint)"
+              >
+                <div class="relative h-7 w-7">
+                  <fa-icon
+                    [icon]="faEnvelope"
+                    class="icon-overlay"
+                  ></fa-icon>
+                </div>
+                Enviar por Email
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                (click)="onSendSunat(row.numint)"
+              >
+                <div class="relative h-7 w-7">
+                  <fa-icon
+                    [icon]="faBuildingColumns"
+                    class="icon-overlay"
+                  ></fa-icon>
+                </div>
+                Enviar a Sunat</a
+              >
+            </li>
+            <li>
+              <a
+                class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                (click)="onCancel(row.numint)"
+              >
+                <div class="relative h-7 w-7">
+                  <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
+                </div>
+                Anular</a
+              >
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="numint">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Number
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.numint }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="document">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Document</th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.serie + ' - ' + row.numdoc }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="destypcomdoc">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Type Document
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.destypcomdoc }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="dessitcomdoc">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Situation
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.dessitcomdoc }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="registdate">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Register Date</th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ formatDate(row.registdate) }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="desreacomdoc">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Reason</th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.desreacomdoc }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="codbuspar">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Bussiner Partner
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.codbuspar }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="busnam">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Descripcion
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.busnam }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="desplaiss">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Place of Issue
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.desplaiss }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="codcur">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Currency
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.codcur }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="dessel">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Seller
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.dessel }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="destyppaycon">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Payment Condition
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.destyppaycon }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="impsaleprice">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+      Sale Price
+    </th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.impsaleprice }}
+    </td>
+  </ng-container>
+  <ng-container cdkColumnDef="imptotal">
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Total</th>
+    <td class="row-cell" cdk-cell *cdkCellDef="let row">
+      {{ row.imptotal }}
+    </td>
+  </ng-container>
+</table>
+</section>
+<section>
+  <div>
+    <mat-paginator
+      (page)="byPageEvent($event)"
+      [hidePageSize]="true"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</section>

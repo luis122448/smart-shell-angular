@@ -1,0 +1,95 @@
+<div class="sidebar-rigth" (mouseenter)="!openSidebar = true" (mouseleave)="!openSidebar = false">
+  <section class="relative h-16">
+    <app-theme-switcher [class.display-none]="!openSidebar" class="absolute"></app-theme-switcher>
+  </section>
+  <section class="sidebar-rigth-section">
+    <button type="button" (click)="openDialogExchangeRate()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faCommentsDollar" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Tipo de Cambio</span>
+    </button>
+  </section>
+  <section>
+    <button type="button" (click)="openDialogCliente()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faUsers" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Interlocutor Comercial</span>
+    </button>
+  </section>
+  <section>
+    <button type="button" (click)="openDialogArticle()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faCartFlatbe" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Inventario y Articles</span>
+    </button>
+  </section>
+  <section>
+    <button type="button" (click)="openDialogListPrice()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faClipboardList" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Lista de Precios</span>
+    </button>
+  </section>
+  <section>
+    <button type="button" (click)="openDialogCliente()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faTruckArrowRight" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Transportista</span>
+    </button>
+  </section>
+  <section>
+    <button type="button" (click)="openDialogCliente()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faIdBadge" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Seller</span>
+    </button>
+  </section>
+  <section>
+    <button type="button" (click)="openDialogCliente()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faCreditCard" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Condicion de Pago</span>
+    </button>
+  </section>
+  <!-- <section>
+    <button type="button" (click)="openDialogCompany()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faCreditCard" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Condicion de Pago</span>
+    </button>
+  </section> -->
+  <section>
+    <button type="button" (click)="openDialogSesion()"
+      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
+      class="menu-sidebar space-x-2">
+        <div class="menu-siderbar-icon">
+          <fa-icon class="icon-operac" [icon]="faSquareXmark" size="lg"></fa-icon>
+        </div>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Cerrar Sesión</span>
+    </button>
+  </section>
+</div>

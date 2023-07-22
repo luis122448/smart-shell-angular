@@ -1,0 +1,20 @@
+<section class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+  <div class="flex justify-center">
+    <fa-icon [icon]="faCircleQuestion" size="2xl" class="text-sky-700"></fa-icon>
+  </div>
+  <div class="text-center text-inline">{{ this.mensaje.message }}</div>
+  <div class="flex justify-around">
+    <app-button-question
+      (click)="closeDialog(true)"
+      colorBtn="sky"
+      typeBtn="button">
+      Si
+    </app-button-question>
+    <app-button-question
+      (click)="closeDialog(false)"
+      colorBtn="red"
+      typeBtn="button">
+      No
+    </app-button-question>
+  </div>
+</section>

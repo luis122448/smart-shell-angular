@@ -1,0 +1,23 @@
+<main class="h-full w-full flex justify-center overflow-hidden">
+  <menu class="left-container">
+    <app-siderbar-left></app-siderbar-left>
+  </menu>
+  <div class="main-container">
+    <app-header></app-header>
+    <div class="body-container">
+      <app-principal-configuration></app-principal-configuration>
+    </div>
+  <app-footer></app-footer>
+  </div>
+  <menu class="rigth-container">
+    <app-siderbar-rigth></app-siderbar-rigth>
+  </menu>
+  <ngx-spinner
+    bdColor="rgba(0,0,0,0.5)"
+    size="large"
+    color="#ffffff"
+    type="ball-spin-clockwise"
+    [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</main>

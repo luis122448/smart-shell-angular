@@ -1,0 +1,31 @@
+<div class="crud-container">
+  <mat-tab-group [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
+            <fa-icon [icon]="faFileInvoice"></fa-icon>
+            <span class="mat-tab-label-span">Informacion Basica</span>
+          </div>
+        </ng-template>
+        <app-basic-info-articulo></app-basic-info-articulo>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
+            <fa-icon [icon]="faShoppingBag"></fa-icon>
+            <span class="mat-tab-label-span">Ecommerce</span>
+          </div>
+        </ng-template>
+        <app-ecommerce-articulo></app-ecommerce-articulo>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
+            <fa-icon [icon]="faClipboardCheck"></fa-icon>
+            <span class="mat-tab-label-span">Precio List</span>
+          </div>
+        </ng-template>
+        <app-lista-precios-articulo></app-lista-precios-articulo>
+      </mat-tab>
+  </mat-tab-group>
+</div>

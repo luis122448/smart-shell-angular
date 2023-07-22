@@ -1,0 +1,37 @@
+<div class="crud-container relative">
+  <mat-tab-group [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
+            <fa-icon [icon]="faFileInvoice"></fa-icon>
+            <span class="mat-tab-label-span">Basic Information</span>
+          </div>
+        </ng-template>
+        <app-basic-info-list-price></app-basic-info-list-price>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
+            <fa-icon [icon]="faClipboardCheck"></fa-icon>
+            <span class="mat-tab-label-span">Article in List Price</span>
+          </div>
+        </ng-template>
+        <app-basic-article-list-price></app-basic-article-list-price>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
+            <fa-icon [icon]="faFileImport"></fa-icon>
+            <span class="mat-tab-label-span">Import / Export</span>
+          </div>
+        </ng-template>
+        <app-basic-import-list-price></app-basic-import-list-price>
+      </mat-tab>
+  </mat-tab-group>
+  <app-button-operac
+    optionBtn="close"
+    colorBtn="red"
+    class="absolute top-0 right-2"
+    (click)="closeDialog()"
+  ></app-button-operac>
+</div>
