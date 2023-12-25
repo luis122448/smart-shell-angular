@@ -17,7 +17,7 @@ constructor(
     const isValidToken =  this.tokenService.isValidRefreshToken()
     console.log(isValidToken)
     if (isValidToken) {
-      this.router.navigate(['/facturacion'])
+      this.router.navigate(['/billing'])
     }
     return true
   }

@@ -18,6 +18,7 @@ import { TypeInventory } from '@billing-models/type-inventory.model';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { Inventory } from 'src/app/auth/models/default-values.model';
+import { DialogImportArticleComponent } from '../dialog-import-article/dialog-import-article.component';
 
 @Component({
   selector: 'app-dialog-all-inventario-articulo',
@@ -108,7 +109,13 @@ export class DialogAllInventarioArticleComponent implements OnInit {
 
   crudArticle(row: Article | null){
     this.dialog.open(DialogCrudArticleComponent,{
-      data: { codart: row?.codart, descri: row?.descri, articulo:row }
+      data: { typinv:row?.typinv, codart: row?.codart, descri: row?.descri, articulo:row }
+    })
+  }
+
+  exportImportArticle(){
+    this.dialog.open(DialogImportArticleComponent,{
+      data: { typinv: this.typinv?.value }
     })
   }
 

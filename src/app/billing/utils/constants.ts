@@ -25,6 +25,13 @@ export const NoJpgFormatImage: DialogMessage = {
   }
 }
 
+export const NoFormatCorrect: DialogMessage = {
+  width: '400px',
+  data: {
+    status: -3,
+    message: 'Formato Incorrecto!, Solo se aceptan imagenes en formato jpg'
+  }
+}
 
 export const MatSnackBarSuccessConfig = {
   duration: 1500,

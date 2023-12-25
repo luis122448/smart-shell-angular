@@ -46,6 +46,18 @@ export interface DTOListPriceArticle {
   object: ListPriceArticle | null
 }
 
+export interface ByteListPriceArticle{
+  status: number
+  message: string
+  logMessage: string
+  logUser: String
+  logTime: Date | number[],
+  bytes: string,
+  format: string,
+  name: string,
+  extension: string
+}
+
 export interface BasicListPriceArticle{
   codlistprice: number
   listprice: ListPriceArticle | null

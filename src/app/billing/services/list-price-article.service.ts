@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { environment } from '@enviroment';
-import { DAOListPriceArticle, DTOListPriceArticle, ListPriceArticle } from '@billing-models/list-price-article.model';
+import { DAOListPriceArticle, DTOListPriceArticle, ListPriceArticle, ByteListPriceArticle } from '@billing-models/list-price-article.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,12 @@ export class ListPriceArticleService {
   constructor(
     private httpCLient: HttpClient
   ) { }
+
+  getByExport(codlistprice: number){
+    let params = new HttpParams()
+    params = params.set('codlistprice',codlistprice.toString())
+    return this.httpCLient.get<ByteListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-export`, { params })
+  }
 
   getByPage(codlistprice: number, codart: string, desart: string, pageSize: number = 10,pageIndex: number = 0){
     let params = new HttpParams()
@@ -40,6 +46,14 @@ export class ListPriceArticleService {
     params = params.set('codlistprice',codlistprice.toString())
     params = params.set('codart',codart)
     return this.httpCLient.get<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, { params })
+  }
+
+  postByImport(codlistprice: number, file: File) {
+    const formData = new FormData();
+    formData.append('codlistprice', codlistprice.toString());
+    formData.append('archive', file, file.name);
+
+    return this.httpCLient.post<ByteListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-import`,formData);
   }
 
   postSave(data: ListPriceArticle){

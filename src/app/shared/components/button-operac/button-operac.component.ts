@@ -1,6 +1,6 @@
 import { Component,Input } from '@angular/core';
 import { faSpinner,faFloppyDisk,faCalculator,faCircleLeft,faBroomBall,faCircleXmark,faPlus,faNewspaper,faTrashArrowUp,
-  faMagnifyingGlass,faQuestion,faTrashCan,faPenToSquare, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+  faMagnifyingGlass,faQuestion,faTrashCan,faPenToSquare, IconDefinition, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Colors, COLORS, COLORSOPERAC } from '../../model/color.model';
 import { ButtonOption } from '../../model/button-option.model';
 
@@ -51,6 +51,8 @@ export class ButtonOperacComponent {
         return faTrashArrowUp
       case 'close':
         return faCircleXmark
+      case 'download':
+        return faDownload
       default:
         return faQuestion; // Puedes establecer un ícono predeterminado aquí si es necesario
     }

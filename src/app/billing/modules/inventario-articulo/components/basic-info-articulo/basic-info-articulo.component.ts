@@ -12,6 +12,7 @@ import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-succ
 import { Inventory } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { DatePipe } from '@angular/common';
+import { MyValidators } from '@billing-utils/validator';
 
 @Component({
   selector: 'app-basic-info-articulo',
@@ -32,7 +33,7 @@ export class BasicInfoArticleComponent implements OnInit {
 
   private buildForm(){
     this.formCrudArticle = this.formBuilder.group({
-      codart: ['',[Validators.required]],
+      codart: ['',[Validators.required], MyValidators.AvailableCodartArticle(this.articuloService)],
       typinv: ['',[Validators.required]],
       abrevi: ['',[Validators.required]],
       descri: ['',[Validators.required]],
@@ -69,8 +70,8 @@ export class BasicInfoArticleComponent implements OnInit {
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ){
-    this.codartId = data.codart
     this.buildForm()
+    this.codartId = data.codart
     if(data.row) {
       this.formCrudArticle.setValue(data.row)
       this.formCrudArticle.patchValue({
@@ -86,13 +87,14 @@ export class BasicInfoArticleComponent implements OnInit {
         codprv: data.row.codprv,
         codman: data.row.codman,
         coduni: data.row.coduni,
-        stocknegative: data.row.stocknegative,
-        editdescri: data.row.editdescri,
-        printcomment: data.row.printcomment,
+        stocknegative: data.row.stocknegative === 'Y' ? true : false,
+        editdescri: data.row.editdescri === 'Y' ? true : false,
+        printcomment: data.row.printcomment === 'Y' ? true : false,
         image: data.row.image,
         observ: data.row.observ,
         commen: data.row.commen
       })
+      this.codart?.disable()
       this.validArticle =  true
     }
   }
@@ -131,6 +133,7 @@ export class BasicInfoArticleComponent implements OnInit {
                 observ: data.object.observ,
                 commen: data.object.commen
               })
+              this.codart?.disable()
               this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
             }
           }
@@ -189,6 +192,12 @@ export class BasicInfoArticleComponent implements OnInit {
         }
       })
     } else {
+      if(this.codart?.hasError('not_available')){
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: { status:0, message:'The article code is already registered' }
+        })
+      }
       this.formCrudArticle.markAllAsTouched()
     }
   }

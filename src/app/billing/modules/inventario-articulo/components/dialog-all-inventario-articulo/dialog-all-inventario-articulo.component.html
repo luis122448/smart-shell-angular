@@ -1,24 +1,39 @@
 <main class="dialog-container">
   <section>
     <h1 class="dialog-title">Inventario y Articles</h1>
-  <form action="#" [formGroup]="formSearchInventarioArticle">
-      <div class="space-y-2 divide-linea">
+    <form [formGroup]="formSearchInventarioArticle">
+      <div class="divide-linea space-y-2">
         <div class="grid grid-cols-5 gap-x-8">
           <div class="col-span-3 flex">
-            <div class="w-48"><label for="typinv" class="label-input-lg">Inventario</label></div>
+            <div class="w-48">
+              <label for="typinv" class="label-input-lg">Inventario</label>
+            </div>
             <select
               name="typinv"
               id="typinv"
               formControlName="typinv"
               class="select-default"
+              [class.select-invalid]="isInputInvalid('typinv')"
             >
-              <option *ngFor="let item of inventories" [value]="item.typinv">{{item.descri}}</option>
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('typinv')"
+              >
+                -- Elegir --
+              </option>
+              <option *ngFor="let item of inventories" [value]="item.typinv">
+                {{ item.descri }}
+              </option>
             </select>
           </div>
-          <app-alert-standard *ngIf="isInputInvalid('typinv')"
+          <!-- <app-alert-standard *ngIf="isInputInvalid('typinv')"
             >Es obligatorio seleccionar un Tipo de
             Inventario</app-alert-standard
-          >
+          > -->
           <div class="col-span-2 flex items-center justify-center space-x-4">
             <label for="status" class="label-input-xs">Inc Inactive?</label>
             <input
@@ -69,6 +84,14 @@
   </section>
   <section class="flex justify-end space-x-4">
     <app-button-standard
+      (click)="exportImportArticle()"
+      colorBtn="gray"
+      optionBtn="search"
+      typeBtn="button"
+    >
+      Export/Import
+    </app-button-standard>
+    <app-button-standard
       (click)="searchArticle()"
       colorBtn="sky"
       optionBtn="search"
@@ -104,7 +127,9 @@
         </td>
       </ng-container>
       <ng-container cdkColumnDef="descri">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Descripcion</th>
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+          Descripcion
+        </th>
         <td class="row-cell" cdk-cell *cdkCellDef="let row">
           {{ row.descri }}
         </td>
@@ -119,27 +144,23 @@
       </ng-container>
       <ng-container cdkColumnDef="operac">
         <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
-        <td
-          class="row-operac-cell"
-          cdk-cell
-          *cdkCellDef="let row"
-        >
+        <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
           <app-button-operac
-            *ngIf="row.status === 'S'"
+            *ngIf="row.status === 'Y'"
             (click)="crudArticle(row)"
             optionBtn="edit"
             colorBtn="sky"
           >
           </app-button-operac>
           <app-button-operac
-            *ngIf="row.status === 'S'"
+            *ngIf="row.status === 'Y'"
             (click)="cleanArticle(row)"
             optionBtn="clean"
             colorBtn="sky"
           >
           </app-button-operac>
           <app-button-operac
-            *ngIf="row.status === 'S'"
+            *ngIf="row.status === 'Y'"
             (click)="deleteArticle(row)"
             optionBtn="delete"
             colorBtn="red"
@@ -159,7 +180,8 @@
       [length]="totalElements"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page">
+      aria-label="Select page"
+    >
     </mat-paginator>
   </section>
   <section class="flex justify-end">

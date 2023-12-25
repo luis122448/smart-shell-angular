@@ -79,6 +79,7 @@ export interface PAGEArticle {
 }
 
 export interface ArticleBasic{
+  typinv: number
   codart: string
   descri: string
   row: Article | null

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faFileInvoice,faClipboardCheck, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoice,faClipboardCheck, faShoppingBag, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -12,5 +12,6 @@ export class DialogCrudArticleComponent{
   faFileInvoice = faFileInvoice
   faClipboardCheck = faClipboardCheck
   faShoppingBag = faShoppingBag
+  faFolderOpen = faFolderOpen
   selectedTab = new FormControl()
 }

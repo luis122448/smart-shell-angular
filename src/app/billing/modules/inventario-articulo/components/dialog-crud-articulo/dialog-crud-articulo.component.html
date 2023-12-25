@@ -12,6 +12,15 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
+            <fa-icon [icon]="faFolderOpen"></fa-icon>
+            <span class="mat-tab-label-span">Article Attached</span>
+          </div>
+        </ng-template>
+        <app-basic-article-attached></app-basic-article-attached>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="mat-tab-label-container">
             <fa-icon [icon]="faShoppingBag"></fa-icon>
             <span class="mat-tab-label-span">Ecommerce</span>
           </div>

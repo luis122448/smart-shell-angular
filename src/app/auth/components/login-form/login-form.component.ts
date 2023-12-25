@@ -18,6 +18,7 @@ import { forkJoin } from 'rxjs';
 import { ReasonCommercialDocumentService } from '@billing-services/reason-commercial-document.service';
 import { DefaultValuesComponent } from '@billing/modules/shared/components/default-values/default-values.component';
 import { TypeInventoryService } from '@billing-services/type-inventory.service';
+import { ListPriceService } from '@billing-services/list-price.service';
 
 @Component({
   selector: 'app-login-form',
@@ -65,7 +66,8 @@ export class LoginFormComponent {
     private sellerService:SellerService,
     private serieCommercialDocumentService:SerieCommercialDocumentService,
     private reasonCommercialDocumentService: ReasonCommercialDocumentService,
-    private typeInventoryService:TypeInventoryService
+    private typeInventoryService:TypeInventoryService,
+    private listPriceService: ListPriceService
   ){
     this.buildForm()
     this.buildFormVerify()
@@ -133,7 +135,7 @@ export class LoginFormComponent {
             })
           } else {
               await this.onUploadDefaultValues()
-              this.router.navigate(['/facturacion'])
+              this.router.navigate(['/billing'])
               this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent, MatSnackBarSuccessConfig);
           }
           this.globalStatusService.setLoading(false)
@@ -172,7 +174,8 @@ export class LoginFormComponent {
           return {
           codsel: data.codsel,
           abrevi: data.abrevi,
-          descri: data.descri
+          descri: data.descri,
+          defaul: 'N'
         }}))
       }
     })
@@ -184,7 +187,8 @@ export class LoginFormComponent {
           typcomdoc: data.typcomdoc,
           serie: data.serie,
           abrevi: data.abrevi,
-          descri: data.descri
+          descri: data.descri,
+          defaul: 'N'
         }}))
       }
     })
@@ -208,7 +212,21 @@ export class LoginFormComponent {
           return{
             typinv: data.typinv,
             abrevi: data.abrevi,
-            descri: data.descri
+            descri: data.descri,
+            defaul: data.defaul
+          }
+        }))
+      }
+    })
+    await this.listPriceService.getAll()
+    .subscribe({
+      next:data =>{
+        this.defaultValuesService.setCookieValue('listPrices', data.list.map(data =>{
+          return{
+            codlistprice: data.codlistprice,
+            abrevi: data.abrevi,
+            descri: data.descri,
+            defaul: data.defaul
           }
         }))
       }

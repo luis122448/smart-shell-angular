@@ -25,6 +25,7 @@ import { ModalImportListPriceComponent } from './components/modal-import-list-pr
   ],
   exports: [
     DialogAllListPriceComponent,
+    BasicImportListPriceComponent
   ]
 })
 export class ListPriceModule { }

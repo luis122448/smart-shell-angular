@@ -9,6 +9,10 @@ import { DialogAllArticleComponent } from './components/dialog-all-articulo/dial
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DialogCrudArticleComponent } from './components/dialog-crud-articulo/dialog-crud-articulo.component';
+import { DialogImportArticleComponent } from './components/dialog-import-article/dialog-import-article.component';
+import { BasicImportArticleComponent } from './components/basic-import-article/basic-import-article.component';
+import { ListPriceModule } from '../list-price/list-price.module';
+import { BasicArticleAttachedComponent } from './components/basic-article-attached/basic-article-attached.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +22,15 @@ import { DialogCrudArticleComponent } from './components/dialog-crud-articulo/di
     ListaPreciosArticleComponent,
     DialogAllInventarioArticleComponent,
     DialogAllArticleComponent,
-    DialogCrudArticleComponent
+    DialogCrudArticleComponent,
+    DialogImportArticleComponent,
+    BasicImportArticleComponent,
+    BasicArticleAttachedComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    ListPriceModule,
     SharedModule
   ],
   exports:[

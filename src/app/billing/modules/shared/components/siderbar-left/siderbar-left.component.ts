@@ -94,6 +94,27 @@ export class SiderbarLeftComponent {
       open: false
     },
     {
+      rotulo: "Configuration2",
+      id: '',
+      link: 'configuration/principal',
+      icon: faGears,
+      subMenu: [
+        {
+          rotulo: 'Company',
+          id: '',
+          link: 'configuration/principal',
+          icon: null
+        },
+        {
+          rotulo: 'Serie / Document',
+          id: '',
+          link: '',
+          icon: null
+        }
+      ],
+      open: false
+    },
+    {
       rotulo: "Credits",
       id: '',
       link: 'configuration/credits',

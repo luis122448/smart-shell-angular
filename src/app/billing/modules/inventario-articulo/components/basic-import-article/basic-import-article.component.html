@@ -1,31 +1,47 @@
 <form
-  [formGroup]="formCrudListPriceArticle"
+  [formGroup]="formCrudInventoryArticle"
   class="relative h-full w-full space-y-6 px-4 py-6"
 >
   <section class="grid grid-cols-2 gap-x-4 export-container">
     <article class="col-span-1 space-y-2">
+      <label for="typinv" class="export-label"
+          >Format Blank</label
+        >
+    </article>
+    <article class="col-span-1 space-y-2">
+      <app-button-standard
+        (click)="exportBlankArticle()"
+        colorBtn="green"
+        optionBtn="export"
+        typeBtn="button"
+      >
+        Export
+      </app-button-standard>
+    </article>
+  </section>
+  <section class="grid grid-cols-2 gap-x-4 export-container">
+    <article class="col-span-1 space-y-2">
       <div class="flex">
-        <label for="codlistprice" class="export-label label-required"
-          >Price List</label
+        <label for="typinv" class="export-label label-required"
+          >Type Inventory</label
         >
         <select
-          name="codlistprice"
-          id="codlistprice"
+          name="typinv"
+          id="typinv"
+          formControlName="typinv"
           class="select-default"
-          formControlName="codlistprice"
-          [class.select-invalid]="isInputInvalid('codlistprice')"
         >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('codlistprice')"
-          >
-            -- Elegir --
-          </option>
-          <option *ngFor="let item of listPrices" [value]="item.codlistprice">
+        <option
+        value=""
+        class="option-default"
+        disabled
+        selected
+        hidden
+        [class.option-invalid]="isInputInvalid('typinv')"
+      >
+        -- Elegir --
+      </option>
+          <option *ngFor="let item of inventories" [value]="item.typinv">
             {{ item.descri }}
           </option>
         </select>
@@ -33,7 +49,7 @@
     </article>
     <article class="col-span-1 space-y-2">
       <app-button-standard
-        (click)="exportListPriceArticle()"
+        (click)="exportArticle()"
         colorBtn="green"
         optionBtn="export"
         typeBtn="button"
@@ -47,8 +63,8 @@
       <label
         class="import-label label-required"
         for="file_input"
-        >Upload file
-      </label>
+        >Upload file</label
+      >
       <input
         class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
         id="file_input"
@@ -59,7 +75,7 @@
     </article>
     <article class="col-span-1 space-y-2">
       <app-button-standard
-        (click)="importListPriceArticle()"
+        (click)="importArticle()"
         colorBtn="green"
         optionBtn="import"
         typeBtn="button"

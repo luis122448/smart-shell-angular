@@ -313,6 +313,22 @@ body {
 //   dark:bg-slate-900 dark:text-gray-400;
 // }
 
+.import-container {
+  @apply py-4 px-6 border border-gray-300 border-dashed rounded-lg dark:border-gray-600
+}
+
+.export-container {
+  @apply py-4 px-6 border border-gray-300 border-dashed rounded-lg dark:border-gray-600
+}
+
+.import-label{
+  @apply mb-2 block text-sm font-medium text-gray-900 dark:text-white
+}
+
+.export-label{
+  @apply mb-2 block text-sm font-medium text-gray-900 dark:text-white
+}
+
 .dialog-container {
   @apply h-5/6 w-screen md:h-[800px] md:w-[800px] xl:w-[1000px] m-auto overflow-auto
   bg-slate-100 px-8 py-8 space-y-6

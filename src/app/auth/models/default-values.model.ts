@@ -16,6 +16,7 @@ export interface Seller{
   codsel: string
   abrevi: string
   descri: string
+  defaul: string
 }
 
 export interface Serie{
@@ -23,6 +24,7 @@ export interface Serie{
   serie: string
   abrevi: string
   descri: string
+  defaul: string
 }
 
 export interface Reason{
@@ -35,6 +37,13 @@ export interface Reason{
 
 export interface Inventory{
   typinv: number
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
+export interface ListPrice{
+  codlistprice: string
   abrevi: string
   descri: string
   defaul: string
