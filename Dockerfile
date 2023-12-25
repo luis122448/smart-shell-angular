@@ -10,17 +10,9 @@ COPY ./tailwind.config.js /home/app
 RUN npm install
 
 COPY ./src /home/app/src
-RUN npm run build
+RUN npm run build --prod
 
 # Serve app with nginx server
-# FROM nginx:latest
-# ARG name
-# COPY --from=build /home/app/dist/$name/browser /usr/share/nginx/html
-# EXPOSE 80
-
-# EXPOSE 4200
-# CMD ["npm", "start"]
-
 # Use official nginx image as the base image
 FROM nginx:latest
 
