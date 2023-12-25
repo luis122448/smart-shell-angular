@@ -10,7 +10,7 @@ COPY ./tailwind.config.js /home/app
 RUN npm install
 
 COPY ./src /home/app/src
-RUN npm run build --prod
+RUN npm run build --omit=dev
 
 # Serve app with nginx server
 # Use official nginx image as the base image
