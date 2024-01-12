@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
+import { DialogRef, DIALOG_DATA, Dialog } from '@angular/cdk/dialog';
 import { Article } from '../../models/article.model';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -8,10 +8,14 @@ import { debounceTime } from 'rxjs/operators';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ArticleService } from '../../services/article.service';
 import { GlobalStatusService } from '../../services/global-status.service';
+import { ListPriceArticleService } from '@billing-services/list-price-article.service';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { Data } from '@angular/router';
 
 export interface DialogData {
-  codart: string
-  descri: string
+  codart?: string
+  descri?: string
+  codlistprice: number
 }
 
 @Component({
@@ -29,28 +33,14 @@ export class DialogGetArticleComponent implements OnInit {
 
   constructor(
     private dialogRef: DialogRef,
+    private dialog: Dialog,
     private articleService: ArticleService,
+    private listPriceArticleService:ListPriceArticleService,
     private globalStatusService: GlobalStatusService,
     @Inject(DIALOG_DATA) private data: DialogData
   ){}
   ngOnInit(): void {
-    if(this.data.codart){
-      this.globalStatusService.setLoading(true)
-      this.articleService.getArticleCodart(this.data.codart)
-      .subscribe(data =>{
-        this.dataSource.getInit(data.list)
-        this.countRecords = this.dataSource.getCount()
-        this.globalStatusService.setLoading(false)
-      })
-    } else if (this.data.descri){
-      this.globalStatusService.setLoading(true)
-      this.articleService.getArticleDescri(this.data.descri)
-      .subscribe(data =>{
-        this.dataSource.getInit(data.list)
-        this.countRecords = this.dataSource.getCount()
-        this.globalStatusService.setLoading(false)
-      })
-    }
+    this.loadArticle(this.data.codart,this.data.descri)
     this.input.valueChanges
     .pipe(
       debounceTime(300)
@@ -60,7 +50,87 @@ export class DialogGetArticleComponent implements OnInit {
     })
   }
 
+  loadArticle(codart: string | undefined, descri: string | undefined){
+    this.globalStatusService.setLoading(true)
+    if(codart){
+      this.articleService.getArticleCodart(codart)
+      .subscribe({
+        next: data =>{
+          this.dataSource.getInit(data.list)
+          this.countRecords = this.dataSource.getCount()
+          if (data.list.length == 0){
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: { no_data_found: 'S' }
+            })
+            this.closeDialog(null)
+          } else if (data.list.length == 1){
+            this.closeDialog(data.list[0])
+          }
+          this.globalStatusService.setLoading(false)
+        },
+        error: error =>{
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: error.error
+          })
+          this.globalStatusService.setLoading(false)
+        }
+      })
+    } else if (descri){
+      this.articleService.getArticleDescri(descri)
+      .subscribe({
+        next: data =>{
+          this.dataSource.getInit(data.list)
+          this.countRecords = this.dataSource.getCount()
+          if (data.list.length == 0){
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: { no_data_found: 'S' }
+            })
+            this.closeDialog(null)
+          } else if (data.list.length == 1){
+            this.closeDialog(data.list[0])
+          }
+          this.globalStatusService.setLoading(false)
+        },
+        error: error =>{
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: error.error
+          })
+          this.globalStatusService.setLoading(false)
+        }
+      })
+    } else {
+      this.globalStatusService.setLoading(false)
+    }
+  }
+
   closeDialog(row: Article | null){
+    if(row){
+      this.globalStatusService.setLoading(true)
+      this.listPriceArticleService.getById(this.data.codlistprice,row.codart)
+      .subscribe({
+        next: data =>{
+          if(data.object){
+            row.price = data.object.price
+            row.stock = 0
+          } else {
+            row.price = 0
+            row.stock = 0
+          }
+          this.globalStatusService.setLoading(false)
+        },
+        error: err =>{
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: err.error
+          })
+          this.globalStatusService.setLoading(false)
+        }
+      })
+    }
     this.dialogRef.close(row)
   }
 }

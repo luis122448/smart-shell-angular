@@ -1,5 +1,27 @@
 #themeSwitcher:checked + label .switchball{
   background-color: transparent;
-  transform: translateX(24px);
-  transition: transform 0.3s linear;
+  transform: translateX(50px);
+  transition: transform 0.4s ease-in-out;
+}
+
+#themeSwitcher:not(:checked) + label .switchball {
+  background-color: transparent;
+  transform: translateX(0); /* Vuelve a la posición inicial al no estar marcado */
+  transition: transform 0.4s ease-in-out;
+}
+
+.light {
+  color: #eab308;
+}
+
+.dark {
+  color: #0c4a6e;
+}
+
+.dark-alternative {
+  color: #9ca3af;
+}
+
+.display-none {
+  display: none;
 }

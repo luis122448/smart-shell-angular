@@ -1,6 +1,6 @@
 <form class="sub-main-container px-4" [formGroup]="formCrudCompany">
-  <section class="grid grid-cols-2 lg:grid-cols-3 pt-6">
-    <article class="col-span-1 space-y-2">
+  <section class="grid grid-cols-5 pt-6 gap-x-6">
+    <article class="col-span-2 space-y-2">
       <div class="flex">
         <label for="typidedoc" class="label-input-sm label-required"
           >Type of Identity Document</label
@@ -82,16 +82,16 @@
         />
       </div>
     </article>
-    <article class="col-span-1 h-full w-full space-y-4">
-      <div class="flex w-full items-center justify-center">
+    <article class="col-span-3 h-full w-full space-x-4 flex justify-between">
+      <div class="flex w-56 items-center justify-center m-auto">
         <div *ngIf="imageCompanyImageURL === imageNoUpload; else imageCompanyImage">
           <label
             for="imageCompanyImage"
           class="flex h-48 w-48 label-image"
           >
-            <div class="flex flex-col items-center justify-center pb-6 pt-5">
+            <div class="flex flex-col items-center justify-center">
               <svg
-                class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                class="h-8 w-8 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -105,13 +105,12 @@
                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                 />
               </svg>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                <span class="font-semibold">Click to upload</span> or drag and
-                drop
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">
+              <label class="text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span>
+              </label>
+              <span class="text-xs text-gray-500 dark:text-gray-400">
                 Only JPG (MAX. 400x400px)
-              </p>
+              </span>
             </div>
             <input
               id="imageCompanyImage"
@@ -142,18 +141,19 @@
           </div>
         </ng-template>
       </div>
-    </article>
-    <article class="lg:col-span-1 w-full">
-      <p>Remember</p>
-      <span>
-        <li>Fields marked with (*) are required</li>
-        <li>Respect the dimensions marks for uploading images, for an optimal visualization</li>
-        <li>Only uploading images with .jpg format is supported</li>
-      </span>
+      <div class="lg:block hidden">
+        <p>Remember</p>
+        <span>
+          <li>Fields marked with (*) are required</li>
+          <li>Respect the dimensions marks for uploading images, for an optimal visualization</li>
+          <li>Only uploading images with .jpg format is supported</li>
+        </span>
+      </div>
     </article>
   </section>
-  <section class="dialog-sub-title">
-    Section Image :
+  <section>
+    <hr class="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700" />
+    <label class="dialog-sub-title">Section Image: </label>
   </section>
   <section class="grid grid-cols-5 gap-x-6">
     <article class="col-span-1 lg:col-span-2 grid grid-rows-2 gap-y-4">
@@ -164,9 +164,9 @@
               for="imageCompanyIcon"
             class="flex h-24 w-24 label-image"
             >
-              <div class="flex flex-col items-center justify-center pb-6 pt-5">
+              <div class="flex flex-col items-center justify-center">
                 <svg
-                  class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                  class="h-8 w-8 text-gray-500 dark:text-gray-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -180,9 +180,8 @@
                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                   />
                 </svg>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  Only JPG (MAX. 200x200px)
-                </p>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Only JPG</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">(200x200px)</span>
               </div>
               <input
                 id="imageCompanyIcon"
@@ -225,9 +224,9 @@
               for="imageCompanyLogo"
             class="flex h-24 w-24 label-image"
             >
-              <div class="flex flex-col items-center justify-center pb-6 pt-5">
+              <div class="flex flex-col items-center justify-center">
                 <svg
-                  class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                  class="h-8 w-8 text-gray-500 dark:text-gray-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -241,9 +240,8 @@
                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                   />
                 </svg>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  Only JPG (MAX. 200x200px)
-                </p>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Only JPG</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">(200x200px)</span>
               </div>
               <input
                 id="imageCompanyLogo"
@@ -287,9 +285,9 @@
             for="imageCompanyGloss"
           class="flex h-24 w-96 label-image mx-auto"
           >
-            <div class="flex flex-col items-center justify-center pb-6 pt-5">
+            <div class="flex flex-col items-center justify-center">
               <svg
-                class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                class="h-8 w-8 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -303,13 +301,13 @@
                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                 />
               </svg>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <label class="text-sm text-gray-500 dark:text-gray-400">
                 <span class="font-semibold">Click to upload</span> or drag and
                 drop
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">
-                Only JPG (MAX. 800x400px)
-              </p>
+              </label>
+              <span class="text-xs text-gray-500 dark:text-gray-400">
+                Only JPG (MAX. 960x240px)
+              </span>
             </div>
             <input
               id="imageCompanyGloss"
@@ -348,6 +346,7 @@
     </article>
   </section>
   <section>
+    <hr class="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700" />
     <label class="dialog-sub-title">Audit Information : </label>
   </section>
   <section class="grid grid-cols-2 gap-x-4">
@@ -401,23 +400,5 @@
       />
     </div>
     </div>
-  </section>
-  <section class="flex justify-end space-x-6">
-    <app-button-standard
-      (click)="saveCompany()"
-      colorBtn="green"
-      optionBtn="save"
-      typeBtn="button"
-    >
-      Save
-    </app-button-standard>
-    <!-- <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard> -->
   </section>
 </form>

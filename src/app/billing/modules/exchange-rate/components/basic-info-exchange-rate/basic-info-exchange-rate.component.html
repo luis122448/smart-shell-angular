@@ -1,0 +1,142 @@
+<form [formGroup]="formCrudExchangeRate" class="sub-dialog-container">
+  <section>
+    <hr class="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700" />
+    <label class="dialog-sub-title">Import : </label>
+  </section>
+  <section>
+    <app-button-import-sunat (click)="importSunat()" typeBtn="button">
+    </app-button-import-sunat>
+  </section>
+  <section>
+    <hr class="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700" />
+    <label class="dialog-sub-title">Basic Information : </label>
+  </section>
+  <section class="space-y-4">
+    <div class="flex flex-col space-x-8">
+      <label for="registdate" class="label-input-sm label-required">Registed Date</label>
+      <input
+        id="registdate"
+        name="registdate"
+        type="date"
+        class="input-default"
+        formControlName="registdate"
+      />
+    </div>
+    <div class="grid grid-cols-2 gap-x-8">
+      <div>
+        <div class="flex">
+          <label for="origen" class="label-input-xl label-required">Moneda Origen</label>
+          <select id="origen" class="input-default" formControlName="origen">
+            <option value="PEN">PEN</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="flex">
+          <label for="destin" class="label-input-xl label-required">Moneda Destino</label>
+          <select id="destin" class="input-default" formControlName="destin">
+            <option value="PEN">PEN</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="grid grid-cols-3 grid-rows-2 gap-x-8 gap-y-4">
+    <div>
+      <label for="fventa" class="label-input-sm">Factor Venta</label>
+      <input
+        type="number"
+        min="0"
+        formControlName="fventa"
+        class="input-default"
+      />
+      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('fventa')">
+        Formato inválido. Ingresa un número con 2 a 4 decimales*
+      </app-alert-standard> -->
+    </div>
+    <div>
+      <label for="fcompra" class="label-input-sm">Factor Compra</label>
+      <input
+        type="number"
+        min="0"
+        formControlName="fcompra"
+        class="input-default"
+      />
+      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('fcompra')">
+        Formato inválido. Ingresa un número con 2 a 4 decimales*
+      </app-alert-standard> -->
+    </div>
+    <div>
+      <label for="cventa" class="label-input-sm"
+        >Contabilidad Venta</label
+      >
+      <input
+        type="number"
+        min="0"
+        formControlName="cventa"
+        class="input-default"
+      />
+      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('cventa')">
+        Formato inválido. Ingresa un número con 2 a 4 decimales*
+      </app-alert-standard> -->
+    </div>
+    <div>
+      <label for="ccompra" class="label-input-sm"
+        >Contabilidad Compra</label
+      >
+      <input
+        type="number"
+        min="0"
+        formControlName="ccompra"
+        class="input-default"
+      />
+      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('ccompra')">
+        Formato inválido. Ingresa un número con 2 a 4 decimales*
+      </app-alert-standard> -->
+    </div>
+    <div>
+      <label for="eventa" class="label-input-sm">Entidad Venta</label>
+      <input
+        type="number"
+        min="0"
+        formControlName="eventa"
+        class="input-default"
+      />
+      <app-alert-standard [class.invisible]="!isInputInvalid('eventa')">
+        Campo Obligatorio*
+      </app-alert-standard>
+    </div>
+    <div>
+      <label for="ecompra" class="label-input-sm">Entidad Compra</label>
+      <input
+        type="number"
+        min="0"
+        formControlName="ecompra"
+        class="input-default"
+      />
+      <app-alert-standard [class.invisible]="!isInputInvalid('ecompra')">
+        Campo Obligatorio*
+      </app-alert-standard>
+    </div>
+  </section>
+  <section class="flex justify-end space-x-4">
+    <app-button-standard
+      (click)="saveExchangeRate()"
+      [colorBtn]="'green'"
+      optionBtn="save"
+      [typeBtn]="'button'"
+    >
+      Guardar
+    </app-button-standard>
+    <app-button-standard
+      (click)="closeDialog()"
+      [colorBtn]="'red'"
+      optionBtn="close"
+      [typeBtn]="'button'"
+    >
+      Close
+    </app-button-standard>
+  </section>
+</form>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { faGithub, faLinkedin, faWhatsapp, faWhatsappSquare } from '@fortawesome/free-brands-svg-icons';
+import { faCode, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+
+  faGitHub = faGithub;
+  faLinkedin = faLinkedin;
+  faCode = faCode;
+  faWhatsapp = faWhatsapp;
+  faGlobe = faGlobe;
+  faWhatsappSquare = faWhatsappSquare;
 
 }

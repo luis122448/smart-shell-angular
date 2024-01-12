@@ -3,12 +3,12 @@
     <app-siderbar-left></app-siderbar-left>
   </menu>
   <div [ngSwitch]="isStatusInvoice" class="main-container">
-    <app-header></app-header>
+    <app-header-invoice class="h-[120px]"></app-header-invoice>
     <div class="body-container">
       <app-register-facbol *ngSwitchCase="'register'"></app-register-facbol>
       <app-search-facbol *ngSwitchCase="'search'"></app-search-facbol>
     </div>
-    <app-footer></app-footer>
+    <app-footer class="h-[80px]"></app-footer>
   </div>
   <menu class="rigth-container">
     <app-siderbar-rigth></app-siderbar-rigth>

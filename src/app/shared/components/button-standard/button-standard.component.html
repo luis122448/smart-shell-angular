@@ -1,12 +1,12 @@
 <button
   [type]="typeBtn"
   [ngClass]="colors"
-  class="w-[150px] flex justify-center space-x-2 rounded px-5 py-2 text-sm font-medium mx-auto"
+  class="min-w-[150px] flex flex-nowrap justify-center space-x-2 rounded px-5 py-2 text-sm font-medium mx-auto"
 >
   <section>
     <fa-icon [icon]="getIcon(optionBtn)"></fa-icon>
   </section>
-  <section>
+  <section class="">
     <ng-content></ng-content>
   </section>
 </button>

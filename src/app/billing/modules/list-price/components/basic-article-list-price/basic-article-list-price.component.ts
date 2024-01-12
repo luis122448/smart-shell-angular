@@ -51,17 +51,17 @@ export class BasicArticleListPriceComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     private datePipe: DatePipe,
-    @Inject(DIALOG_DATA) data : BasicListPrice,
+    @Inject(DIALOG_DATA) data : ListPrice | null,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ){
-    this.id = data.codlistprice
+    // this.id = data.codlistprice
     this.buildForm()
-    if(data.listprice) {
+    if(data) {
       this.formCrudListPriceArticle.patchValue({
-        codlistprice : data.listprice.codlistprice
+        codlistprice : data.codlistprice
       })
-      this.listPrice = data.listprice
+      this.listPrice = data
       this.validListPrice =  true
     }
     // this.codlistprice?.disable()

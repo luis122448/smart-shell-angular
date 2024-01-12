@@ -17,27 +17,13 @@ export class BusinessPartnerService {
     private httpCLient: HttpClient
   ) { }
 
-  getByLike(codbuspar : string, busnam: string, status : string = 'S'){
+  getByLike(codbuspar : string, busnam: string, status : string = 'Y'){
     let params = new HttpParams();
     params = params.set('codbuspar',codbuspar)
     params = params.set('busnam',busnam)
     params = params.set('status',status)
     return this.httpCLient.get<DAOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-like`,{ params })
   }
-
-  // getClienteCodintcom(codbuspar : string, status : string = 'S'){
-  //   let params = new HttpParams();
-  //   params = params.set('codbuspar',codbuspar)
-  //   params = params.set('status',status)
-  //   return this.httpCLient.get<DAOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-like`,{ params })
-  // }
-
-  // getClienteRazsoc(busnam: string, status : string = 'S'){
-  //   let params = new HttpParams()
-  //   params = params.set('busnam',busnam)
-  //   params = params.set('status',status)
-  //   return this.httpCLient.get<DAOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-like`,{ params })
-  // }
 
   getById(codbuspar: string): Observable<DTOInterlocutorComercial>{
     return this.httpCLient.get<DTOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
@@ -55,7 +41,7 @@ export class BusinessPartnerService {
     params = params.set('codbuspar',codbuspar)
     params = params.set('busnam',busnam)
     if (!status) {
-      params = params.set('status','S')
+      params = params.set('status','Y')
     }
     params = params.set('size',pageSize.toString())
     params = params.set('page',pageIndex.toString())

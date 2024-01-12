@@ -1,0 +1,20 @@
+<header class="h-[120px] w-full sapce-y-6 dark:bg-slate-800 dark:text-slate-400">
+  <app-header></app-header>
+  <section class="h-[50px] w-full px-4 grid grid-cols-2 dark:bg-slate-800 dark:text-slate-400 items-center">
+    <section class="dialog-title">{{this.title}}</section>
+    <section class="flex justify-end space-x-6">
+      <app-button-standard
+      (click)="onSave()"
+      colorBtn="green"
+      optionBtn="save"
+      typeBtn="button"
+      >Save</app-button-standard>
+      <app-button-standard
+        (click)="onLeave()"
+        colorBtn="red"
+        optionBtn="close"
+        typeBtn="button"
+        >Close</app-button-standard>
+    </section>
+  </section>
+</header>

@@ -1,66 +1,116 @@
 <ng-container [ngSwitch]="this.mensaje.status">
-  <section *ngSwitchCase="1"
-  class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
-  <div class="flex justify-center">
-    <fa-icon [icon]="faCircleMinus" size="2xl" class="text-sky-600"></fa-icon>
-  </div>
-  <div class="text-center text-inline">{{ this.mensaje.message }}</div>
-  <div class="flex justify-center">
-    <app-button-standard
-      (click)="onClose()"
-      colorBtn="sky"
-      optionBtn="close"
-      typeBtn="button">
-      Cerrar
-    </app-button-standard>
-  </div>
-</section>
-  <section *ngSwitchCase="0"
-    class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+  <section
+    *ngSwitchCase="1"
+    class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+  >
     <div class="flex justify-center">
-      <fa-icon [icon]="faCircleInfo" size="2xl" class="text-sky-600"></fa-icon>
+      <fa-icon [icon]="faCircleMinus" size="2xl" class="text-sky-600"></fa-icon>
     </div>
-    <div class="text-center text-inline">{{ this.mensaje.message }}</div>
-    <div class="flex justify-center">
+    <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+    <div class="flex justify-center gap-x-4">
       <app-button-standard
         (click)="onClose()"
         colorBtn="sky"
         optionBtn="close"
-        typeBtn="button">
-        Cerrar
+        typeBtn="button"
+      >
+        Close
       </app-button-standard>
     </div>
   </section>
-  <section *ngSwitchCase="-1"
-    class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+  <section
+    *ngSwitchCase="0"
+    class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+  >
     <div class="flex justify-center">
-      <fa-icon [icon]="faCircleExclamation" size="2xl" class="text-yellow-700"></fa-icon>
+      <fa-icon [icon]="faCircleInfo" size="2xl" class="text-sky-600"></fa-icon>
     </div>
-    <div class="text-center text-inline">{{ this.mensaje.message }}</div>
-    <div class="flex justify-center">
+    <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+    <div class="flex justify-center gap-x-4">
       <app-button-standard
         (click)="onClose()"
-        colorBtn="yellow"
+        colorBtn="sky"
         optionBtn="close"
-        typeBtn="button">
-        Cerrar
+        typeBtn="button"
+      >
+        Close
       </app-button-standard>
+    </div>
+  </section>
+  <section
+    *ngSwitchCase="-1"
+    class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+  >
+    <div class="flex justify-center">
+      <fa-icon
+        [icon]="faCircleExclamation"
+        size="2xl"
+        class="text-yellow-700"
+      ></fa-icon>
+    </div>
+    <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+    <div class="flex justify-center gap-x-4">
+      <app-button-standard
+        (click)="onClose()"
+        colorBtn="sky"
+        optionBtn="close"
+        typeBtn="button"
+      >
+        Close
+      </app-button-standard>
+      <app-button-standard
+        *ngIf="this.mensaje.logMessage!"
+        (click)="onWarning()"
+        colorBtn="yellow"
+        optionBtn="info"
+        typeBtn="button"
+      >
+        Warning
+      </app-button-standard>
+    </div>
+    <div
+      *ngIf="this.varWarning"
+      class="mb-4 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800 dark:bg-gray-800 dark:text-yellow-300"
+    >
+      <span class="font-medium">Cause :</span> {{ this.mensaje.logMessage }}
     </div>
   </section>
   <ng-template ngSwitchDefault>
-    <section class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+    <section
+      class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+    >
       <div class="flex justify-center">
-        <fa-icon [icon]="faCircleXmark" size="2xl" class="text-red-600"></fa-icon>
+        <fa-icon
+          [icon]="faCircleXmark"
+          size="2xl"
+          class="text-red-600"
+        ></fa-icon>
       </div>
-      <div class="text-center text-inline">{{ this.mensaje.message }}</div>
-      <div class="flex justify-center">
+      <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+      <div class="flex justify-center gap-x-4">
         <app-button-standard
           (click)="onClose()"
-          colorBtn="red"
+          colorBtn="sky"
           optionBtn="close"
-          typeBtn="button">
-          Cerrar
+          typeBtn="button"
+        >
+          Close
         </app-button-standard>
+        <app-button-standard
+          *ngIf="this.mensaje.logMessage!"
+          (click)="onReport()"
+          colorBtn="red"
+          optionBtn="report"
+          typeBtn="button"
+        >
+          Report
+        </app-button-standard>
+      </div>
+      <div
+        *ngIf="this.varError"
+        class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400"
+      >
+        <span class="font-medium">Cause :</span> {{ this.mensaje.logMessage }}
       </div>
     </section>
   </ng-template>

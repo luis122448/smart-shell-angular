@@ -1,0 +1,35 @@
+<div class="configuration-container">
+  <mat-tab-group
+    [selectedIndex]="selectedTab.value"
+    (selectedIndexChange)="selectedTab.setValue($event)"
+  >
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faFileInvoice"></fa-icon>
+          <span class="mat-tab-label-span">Basic Configuration</span>
+        </div>
+      </ng-template>
+      <app-basic-serie-commercial-document
+        [inputTypcomdoc]="this.inputTypcomdoc"
+        [inputSerie]="this.inputSerie"
+        [inputSave]="this.inputSave"
+        (changeView)="(this.changeView)"
+      ></app-basic-serie-commercial-document>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faIndent"></fa-icon>
+          <span class="mat-tab-label-span">Format Configuration</span>
+        </div>
+      </ng-template>
+      <app-format-serie-commercial-document
+        [inputTypcomdoc]="this.inputTypcomdoc"
+        [inputSerie]="this.inputSerie"
+        [inputSave]="this.inputSave"
+        (changeView)="(this.changeView)">
+      </app-format-serie-commercial-document>
+    </mat-tab>
+  </mat-tab-group>
+</div>

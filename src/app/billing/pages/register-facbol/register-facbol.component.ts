@@ -38,23 +38,24 @@ export class RegisterFacbolComponent implements OnInit {
   currencies : Currency[]
   reasons: Reason[]
 
-  private buildForm() {
+  private buildForm(typcomdoc: number | undefined, serie: string | undefined, reacomdoc: number | undefined) {
     this.form =  this.formBuilder.group({
-      typcomdoc: [1,[Validators.required]],
+      typcomdoc: [typcomdoc,[Validators.required]],
       sitcomdoc: [1,[Validators.required]],
-      serie: ['',[Validators.required]],
+      serie: [serie,[Validators.required]],
       numdoc: [0,[Validators.required]],
       registdate: [new Date(),[Validators.required]],
       codbranch: [1,[Validators.required]],
       codplaiss: [1,[Validators.required]],
       ingsalcom: [1,[Validators.required]],
-      reacomdoc: ['',[Validators.required]],
+      reacomdoc: [reacomdoc,[Validators.required]],
       codcur: ['PEN',[Validators.required]],
       exchangerate: [0,[Validators.required,Validators.pattern(/^\d{1,4}(\.\d{1,4})?$/)]],
       codbuspar: ['',[Validators.required]],
       busnam: ['',[Validators.required]],
       addres: ['',[Validators.required]],
       poscod: ['000000',[Validators.required]],
+      codlistprice: [0,[Validators.required]],
       codsel: ['',[Validators.required]],
       typpaycon: [1,[Validators.required]],
       incigv: [1,[Validators.required]],
@@ -75,16 +76,17 @@ export class RegisterFacbolComponent implements OnInit {
     private facbolGlobalStatusService: FacbolGlobalStatusService,
     private defaultValuesService: DefaultValuesService
   ){
-    this.buildForm()
     this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === 1)
     this.sellers = this.defaultValuesService.getCookieValue('sellers')
     this.currencies = this.defaultValuesService.getCookieValue('currencies')
     this.reasons = this.defaultValuesService.getCookieValue('reasons').filter(data => data.typcomdoc === 1 && data.ingsalcom === 1)
-    // this.series =  this.defaultValuesService.series.filter(data => data.typcomdoc === 1)
-    // this.sellers = this.defaultValuesService.sellers
-    // this.currencies = this.defaultValuesService.currencies
-    // this.reasons =  this.defaultValuesService.reasons.filter(data => data.typcomdoc === 1 && data.ingsalcom === 1)
+
+    // Default Values
+    const defaultSeries = this.series.find(data => data.defaul === 'Y');
+    const defaultReason = this.reasons.find(data => data.defaul === 'Y');
+    this.buildForm(1,defaultSeries?.serie,defaultReason?.reacomdoc)
   }
+
   ngOnInit(): void {
     this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === 1)
     this.sellers = this.defaultValuesService.getCookieValue('sellers')
@@ -139,11 +141,12 @@ export class RegisterFacbolComponent implements OnInit {
         this.form.get('codbuspar')?.setValue(data.codbuspar)
         this.form.get('busnam')?.setValue(data.busnam)
         this.form.get('addres')?.setValue(data.addres)
+        this.form.get('poscod')?.setValue(data.poscod)
+        this.form.get('codlistprice')?.setValue(data.codlistprice)
         // Asignar las Condiciones Pago
         this.businessPartnerService.getByCodintcomCondicionPago(data.codbuspar)
         .subscribe(data => {
           this.tipoConPag = data.list
-          console.log("Condicion Pago", this.tipoConPag)
         })
         // Deshabilitar todos los inputs
         this.form.get('typcomdoc')?.disable()
@@ -160,7 +163,6 @@ export class RegisterFacbolComponent implements OnInit {
         }
       }
     })
-
     this.dataSource.getPush(this.form.value)
   }
 

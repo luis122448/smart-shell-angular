@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'invoice',
     canActivate: [ AuthGuard ],
     component: LayoutInvoiceComponent
-  },
+  }
 ];
 
 @NgModule({

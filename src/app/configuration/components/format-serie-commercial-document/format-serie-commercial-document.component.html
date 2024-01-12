@@ -1,0 +1,123 @@
+<form
+  [formGroup]="formCrudSerieCommercialDocument"
+  class="flex h-full w-full flex-col space-y-6 px-4 py-6"
+>
+  <section class="grid grid-cols-2 gap-x-4">
+    <article class="col-span-1 space-y-2">
+      <div class="flex">
+        <label for="typcomdoc" class="label-input-sm label-required"
+          >Type Document</label
+        >
+        <select
+          name="typcomdoc"
+          id="typcomdoc"
+          class="select-default col-span-2"
+          formControlName="typcomdoc"
+          placeholder="Type Document*"
+          (change)="changeTypeDocumentCommercial()"
+        >
+          <option
+            value=""
+            class="option-default"
+            disabled
+            selected
+            hidden
+            [class.option-invalid]="isInputInvalid('typcomdoc')"
+          >
+            -- Elegir --
+          </option>
+          <option
+            *ngFor="let item of listCommercialDocument"
+            [value]="item.typcomdoc"
+            class="option-default"
+          >
+            {{ item.typcomdoc + " - " + item.descri }}
+          </option>
+        </select>
+      </div>
+      <div class="flex">
+        <label for="serie" class="label-input-sm label-required">Serie</label>
+        <input
+          id="serie"
+          type="text"
+          class="input-default"
+          formControlName="serie"
+          [class.input-invalid]="isInputInvalid('serie')"
+          placeholder="Serie*"
+        />
+      </div>
+      <div class="flex">
+        <label for="codbranch" class="label-input-sm label-required"
+          >Branch</label
+        >
+        <select
+          name="codbranch"
+          id="codbranch"
+          class="select-default col-span-2"
+          formControlName="codbranch"
+          [class.select-invalid]="isInputInvalid('codbranch')"
+          placeholder="Type Document*"
+        >
+          <option
+            value=""
+            class="option-default"
+            disabled
+            selected
+            hidden
+            [class.option-invalid]="isInputInvalid('codbranch')"
+          >
+            -- Elegir --
+          </option>
+          <option
+            *ngFor="let item of listBranches"
+            [value]="item.codbranch"
+            class="option-default"
+          >
+            {{ item.codbranch + " - " + item.descri }}
+          </option>
+        </select>
+      </div>
+      <div class="flex">
+        <label for="typformat" class="label-input-sm label-required"
+          >Type Format</label
+        >
+        <select
+          name="typformat"
+          id="typformat"
+          class="select-default col-span-2"
+          formControlName="typformat"
+          [class.select-invalid]="isInputInvalid('typformat')"
+          placeholder="Type Document*"
+          (change)="changeFormatCommercialDocument()"
+        >
+          <option
+            value=""
+            class="option-default"
+            disabled
+            selected
+            hidden
+            [class.option-invalid]="isInputInvalid('typformat')"
+          >
+            -- Elegir --
+          </option>
+          <option
+            *ngFor="let item of listFormatCommercialDocument"
+            [value]="item.typformat"
+            class="option-default"
+          >
+            {{ item.typformat + " - " + item.descri }}
+          </option>
+        </select>
+      </div>
+    </article>
+    <article class="col-span-1 h-full w-full space-y-4 px-8">
+      <div class="flex w-full items-center justify-center">
+        <img
+          [src]="urlFormatCommercialDocument"
+          [alt]="nameFormatCommercialDocument"
+          class="m-auto h-64 w-56 rounded-sm bg-slate-100 object-cover"
+        />
+      </div>
+    </article>
+  </section>
+</form>

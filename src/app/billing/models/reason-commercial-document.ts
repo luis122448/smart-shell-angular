@@ -7,6 +7,7 @@ export interface ReasonCommercialDocument{
   codext: string
   observ: string
   commen: string
+  defaul: string
   status: string
   createby: string
   updateby: string

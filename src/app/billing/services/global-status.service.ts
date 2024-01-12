@@ -9,10 +9,12 @@ export class GlobalStatusService {
 
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   private isStatusInvoiceSubject = new BehaviorSubject<'search' | 'register'>('register');
+  private isStatusConfigurationSubject = new BehaviorSubject<'company' | 'serie'>('company');
   private isBranchSubject = new BehaviorSubject<string>('1');
   private isPlaceOfIssue = new BehaviorSubject<string>('1');
   isLoading$ = this.isLoadingSubject.asObservable()
   isStatusInvoice$ = this.isStatusInvoiceSubject.asObservable()
+  isStatusConfiguration$ = this.isStatusConfigurationSubject.asObservable()
   isBranchSubject$ = this.isBranchSubject.asObservable()
   isPlaceOfIssue$ = this.isPlaceOfIssue.asObservable()
 
@@ -37,6 +39,14 @@ export class GlobalStatusService {
   }
   setStatusInvoice(data: 'search' | 'register'){
     this.isStatusInvoiceSubject.next(data)
+  }
+
+  getStatusConfiguration(){
+    return this.isStatusConfigurationSubject.getValue()
+  }
+
+  setStatusConfiguration(data: 'company' | 'serie'){
+    this.isStatusConfigurationSubject.next(data)
   }
 
   getBranchSubject(){

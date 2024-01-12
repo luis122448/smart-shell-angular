@@ -1,4 +1,4 @@
-<main class="grid h-full grid-cols-5 xl:grid-cols-7 default-container">
+<main class="default-container grid h-full grid-cols-5 xl:grid-cols-7">
   <section class="col-span-3 xl:col-span-5">
     <img
       loading="lazy"
@@ -7,15 +7,88 @@
       alt="logo"
     />
   </section>
-  <section class="dialog-container col-span-2 w-full">
-    <section class="fixed top-0 right-0">
-      <app-theme-switcher class=""></app-theme-switcher>
-    </section>
+  <section class="fixed right-0 top-0">
+    <app-theme-switcher [openSidebar]="true"></app-theme-switcher>
+  </section>
+  <section class="dialog-container col-span-2 mx-auto my-auto h-[650px] w-full">
     <section>
       <app-login-form></app-login-form>
     </section>
-    <section class="">
-      <app-footer class=""></app-footer>
+    <section
+      class="mx-auto h-[180px] max-w-[320px] space-y-4 rounded-lg bg-slate-900 py-6 dark:bg-slate-100"
+    >
+      <article class="flex flex-row justify-around">
+        <h5
+          for=""
+          class="my-auto p-0 text-center text-base dark:font-semibold tracking-tight text-gray-200 dark:text-slate-800"
+        >
+          By Luis Antonio Calvo Quispe
+        </h5>
+      </article>
+      <article class="flex w-full flex-row justify-around space-x-4">
+        <h5
+          for=""
+          class="my-auto p-0 text-base dark:font-semibold tracking-tight text-gray-200 dark:text-slate-800"
+        >
+          Contact
+        </h5>
+        <div class="flex w-auto flex-row space-x-4">
+          <a
+            href="https://www.linkedin.com/in/luis-antonio-calvo-quispe-57a33b229/"
+            target="_blank"
+          >
+            <div class="menu-siderbar-icon-inverse">
+              <fa-icon
+                class="icon-operac-inverse"
+                [icon]="faLinkedin"
+                size="xl"
+              ></fa-icon>
+            </div>
+          </a>
+          <a href="https://github.com/luis122448" target="_blank">
+            <div class="menu-siderbar-icon-inverse">
+              <fa-icon
+                class="icon-operac-inverse"
+                [icon]="faGitHub"
+                size="xl"
+              ></fa-icon>
+            </div>
+          </a>
+          <a href="https://luis122448.com" target="_blank">
+            <div class="menu-siderbar-icon-inverse">
+              <fa-icon
+                class="icon-operac-inverse"
+                [icon]="faGlobe"
+                size="xl"
+              ></fa-icon>
+            </div>
+          </a>
+        </div>
+      </article>
+      <article class="flex w-full flex-row justify-around space-x-4">
+        <h5
+          for=""
+          class="my-auto p-0 text-base dark:font-semibold tracking-tight text-gray-200 dark:text-slate-800"
+        >
+          Tell me
+        </h5>
+        <div class="flex w-auto flex-row space-x-2">
+          <label
+            for=""
+            class="my-auto p-0 dark:font-semibold tracking-tight text-gray-200 dark:text-slate-800"
+            >+51 939232327</label
+          >
+          <a href="https://wa.me/51939232327?text=Hola" target="_blank">
+            <div class="menu-siderbar-icon-inverse">
+              <fa-icon
+                class="icon-operac-inverse"
+                [icon]="faWhatsappSquare"
+                size="2xl"
+              ></fa-icon>
+            </div>
+          </a>
+        </div>
+      </article>
     </section>
   </section>
 </main>

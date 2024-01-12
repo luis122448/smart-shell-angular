@@ -1,14 +1,20 @@
-<main>
-  <h1 class="text-inline my-12 text-center">Smart Shell</h1>
+<main class="space-y-8">
+  <h3
+    class="text-center text-3xl font-extrabold leading-normal tracking-tight dark:text-gray-400 sm:text-4xl"
+  >
+    Smart <span class="text-sky-900 dark:text-sky-700">Shell</span>
+  </h3>
   <div *ngIf="LoginIn; else elseBlock">
     <form
       [formGroup]="fromAuthLogin"
       novalidate
-      class="space-y-6"
+      class="flex w-full flex-col items-center justify-around space-y-2"
       (ngSubmit)="doLogin()"
     >
       <section>
-        <div class="relative">
+        <div
+          class="relative flex w-[320px] justify-around"
+        >
           <input
             #nameInput
             formControlName="coduser"
@@ -18,7 +24,7 @@
           />
           <button
             type="button"
-            class="absolute right-2 p-2"
+            class="-z-1 absolute right-3 top-1/2 -translate-y-1/2"
             (click)="nameInput.focus()"
           >
             <fa-icon [icon]="faPen"></fa-icon>
@@ -29,7 +35,9 @@
         >
       </section>
       <section>
-        <div class="relative">
+        <div
+          class="relative flex w-[320px] justify-around"
+        >
           <input
             formControlName="password"
             placeholder="Enter password"
@@ -38,7 +46,7 @@
           />
           <button
             type="button"
-            class="absolute right-2 p-2"
+            class="-z-1 absolute right-3 top-1/2 -translate-y-1/2"
             (click)="showPassword = !showPassword"
           >
             <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
@@ -49,38 +57,31 @@
         >
       </section>
       <section class="flex justify-center">
-        <app-button-standard typeBtn="submit" colorBtn="sky" optionBtn="go" >
+        <app-button-standard typeBtn="submit" colorBtn="sky" optionBtn="go">
           Login</app-button-standard
         >
-      </section>
-      <section>
-        <hr class="border-r-default my-4" />
-        <div
-          class="flex flex-col items-center justify-center space-x-0 space-y-2 md:flex-row md:space-x-2 md:space-y-0"
-        >
-          <a routerLink="/forgot-password" class="text-blue-600">Contraseña?</a>
-          <span class="hidden text-gray-500 md:block">•</span>
-          <a routerLink="/register" class="text-blue-600">Nuevo Usuario?</a>
-        </div>
       </section>
     </form>
   </div>
   <ng-template #elseBlock>
-    <div class="space-y-6">
-      <section>
-        <form
-          [formGroup]="formVerifyCode"
-          novalidate
-          (ngSubmit)="doVerifyCode()"
-        >
-          <div class="relative">
-            <input formControlName="coduser" type="text" class="input-login" />
+    <div class="flex w-full flex-col items-center justify-around space-y-2">
+      <form [formGroup]="formVerifyCode">
+        <section>
+          <div
+            class="relative flex w-[320px] justify-around"
+          >
+            <input
+              #nameInput
+              formControlName="coduser"
+              type="text"
+              class="input-login"
+            />
           </div>
           <app-alert-standard class="invisible"></app-alert-standard>
-        </form>
-      </section>
+        </section>
+      </form>
       <section>
-        <div class="flex justify-around space-x-3">
+        <div class="flex w-[320px] justify-around space-x-3">
           <input
             *ngFor="let i of [0, 1, 2, 3, 4, 5]"
             type="text"
@@ -89,27 +90,31 @@
             (input)="onCodeInputChange(i, $event)"
             maxlength="1"
           />
-          <!-- (input)="onCodeInputChange(i, $event)" -->
         </div>
         <app-alert-standard [class.invisible]="!isInputInvalidVerify('codver')"
           >Digitar su Codigo de Seguridad</app-alert-standard
         >
       </section>
       <section class="flex justify-center">
-        <app-button-standard typeBtn="button" colorBtn="sky" (click)="doVerifyCode()" optionBtn="go">
+        <app-button-standard
+          typeBtn="button"
+          colorBtn="sky"
+          (click)="doVerifyCode()"
+          optionBtn="go"
+        >
           Login</app-button-standard
         >
       </section>
-      <section>
-        <hr class="border-r-default my-4" />
-        <div
-          class="flex flex-col items-center justify-center space-x-0 space-y-2 md:flex-row md:space-x-2 md:space-y-0"
-        >
-          <a routerLink="/forgot-password" class="text-blue-600">Contraseña?</a>
-          <span class="hidden text-gray-500 md:block">•</span>
-          <a routerLink="/register" class="text-blue-600">Nuevo Usuario?</a>
-        </div>
-      </section>
     </div>
   </ng-template>
+  <section>
+    <hr class="border-r-default my-4" />
+    <div
+      class="flex flex-col items-center justify-center space-x-0 space-y-2 md:flex-row md:space-x-2 md:space-y-0"
+    >
+      <!-- <a routerLink="/forgot-password" class="text-blue-600">Contraseña?</a> -->
+      <!-- <span class="hidden text-gray-500 md:block">•</span> -->
+      <!-- <a routerLink="/register" class="text-blue-600">Nuevo Usuario?</a> -->
+    </div>
+  </section>
 </main>

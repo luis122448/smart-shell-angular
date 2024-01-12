@@ -3,12 +3,11 @@ import { GlobalStatusService } from '@billing-services/global-status.service';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-header-invoice',
+  templateUrl: './header-invoice.component.html',
+  styleUrls: ['./header-invoice.component.scss']
 })
-export class HeaderComponent {
-
+export class HeaderInvoiceComponent {
   isLoading =  false
   isStatusInvoice : 'search' | 'register' =  'register'
   constructor(

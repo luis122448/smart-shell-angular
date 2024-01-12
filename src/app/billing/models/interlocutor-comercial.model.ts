@@ -15,6 +15,7 @@ export interface InterlocutorComercial {
   telefo: string
   email: string
   typpaycon: number
+  codlistprice: number
   limcre: number
   lispre: string
   image: ArrayBuffer

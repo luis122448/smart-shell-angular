@@ -11,7 +11,7 @@ import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-succ
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
 import { DatePipe } from '@angular/common';
-import { BasicListPrice } from '@billing-models/list-price.model';
+import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
 
 
 @Component({
@@ -51,28 +51,26 @@ export class BasicInfoListPriceComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     private datePipe: DatePipe,
-    @Inject(DIALOG_DATA) data : BasicListPrice,
+    @Inject(DIALOG_DATA) data : ListPrice | null,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ){
-    this.id = data.codlistprice
     this.buildForm()
-    if(data.listprice) {
-      this.formCrudListPrice.setValue(data.listprice)
+    if(data) {
       this.formCrudListPrice.patchValue({
-        codlistprice : data.listprice.codlistprice,
-        abrevi : data.listprice.abrevi,
-        descri : data.listprice.descri,
-        codext : data.listprice.codext,
-        codcur : data.listprice.codcur,
-        inctax : data.listprice.inctax === 'Y' ? true : false,
-        observ : data.listprice.observ,
-        commen : data.listprice.commen,
-        status : data.listprice.status,
-        createby : data.listprice.createby,
-        updateby : data.listprice.updateby,
-        createat : data.listprice.createat,
-        updateat : data.listprice.updateat,
+        codlistprice : data.codlistprice,
+        abrevi : data.abrevi,
+        descri : data.descri,
+        codext : data.codext,
+        codcur : data.codcur,
+        inctax : data.inctax === 'Y' ? true : false,
+        observ : data.observ,
+        commen : data.commen,
+        status : data.status,
+        createby : data.createby,
+        updateby : data.updateby,
+        createat : data.createat,
+        updateat : data.updateat,
       })
       this.validListPrice =  true
     }

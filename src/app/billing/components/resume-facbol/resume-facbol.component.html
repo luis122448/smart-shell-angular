@@ -42,7 +42,9 @@
         />
       </div>
       <div class="flex space-x-2">
-        <label for="imptribtotal" class="label-input-sm text-left">Total Tax</label>
+        <label for="imptribtotal" class="label-input-sm text-left"
+          >Total Tax</label
+        >
         <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
           cursymbol
         }}</span>
@@ -70,10 +72,10 @@
   <div class="flex justify-start space-x-4">
     <app-button-standard
       [disabledBtn]="isStatusInvoiceRegister"
-      optionBtn="calculate"
+      optionBtn="new"
       colorBtn="sky"
-      (click)="calculate()"
-      >Ayuda</app-button-standard
+      (click)="newDocument()"
+      >Nuevo Documento</app-button-standard
     >
   </div>
   <div class="flex justify-end space-x-4">

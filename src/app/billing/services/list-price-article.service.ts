@@ -21,6 +21,12 @@ export class ListPriceArticleService {
     return this.httpCLient.get<ByteListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-export`, { params })
   }
 
+  getByGenerate(codlistprice: number){
+    let params = new HttpParams()
+    params = params.set('codlistprice',codlistprice.toString())
+    return this.httpCLient.get<ByteListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-generate`, { params })
+  }
+
   getByPage(codlistprice: number, codart: string, desart: string, pageSize: number = 10,pageIndex: number = 0){
     let params = new HttpParams()
     params = params.set('codlistprice',codlistprice.toString())
@@ -45,7 +51,7 @@ export class ListPriceArticleService {
     let params = new HttpParams()
     params = params.set('codlistprice',codlistprice.toString())
     params = params.set('codart',codart)
-    return this.httpCLient.get<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, { params })
+    return this.httpCLient.get<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-id`, { params })
   }
 
   postByImport(codlistprice: number, file: File) {

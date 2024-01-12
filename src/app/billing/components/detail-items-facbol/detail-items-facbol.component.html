@@ -1,5 +1,5 @@
 <section class="container-default-table">
-  <table class="main-default-table" cdk-table [dataSource]="dataSource">
+  <table class="main-default-table" cdk-table [dataSource]="dataDetailSource">
     <tr class="header-table" cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
     <tr class="row-table" cdk-row
       *cdkRowDef="let row; columns: displayedColumns">
@@ -13,7 +13,7 @@
         <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Tipo de Inventario</th>
         <td cdk-cell class="px-2 py-3 w-40" *cdkCellDef="let row">
           <div *ngIf="row.codart; else notCodart">
-            {{ row.typinv }}
+            {{ row.desinv }}
           </div>
           <ng-template #notCodart>
           </ng-template>
@@ -23,11 +23,31 @@
         <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Article</th>
         <td class="px-2 py-3" cdk-cell *cdkCellDef="let row">
           <div *ngIf="row.codart; else notCodart">
-            {{ row.codart }}
+            {{ row.codart + ' - ' + row.desart }}
           </div>
           <ng-template #notCodart>
             <div class="flex" *ngIf="isStatusInvoiceRegister">
-              <input type="text" placeholder="Codigo" class="input-search w-40" formControlName="codart">
+              <input type="text" placeholder="Code" class="input-search w-25" formControlName="codart"
+              (keydown.enter)="openDialogGetArticle()">
+              <input type="text" placeholder="Description" class="input-search w-52" formControlName="desart"
+              (keydown.enter)="openDialogGetArticle()">
+              <button type="button" class="button-icon-search"
+                (click)="openDialogGetArticle()">
+              <fa-icon [icon]="faMagnifyingGlass" class="icon-operac" size="sm"></fa-icon>
+              </button>
+            </div>
+          </ng-template>
+        </td>
+      </ng-container>
+      <!-- <ng-container cdkColumnDef="desart">
+        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Article</th>
+        <td class="px-2 py-3" cdk-cell *cdkCellDef="let row">
+          <div *ngIf="row.codart; else notCodart">
+            {{ row.desart }}
+          </div>
+          <ng-template #notCodart>
+            <div class="flex" *ngIf="isStatusInvoiceRegister">
+              <input type="text" placeholder="Codigo" class="input-search w-40" formControlName="desart">
               <button type="button" class="button-icon-search"
                 (click)="openDialogGetArticle()"
                 (keydown.enter)="openDialogGetArticle()"
@@ -37,7 +57,7 @@
             </div>
           </ng-template>
         </td>
-      </ng-container>
+      </ng-container> -->
       <ng-container cdkColumnDef="etiqueta">
         <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Etiqueta</th>
         <td class="px-2 py-3" cdk-cell *cdkCellDef="let row">
@@ -66,27 +86,27 @@
         </td>
       </ng-container>
       <ng-container cdkColumnDef="price">
-        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Precio Unidad</th>
+        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Unit Price</th>
         <td class="px-2 py-3" cdk-cell *cdkCellDef="let row">
           <div *ngIf="row.codart; else notCodart">
-            <input type="number" readonly placeholder="Precio Unidad" class="input-default" formControlName="price" min="0">
+            <input type="number" readonly placeholder="Unit Price" class="input-default" formControlName="price" min="0" [disabled]="row.modprice == 'N'">
           </div>
           <ng-template #notCodart>
         </ng-template>
         </td>
       </ng-container>
       <ng-container cdkColumnDef="subtotal">
-        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Importe</th>
+        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Import</th>
         <td class="px-2 py-3" cdk-cell *cdkCellDef="let row">
           <div *ngIf="row.codart; else notCodart">
-            <input type="number" readonly placeholder="Importe" class="input-default" [value]="row.impsaleprice" min="0">
+            <input type="number" readonly placeholder="Import" class="input-default" [value]="row.impsaleprice" min="0">
           </div>
           <ng-template #notCodart>
           </ng-template>
         </td>
       </ng-container>
       <ng-container cdkColumnDef="operac">
-        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Operacion ?</th>
+        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Action?</th>
         <td class="px-2 py-3" cdk-cell *cdkCellDef="let row">
           <div *ngIf="row.codart; else notCodart" class="flex justify-around">
             <app-button-operac

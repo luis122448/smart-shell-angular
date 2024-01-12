@@ -2,10 +2,15 @@ export interface DocumentDetail{
   numint?: number;
   numite: number;
   typinv: number;
+  desinv?: string;
   codart: string;
+  desart?: string;
   etiqueta: number;
   quantity: number;
+  // Optional
+  stock?: number;
   price: number;
+  modprice?: string;
   impafecto?: number;
   impinafecto?: number;
   impexonerado?: number;
@@ -16,6 +21,7 @@ export interface DocumentDetail{
   imptribadd02?: number;
   imptribadd03?: number;
   imptribadd04?: number;
+  moddesc?: string;
   impdesc01?: number;
   impdesc02?: number;
   impdesc03?: number;

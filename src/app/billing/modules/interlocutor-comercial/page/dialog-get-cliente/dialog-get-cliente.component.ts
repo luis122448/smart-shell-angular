@@ -57,20 +57,30 @@ export class DialogGetClienteComponent implements OnInit{
       } else {
         this.globalStatusService.setLoading(true)
         this.businessPartnerService.getByLike(this.data.codbuspar,this.data.busnam)
-        .subscribe(data =>{
-          if (data.status <= 0 || data.list.length === 0){
+        .subscribe({
+          next: data =>{
+            if (data.status <= 0 || data.list.length === 0){
+              this.dialog.open(DialogErrorAlertComponent,{
+                width: '400px',
+                data: { no_data_found:'S' }
+              })
+              this.dialogRef.close(null)
+            }
+            if (data.status > 0 && data.list.length === 1 ){
+              this.dialogRef.close(data.list[0])
+            }
+            this.dataSource.getInit(data.list)
+            this.globalStatusService.setLoading(false)
+            this.countRecords = this.dataSource.getCount()
+          },
+          error: error =>{
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status:data.status, message:data.message}
+              data: error.error
             })
+            this.globalStatusService.setLoading(false)
             this.dialogRef.close(null)
           }
-          if (data.status > 0 && data.list.length === 1 ){
-            this.dialogRef.close(data.list[0])
-          }
-          this.dataSource.getInit(data.list)
-          this.globalStatusService.setLoading(false)
-          this.countRecords = this.dataSource.getCount()
         })
       }
     }

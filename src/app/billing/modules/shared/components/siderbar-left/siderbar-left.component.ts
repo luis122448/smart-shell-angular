@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { faXmark, faPenToSquare, faChartLine, faFileInvoice, faShop, faGears, faUserTag } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faPenToSquare, faChartLine, faFileInvoice, faShop, faGears, faUserTag, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { faBuilding } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-siderbar-left',
@@ -11,10 +12,12 @@ import { Location } from '@angular/common';
   styleUrls: ['./siderbar-left.component.scss']
 })
 export class SiderbarLeftComponent {
+  faMagnifyingGlass = faMagnifyingGlass
   faGithubSquare = faGithubSquare
   faLinkedin = faLinkedin
-  openSidebar = true;
+  openSidebar = false;
   baseUrl: string;
+
   // menuSidebar = [
   //   {
   //     rotulo: "DashBoard",
@@ -90,26 +93,18 @@ export class SiderbarLeftComponent {
       id: '',
       link: 'configuration/principal',
       icon: faGears,
-      subMenu: [],
-      open: false
-    },
-    {
-      rotulo: "Configuration2",
-      id: '',
-      link: 'configuration/principal',
-      icon: faGears,
       subMenu: [
         {
           rotulo: 'Company',
           id: '',
           link: 'configuration/principal',
-          icon: null
+          icon: faBuilding
         },
         {
           rotulo: 'Serie / Document',
           id: '',
-          link: '',
-          icon: null
+          link: 'configuration/serie',
+          icon: faFileInvoice
         }
       ],
       open: false
@@ -134,6 +129,10 @@ export class SiderbarLeftComponent {
   toRedirec(path: string){
     const redirectUrl = `${this.baseUrl}/${path}`; // Construir la URL de redirección
     this.router.navigateByUrl(redirectUrl); // Redirigir a la URL especificada
+  }
+
+  onSearch(){
+
   }
 
 }

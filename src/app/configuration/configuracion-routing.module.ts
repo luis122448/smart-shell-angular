@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutConfigurationComponent } from './layout/layout-configuration/layout-configuration.component';
 import { AuthGuard } from '@billing/guards/auth.guard';
+import { LayoutSerieCommercialDocumentComponent } from './layout/layout-serie-commercial-document/layout-serie-commercial-document.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,11 @@ const routes: Routes = [
     path: 'credits',
     canActivate: [ AuthGuard ],
     component: LayoutConfigurationComponent
+  },
+  {
+    path: 'serie',
+    canActivate: [ AuthGuard ],
+    component: LayoutSerieCommercialDocumentComponent
   }
 ];
 

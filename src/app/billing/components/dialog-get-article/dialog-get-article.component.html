@@ -1,46 +1,80 @@
-<section class="p-4 bg-gray-800 space-y-4 rounded-md">
-  <h1 class="m-0 pt-2 dark:text-gray-400 dark:bg-none">Busqueda de Article</h1>
-  <div class="flex w-full justify-around items-center relative">
-    <input type="search" class="w-full h-10 pl-8 pr-2 py-1
-      border-2 border-slate-800 rounded-sm text-slate-700
-      dark:text-gray-400 dark:bg-gray-700
-      hover:border-sky-700
-      focus:outline-none focus:ring-1 focus:ring-sky-700 focus:border-sky-700"
+<main class="dialog-container">
+  <section class="dialog-title">Search de Article</section>
+  <section class="relative flex w-full items-center justify-around">
+    <input
+      type="search"
+      class="h-10 w-full rounded-sm border-2 border-slate-800 py-1 pl-8 pr-2 text-slate-700 hover:border-sky-700 focus:border-sky-700 focus:outline-none focus:ring-1 focus:ring-sky-700 dark:bg-gray-700 dark:text-gray-400"
       placeholder="Escribir Codigo / Descripcion / Identificador"
-      [formControl]="input">
-    <fa-icon [icon]="faMagnifyingGlass" size="xl" class="text-gray-600 absolute left-2 dark:text-gray-400"></fa-icon>
-  </div>
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" cdk-table [dataSource]="dataSource">
-    <tr class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" cdk-row
-      *cdkRowDef="let row; columns: displayedColumns"
-      (click)="closeDialog(row)"></tr>
-    <!-- <tr class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" cdk-footer-row *cdkFooterRowDef="displayedColumns"></tr> -->
-    <!--ID Column-->
-    <ng-container cdkColumnDef="codart">
-      <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
-      <td class="px-6 py-4" cdk-cell *cdkCellDef="let row">{{ row.codart }}</td>
-      <!-- <td class="px-6 py-3" cdk-footer-cell *cdkFooterCellDef></td> -->
-    </ng-container>
-    <ng-container cdkColumnDef="descri">
-      <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef>Descripcion</th>
-      <td class="px-6 py-4" cdk-cell *cdkCellDef="let row">{{ row.descri }}</td>
-      <!-- <td class="px-6 py-3" cdk-footer-cell *cdkFooterCellDef>Total de Registros : </td> -->
-    </ng-container>
-    <ng-container cdkColumnDef="codext">
-      <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef>Identificador</th>
-      <td class="px-6 py-4" cdk-cell *cdkCellDef="let row">{{ row.codext }}</td>
-      <!-- <td class="px-6 py-3" cdk-footer-cell *cdkFooterCellDef>999</td> -->
-    </ng-container>
-  </table>
-  <div class="w-[150px]">
+      [formControl]="input"
+    />
+    <fa-icon
+      [icon]="faMagnifyingGlass"
+      size="xl"
+      class="absolute left-2 text-gray-600 dark:text-gray-400"
+    ></fa-icon>
+  </section>
+  <section class="container-dialog-table">
+    <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
+      <tr
+        class="header-table"
+        cdk-header-row
+        *cdkHeaderRowDef="displayedColumns"
+      ></tr>
+      <tr
+        class="row-table"
+        cdk-row
+        *cdkRowDef="let row; columns: displayedColumns"
+        (click)="closeDialog(row)"
+      ></tr>
+      <ng-container cdkColumnDef="codart">
+        <th
+          class="header-cell"
+          class="px-6 py-3"
+          cdk-header-cell
+          *cdkHeaderCellDef
+        >
+          Codigo
+        </th>
+        <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+          {{ row.codart }}
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="descri">
+        <th
+          class="header-cell"
+          class="px-6 py-3"
+          cdk-header-cell
+          *cdkHeaderCellDef
+        >
+          Descripcion
+        </th>
+        <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+          {{ row.descri }}
+        </td>
+      </ng-container>
+      <ng-container cdkColumnDef="codext">
+        <th
+          class="header-cell"
+          class="px-6 py-3"
+          cdk-header-cell
+          *cdkHeaderCellDef
+        >
+          Identificador
+        </th>
+        <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+          {{ row.codext }}
+        </td>
+      </ng-container>
+    </table>
+  </section>
+  <section class="flex justify-end">
     <app-button-standard
-    (click)="closeDialog(null)"
-    optionBtn="close"
-    [colorBtn]="'red'"
-    [typeBtn]="'button'">
-    Close
+      (click)="closeDialog(null)"
+      optionBtn="close"
+      [colorBtn]="'red'"
+      [typeBtn]="'button'"
+    >
+      Close
     </app-button-standard>
-  </div>
-</section>
-
+  </section>
+</main>

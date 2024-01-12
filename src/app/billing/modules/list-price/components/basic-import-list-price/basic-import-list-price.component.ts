@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { GlobalStatusService } from '@billing-services/global-status.service';
 import { ListPriceArticleService } from '@billing-services/list-price-article.service';
-import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
+import { ListPrice } from '@billing-models/list-price.model';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { downloadFile } from '@billing-utils/function';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
@@ -22,9 +22,9 @@ export class BasicImportListPriceComponent {
   listPrices : ListPrice[] = []
   validListPrice = false
 
-  private buildForm(){
+  private buildForm(codeListPrice: number = 0, disabled: boolean = false){
     this.formCrudListPriceArticle = this.formBuilder.group({
-      codlistprice: [{value:'',disabled: false},[Validators.required]],
+      codlistprice: [{value:codeListPrice,disabled: disabled},[Validators.required]],
       file: ['', [Validators.required]]
     })
   }
@@ -35,21 +35,17 @@ export class BasicImportListPriceComponent {
     private dialog: Dialog,
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
-    @Inject(DIALOG_DATA) data : BasicListPrice,
+    @Inject(DIALOG_DATA) data : ListPrice | null,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ){
-    this.buildForm()
-    if(data.listprice) {
-      this.codlistprice?.setValue(data.listprice.codlistprice)
-      this.codlistprice?.disable()
-      this.validListPrice =  true
+    if(data) {
+      this.listPrices.push(data)
+      this.buildForm(data.codlistprice,true)
     } else {
       this.listPrices = this.defaultValuesService.getCookieValue('listPrices')
       const defaultListPrice = this.listPrices.find(data => data.defaul === 'Y');
-      if (defaultListPrice) {
-        this.codlistprice?.setValue(defaultListPrice.codlistprice);
-      }
+      this.buildForm(defaultListPrice?.codlistprice,false)
     }
   }
 
@@ -76,6 +72,10 @@ export class BasicImportListPriceComponent {
   importListPriceArticle(){
     if (this.formCrudListPriceArticle.invalid) {
       this.formCrudListPriceArticle.markAllAsTouched()
+      this.dialog.open(DialogErrorAlertComponent,{
+        width: '400px',
+        data: { no_file_selected: 'S' }
+      })
       return
     }
     this.globalStatusService.setLoading(true)
@@ -84,7 +84,7 @@ export class BasicImportListPriceComponent {
         if(data.status<=0){
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status:data.status, message:data.message }
+            data: data
           })
         } else {
           this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent, MatSnackBarSuccessConfig);
@@ -95,7 +95,10 @@ export class BasicImportListPriceComponent {
         this.globalStatusService.setLoading(false)
       },
       error: err => {
-        console.error(err)
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
         this.clearArchive()
         this.globalStatusService.setLoading(false)
       }
@@ -103,17 +106,13 @@ export class BasicImportListPriceComponent {
   }
 
   exportListPriceArticle(){
-    if (this.codlistprice?.valid ==   false) {
-      this.codlistprice.markAsTouched()
-      return
-    }
     this.globalStatusService.setLoading(true)
     this.listPriceArticleService.getByExport(this.codlistprice?.value).subscribe({
       next: data => {
         if(data.status<=0){
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status:data.status, message:data.message }
+            data: data
           })
         } else{
           const fileName = `${data.name}.${data.extension}`;
@@ -122,7 +121,35 @@ export class BasicImportListPriceComponent {
         this.globalStatusService.setLoading(false)
       },
       error: err => {
-        console.error(err)
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
+        this.globalStatusService.setLoading(false)
+      }
+    })
+  }
+
+  generateListPriceArticle(){
+    this.globalStatusService.setLoading(true)
+    this.listPriceArticleService.getByGenerate(this.codlistprice?.value).subscribe({
+      next: data => {
+        if(data.status<=0){
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: data
+          })
+        } else{
+          const fileName = `${data.name}.${data.extension}`;
+          downloadFile(data, fileName);
+        }
+        this.globalStatusService.setLoading(false)
+      },
+      error: err => {
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
         this.globalStatusService.setLoading(false)
       }
     })

@@ -7,7 +7,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, debounceTime } from 'rxjs';
 import { faMagnifyingGlass, faXmark, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '@billing-models/article.model';
-import { DataSourceDocumentDetail } from '../../data/datasource-facbol.service';
+import { DataSourceDocumentDetail,DataSourceDocumentHeader } from '../../data/datasource-facbol.service';
 import { FacbolGlobalStatusService } from '../../services/facbol-global-status.service';
 
 @Component({
@@ -18,7 +18,8 @@ import { FacbolGlobalStatusService } from '../../services/facbol-global-status.s
 export class DetailItemsFacbolComponent implements OnInit  {
 
   formDetail!: FormGroup
-  dataSource = DataSourceDocumentDetail.getInstance()
+  dataDetailSource = DataSourceDocumentDetail.getInstance()
+  dataHeaderSource = DataSourceDocumentHeader.getInstance()
   displayedColumns: string[] = ['numite', 'typinv','codart','etiqueta','quantity','price','subtotal','operac'];
   faMagnifyingGlass = faMagnifyingGlass
   faPenToSquare = faPenToSquare
@@ -26,21 +27,28 @@ export class DetailItemsFacbolComponent implements OnInit  {
   // SubStatus
   isStatusInvoiceRegister = false;
 
+  // Var
+  codlistprice: number = 0;
+
   constructor(
     private dialog: Dialog,
     private formBuilder: FormBuilder,
     private facbolGlobalStatusService: FacbolGlobalStatusService
   ){
-    this.dataSource.getInit(
+    this.dataDetailSource.getInit(
       [
         {
           numint: 0,
           numite: 0,
           typinv: 0,
+          desinv: '',
           codart: '',
+          desart: '',
           etiqueta: 0,
           quantity: 0,
+          stock: 0,
           price: 0.0,
+          modprice: 'N',
           impafecto: 0.0,
           impinafecto: 0,
           impexonerado: 0,
@@ -51,6 +59,7 @@ export class DetailItemsFacbolComponent implements OnInit  {
           imptribadd02: 0,
           imptribadd03: 0,
           imptribadd04: 0,
+          moddesc: 'N',
           impdesc01: 0,
           impdesc02: 0,
           impdesc03: 0,
@@ -84,6 +93,7 @@ export class DetailItemsFacbolComponent implements OnInit  {
       numite: [{value:'0',disabled:false},[Validators.required]],
       typinv: [{value:'',disabled:false},[Validators.required]],
       codart: ['',[Validators.required]],
+      desart: ['',[Validators.required]],
       etiqueta: [{value:'',disabled:false},[Validators.required]],
       quantity: [{value:'0',disabled:false},[Validators.required]],
       price: [{value:'0',disabled:false},[Validators.required]],
@@ -92,26 +102,35 @@ export class DetailItemsFacbolComponent implements OnInit  {
   }
 
   openDialogGetArticle(){
+    const dataHeader = this.dataHeaderSource.get()
+    this.codlistprice = dataHeader.codlistprice ?? 0
     const dialogRefArticle = this.dialog.open<Article>(DialogGetArticleComponent, {
-      data: { codart: this.formDetail.get('codart')?.value }
+      data: {
+        codart: this.codart?.value,
+        desart: this.desart?.value,
+        codlistprice: this.codlistprice,
+      }
     })
 
     dialogRefArticle.closed.subscribe(data =>{
       if (data) {
-        const nextNumite : number = this.dataSource.getCount() + 1;
+        const nextNumite : number = this.dataDetailSource.getCount() + 1;
         this.formDetail.get('numite')?.setValue('')
         this.formDetail.get('typinv')?.setValue('')
         this.formDetail.get('codart')?.setValue('')
         // Habilitando
         // this.formDetail.get('etiqueta')?.enable()
         // this.formDetail.get('quantity')?.enable()
-        this.dataSource.getPush({
+        this.dataDetailSource.getPush({
           numite:nextNumite,
           typinv:data.typinv,
+          desinv:data.desinv,
           codart:data.codart,
+          desart:data.descri,
           etiqueta:0,
           quantity:0,
-          price:10.0,
+          stock:data.stock ?? 0,
+          price:data.price ?? 0.0,
           update: true
         })
       }
@@ -133,12 +152,12 @@ export class DetailItemsFacbolComponent implements OnInit  {
       update: false
     }
     console.log('UpdateRow', updateRow)
-    this.dataSource.putPreCalculate(updateRow.numite,updateRow)
-    this.dataSource.getCalculateImport(updateRow.numite)
+    this.dataDetailSource.putPreCalculate(updateRow.numite,updateRow)
+    this.dataDetailSource.getCalculateImport(updateRow.numite)
   }
 
   cleanNumite(row: DocumentDetail){
-    this.dataSource.getClean(row.numite)
+    this.dataDetailSource.getClean(row.numite)
   }
 
   get numite (){
@@ -149,6 +168,9 @@ export class DetailItemsFacbolComponent implements OnInit  {
   }
   get codart (){
     return this.formDetail.get('codart')
+  }
+  get desart (){
+    return this.formDetail.get('desart')
   }
   get etiqueta (){
     return this.formDetail.get('etiqueta')

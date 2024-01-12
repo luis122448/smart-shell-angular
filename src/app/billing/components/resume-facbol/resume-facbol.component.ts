@@ -140,6 +140,10 @@ export class ResumeFacbolComponent implements OnInit {
     }
   }
 
+  newDocument(){
+
+  }
+
   onPrint(numint: number){
     this.globalStatusService.setLoading(true)
     this.documentInvoiceService.getPrintDocument(numint)

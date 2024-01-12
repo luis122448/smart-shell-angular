@@ -12,6 +12,10 @@
     @apply dark:text-gray-400 dark:bg-gray-700
   }
 
+  // mat-tab-group{
+  //   @apply h-full
+  // }
+
   .mat-tab-label-span  {
     @apply m-0 p-0 text-sm text-slate-800
     dark:text-gray-400
@@ -21,6 +25,11 @@
     @apply w-full h-full flex items-center space-x-4 text-slate-700 font-semibold
     dark:text-gray-400
   }
+
+  .cdk-overlay-backdrop {
+    @apply overflow-hidden
+  }
+
 }
 
 @mixin custom-table-style(){

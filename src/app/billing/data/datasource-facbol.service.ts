@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { DocumentHeader } from '../models/document-header.model';
 import { Mensaje } from 'src/app/shared/model/mensaje.model';
-import { ExchangeRate } from '../models/tipo-cambio.model';
+import { ExchangeRate } from '../models/exchange-rate.model';
 
 @Injectable({
   providedIn: 'root'

@@ -3,8 +3,12 @@
   @apply m-auto h-screen flex-col justify-around bg-slate-100 dark:bg-slate-900 dark:text-gray-400;
 }
 
+.body-container{
+  @apply bg-slate-100 dark:bg-slate-900 dark:text-gray-400;
+}
+
 .sub-main-container {
-  @apply space-y-6 bg-slate-100 dark:bg-slate-900 dark:text-gray-400;
+  @apply h-full space-y-6 bg-slate-100 dark:bg-slate-900 dark:text-gray-400;
 }
 
 .items-container {
@@ -47,6 +51,14 @@
 
 // Menu Sidebar
 .menu-sidebar {
+  @apply my-auto grid w-full grid-cols-5 rounded-md p-2 space-x-2
+  text-left text-slate-700
+  hover:bg-blue-100 hover:font-normal hover:text-blue-500
+  dark:text-gray-400
+  dark:hover:bg-slate-500 dark:hover:font-normal dark:hover:text-gray-50;
+}
+
+.menu-sidebar-left {
   @apply my-auto grid w-full grid-cols-5 rounded-md p-2
   text-left text-slate-700
   hover:bg-blue-100 hover:font-normal hover:text-blue-500
@@ -58,8 +70,12 @@
   @apply relative col-span-1 h-6 w-6 text-slate-700 dark:text-gray-400;
 }
 
+.menu-siderbar-icon-inverse {
+  @apply relative col-span-1 h-6 w-6 dark:text-slate-700 text-gray-400;
+}
+
 .menu-sidebar-text {
-  @apply col-span-4 text-xs text-slate-800 dark:text-gray-400;
+  @apply my-auto font-semibold dark:font-normal col-span-4 whitespace-nowrap text-xs text-slate-800 dark:text-gray-400;
 }
 
 .display-none {

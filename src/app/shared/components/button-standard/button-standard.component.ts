@@ -62,6 +62,16 @@ export class ButtonStandardComponent {
         return faTrashArrowUp
       case 'close':
         return faCircleXmark
+      case 'download':
+        return faDownload
+      case 'info':
+        return faQuestion
+      case 'report':
+        return faNewspaper
+      case 'warning':
+        return faCircleXmark
+      case 'refresh':
+        return faSpinner
       default:
         return faQuestion; // Puedes establecer un ícono predeterminado aquí si es necesario
     }

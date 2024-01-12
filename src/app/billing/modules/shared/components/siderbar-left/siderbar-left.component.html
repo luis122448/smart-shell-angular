@@ -1,9 +1,18 @@
-<div class="sidebar-left" (mouseenter)="!openSidebar = true" (mouseleave)="!openSidebar = false">
+<div
+  class="sidebar-left"
+  (mouseenter)="!(openSidebar = true)"
+  (mouseleave)="!(openSidebar = false)"
+>
   <section class="space-y-2">
     <div class="flex items-center justify-around">
       <div>
-        <img src="../../../../../../assets/images/extra/Foto.jpg" alt=""
-          class="rounded-full" height="40px" width="40px">
+        <img
+          src="../../../../../../assets/images/extra/Foto.jpg"
+          alt=""
+          class="rounded-full"
+          height="40px"
+          width="40px"
+        />
       </div>
       <div>
         <p class="m-0">My Project</p>
@@ -17,19 +26,39 @@
         </div>
       </div>
     </div>
-    <div class="px-10 flex justify-around">
-      <img src="../../../../../../assets/images/extra/AngularIcon.png" alt=""
-        class="rounded-full" height="20px" width="20px">
-      <img src="../../../../../../assets/images/extra/SpringIcon.png" alt=""
-        class="rounded-full" height="20px" width="20px">
-      <img src="../../../../../../assets/images/extra/PostgresSQLIcon.png" alt=""
-        class="rounded-full" height="20px" width="20px">
+    <div class="flex justify-around px-10 pb-2">
+      <img
+        src="../../../../../../assets/images/extra/AngularIcon.png"
+        alt=""
+        class="rounded-full"
+        height="20px"
+        width="20px"
+      />
+      <img
+        src="../../../../../../assets/images/extra/SpringIcon.png"
+        alt=""
+        class="rounded-full"
+        height="20px"
+        width="20px"
+      />
+      <img
+        src="../../../../../../assets/images/extra/PostgresSQLIcon.png"
+        alt=""
+        class="rounded-full"
+        height="20px"
+        width="20px"
+      />
     </div>
   </section>
-  <section class="space-x-2 flex justify-around">
+  <section class="flex justify-around space-x-2 py-2">
     <div>
-      <img src="../../../../../../assets/images/extra/Foto.jpg" alt=""
-      class="rounded-sm" height="50px" width="50px">
+      <img
+        src="../../../../../../assets/images/extra/Foto.jpg"
+        alt=""
+        class="rounded-md"
+        height="50px"
+        width="50px"
+      />
     </div>
     <div>
       <p class="text-inline m-0 font-bold">Luis C.</p>
@@ -37,36 +66,67 @@
       <p class="text-inline m-0">Online</p>
     </div>
   </section>
-  <section>
-    <input type="search" class="input-default">
+  <section class="flex py-2">
+    <input type="search" class="input-default" placeholder="Search*" />
+    <button type="button" class="button-icon-input" (click)="onSearch()">
+      <fa-icon
+        [icon]="faMagnifyingGlass"
+        class="text-white"
+        size="sm"
+      ></fa-icon>
+    </button>
   </section>
-  <section class="py-4 px-2 space-y-2 divide-y divide-dotted divide-slate-500">
+  <section class="space-y-2 divide-y divide-dotted divide-slate-500 px-2 py-4">
     <li *ngFor="let item of menuSidebar" routerLinkActive="active">
-      <div *ngIf="item.subMenu.length === 0; else subMenu" class="menu-sidebar">
-        <a (click)="toRedirec(item.link)" class="space-x-2 w-full flex">
-          <fa-icon [icon]="item.icon" size="lg"></fa-icon>
-          <span [class.display-none]="!openSidebar" class="whitespace-nowrap">{{ item.rotulo }}</span>
+      <div *ngIf="item.subMenu.length === 0; else subMenu">
+        <a (click)="toRedirec(item.link)" class="menu-sidebar">
+          <div class="menu-siderbar-icon">
+            <fa-icon class="icon-operac" [icon]="item.icon" size="lg"></fa-icon>
+          </div>
+          <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{
+            item.rotulo
+          }}</span>
         </a>
       </div>
       <ng-template #subMenu>
-          <cdk-accordion>
-            <cdk-accordion-item #accordionItem="cdkAccordionItem">
-              <button type="button" (click)="accordionItem.toggle()"
-              cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
-              class="menu-sidebar space-x-2">
-                <fa-icon [icon]="item.icon" size="lg"></fa-icon>
-                <span [class.display-none]="!openSidebar">{{ item.rotulo }}</span>
-              </button>
-              <div [style.display]="accordionItem.expanded ? '' : 'none'">
-                <li *ngFor="let itemSub of item.subMenu" class="menu-sidebar">
-                  <a (click)="toRedirec(itemSub.link)" class="space-x-2 w-full flex">
-                    <fa-icon *ngIf="itemSub.icon" [icon]="itemSub.icon" size="lg"></fa-icon>
-                    <span [class.display-none]="!openSidebar" class="whitespace-nowrap">{{ itemSub.rotulo }}</span>
-                  </a>
-                </li>
+        <cdk-accordion>
+          <cdk-accordion-item #accordionItem="cdkAccordionItem">
+            <button
+              type="button"
+              (click)="accordionItem.toggle()"
+              cdkOverlayOrigin
+              #subMenuOverlay="cdkOverlayOrigin"
+              class="menu-sidebar space-x-2"
+            >
+              <div class="menu-siderbar-icon">
+                <fa-icon class="icon-operac" [icon]="item.icon" size="lg"></fa-icon>
               </div>
-            </cdk-accordion-item>
-          </cdk-accordion>
+              <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{ item.rotulo }}</span>
+            </button>
+            <div [style.display]="accordionItem.expanded ? '' : 'none'">
+              <li *ngFor="let itemSub of item.subMenu">
+                <a
+                  (click)="toRedirec(itemSub.link)"
+                  class="menu-sidebar"
+                >
+                  <div class="menu-siderbar-icon">
+                    <fa-icon
+                      *ngIf="itemSub.icon"
+                      class="icon-operac"
+                      [icon]="itemSub.icon"
+                      size="lg"
+                    ></fa-icon>
+                  </div>
+                  <span
+                    class="menu-sidebar-text"
+                    [class.display-none]="!openSidebar"
+                    >{{ itemSub.rotulo }}</span
+                  >
+                </a>
+              </li>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
       </ng-template>
     </li>
   </section>

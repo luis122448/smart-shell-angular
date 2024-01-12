@@ -1,15 +1,56 @@
-<section>
-  <!-- <div class="sidebar-section-text">Tema : </div> -->
-  <div class="flex flex-row justify-center items-center space-x-2 mx-auto float-right">
-    <div class="m-auto">
-      <input type="checkbox" name="themeSwitcher" id="themeSwitcher" class="hidden"/>
-      <label for="themeSwitcher" class="relative cursor-pointer">
-        <div class="w-24 h-10 flex items-center bg-gray-300 rounded-sm">
-          <fa-icon [icon]="faSun" class="absolute left-2 p-2 z-10"></fa-icon>
-          <div class="absolute left-2 switchball w-8 h-8 bg-white rounded-sm shadow"></div>
-          <fa-icon [icon]="faMoon" class="absolute right-2 p-2 z-10"></fa-icon>
-        </div>
-      </label>
+<section class="flex h-full w-full rounded-full">
+  <article [class.display-none]="!isOpenSidebar" class="relative">
+    <input
+      type="checkbox"
+      name="themeSwitcher"
+      id="themeSwitcher"
+      class="hidden"
+      (click)="onChange(true)"
+    />
+    <label for="themeSwitcher" class="relative cursor-pointer">
+      <div class="flex h-10 w-24 items-center rounded-full bg-gray-300">
+        <fa-icon
+          [icon]="faSun"
+          [class.light]="!isDark"
+          class="absolute left-2 z-10 p-2"
+          size="lg"
+        ></fa-icon>
+        <div
+          class="switchball absolute left-2 h-8 w-8 rounded-full bg-white shadow"
+        ></div>
+        <fa-icon
+          [icon]="faMoon"
+          [class.dark]="isDark"
+          class="absolute right-2 z-10 p-2"
+          size="lg"
+        ></fa-icon>
+      </div>
+    </label>
+    <!-- <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{ isDark ? 'Dark Mode' : 'Ligth Mode' }}</span> -->
+  </article>
+  <article [class.display-none]="isOpenSidebar" class="menu-sidebar">
+    <div
+      for="themeSwitcher"
+      [ngSwitch]="this.isDark"
+      class="menu-siderbar-icon"
+    >
+      <fa-icon
+        *ngSwitchCase="false"
+        [icon]="faSun"
+        [class.light]="!isDark"
+        class="icon-operac"
+        size="lg"
+      ></fa-icon>
+      <fa-icon
+        *ngSwitchCase="true"
+        [icon]="faMoon"
+        [class.dark-alternative]="isDark"
+        class="icon-operac"
+        size="lg"
+      ></fa-icon>
     </div>
-  </div>
+    <span class="menu-sidebar-text" [class.display-none]="isOpenSidebar">{{
+      isDark ? "Dark Mode" : "Ligth Mode"
+    }}</span>
+  </article>
 </section>

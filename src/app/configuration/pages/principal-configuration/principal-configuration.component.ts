@@ -1,5 +1,5 @@
 import { Dialog, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { Component,OnInit, Inject } from '@angular/core';
+import { Component,OnInit, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
@@ -16,8 +16,9 @@ import { IMAGENOUPLOAD, MatSnackBarSuccessConfig, NoJpgFormatImage } from '@bill
   templateUrl: './principal-configuration.component.html',
   styleUrls: ['./principal-configuration.component.scss']
 })
-export class PrincipalConfigurationComponent implements OnInit {
+export class PrincipalConfigurationComponent implements OnInit, OnChanges {
 
+  @Input() inputSave: boolean = false
   formCrudCompany!: FormGroup
   urlLink: string = ''
   codartId: string = ''
@@ -63,6 +64,13 @@ export class PrincipalConfigurationComponent implements OnInit {
   ){
     this.buildForm()
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['inputSave'] && changes['inputSave'].currentValue){
+      this.saveCompany()
+    }
+  }
+
   ngOnInit(): void {
     this.globalStatusService.setLoading(true)
     this.companyInfoService.getById(1)

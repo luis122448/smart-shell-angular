@@ -21,6 +21,12 @@ export interface ExchangeRate{
   updateat: Date;
 }
 
+export interface BasicExchangeRate{
+  registdate: Date | number[],
+  origen: string,
+  destin: string,
+}
+
 export interface DAOExchangeRate {
   status: number
   message: string

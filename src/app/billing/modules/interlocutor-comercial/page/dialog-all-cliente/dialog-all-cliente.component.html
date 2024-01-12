@@ -122,21 +122,21 @@
           </th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
             <app-button-operac
-              *ngIf="row.status === 'S'"
+              *ngIf="row.status === 'Y'"
               (click)="crudInterlocutorComercial(row)"
               optionBtn="edit"
               colorBtn="sky"
             >
             </app-button-operac>
             <app-button-operac
-              *ngIf="row.status === 'S'"
+              *ngIf="row.status === 'Y'"
               (click)="cleanInterlocutorComercial(row)"
               optionBtn="clean"
               colorBtn="sky"
             >
             </app-button-operac>
             <app-button-operac
-              *ngIf="row.status === 'S'"
+              *ngIf="row.status === 'Y'"
               (click)="deleteInterlocutorComercial(row)"
               optionBtn="delete"
               colorBtn="red"

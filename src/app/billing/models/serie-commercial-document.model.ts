@@ -6,24 +6,21 @@ export interface SerieCommercialDocument {
   codext: string | null
   codbranch: number | null
   docelectr: string
-  tipcorrel: string
+  typcorrel: string
   nrocorrel: number
-  defect: string
+  defaul: string
   typformat: number
   observ: string | null
   commen: string | null
   status: string
   createby: string
   updateby: string
-  createat: string
-  updateat: string
+  createat: Date | number[],
+  updateat: Date | number[],
 }
 
-export interface DAOSerieCommercialDocument {
-  status: number
-  message: string
-  logMessage: string
-  logUser: String
-  logTime: Date | number[],
-  list: SerieCommercialDocument[]
+export interface ChangeSerieCommercialDocument{
+  view: 'search' | 'crud'
+  typcomdoc: number
+  serie: string
 }

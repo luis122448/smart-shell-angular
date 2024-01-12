@@ -35,5 +35,6 @@ export interface DTOListPrice {
 
 export interface BasicListPrice{
   codlistprice: number
-  listprice: ListPrice | null
+  abrevi: string
+  descri: string
 }

@@ -1,3 +1,10 @@
+export interface Branch{
+  codbranch: number
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
 export interface Currency{
   codcur: string
   abrevi: string
@@ -27,12 +34,20 @@ export interface Serie{
   defaul: string
 }
 
+export interface Document{
+  typcomdoc: number
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
 export interface Reason{
   typcomdoc: number
   ingsalcom: number
   reacomdoc: number
   abrevi: string
   descri: string
+  defaul: string
 }
 
 export interface Inventory{

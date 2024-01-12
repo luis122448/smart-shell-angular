@@ -4,7 +4,7 @@ import { faMagnifyingGlass, faUsers, faCartFlatbed, faCommentsDollar,faIdBadge,
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { InterlocutorComercial } from '@billing-models/interlocutor-comercial.model';
 import { DialogAllClienteComponent } from 'src/app/billing/modules/interlocutor-comercial/page/dialog-all-cliente/dialog-all-cliente.component';
-import { DialogCrudExchangeRateComponent } from 'src/app/billing/components/dialog-crud-tipo-cambio/dialog-crud-tipo-cambio.component';
+import { DialogCrudExchangeRateComponent } from '@billing/modules/exchange-rate/pages/dialog-crud-tipo-cambio/dialog-crud-tipo-cambio.component';
 import { DialogAllInventarioArticleComponent } from '../../../inventario-articulo/components/dialog-all-inventario-articulo/dialog-all-inventario-articulo.component';
 import { DialogDefaultConfig } from '@billing-utils/constants';
 import { DialogDeleteQuestionComponent } from '@shared-components/dialog-delete-question/dialog-delete-question.component';

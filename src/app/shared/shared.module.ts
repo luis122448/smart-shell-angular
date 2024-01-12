@@ -20,6 +20,8 @@ import { ButtonQuestionComponent } from './components/button-question/button-que
 import { MatsnackbarMessageComponent } from './components/matsnackbar-message/matsnackbar-message.component';
 import { ButtonOperacComponent } from './components/button-operac/button-operac.component';
 import { DialogQuestionComponent } from './components/dialog-question/dialog-question.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -36,6 +38,8 @@ import { DialogQuestionComponent } from './components/dialog-question/dialog-que
     MatsnackbarMessageComponent,
     ButtonOperacComponent,
     DialogQuestionComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +69,8 @@ import { DialogQuestionComponent } from './components/dialog-question/dialog-que
     MatsnackbarMessageComponent,
     ButtonOperacComponent,
     DialogQuestionComponent,
+    HeaderComponent,
+    FooterComponent,
   ]
 })
 export class SharedModule { }

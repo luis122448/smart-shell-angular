@@ -15,6 +15,19 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.cdk-global-scrollblock {
+  position: static;
+  overflow: hidden !important;
+}
+
+.mdc-snackbar__label {
+  padding: 0 !important;
+}
+
+.mdc-snackbar__surface {
+  padding: 0 !important;
+}
+
 ::ng-deep .mat-snack-bar-container {
   margin: 0;
   padding: 0;
@@ -101,7 +114,7 @@ body {
 }
 
 .input-login {
-  @apply h-10 w-full rounded-md border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
+  @apply h-10 w-full mx-auto rounded-md border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
   disabled:bg-slate-300 disabled:font-semibold
   hover:border-sky-700 hover:outline-none
   hover:ring-1 hover:ring-sky-700
@@ -219,8 +232,13 @@ body {
 }
 
 .icon-operac {
-  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-100
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-800
   dark:text-slate-100;
+}
+
+.icon-operac-inverse {
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 dark:text-slate-800
+  text-slate-100;
 }
 
 // Style form Dialog Modals Crud
@@ -259,7 +277,7 @@ body {
 
 .label-input-xl{
   @apply my-auto p-0 w-80 text-xs text-slate-800
-  dark:text-gray-400
+ dark:text-gray-400
 }
 
 // CheckBox
@@ -349,9 +367,16 @@ body {
   @apply m-0 text-left text-sm text-slate-700
   dark:bg-none dark:text-gray-400;
 }
+
 .crud-container {
   @apply h-5/6 w-screen md:h-[800px] md:w-[800px] xl:w-[1000px] m-auto overflow-auto
   bg-slate-100 px-8 py-8 space-y-6
+  dark:bg-slate-900 dark:text-gray-400;
+}
+
+.configuration-container {
+  @apply h-full w-full m-auto overflow-auto
+  bg-slate-100 px-8 space-y-6
   dark:bg-slate-900 dark:text-gray-400;
 }
 
@@ -361,7 +386,7 @@ body {
 }
 
 .border-r-default{
-  @apply border-b-2 border-r-slate-700
+  @apply border-b-2 border-r-sky-950
   dark:border-r-gray-400
 }
 

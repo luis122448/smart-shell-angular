@@ -16,6 +16,8 @@ export interface DocumentHeader {
   busnam: string
   addres: string
   poscod: string
+  // Optional
+  codlistprice?: number
   codsel: string
   typpaycon: number
   incigv: string

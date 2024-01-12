@@ -1,6 +1,7 @@
 export interface Article{
   codart: string
   typinv: number
+  desinv?: string
   abrevi: string
   descri: string
   codext: string
@@ -11,6 +12,9 @@ export interface Article{
   codprv: string
   codman: string
   coduni: string
+  // Optional
+  stock?: number,
+  price?: number,
   stocknegative : string
   editdescri : string
   printcomment : string

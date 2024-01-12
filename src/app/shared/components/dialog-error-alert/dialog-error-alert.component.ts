@@ -5,6 +5,8 @@ import { faCircleXmark,faCircleExclamation,faCircleInfo,faCircleMinus } from '@f
 
 export const MESSAGE_NODATAFOUND = 'Search returned no results'
 export const MESSAGE_ONLY_ONE_CRITERION = 'Type or select only one search criteria'
+export const MESSAGE_NO_FILE_SELECTED = 'No file selected'
+export const MESSAGE_NO_REQUIRED_FIELDS = 'Required fields (*) not completed'
 
 @Component({
   selector: 'app-dialog-error-alert',
@@ -18,6 +20,10 @@ export class DialogErrorAlertComponent {
   faCircleInfo = faCircleInfo
   faCircleMinus = faCircleMinus
 
+  varInfo: boolean = false
+  varWarning: boolean = false
+  varError: boolean = false
+
   mensaje: Mensaje = {
     status: -3,
     message: 'El mensaje de Error no llego al componente, revisar el codigo'
@@ -29,18 +35,32 @@ export class DialogErrorAlertComponent {
   ){
     if ( data.minimum_length ){
       this.mensaje = {
-        status: -2,
+        status: -1,
         message: 'Enter at least ' + data.minimum_length + ' characters'
       }
     } else if ( data.no_data_found ) {
       this.mensaje = {
-        status: -2,
-        message: MESSAGE_NODATAFOUND
+        status: -1,
+        message: MESSAGE_NODATAFOUND,
+        logMessage: MESSAGE_NODATAFOUND
       }
     }  else if ( data.only_one_criterion ){
       this.mensaje = {
-        status: -2,
-        message: MESSAGE_ONLY_ONE_CRITERION
+        status: -1,
+        message: MESSAGE_ONLY_ONE_CRITERION,
+        logMessage: MESSAGE_ONLY_ONE_CRITERION
+      }
+    } else if ( data.no_file_selected ){
+      this.mensaje = {
+        status: -1,
+        message: MESSAGE_NO_FILE_SELECTED,
+        logMessage: MESSAGE_NO_FILE_SELECTED
+      }
+    } else if ( data.no_required_fields ){
+      this.mensaje = {
+        status: -1,
+        message: MESSAGE_NO_REQUIRED_FIELDS,
+        logMessage: MESSAGE_NO_REQUIRED_FIELDS
       }
     } else {
       this.mensaje = data
@@ -49,6 +69,14 @@ export class DialogErrorAlertComponent {
 
   onClose(){
     this.dialogRef.close()
+  }
+
+  onWarning(){
+    this.varWarning = !this.varWarning
+  }
+
+  onReport(){
+    this.varError = !this.varError
   }
 
 }

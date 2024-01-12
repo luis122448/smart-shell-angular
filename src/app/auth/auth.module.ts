@@ -6,7 +6,6 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { RecoveryFormComponent } from './components/recovery-form/recovery-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ForgotPasswordFormComponent } from './components/forgot-password-form/forgot-password-form.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RecoveryComponent } from './pages/recovery/recovery.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -19,7 +18,6 @@ import { FormsModule } from '@angular/forms';
     RecoveryFormComponent,
     RegisterFormComponent,
     ForgotPasswordFormComponent,
-    FooterComponent,
     LoginComponent,
     RecoveryComponent,
     RegisterComponent,

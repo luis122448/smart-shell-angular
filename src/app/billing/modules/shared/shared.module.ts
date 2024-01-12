@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
 import { SiderbarLeftComponent } from './components/siderbar-left/siderbar-left.component';
 import { SiderbarRigthComponent } from './components/siderbar-rigth/siderbar-rigth.component';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { FooterComponent } from './components/footer/footer.component';
 import { DefaultValuesComponent } from './components/default-values/default-values.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
     SiderbarLeftComponent,
     SiderbarRigthComponent,
-    FooterComponent,
     DefaultValuesComponent,
   ],
   imports: [
@@ -26,11 +22,10 @@ import { DefaultValuesComponent } from './components/default-values/default-valu
   exports: [
     SiderbarLeftComponent,
     SiderbarRigthComponent,
+    DefaultValuesComponent,
     RouterModule,
     FontAwesomeModule,
-    SharedModule,
-    HeaderComponent,
-    FooterComponent
+    SharedModule
   ]
 })
 export class SharedModuleFacturacion { }
