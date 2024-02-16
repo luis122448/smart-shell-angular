@@ -47,6 +47,14 @@ export const COLORS:ObjColors = {
     'bg-gray-700': true,
     'hover:bg-gray-800': true,
     'text-white': true
+  },
+  white: {
+    'bg-gray-700': true,
+    'hover:bg-gray-800': true,
+    'text-white': true
+  },
+  transparent: {
+    'bg-transparent': true,
   }
 }
 
@@ -101,5 +109,13 @@ export const COLORSOPERAC:ObjColors = {
     'bg-gray-700': true,
     'hover:bg-gray-800': true,
     'text-white': true
+  },
+  white: {
+    'bg-gray-700': true,
+    'hover:bg-gray-800': true,
+    'text-white': true
+  },
+  transparent: {
+    'bg-transparent': true,
   }
 }
