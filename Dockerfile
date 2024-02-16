@@ -16,6 +16,8 @@ RUN npm run build --omit=dev
 # Use official nginx image as the base image
 FROM nginx:latest
 
+# Copy the custom nginx configuration file to the container in the default location
+COPY ./nginx.conf /etc/nginx/nginx.conf
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /home/app/dist/smart-shell /usr/share/nginx/html
 
