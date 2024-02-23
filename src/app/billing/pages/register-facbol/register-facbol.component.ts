@@ -66,7 +66,7 @@ export class RegisterFacbolComponent implements OnInit {
       reacomdoc: [reacomdoc, [Validators.required]],
       codcur: ['PEN', [Validators.required]],
       exchangerate: [
-        0,
+        '',
         [Validators.required, Validators.pattern(/^\d{1,4}(\.\d{1,4})?$/)],
       ],
       codbuspar: ['', [Validators.required]],
@@ -75,7 +75,7 @@ export class RegisterFacbolComponent implements OnInit {
       poscod: ['000000', [Validators.required]],
       codlistprice: [0, [Validators.required]],
       codsel: ['', [Validators.required]],
-      typpaycon: [1, [Validators.required]],
+      typpaycon: ['', [Validators.required]],
       incigv: [1, [Validators.required]],
       tasigv: [18.0, [Validators.required]],
       refere: ['', []],
@@ -246,6 +246,7 @@ export class RegisterFacbolComponent implements OnInit {
 
   onTipCamChange() {
     this.globalStatusService.setLoading(true);
+    this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
     this.tipoCambioService
       .getByLike(
         this.formDocumentHeader.get('registdate')?.value,
@@ -261,7 +262,6 @@ export class RegisterFacbolComponent implements OnInit {
               width: '400px',
               data: { status: data.status, message: data.message },
             });
-            this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
           } else {
             if (data.list.length === 0) {
               this.dialog.open(DialogErrorAlertComponent, {
@@ -272,8 +272,7 @@ export class RegisterFacbolComponent implements OnInit {
                     'No existe tipo de cambio, para la registdate seleccionada',
                 },
               });
-              this.formDocumentHeader.get('exchangerate')?.setValue(0);
-              this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+              this.formDocumentHeader.get('exchangerate')?.setValue('');
             } else {
               this.matSnackBar.openFromComponent(
                 MatsnackbarSuccessComponent,

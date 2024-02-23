@@ -20,7 +20,6 @@ import { MyValidators } from '@billing-utils/validator';
   styleUrls: ['./basic-info-articulo.component.scss']
 })
 
-
 export class BasicInfoArticleComponent implements OnInit {
 
   formCrudArticle!: FormGroup

@@ -46,12 +46,13 @@
                 placeholder="Code"
                 class="input-search w-20"
                 formControlName="codart"
-                (keydown.enter)="openDialogGetArticle()"
+                (keydown.enter)="openDialogGetArticle(item.value)"
+                [value]="item.value.codart"
               />
               <button
                 type="button"
                 class="button-icon-search"
-                (click)="openDialogGetArticle()"
+                (click)="openDialogGetArticle(item.value)"
               >
                 <fa-icon
                   [icon]="faMagnifyingGlass"

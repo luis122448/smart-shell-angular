@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TypePaymentConditionService } from '../../services/type-payment-condition.service';
-import { SerieCommercialDocumentService } from '../../services/serie-commercial-document.service';
-import { BusinessPartnerService } from '../../services/interlocutor-comcercial.service';
 import { GlobalStatusService } from '../../services/global-status.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,7 +8,6 @@ import { SearchDocumentInvoice } from '@billing-models/document-invoice.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { faXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { SerieCommercialDocument } from '@billing-models/serie-commercial-document.model';
 import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
 import { ReasonCommercialDocumentService } from '@billing-services/reason-commercial-document.service';
 import { SituationCommercialDocument } from '@billing-models/situacion-commercial-document';
@@ -20,12 +17,8 @@ import { DialogGetClienteComponent } from '@billing/modules/interlocutor-comerci
 import { TypePaymentCondition } from '@billing-models/type-payment-condition.model';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
-import { DatePipe } from '@angular/common';
-import { faRectangleList,faPrint,faEnvelope,faBuildingColumns,faBan } from '@fortawesome/free-solid-svg-icons';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { Currency, Seller, Serie } from 'src/app/auth/models/default-values.model';
-import { MyDate } from '@billing-utils/date';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-search-facbol',
@@ -43,10 +36,11 @@ export class SearchFacbolComponent implements OnInit{
 
   formSearchDocument! : FormGroup
   private buidForm(){
+    const today = new Date().toJSON().split('T')[0]
     this.formSearchDocument = this.formBuilder.group({
       typcomdoc : [1,[Validators.required]],
-      startat : ['',[Validators.required]],
-      finalat : ['',[Validators.required]],
+      startat : [today,[Validators.required]],
+      finalat : [today,[Validators.required]],
       sitcomdoc : this.formBuilder.array([1]),
       reacomdoc : this.formBuilder.array([1]),
       codbranch : ['-1',[]],

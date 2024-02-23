@@ -127,7 +127,7 @@ export class DetailItemsFacbolComponent implements OnInit {
     this.dataDetailSource.getDelete(row.numite);
   }
 
-  openDialogGetArticle() {
+  openDialogGetArticle(item: DocumentDetail) {
     const dataHeader = this.dataHeaderSource.get();
     this.codlistprice = dataHeader.codlistprice ?? 1;
     const dialogRefArticle = this.dialog.open<Article>(
@@ -140,8 +140,7 @@ export class DetailItemsFacbolComponent implements OnInit {
         },
       }
     );
-    this.dataDetail.value[0].value.codart = ''
-    this.detailDocument.value[0].codart = ''
+    item.codart = '';
     dialogRefArticle.closed.subscribe((data) => {
       if (data) {
         const nextNumite: number = this.dataDetailSource.getLastNumite() + 1;

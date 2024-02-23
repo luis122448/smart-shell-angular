@@ -150,7 +150,7 @@
               formControlName="addres"
               class="input-default col-span-2"
               cols="60"
-              rows="10"
+              rows="20"
               placeholder="Direccion Comercial o Domicilio Fiscal"
               [class.input-invalid]="isInputInvalid('addres')"
             ></textarea>
@@ -186,7 +186,7 @@
                 <option class="option-default" value="USD">USD</option>
               </select>
               <label for="incigv" class="text-inline label-required pl-6"
-                >Inc Igv?</label
+                >Igv?</label
               >
               <select
                 name="incigv"
@@ -212,6 +212,7 @@
                 id="exchangerate"
                 formControlName="exchangerate"
                 [class.input-invalid]="isInputInvalid('exchangerate')"
+                [disabled]="true"
                 placeholder="Tip Cambio*"
               />
               <label for="tasigv" class="text-inline label-required pl-6"
@@ -224,6 +225,7 @@
                 id="tasigv"
                 formControlName="tasigv"
                 [class.input-invalid]="isInputInvalid('tasigv')"
+                [disabled]="true"
                 placeholder="Tas Igv*"
               />
             </div>
@@ -277,6 +279,7 @@
                 selected
                 hidden
                 [class.option-invalid]="isInputInvalid('typpaycon')"
+
               >
                 -- Elegir --
               </option>
