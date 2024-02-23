@@ -1,3 +1,20 @@
+export interface ExchangeRateAPISunat{
+  statusCode: number
+  body: {
+    data: {
+      tipoCambioByFecha: {
+        items: {
+          compra: string,
+          venta: string,
+          moneda: string,
+          fechaSunat: string
+        }[],
+        nextToken: string | null
+      }
+    }
+  }
+}
+
 export interface ExchangeRateSunat{
   registdate: Date,
   eventa: number,

@@ -60,26 +60,20 @@ export class ResumeFacbolComponent implements OnInit {
     if(this.isStatusInvoiceRegister){
       // Header
       const dataHeader = this.dataHeaderSource.get()
-      this.cursymbol = this.currencies.find(currency => currency.symbol = dataHeader.codcur)?.symbol
+      this.cursymbol = this.currencies.find(currency => currency.codcur = dataHeader.codcur)?.symbol
       // Detail
       const dataDetail = this.dataDetailSource.getImp()
-      console.log(dataDetail);
-      // this.impafecto?.setValue(dataDetail.impafecto);
-      // this.impinafecto?.setValue(dataDetail.impinafecto);
-      // this.impexonerado?.setValue(dataDetail.impexonerado);
-      // this.impgratuito?.setValue(dataDetail.impgratuito);
-      // this.impigv?.setValue(dataDetail.impigv);
-      // this.impisc?.setValue(dataDetail.impisc);
-
-      this.impdesctotal?.setValue(dataDetail.impdesctotal);
-      this.impsaleprice?.setValue(dataDetail.impsaleprice);
-      this.imptotal?.setValue(dataDetail.imptotal);
+      this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
+      this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
+      this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
+      this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
+      this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
       this.dataHeaderSource.updateImp(dataDetail)
     } else {
       this.facbolGlobalStatusService.setStatusInvoiceSave(false);
       this.dialog.open(DialogErrorAlertComponent,{
         width: '400px',
-        data: { status: -3, message: 'Documento incompleto!, revisar las validaciones del formulario' }
+        data: { no_required_fields: 'Y' }
       })
     }
   }
@@ -103,7 +97,7 @@ export class ResumeFacbolComponent implements OnInit {
           if(data.status<=0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status: data.status, message: data.message }
+              data: data
             })
           }
           if(data.status>=0){
@@ -112,22 +106,19 @@ export class ResumeFacbolComponent implements OnInit {
               data: { status: 0, message: 'Do you want to print the document?'}
             })
             dialogRef.closed.subscribe(response =>{
-              console.log(response)
-              console.log(data)
               if(response){
                 this.onPrint(data.object.numint)
               }
             })
           }
-          this.globalStatusService.setLoading(false)
         },
-        error:error => {
-          error.error.text().then((data:APIErrorMessage ) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: { status: -3, message: data.message }
-            })
+        error:err => {
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: err.error
           })
+        },
+        complete: () => {
           this.globalStatusService.setLoading(false)
         }
       })
@@ -179,24 +170,6 @@ export class ResumeFacbolComponent implements OnInit {
     window.open(fileURL, '_blank');
   }
 
-  // get impafecto (){
-  //   return this.formResumeFacBol.get('impafecto')
-  // }
-  // get impinafecto (){
-  //   return this.formResumeFacBol.get('impinafecto')
-  // }
-  // get impexonerado (){
-  //   return this.formResumeFacBol.get('impexonerado')
-  // }
-  // get impgratuito (){
-  //   return this.formResumeFacBol.get('impgratuito')
-  // }
-  // get impigv (){
-  //   return this.formResumeFacBol.get('impigv')
-  // }
-  // get impisc (){
-  //   return this.formResumeFacBol.get('impisc')
-  // }
   get implistprice (){
     return this.formResumeFacBol.get('implistprice')
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faXmark, faPenToSquare, faChartLine, faFileInvoice, faShop, faGears, faUserTag, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faPenToSquare, faChartLine, faFileInvoice, faShop, faGears, faUserTag, faMagnifyingGlass, faFilm } from '@fortawesome/free-solid-svg-icons';
 import { faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
@@ -18,65 +18,12 @@ export class SiderbarLeftComponent {
   openSidebar = false;
   baseUrl: string;
 
-  // menuSidebar = [
-  //   {
-  //     rotulo: "DashBoard",
-  //     id: '',
-  //     link: 'facturacion/dashboard',
-  //     icon: faChartLine,
-  //     subMenu: [],
-  //     open: false
-  //   },
-  //   {
-  //     rotulo: "Billing",
-  //     id: '',
-  //     link: '',
-  //     icon: faShop,
-  //     subMenu: [
-  //       {
-  //         rotulo: 'Invoice',
-  //         id: '',
-  //         link: 'facturacion/billing',
-  //         icon: faFileInvoice
-  //       },
-  //       {
-  //         rotulo: 'Note Credit / Debit',
-  //         id: '',
-  //         link: '',
-  //         icon: null
-  //       }
-  //     ],
-  //     open: false
-  //   },
-  //   {
-  //     rotulo: "Configuration",
-  //     id: '',
-  //     link: 'configuration/principal',
-  //     icon: faGears,
-  //     subMenu: [
-  //       {
-  //         rotulo: 'Company',
-  //         id: '',
-  //         link: 'configuration/principal',
-  //         icon: null
-  //       },
-  //       {
-  //         rotulo: 'Serie / Document',
-  //         id: '',
-  //         link: '',
-  //         icon: null
-  //       }
-  //     ],
-  //     open: false
-  //   }
-  // ]
-
   menuSidebar = [
     {
-      rotulo: "DashBoard",
+      rotulo: "Tutorial",
       id: '',
       link: 'billing/dashboard',
-      icon: faChartLine,
+      icon: faFilm,
       subMenu: [],
       open: false
     },

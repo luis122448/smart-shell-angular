@@ -35,7 +35,8 @@ export class DialogCrudClienteComponent implements OnInit{
     // })
   }
 
-
-
+  closeDialog(){
+    this.dialogRef.close()
+  }
 
 }

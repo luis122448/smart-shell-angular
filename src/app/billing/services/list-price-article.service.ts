@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import { environment } from '@enviroment';
 import { DAOListPriceArticle, DTOListPriceArticle, ListPriceArticle, ByteListPriceArticle } from '@billing-models/list-price-article.model';
+import { ApiResponseList, ApiResponseObject, ApiResponsePage } from '@billing-models/api-reponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,26 +33,28 @@ export class ListPriceArticleService {
     params = params.set('codlistprice',codlistprice.toString())
     params = params.set('codart',codart)
     params = params.set('desart',desart)
-    return this.httpCLient.get<DAOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-page`)
+    params = params.set('size',pageSize.toString())
+    params = params.set('page',pageIndex.toString())
+    return this.httpCLient.get<ApiResponsePage<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-page`, { params })
   }
 
   getAll(codlistprice: number){
     let params = new HttpParams()
     params = params.set('codlistprice',codlistprice.toString())
-    return this.httpCLient.get<DAOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-all`)
+    return this.httpCLient.get<ApiResponseList<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-all`, { params })
   }
 
   getByLike(codart: string){
     let params = new HttpParams()
     params = params.set('codart',codart)
-    return this.httpCLient.get<DAOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-all`)
+    return this.httpCLient.get<ApiResponseList<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-all`, { params })
   }
 
   getById(codlistprice: number, codart: string){
     let params = new HttpParams()
     params = params.set('codlistprice',codlistprice.toString())
     params = params.set('codart',codart)
-    return this.httpCLient.get<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-id`, { params })
+    return this.httpCLient.get<ApiResponseObject<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-id`, { params })
   }
 
   postByImport(codlistprice: number, file: File) {
@@ -63,21 +66,21 @@ export class ListPriceArticleService {
   }
 
   postSave(data: ListPriceArticle){
-    return this.httpCLient.post<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, data)
+    return this.httpCLient.post<ApiResponseObject<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, data)
   }
 
   putUpdate(data: ListPriceArticle, codlistprice: number, codart: string){
     let params = new HttpParams()
     params = params.set('codlistprice',codlistprice.toString())
     params = params.set('codart',codart)
-    return this.httpCLient.put<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, data, { params })
+    return this.httpCLient.put<ApiResponseObject<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, data, { params })
   }
 
   delDelete(codlistprice: number, codart: string){
     let params = new HttpParams()
     params = params.set('codlistprice',codlistprice.toString())
     params = params.set('codart',codart)
-    return this.httpCLient.delete<DTOListPriceArticle>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, { params })
+    return this.httpCLient.delete<ApiResponseObject<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article`, { params })
   }
 
 }

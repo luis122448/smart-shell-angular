@@ -13,6 +13,7 @@
           type="number"
           class="input-disabled-import"
           formControlName="implistprice"
+          [value]="implistprice?.value | number:'1.2-2'"
         />
       </div>
       <div class="flex space-x-2">
@@ -26,6 +27,7 @@
           type="number"
           class="input-disabled-import"
           formControlName="impdesctotal"
+          [value]="impdesctotal?.value | number:'1.2-2'"
         />
       </div>
       <div class="flex space-x-2">
@@ -39,6 +41,7 @@
           type="number"
           class="input-disabled-import"
           formControlName="impsaleprice"
+          [value]="impsaleprice?.value | number:'1.2-2'"
         />
       </div>
       <div class="flex space-x-2">
@@ -52,6 +55,7 @@
           type="number"
           class="input-disabled-import"
           formControlName="imptribtotal"
+          [value]="imptribtotal?.value | number:'1.2-2'"
         />
       </div>
       <div class="flex space-x-2">
@@ -63,6 +67,7 @@
           type="number"
           class="input-disabled-import"
           formControlName="imptotal"
+          [value]="imptotal?.value | number:'1.2-2'"
         />
       </div>
     </form>

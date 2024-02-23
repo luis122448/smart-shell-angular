@@ -23,6 +23,7 @@ export class BasicAllExchangeRateComponent implements OnInit {
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onSave = new EventEmitter<boolean>();
   @Output() basicExchangeRate = new EventEmitter<BasicExchangeRate>();
+  totalElements = 0;
 
   formSearchExchangeRate!: FormGroup;
   dataSourceExchangeRate = new DataSourceExchangeRateExchangeRate();
@@ -53,13 +54,14 @@ export class BasicAllExchangeRateComponent implements OnInit {
       .getByLike(this.startat?.value, this.finalat?.value, '', '')
       .subscribe({
         next: (data) => {
-          this.dataSourceExchangeRate.getInit(data.list);
           if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
               data: data,
             });
           }
+          this.dataSourceExchangeRate.getInit(data.list);
+          this.totalElements = data.list.length;
           this.globalStatusService.setLoading(false);
         },
         error: (err) => {
@@ -88,6 +90,7 @@ export class BasicAllExchangeRateComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.dataSourceExchangeRate.getInit(data.list);
+          this.totalElements = data.list.length;
           if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
@@ -127,6 +130,7 @@ export class BasicAllExchangeRateComponent implements OnInit {
               MatSnackBarSuccessConfig
             );
             this.dataSourceExchangeRate.getClean(row);
+            this.totalElements--;
           }
           this.globalStatusService.setLoading(false);
         },

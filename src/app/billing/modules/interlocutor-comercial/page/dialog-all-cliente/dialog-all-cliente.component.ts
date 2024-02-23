@@ -97,10 +97,7 @@ export class DialogAllClienteComponent {
   }
 
   crudInterlocutorComercial(row: InterlocutorComercial | null) {
-    // console.log(row)
     this.dialog.open(DialogCrudClienteComponent,{
-      height: '800px',
-      width: '800px',
       data: { codbuspar: row?.codbuspar, busnam: row?.busnam }
     })
   }

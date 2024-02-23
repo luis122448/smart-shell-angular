@@ -1,6 +1,6 @@
 <main class="sub-main-container">
-  <section class="w-full h-auto pt-6">
-    <form [formGroup]="form">
+  <section class="h-auto w-full pt-6">
+    <form [formGroup]="formDocumentHeader">
       <div class="items-container">
         <section class="flex-col space-y-2">
           <div class="dense-3 grid grid-cols-3 items-center">
@@ -14,19 +14,10 @@
               placeholder="Type Document*"
               (change)="changeTypcomdoc($event)"
             >
-              <option
-                [value]="1"
-                selected
-                class="option-default"
-              >
+              <option [value]="1" selected class="option-default">
                 Invoice
               </option>
-              <option
-                [value]="2"
-                class="option-default"
-              >
-                Ticket
-              </option>
+              <option [value]="2" class="option-default">Ticket</option>
             </select>
           </div>
           <div class="grid grid-cols-3 items-center">
@@ -95,13 +86,11 @@
             >
             <div class="col-span-2 flex">
               <input
-                name="codbuspar"
-                id="codbuspar"
                 type="text"
+                placeholder="Codigo de Cliente"
                 class="input-default"
                 formControlName="codbuspar"
                 [class.input-invalid]="isInputInvalid('codbuspar')"
-                placeholder="Codigo de Cliente*"
                 (keyup.enter)="openDialogGetCli()"
               />
               <button
@@ -140,7 +129,6 @@
                 formControlName="busnam"
                 [class.input-invalid]="isInputInvalid('busnam')"
                 (keyup.enter)="openDialogGetCli()"
-                placeholder="Razon Social*"
               />
               <button
                 *ngIf="!statusBuspar"
@@ -165,21 +153,22 @@
               rows="10"
               placeholder="Direccion Comercial o Domicilio Fiscal"
               [class.input-invalid]="isInputInvalid('addres')"
-              placeholder="Direccion*"
             ></textarea>
           </div>
         </section>
         <section class="flex-col space-y-2">
           <div class="grid grid-cols-3 items-center">
-            <label for="registdate" class="text-inline label-required">Fecha de Emisión</label>
+            <label for="registdate" class="text-inline label-required"
+              >Fecha de Emisión</label
+            >
             <input
-                id="registdate"
-                name="registdate"
-                type="date"
-                class="input-auto col-span-2"
-                formControlName="registdate"
-                (input)="onFemisiChange($event)"
-              />
+              id="registdate"
+              name="registdate"
+              type="date"
+              class="input-auto col-span-2"
+              formControlName="registdate"
+              (input)="onFemisiChange($event)"
+            />
           </div>
           <div class="grid grid-cols-3 items-center">
             <label for="codcur" class="text-inline label-required"
@@ -321,10 +310,10 @@
       </div>
     </form>
   </section>
-  <section class="w-full h-auto">
+  <section class="h-auto w-full">
     <app-detail-items-facbol></app-detail-items-facbol>
   </section>
-  <section class="w-full h-auto px-4">
+  <section class="h-auto w-full px-4">
     <app-resume-facbol></app-resume-facbol>
   </section>
 </main>

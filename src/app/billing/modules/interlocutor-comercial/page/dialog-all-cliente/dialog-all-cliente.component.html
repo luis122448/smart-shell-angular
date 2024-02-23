@@ -82,8 +82,8 @@
       >
     </div>
   </section>
-  <section class="selection-table">
-    <div class="container-dialog-table">
+  <section class="section-table">
+    <article class="container-dialog-table">
       <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
         <tr
           class="header-table"
@@ -150,7 +150,7 @@
           </td>
         </ng-container>
       </table>
-    </div>
+    </article>
     <mat-paginator
       (page)="byPageEvent($event)"
       [hidePageSize]="true"

@@ -25,8 +25,8 @@ export class BasicInfoExchangeRateComponent {
       registdate: [today,[Validators.required]],
       origen: ['PEN',[Validators.required]],
       destin: ['USD',[Validators.required]],
-      fventa: [0.00,[]],
-      fcompra: [0.00,[]],
+      fventa: [0.00,[Validators.required]],
+      fcompra: [0.00,[Validators.required]],
       cventa: [0.00,[]],
       ccompra: [0.00,[]],
       eventa: [0.00,[Validators.required, Validators.min(2), Validators.max(5), Validators.pattern(/^\d{1,5}(?:\.\d{0,4})?$/)]],
@@ -51,10 +51,10 @@ export class BasicInfoExchangeRateComponent {
 
   importSunat(){
     this.globalStatusService.setLoading(true)
-    this.tipoCambioService.getExchangeRateSunat()
+    this.tipoCambioService.getExchangeRateSunat(new Date(Date.parse(this.crudFecha?.value)))
     .subscribe({
       next:data =>{
-        this.crudFecha?.setValue(data.registdate)
+        this.crudFecha?.setValue(data.registdate.toISOString().split('T')[0])
         this.crudEventa?.setValue(data.eventa)
         this.crudEcompra?.setValue(data.ecompra)
         this.crudFventa?.setValue(data.eventa)
@@ -105,6 +105,10 @@ export class BasicInfoExchangeRateComponent {
       })
     } else {
       this.formCrudExchangeRate.markAllAsTouched()
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { no_required_fields: 'S' }
+      })
     }
   }
 

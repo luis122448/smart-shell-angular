@@ -22,6 +22,7 @@ import { ButtonOperacComponent } from './components/button-operac/button-operac.
 import { DialogQuestionComponent } from './components/dialog-question/dialog-question.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { VideoPlayerComponent } from './components/video-player/video-player.component';
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -40,6 +41,7 @@ import { FooterComponent } from './components/footer/footer.component';
     DialogQuestionComponent,
     HeaderComponent,
     FooterComponent,
+    VideoPlayerComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { FooterComponent } from './components/footer/footer.component';
     DialogQuestionComponent,
     HeaderComponent,
     FooterComponent,
+    VideoPlayerComponent
   ]
 })
 export class SharedModule { }

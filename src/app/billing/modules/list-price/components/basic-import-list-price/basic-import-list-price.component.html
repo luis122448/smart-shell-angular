@@ -1,48 +1,48 @@
 <form
   [formGroup]="formCrudListPriceArticle"
-  class="relative h-full w-full space-y-6 px-4 py-6"
+  class="sub-dialog-container"
 >
-<section class="grid grid-cols-2 gap-x-4 export-container">
-  <article class="col-span-1 space-y-2">
-    <div class="flex">
-      <label for="codlistprice" class="export-label label-required"
-        >Price List</label
-      >
-      <select
-        name="codlistprice"
-        id="codlistprice"
-        class="select-default"
-        formControlName="codlistprice"
-        [class.select-invalid]="isInputInvalid('codlistprice')"
-      >
-        <option
-          value=""
-          class="option-default"
-          disabled
-          selected
-          hidden
-          [class.option-invalid]="isInputInvalid('codlistprice')"
+  <section class="export-container grid grid-cols-2 gap-x-4">
+    <article class="col-span-1 space-y-2">
+      <div class="flex">
+        <label for="codlistprice" class="export-label label-required"
+          >Price List</label
         >
-          -- Elegir --
-        </option>
-        <option *ngFor="let item of listPrices" [value]="item.codlistprice">
-          {{ item.descri }}
-        </option>
-      </select>
-    </div>
-  </article>
-  <article class="col-span-1 space-y-2">
-    <app-button-standard
-      (click)="generateListPriceArticle()"
-      colorBtn="green"
-      optionBtn="export"
-      typeBtn="button"
-    >
-      Generate
-    </app-button-standard>
-  </article>
-</section>
-  <section class="grid grid-cols-2 gap-x-4 export-container">
+        <select
+          name="codlistprice"
+          id="codlistprice"
+          class="select-default"
+          formControlName="codlistprice"
+          [class.select-invalid]="isInputInvalid('codlistprice')"
+        >
+          <option
+            value=""
+            class="option-default"
+            disabled
+            selected
+            hidden
+            [class.option-invalid]="isInputInvalid('codlistprice')"
+          >
+            -- Elegir --
+          </option>
+          <option *ngFor="let item of listPrices" [value]="item.codlistprice">
+            {{ item.descri }}
+          </option>
+        </select>
+      </div>
+    </article>
+    <article class="col-span-1 space-y-2">
+      <app-button-standard
+        (click)="generateListPriceArticle()"
+        colorBtn="green"
+        optionBtn="export"
+        typeBtn="button"
+      >
+        Generate
+      </app-button-standard>
+    </article>
+  </section>
+  <section class="export-container grid grid-cols-2 gap-x-4">
     <article class="col-span-1 space-y-2">
       <div class="flex">
         <label for="codlistprice" class="export-label label-required"
@@ -82,11 +82,9 @@
       </app-button-standard>
     </article>
   </section>
-  <section class="grid grid-cols-2 gap-x-4 import-container">
+  <section class="import-container grid grid-cols-2 gap-x-4">
     <article class="col-span-1 space-y-2">
-      <label
-        class="import-label label-required"
-        for="file_input"
+      <label class="import-label label-required" for="file_input"
         >Upload file
       </label>
       <input

@@ -15,6 +15,8 @@ export interface Article{
   // Optional
   stock?: number,
   price?: number,
+  modprice?: string,
+  moddesc?: string,
   stocknegative : string
   editdescri : string
   printcomment : string

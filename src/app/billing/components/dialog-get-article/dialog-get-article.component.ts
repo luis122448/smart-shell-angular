@@ -39,6 +39,7 @@ export class DialogGetArticleComponent implements OnInit {
     private globalStatusService: GlobalStatusService,
     @Inject(DIALOG_DATA) private data: DialogData
   ){}
+
   ngOnInit(): void {
     this.loadArticle(this.data.codart,this.data.descri)
     this.input.valueChanges
@@ -58,24 +59,18 @@ export class DialogGetArticleComponent implements OnInit {
         next: data =>{
           this.dataSource.getInit(data.list)
           this.countRecords = this.dataSource.getCount()
-          if (data.list.length == 0){
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: { no_data_found: 'S' }
-            })
-            this.closeDialog(null)
-          } else if (data.list.length == 1){
+          if (data.list.length == 1){
             this.closeDialog(data.list[0])
           }
-          this.globalStatusService.setLoading(false)
         },
-        error: error =>{
+        error: err =>{
           this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: error.error
+            data: err.error
           })
-          this.globalStatusService.setLoading(false)
-        }
+          this.closeDialog(null)
+        },
+        complete: () => this.globalStatusService.setLoading(false)
       })
     } else if (descri){
       this.articleService.getArticleDescri(descri)
@@ -83,24 +78,18 @@ export class DialogGetArticleComponent implements OnInit {
         next: data =>{
           this.dataSource.getInit(data.list)
           this.countRecords = this.dataSource.getCount()
-          if (data.list.length == 0){
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: { no_data_found: 'S' }
-            })
-            this.closeDialog(null)
-          } else if (data.list.length == 1){
+          if (data.list.length == 1){
             this.closeDialog(data.list[0])
           }
-          this.globalStatusService.setLoading(false)
         },
-        error: error =>{
+        error: err =>{
           this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: error.error
+            data: err.error
           })
-          this.globalStatusService.setLoading(false)
-        }
+          this.closeDialog(null)
+        },
+        complete: () => this.globalStatusService.setLoading(false)
       })
     } else {
       this.globalStatusService.setLoading(false)
@@ -114,24 +103,33 @@ export class DialogGetArticleComponent implements OnInit {
       .subscribe({
         next: data =>{
           if(data.object){
+            row.desinv = 'MERC'
             row.price = data.object.price
             row.stock = 0
+            row.moddesc = data.object.moddesc
+            row.modprice = data.object.modprice
           } else {
+            row.desinv = 'UND'
             row.price = 0
             row.stock = 0
+            row.moddesc = 'Y'
+            row.modprice = 'Y'
           }
-          this.globalStatusService.setLoading(false)
         },
         error: err =>{
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
             data: err.error
           })
+        },
+        complete: () => {
           this.globalStatusService.setLoading(false)
+          this.dialogRef.close(row)
         }
       })
+    } else {
+      this.dialogRef.close(null);
     }
-    this.dialogRef.close(row)
   }
 }
 

@@ -54,10 +54,17 @@
     @apply h-full w-auto text-sm text-left text-gray-500 dark:text-gray-400
   }
 
-  // Dialog Table
-  .container-dialog-table{
-  @apply h-1/2 max-h-[400px] sm:min-h-[200px] md:min-h-[250px] lg:min-h-[350px] overflow-auto
+  .section-table{
+    @apply w-full h-full overflow-auto
   }
+
+  // // Dialog Table
+  .container-dialog-table{
+  @apply h-auto sm:min-h-[200px] md:min-h-[250px] lg:min-h-[350px] overflow-auto
+  }
+  // .container-dialog-table{
+  //   @apply h-1/2 sm:h-[200px] md:h-[250px] lg:h-[350px] overflow-auto
+  // }
 
   .main-dialog-table{
     @apply w-full h-auto text-sm text-left text-gray-500 dark:text-gray-400

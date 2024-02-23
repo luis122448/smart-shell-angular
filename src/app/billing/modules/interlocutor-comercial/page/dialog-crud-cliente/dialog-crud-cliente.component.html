@@ -1,4 +1,4 @@
-<div class="crud-container relative h-full w-full">
+<div class="crud-container relative">
   <mat-tab-group [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
       <mat-tab>
         <ng-template mat-tab-label>
@@ -28,4 +28,10 @@
         <app-contacto-cliente></app-contacto-cliente>
       </mat-tab>
   </mat-tab-group>
+  <app-button-operac
+    optionBtn="close"
+    colorBtn="red"
+    class="absolute top-0 right-6 z-10"
+    (click)="closeDialog()"
+  ></app-button-operac>
 </div>

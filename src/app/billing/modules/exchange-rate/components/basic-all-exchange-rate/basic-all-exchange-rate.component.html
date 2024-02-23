@@ -4,36 +4,48 @@
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
           <label for="startat" class="label-input-sm">Fecha Inicio</label>
-            <input
-              id="startat"
-              name="startat"
-              type="date"
-              class="input-auto col-span-2"
-              formControlName="startat"
-            />
+          <input
+            id="startat"
+            name="startat"
+            type="date"
+            class="input-auto col-span-2"
+            formControlName="startat"
+          />
         </div>
         <div class="grid grid-cols-3">
           <label for="finalat" class="label-input-sm">Fecha Final</label>
-            <input
-              id="finalat"
-              name="finalat"
-              type="date"
-              class="input-auto col-span-2"
-              formControlName="finalat"
-            />
+          <input
+            id="finalat"
+            name="finalat"
+            type="date"
+            class="input-auto col-span-2"
+            formControlName="finalat"
+          />
         </div>
       </div>
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
-          <div class="w-56"><label for="origen" class="label-input-sm">Moneda Origen</label></div>
-          <select id="origen" class="select-default col-span-2" formControlName="origen">
+          <div class="w-56">
+            <label for="origen" class="label-input-sm">Moneda Origen</label>
+          </div>
+          <select
+            id="origen"
+            class="select-default col-span-2"
+            formControlName="origen"
+          >
             <option value="PEN" class="option-default">PEN</option>
             <option value="USD" class="option-default">USD</option>
           </select>
         </div>
         <div class="grid grid-cols-3">
-          <div class="w-56"><label for="destin" class="label-input-sm">Moneda Destino</label></div>
-          <select id="destin" class="select-default col-span-2" formControlName="destin">
+          <div class="w-56">
+            <label for="destin" class="label-input-sm">Moneda Destino</label>
+          </div>
+          <select
+            id="destin"
+            class="select-default col-span-2"
+            formControlName="destin"
+          >
             <option value="PEN" class="option-default">PEN</option>
             <option value="USD" class="option-default">USD</option>
           </select>
@@ -55,13 +67,17 @@
       optionBtn="new"
       typeBtn="button"
       (click)="crudExchangeRate(null)"
-      >
+    >
       Nuevo
     </app-button-standard>
   </section>
   <section class="section-table">
-    <div class="container-dialog-table">
-      <table class="main-dialog-table" cdk-table [dataSource]="dataSourceExchangeRate">
+    <article class="container-dialog-table">
+      <table
+        class="main-dialog-table"
+        cdk-table
+        [dataSource]="dataSourceExchangeRate"
+      >
         <tr
           class="header-table"
           cdk-header-row
@@ -73,9 +89,7 @@
           *cdkRowDef="let row; columns: displayedColumns"
         ></tr>
         <ng-container cdkColumnDef="registdate">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Fecha
-          </th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Fecha</th>
           <td
             cdk-cell
             class="row-cell min-w-[140px] text-center"
@@ -117,9 +131,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Accion
-          </th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
             <app-button-operac
               optionBtn="edit"
@@ -135,9 +147,15 @@
           </td>
         </ng-container>
       </table>
-    </div>
-    <div>
-    </div>
+    </article>
+    <mat-paginator
+      [hidePageSize]="true"
+      [length]="totalElements"
+      [pageSize]="1"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </section>
   <section class="flex justify-end">
     <app-button-standard

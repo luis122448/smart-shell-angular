@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map,catchError  } from 'rxjs/operators';
-import { ExchangeRateSunat, DAOExchangeRate } from '../models/exchange-rate.model';
+import { ExchangeRateSunat, DAOExchangeRate, ExchangeRateAPISunat } from '../models/exchange-rate.model';
 import { environment } from '@enviroment';
 
 @Injectable({
@@ -11,21 +11,42 @@ import { environment } from '@enviroment';
 })
 export class ExchangeRateService {
 
-  API_URL_SUNAT = 'https://www.sunat.gob.pe/a/txt/tipoCambio.txt'
+  // API_URL_SUNAT = 'https://www.sunat.gob.pe/a/txt/tipoCambio.txt'
+  API_URL_SUNAT = 'https://api.sunat.dev/sunat/tc'
   API_URL = environment.API_URL
   PATH_BILLING = environment.PATH_BILLING
   constructor(
     private httpCliente: HttpClient
   ) { }
 
-  getExchangeRateSunat(): Observable<ExchangeRateSunat>{
-    return this.httpCliente.get<string>(this.API_URL_SUNAT)
+  // getExchangeRateSunat(): Observable<ExchangeRateSunat>{
+  //   return this.httpCliente.get<string>(this.API_URL_SUNAT)
+  //   .pipe(map(data =>{
+  //     const parts = data.split('|')
+  //     return {
+  //       registdate: new Date(parts[0]),
+  //       eventa: parseFloat(parts[1]),
+  //       ecompra: parseFloat(parts[2])
+  //     }
+  //   }),
+  //   catchError(error =>{
+  //     console.log(error)
+  //     throw error;
+  //   }))
+  // }
+
+  getExchangeRateSunat(date: Date): Observable<ExchangeRateSunat>{
+    let params = new HttpParams()
+    .set('fechaInicio', date.toISOString().split('T')[0]) // Convierte la fecha a formato "YYYY-MM-DD"
+    .set('fechaFin', date.toISOString().split('T')[0]) // Convierte la fecha a formato "YYYY-MM-DD"
+    .set('apikey', environment.API_SUNAT_TOKEN)
+    return this.httpCliente.get<ExchangeRateAPISunat>(this.API_URL_SUNAT, { params })
     .pipe(map(data =>{
-      const parts = data.split('|')
+      const parts = data.body.data.tipoCambioByFecha.items[0]
       return {
-        registdate: new Date(parts[0]),
-        eventa: parseFloat(parts[1]),
-        ecompra: parseFloat(parts[2])
+        registdate: new Date(parts.fechaSunat),
+        eventa: parseFloat(parts.venta),
+        ecompra: parseFloat(parts.compra)
       }
     }),
     catchError(error =>{

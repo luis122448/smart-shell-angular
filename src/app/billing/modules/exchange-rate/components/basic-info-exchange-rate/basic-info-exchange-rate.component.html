@@ -12,20 +12,25 @@
     <label class="dialog-sub-title">Basic Information : </label>
   </section>
   <section class="space-y-4">
-    <div class="flex flex-col space-x-8">
-      <label for="registdate" class="label-input-sm label-required">Registed Date</label>
+    <div class="grid grid-cols-2 gap-x-8">
+      <label for="registdate" class="label-input-sm label-required"
+        >Registed Date</label
+      >
       <input
         id="registdate"
         name="registdate"
         type="date"
         class="input-default"
         formControlName="registdate"
+        [class.input-invalid]="isInputInvalid('registdate')"
       />
     </div>
     <div class="grid grid-cols-2 gap-x-8">
       <div>
         <div class="flex">
-          <label for="origen" class="label-input-xl label-required">Moneda Origen</label>
+          <label for="origen" class="label-input-xl label-required"
+            >Moneda Origen</label
+          >
           <select id="origen" class="input-default" formControlName="origen">
             <option value="PEN">PEN</option>
             <option value="USD">USD</option>
@@ -34,7 +39,9 @@
       </div>
       <div>
         <div class="flex">
-          <label for="destin" class="label-input-xl label-required">Moneda Destino</label>
+          <label for="destin" class="label-input-xl label-required"
+            >Moneda Destino</label
+          >
           <select id="destin" class="input-default" formControlName="destin">
             <option value="PEN">PEN</option>
             <option value="USD">USD</option>
@@ -43,83 +50,71 @@
       </div>
     </div>
   </section>
-  <section class="grid grid-cols-3 grid-rows-2 gap-x-8 gap-y-4">
-    <div>
-      <label for="fventa" class="label-input-sm">Factor Venta</label>
-      <input
-        type="number"
-        min="0"
-        formControlName="fventa"
-        class="input-default"
-      />
-      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('fventa')">
-        Formato inválido. Ingresa un número con 2 a 4 decimales*
-      </app-alert-standard> -->
-    </div>
-    <div>
-      <label for="fcompra" class="label-input-sm">Factor Compra</label>
-      <input
-        type="number"
-        min="0"
-        formControlName="fcompra"
-        class="input-default"
-      />
-      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('fcompra')">
-        Formato inválido. Ingresa un número con 2 a 4 decimales*
-      </app-alert-standard> -->
-    </div>
-    <div>
-      <label for="cventa" class="label-input-sm"
-        >Contabilidad Venta</label
-      >
-      <input
-        type="number"
-        min="0"
-        formControlName="cventa"
-        class="input-default"
-      />
-      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('cventa')">
-        Formato inválido. Ingresa un número con 2 a 4 decimales*
-      </app-alert-standard> -->
-    </div>
-    <div>
-      <label for="ccompra" class="label-input-sm"
-        >Contabilidad Compra</label
-      >
-      <input
-        type="number"
-        min="0"
-        formControlName="ccompra"
-        class="input-default"
-      />
-      <!-- <app-alert-standard [class.invisible]="!isInputInvalid('ccompra')">
-        Formato inválido. Ingresa un número con 2 a 4 decimales*
-      </app-alert-standard> -->
-    </div>
-    <div>
-      <label for="eventa" class="label-input-sm">Entidad Venta</label>
-      <input
-        type="number"
-        min="0"
-        formControlName="eventa"
-        class="input-default"
-      />
-      <app-alert-standard [class.invisible]="!isInputInvalid('eventa')">
-        Campo Obligatorio*
-      </app-alert-standard>
-    </div>
-    <div>
-      <label for="ecompra" class="label-input-sm">Entidad Compra</label>
-      <input
-        type="number"
-        min="0"
-        formControlName="ecompra"
-        class="input-default"
-      />
-      <app-alert-standard [class.invisible]="!isInputInvalid('ecompra')">
-        Campo Obligatorio*
-      </app-alert-standard>
-    </div>
+  <section class="grid grid-cols-3 gap-x-12">
+    <article class="grid grid-rows-2 gap-y-2">
+      <div class="flex flex-col space-y-1">
+        <label for="fventa" class="label-input-sm label-required">Factor Venta</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="fventa"
+          [class.input-invalid]="isInputInvalid('fventa')"
+          class="input-default"
+        />
+      </div>
+      <div class="flex flex-col space-y-1">
+        <label for="fcompra" class="label-input-sm label-required">Factor Compra</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="fcompra"
+          [class.input-invalid]="isInputInvalid('fcompra')"
+          class="input-default"
+        />
+      </div>
+    </article>
+    <article class="grid grid-rows-2 gap-y-2">
+      <div class="flex flex-col space-y-1">
+        <label for="cventa" class="label-input-sm">Contabilidad Venta</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="cventa"
+          class="input-default"
+        />
+      </div>
+      <div class="flex flex-col space-y-1">
+        <label for="ccompra" class="label-input-sm">Contabilidad Compra</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="ccompra"
+          class="input-default"
+        />
+      </div>
+    </article>
+    <article class="grid grid-rows-2 gap-y-2">
+      <div class="flex flex-col space-y-1">
+        <label for="eventa" class="label-input-sm label-required">Entidad Venta</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="eventa"
+          [class.input-invalid]="isInputInvalid('eventa')"
+          class="input-default"
+        />
+      </div>
+      <div class="flex flex-col space-y-1">
+        <label for="ecompra" class="label-input-sm label-required">Entidad Compra</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="ecompra"
+          [class.input-invalid]="isInputInvalid('ecompra')"
+          class="input-default"
+        />
+      </div>
+    </article>
   </section>
   <section class="flex justify-end space-x-4">
     <app-button-standard

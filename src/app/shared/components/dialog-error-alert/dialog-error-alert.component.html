@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="this.mensaje.status">
   <section
     *ngSwitchCase="1"
-    class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+    class="dialog-alert-container"
   >
     <div class="flex justify-center">
       <fa-icon [icon]="faCircleMinus" size="2xl" class="text-sky-600"></fa-icon>
@@ -20,7 +20,7 @@
   </section>
   <section
     *ngSwitchCase="0"
-    class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+    class="dialog-alert-container"
   >
     <div class="flex justify-center">
       <fa-icon [icon]="faCircleInfo" size="2xl" class="text-sky-600"></fa-icon>
@@ -39,7 +39,7 @@
   </section>
   <section
     *ngSwitchCase="-1"
-    class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+    class="dialog-alert-container"
   >
     <div class="flex justify-center">
       <fa-icon
@@ -70,14 +70,15 @@
     </div>
     <div
       *ngIf="this.varWarning"
-      class="mb-4 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800 dark:bg-gray-800 dark:text-yellow-300"
+      class="flex flex-col w-auto rounded-lg bg-yellow-50 mt-4 p-2 font-medium text-yellow-800 dark:bg-gray-800 dark:text-yellow-300 text-wrap"
     >
-      <span class="font-medium">Cause :</span> {{ this.mensaje.logMessage }}
+      <span class="font-semibold">Cause :</span>
+      <span class="text-start block break-all">{{ this.mensaje.logMessage }}</span>
     </div>
   </section>
   <ng-template ngSwitchDefault>
     <section
-      class="dialog-container h-auto w-full flex-col items-center justify-center space-y-4"
+      class="dialog-alert-container"
     >
       <div class="flex justify-center">
         <fa-icon
@@ -108,9 +109,10 @@
       </div>
       <div
         *ngIf="this.varError"
-        class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400"
+        class="flex flex-col w-auto rounded-lg bg-red-50 mt-4 p-2 font-medium text-red-800 dark:bg-gray-800 dark:text-red-400 text-wrap"
       >
-        <span class="font-medium">Cause :</span> {{ this.mensaje.logMessage }}
+        <span class="font-semibold">Cause :</span>
+        <span class="text-start block break-all">{{ this.mensaje.logMessage }}</span>
       </div>
     </section>
   </ng-template>
