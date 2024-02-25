@@ -1,21 +1,31 @@
-import { Component,Input } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
 import { faSpinner,faFloppyDisk,faCalculator,faCircleLeft,faBroomBall,faCircleXmark,faPlus,faNewspaper,faTrashArrowUp,
   faMagnifyingGlass,faQuestion,faTrashCan,faPenToSquare, IconDefinition, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Colors, COLORS, COLORSOPERAC } from '../../model/color.model';
 import { ButtonOption } from '../../model/button-option.model';
+import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-button-operac',
   templateUrl: './button-operac.component.html',
   styleUrls: ['./button-operac.component.scss']
 })
-export class ButtonOperacComponent {
+export class ButtonOperacComponent implements OnInit{
   @Input() optionBtn: ButtonOption = ''
   @Input() colorBtn: Colors = 'sky';
+  @Input() disabled = false;
+  @Input() sizeBtn: string = '2xs';
+  sizeIconProp: SizeProp | undefined = undefined;
+  validSizes: SizeProp[] = ['2xs','xs','sm', 'lg', 'xl', '2xl'];
 
   mapColors = COLORSOPERAC;
 
-  constructor() {}
+  constructor() {
+    this.sizeIconProp = this.convertToSizeProp(this.sizeBtn);
+  }
+  ngOnInit(): void {
+    this.sizeIconProp = this.convertToSizeProp(this.sizeBtn);
+  }
 
   get colors() {
     const colors = this.mapColors[this.colorBtn];
@@ -55,6 +65,15 @@ export class ButtonOperacComponent {
         return faDownload
       default:
         return faQuestion; // Puedes establecer un ícono predeterminado aquí si es necesario
+    }
+  }
+
+  convertToSizeProp(sizeStr: string): SizeProp | undefined {
+    if (this.validSizes.includes(sizeStr as SizeProp)) {
+      return sizeStr as SizeProp; // Conversión segura porque sizeStr coincide con los valores válidos
+    } else {
+      console.error(`El tamaño ${sizeStr} no es válido`);
+      return undefined; // Si la cadena no coincide con ningún valor válido, se devuelve undefined
     }
   }
 }

@@ -75,12 +75,6 @@ body {
   dark:border-0 dark:bg-gray-700 dark:text-gray-400;
 }
 
-.button-icon-input {
-  @apply border-2 border-slate-800 bg-slate-700 px-2
-  hover:border-sky-700 hover:outline-none
-  hover:ring-1 hover:ring-sky-700 dark:bg-gray-700 dark:text-gray-400;
-}
-
 // Input
 .input-default {
   @apply h-7 w-full rounded-sm border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
@@ -190,6 +184,12 @@ body {
   dark:border-sky-700 dark:dark:bg-sky-700 dark:hover:ring-sky-700 dark:disabled:bg-slate-800;
 }
 
+.button-icon-input {
+  @apply border-2 border-slate-800 bg-slate-700 px-2
+  hover:border-sky-700 hover:outline-none
+  hover:ring-1 hover:ring-sky-700 dark:bg-gray-700 dark:text-gray-400;
+}
+
 .button-icon-overlay {
   @apply h-7 w-7 rounded-md border-2 border-slate-800 text-white
   hover:scale-110 hover:transform
@@ -198,7 +198,7 @@ body {
 
 .button-icon-operac {
   @apply relative h-7 w-7 rounded-md border-2 border-slate-800 text-white
-  hover:scale-110 hover:transform
+  hover:scale-110 hover:transform text-xl
   dark:border-sky-900;
 }
 
@@ -206,6 +206,11 @@ body {
   @apply relative h-7 w-7 rounded-md border-2 border-red-600 bg-red-700 text-white
   hover:scale-110 hover:transform
   dark:border-red-700 dark:bg-red-800;
+}
+
+.icon-operac-button {
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-200
+  dark:text-slate-100;
 }
 
 .icon-operac {

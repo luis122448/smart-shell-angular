@@ -59,6 +59,7 @@ export class ResumeFacbolComponent implements OnInit {
   calculate() {
     if(this.isStatusInvoiceRegister){
       // Header
+      this.globalStatusService.setLoading(true)
       const dataHeader = this.dataHeaderSource.get()
       this.cursymbol = this.currencies.find(currency => currency.codcur = dataHeader.codcur)?.symbol
       // Detail
@@ -69,6 +70,7 @@ export class ResumeFacbolComponent implements OnInit {
       this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
       this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
       this.dataHeaderSource.updateImp(dataDetail)
+      this.globalStatusService.setLoading(false)
     } else {
       this.facbolGlobalStatusService.setStatusInvoiceSave(false);
       this.dialog.open(DialogErrorAlertComponent,{
@@ -185,4 +187,5 @@ export class ResumeFacbolComponent implements OnInit {
   get imptotal (){
     return this.formResumeFacBol.get('imptotal')
   }
+
 }

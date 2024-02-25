@@ -17,6 +17,7 @@ import { ReasonCommercialDocumentService } from '@billing-services/reason-commer
 import { TypeInventoryService } from '@billing-services/type-inventory.service';
 import { ListPriceService } from '@billing-services/list-price.service';
 import { TypeCommercialDocumentService } from '@billing-services/type-commercial-document.service';
+import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
 
 @Component({
   selector: 'app-login-form',
@@ -65,6 +66,7 @@ export class LoginFormComponent {
     private sellerService: SellerService,
     private serieCommercialDocumentService: SerieCommercialDocumentService,
     private reasonCommercialDocumentService: ReasonCommercialDocumentService,
+    private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
     private listPriceService: ListPriceService
   ) {
@@ -246,6 +248,28 @@ export class LoginFormComponent {
               abrevi: data.abrevi,
               descri: data.descri,
               defaul: data.defaul,
+            };
+          })
+        );
+      },
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err,
+        });
+      },
+    });
+    await this.situationCommercialDocumentService.getAll().subscribe({
+      next: (data) => {
+        this.defaultValuesService.setCookieValue(
+          'situations',
+          data.list.map((data) => {
+            return {
+              typcomdoc: data.typcomdoc,
+              sitcomdoc: data.sitcomdoc,
+              abrevi: data.abrevi,
+              descri: data.descri,
+              defaul: 'N',
             };
           })
         );

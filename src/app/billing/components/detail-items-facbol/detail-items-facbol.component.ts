@@ -32,9 +32,6 @@ export class DetailItemsFacbolComponent implements OnInit {
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
 
   dataDetailSource = DataSourceDocumentDetail.getInstance();
-  // dataDetail: MatTableDataSource<any> = new MatTableDataSource<any>([])
-  // dataDetail = new BehaviorSubject<DocumentDetail[]>([])
-  // dataDetail = DataSourceDocumentDetail.getInstance()
   dataDetail = new BehaviorSubject<FormGroup[]>([]);
 
   displayedColumns: string[] = ['numite', 'typinv','codart','quantity','price','subtotal','operac'];

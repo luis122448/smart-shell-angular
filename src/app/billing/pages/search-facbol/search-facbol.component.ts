@@ -61,8 +61,6 @@ export class SearchFacbolComponent implements OnInit{
 
   constructor(
     private formBuilder:FormBuilder,
-    private situationCommercialDocumentService:SituationCommercialDocumentService,
-    private reasonCommercialDocumentService:ReasonCommercialDocumentService,
     private typePaymentConditionService:TypePaymentConditionService,
     private documentInvoiceService:DocumentInvoiceService,
     private globalStatusService:GlobalStatusService,
@@ -74,30 +72,14 @@ export class SearchFacbolComponent implements OnInit{
     this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === 1)
     this.sellers = this.defaultValuesService.getCookieValue('sellers')
     this.currencies = this.defaultValuesService.getCookieValue('currencies')
-    const defaultFinalDate = new Date()
-    const defaultStartDate = new Date(new Date().getFullYear(), new Date().getMonth() - 6, new Date().getDate())
-    this.formSearchDocument.patchValue({
-      startat: defaultStartDate.toISOString().substring(0, 10), // Formato yyyy-MM-dd
-      finalat: defaultFinalDate.toISOString().substring(0, 10)
-    });
   }
 
   ngOnInit(): void {
     this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === 1)
     this.sellers = this.defaultValuesService.getCookieValue('sellers')
     this.currencies = this.defaultValuesService.getCookieValue('currencies')
-    this.situationCommercialDocumentService.getByTypcomdoc(this.typcomdoc?.value)
-    .subscribe({
-      next:data =>{
-        this.situations = data.list
-      }
-    })
-    this.reasonCommercialDocumentService.getByLike(this.typcomdoc?.value, 1)
-    .subscribe({
-      next:data =>{
-        this.reasons = data.list
-      }
-    })
+    this.reasons = this.defaultValuesService.getCookieValue('reasons').filter(data => data.typcomdoc === 1)
+    this.situations = this.defaultValuesService.getCookieValue('situations').filter(data => data.typcomdoc === 1)
     this.typePaymentConditionService.getByAll()
     .subscribe({
       next:data =>{
@@ -119,6 +101,8 @@ export class SearchFacbolComponent implements OnInit{
   changeTypcomdoc(event: any){
     const typcomdoc: number = parseInt(event.target.value)
     this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === typcomdoc)
+    this.reasons = this.defaultValuesService.getCookieValue('reasons').filter(data => data.typcomdoc === typcomdoc)
+    this.situations = this.defaultValuesService.getCookieValue('situations').filter(data => data.typcomdoc === typcomdoc)
   }
 
   toggleSelectionSituation(option: string){

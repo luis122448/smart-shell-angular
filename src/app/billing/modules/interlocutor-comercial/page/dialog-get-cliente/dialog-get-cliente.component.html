@@ -1,51 +1,86 @@
-<main class="dialog-container">
+<main
+  class="dialog-container"
+  (keydown.arrowup)="onArrowUp()"
+  (keydown.arrowdown)="onArrowDown()"
+>
   <section class="dialog-title">
-    Busqueda de Interlocutor Comercial
+    <h1>Search Business Partner</h1>
   </section>
-  <section class="flex w-full justify-around items-center relative">
-    <input type="search" class="w-full h-10 pl-8 pr-2 py-1
-      border-2 border-slate-800 rounded-sm text-slate-700
-      dark:text-gray-400 dark:bg-gray-700
-      hover:border-sky-700
-      focus:outline-none focus:ring-1 focus:ring-sky-700 focus:border-sky-700"
+  <section class="relative flex w-full items-center justify-around">
+    <input
+      type="search"
+      class="h-10 w-full rounded-sm border-2 border-slate-800 py-1 pl-8 pr-2 text-slate-700 hover:border-sky-700 focus:border-sky-700 focus:outline-none focus:ring-1 focus:ring-sky-700 dark:bg-gray-700 dark:text-gray-400"
       placeholder="Escribir Codigo / Razon Social"
-      [formControl]="input">
-    <fa-icon [icon]="faMagnifyingGlass" size="xl" class="text-gray-600 absolute left-2 dark:text-gray-400"></fa-icon>
+      [formControl]="input"
+
+    />
+    <fa-icon
+      [icon]="faMagnifyingGlass"
+      size="xl"
+      class="absolute left-2 text-gray-600 dark:text-gray-400"
+    ></fa-icon>
   </section>
-  <section class="section-table">
-    <div class="container-dialog-table">
-      <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
-        <tr class="header-table" cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr class="row-table" cdk-row
-          *cdkRowDef="let row; columns: displayedColumns"
-          (click)="closeDialog(row)">
-        </tr>
+  <section #mainTable class="section-table">
+    <article class="container-dialog-table-350">
+      <table
+        class="main-dialog-table"
+        cdk-table
+        [dataSource]="dataSource"
+        tabindex="0"
+        role="grid"
+      >
+        <tr
+          class="header-table"
+          cdk-header-row
+          *cdkHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          class="row-table"
+          cdk-row
+          *cdkRowDef="let row; columns: displayedColumns; let i = index"
+          [class.selected-row]="selectedRowIndex === i"
+          (click)="closeDialog(row)"
+          (mouseover)="onMouseOver(i)"
+          (mouseout)="onMouseOut()"
+          (keydown.enter)="closeDialog(row)"
+          [id]="'row_' + i"
+        ></tr>
         <ng-container cdkColumnDef="codbuspar">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">{{ row.codbuspar }}</td>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.codbuspar }}
+          </td>
         </ng-container>
         <ng-container cdkColumnDef="busnam">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Razon Social</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">{{ row.busnam }}</td>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Bussiness Name
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.busnam }}
+          </td>
         </ng-container>
         <ng-container cdkColumnDef="nroidedoc">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>RUC/DNI</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">{{ row.nroidedoc }}</td>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            N° Document
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.nroidedoc }}
+          </td>
         </ng-container>
       </table>
-    </div>
-    <div class="footer-table-external">
+    </article>
+    <article class="footer-table-external">
       Total Record : {{ dataSource.getCount() }}
-    </div>
+    </article>
   </section>
-  <section class="w-[150px]">
+  <section class="flex justify-end">
     <app-button-standard
-    (click)="closeDialog(null)"
-    optionBtn="close"
-    [colorBtn]="'red'"
-    [typeBtn]="'button'">
-    Close
+      (click)="closeDialog(null)"
+      optionBtn="close"
+      [colorBtn]="'red'"
+      [typeBtn]="'button'"
+    >
+      Close
     </app-button-standard>
   </section>
 </main>
-

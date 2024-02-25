@@ -9,6 +9,7 @@ import { DefaultValuesService } from 'src/app/auth/services/default-values.servi
 import { catchError, forkJoin, of } from 'rxjs';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
 
 @Component({
   selector: 'app-default-values',
@@ -24,6 +25,7 @@ export class DefaultValuesComponent {
     private sellerService: SellerService,
     private serieCommercialDocumentService: SerieCommercialDocumentService,
     private reasonCommercialDocumentService: ReasonCommercialDocumentService,
+    private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
     private typeCommercialDocumentService: TypeCommercialDocumentService
   ) {}
@@ -34,10 +36,19 @@ export class DefaultValuesComponent {
     // Realiza todas las llamadas en paralelo
     forkJoin([
       this.sellerService.getAll().pipe(catchError(this.handleError)),
-      this.serieCommercialDocumentService.getAll().pipe(catchError(this.handleError)),
-      this.reasonCommercialDocumentService.getAll().pipe(catchError(this.handleError)),
+      this.serieCommercialDocumentService
+        .getAll()
+        .pipe(catchError(this.handleError)),
+      this.reasonCommercialDocumentService
+        .getAll()
+        .pipe(catchError(this.handleError)),
       this.typeInventoryService.getAll().pipe(catchError(this.handleError)),
-      this.typeCommercialDocumentService.getAll().pipe(catchError(this.handleError))
+      this.typeCommercialDocumentService
+        .getAll()
+        .pipe(catchError(this.handleError)),
+      this.situationCommercialDocumentService
+        .getAll()
+        .pipe(catchError(this.handleError)),
     ]).subscribe((results: any[]) => {
       // Procesa los resultados después de que todas las llamadas se completen
       // 'results' es un array con los resultados de cada llamada
@@ -46,7 +57,7 @@ export class DefaultValuesComponent {
       this.processResult('reasons', results[2]);
       this.processResult('inventories', results[3]);
       this.processResult('documents', results[4]);
-
+      this.processResult('situations', results[5]);
       this.globalStatusService.setLoading(false); // Finaliza la carga después de procesar los datos
     });
   }
@@ -64,7 +75,7 @@ export class DefaultValuesComponent {
   handleError(error: any) {
     this.dialog.open(DialogErrorAlertComponent, {
       width: '400px',
-      data: error
+      data: error,
     });
     // Retorna un observable de un solo valor para continuar el flujo
     return of(null);
@@ -74,107 +85,52 @@ export class DefaultValuesComponent {
   mapData(data: any, cookieName: string): any {
     switch (cookieName) {
       case 'sellers':
-        return { codsel: data.codsel, abrevi: data.abrevi, descri: data.descri };
+        return {
+          codsel: data.codsel,
+          abrevi: data.abrevi,
+          descri: data.descri,
+        };
       case 'series':
-        return { typcomdoc: data.typcomdoc, serie: data.serie, abrevi: data.abrevi, descri: data.descri };
+        return {
+          typcomdoc: data.typcomdoc,
+          serie: data.serie,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
       case 'reasons':
-        return { typcomdoc: data.typcomdoc, ingsalcom: data.ingsalcom, reacomdoc: data.reacomdoc, abrevi: data.abrevi, descri: data.descri };
+        return {
+          typcomdoc: data.typcomdoc,
+          ingsalcom: data.ingsalcom,
+          reacomdoc: data.reacomdoc,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
       case 'inventories':
-        return { typinv: data.typinv, abrevi: data.abrevi, descri: data.descri, defaul: data.defaul };
+        return {
+          typinv: data.typinv,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
       case 'documents':
-        return { typcomdoc: data.typcomdoc, abrevi: data.abrevi, descri: data.descri, defaul: 'N' };
+        return {
+          typcomdoc: data.typcomdoc,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: 'N',
+        };
+      case 'situations':
+        return {
+          typcomdoc: data.typcomdoc,
+          sitcomdoc: data.sitcomdoc,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: 'N',
+        };
       default:
         return null;
+    }
   }
-
-}
-  // onUploadDefaultValues() {
-  //   this.globalStatusService.setLoading(true);
-  //   this.sellerService.getAll().subscribe({
-  //     next: (data) => {
-  //       if (data.list) {
-  //         this.defaultValuesService.setCookieValue(
-  //           'sellers',
-  //           data.list.map((data) => {
-  //             return {
-  //               codsel: data.codsel,
-  //               abrevi: data.abrevi,
-  //               descri: data.descri,
-  //             };
-  //           })
-  //         );
-  //       }
-  //     },
-  //   });
-  //   this.serieCommercialDocumentService.getAll().subscribe({
-  //     next: (data) => {
-  //       if (data.list) {
-  //         this.defaultValuesService.setCookieValue(
-  //           'series',
-  //           data.list.map((data) => {
-  //             return {
-  //               typcomdoc: data.typcomdoc,
-  //               serie: data.serie,
-  //               abrevi: data.abrevi,
-  //               descri: data.descri,
-  //             };
-  //           })
-  //         );
-  //       }
-  //     },
-  //   });
-  //   this.reasonCommercialDocumentService.getAll().subscribe({
-  //     next: (data) => {
-  //       if (data.list) {
-  //         this.defaultValuesService.setCookieValue(
-  //           'reasons',
-  //           data.list.map((data) => {
-  //             return {
-  //               typcomdoc: data.typcomdoc,
-  //               ingsalcom: data.ingsalcom,
-  //               reacomdoc: data.reacomdoc,
-  //               abrevi: data.abrevi,
-  //               descri: data.descri,
-  //             };
-  //           })
-  //         );
-  //       }
-  //     },
-  //   });
-  //   this.typeInventoryService.getAll().subscribe({
-  //     next: (data) => {
-  //       if (data.list) {
-  //         this.defaultValuesService.setCookieValue(
-  //           'inventories',
-  //           data.list.map((data) => {
-  //             return {
-  //               typinv: data.typinv,
-  //               abrevi: data.abrevi,
-  //               descri: data.descri,
-  //               defaul: data.defaul,
-  //             };
-  //           })
-  //         );
-  //       }
-  //     },
-  //   });
-  //   this.typeCommercialDocumentService.getAll().subscribe({
-  //     next: (data) => {
-  //       if (data.list) {
-  //         this.defaultValuesService.setCookieValue(
-  //           'documents',
-  //           data.list.map((data) => {
-  //             return {
-  //               typcomdoc: data.typcomdoc,
-  //               abrevi: data.abrevi,
-  //               descri: data.descri,
-  //               defaul: 'N',
-  //             };
-  //           })
-  //         );
-  //       }
-  //     },
-  //   });
-  //   this.globalStatusService.setLoading(false);
-  // }
 }

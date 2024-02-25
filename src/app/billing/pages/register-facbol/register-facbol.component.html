@@ -4,7 +4,9 @@
       <div class="items-container">
         <section class="flex-col space-y-2">
           <div class="dense-3 grid grid-cols-3 items-center">
-            <label class="text-inline label-required">Type Document</label>
+            <label for="typcomdoc" class="text-inline label-required"
+              >Type Document</label
+            >
             <select
               name="typcomdoc"
               id="typcomdoc"
@@ -91,30 +93,30 @@
                 class="input-default"
                 formControlName="codbuspar"
                 [class.input-invalid]="isInputInvalid('codbuspar')"
-                (keyup.enter)="openDialogGetCli()"
+                (keyup.enter)="openDialogGetCli(true)"
               />
               <button
                 *ngIf="!statusBuspar"
                 type="button"
-                class="button-icon-input"
-                (click)="openDialogGetCli()"
+                class="button-icon-search"
+                (click)="openDialogGetCli(true)"
               >
                 <fa-icon
                   [icon]="faMagnifyingGlass"
-                  class="text-white"
+                  class="icon-operac-button"
                   size="sm"
                 ></fa-icon>
               </button>
               <button
                 *ngIf="statusBuspar"
                 type="button"
-                class="button-icon-input"
+                class="button-icon-search"
                 (click)="cleanBuspar()"
               >
                 <fa-icon
                   [icon]="faXmark"
-                  class="text-white"
-                  size="xl"
+                  class="icon-operac-button"
+                  size="sm"
                 ></fa-icon>
               </button>
             </div>
@@ -128,17 +130,17 @@
                 class="input-default"
                 formControlName="busnam"
                 [class.input-invalid]="isInputInvalid('busnam')"
-                (keyup.enter)="openDialogGetCli()"
+                (keyup.enter)="openDialogGetCli(false)"
               />
               <button
                 *ngIf="!statusBuspar"
                 type="button"
-                class="button-icon-input"
-                (click)="openDialogGetCli()"
+                class="button-icon-search"
+                (click)="openDialogGetCli(false)"
               >
                 <fa-icon
                   [icon]="faMagnifyingGlass"
-                  class="text-white"
+                  class="icon-operac-button"
                   size="sm"
                 ></fa-icon>
               </button>
@@ -148,7 +150,7 @@
             <label class="text-inline label-required">Direccion</label>
             <textarea
               formControlName="addres"
-              class="input-default col-span-2"
+              class="textarea-default col-span-2"
               cols="60"
               rows="20"
               placeholder="Direccion Comercial o Domicilio Fiscal"
@@ -212,7 +214,6 @@
                 id="exchangerate"
                 formControlName="exchangerate"
                 [class.input-invalid]="isInputInvalid('exchangerate')"
-                [disabled]="true"
                 placeholder="Tip Cambio*"
               />
               <label for="tasigv" class="text-inline label-required pl-6"
@@ -225,7 +226,6 @@
                 id="tasigv"
                 formControlName="tasigv"
                 [class.input-invalid]="isInputInvalid('tasigv')"
-                [disabled]="true"
                 placeholder="Tas Igv*"
               />
             </div>
@@ -261,16 +261,15 @@
             </select>
           </div>
           <div class="grid grid-cols-3 items-center">
-            <label for="serie" class="text-inline label-required"
+            <label for="typcomdoc" class="text-inline label-required"
               >Condicion de Pago</label
             >
             <select
-              name="serie"
-              id="serie"
+              name="typcomdoc"
+              id="typcomdoc"
               class="select-default col-span-2"
               formControlName="typpaycon"
               [class.select-invalid]="isInputInvalid('typpaycon')"
-              [disabled]="this.statusBuspar"
             >
               <option
                 value=""
@@ -279,7 +278,6 @@
                 selected
                 hidden
                 [class.option-invalid]="isInputInvalid('typpaycon')"
-
               >
                 -- Elegir --
               </option>
@@ -293,8 +291,9 @@
             </select>
           </div>
           <div class="grid grid-cols-3 items-center">
-            <p>Referencia</p>
+            <label for="refere" class="text-inline">Referencia</label>
             <input
+              name="refere"
               type="text"
               class="input-default col-span-2"
               placeholder="Referencia"
@@ -302,8 +301,9 @@
             />
           </div>
           <div class="grid grid-cols-3 items-center">
-            <p>Observacion</p>
+            <label for="observ" class="text-inline">Observacion</label>
             <textarea
+              name="observ"
               class="input-default col-span-2"
               placeholder="Observación"
               formControlName="observ"

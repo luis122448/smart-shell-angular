@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Access, Branch, Currency, Document, Inventory, Reason, Seller, Serie } from '../models/default-values.model';
+import { Access, Branch, Currency, Document, Inventory, Reason, Seller, Serie, Situcion } from '../models/default-values.model';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -42,6 +42,7 @@ export class DefaultValuesService {
   public sellers: Seller[] = []
   public series: Serie[] = []
   public reasons: Reason[] = []
+  public situations: Situcion[] = []
   public inventories: Inventory[] = []
   public documents: Document[] = []
 
@@ -78,7 +79,5 @@ export class DefaultValuesService {
   public removeCookie(key: string): void {
     this.cookieService.delete(key);
   }
-
-
 
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { DialogRef, DIALOG_DATA, Dialog } from '@angular/cdk/dialog';
 import { Article } from '../../models/article.model';
 import { DataSource } from '@angular/cdk/collections';
@@ -30,6 +30,9 @@ export class DialogGetArticleComponent implements OnInit {
   displayedColumns: string[] = ['codart', 'descri','codext'];
   input =  new FormControl('',{ nonNullable: true })
   countRecords = 0;
+  selectedRowIndex: number | null = 0;
+  scrollingUp = false;
+  isKeyboardNavigation = false;
 
   constructor(
     private dialogRef: DialogRef,
@@ -93,6 +96,64 @@ export class DialogGetArticleComponent implements OnInit {
       })
     } else {
       this.globalStatusService.setLoading(false)
+    }
+  }
+
+  @ViewChild('mainTable') mainTable!: ElementRef;
+  ngAfterViewInit() {
+    this.mainTable.nativeElement.focus();
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event) {
+    if (this.scrollingUp) {
+      this.onArrowUp();
+    } else {
+      this.onArrowDown();
+    }
+  }
+
+  onMouseOver(index: number) {
+    if (!this.isKeyboardNavigation) {
+      this.selectedRowIndex = index;
+    }
+  }
+
+  onMouseOut() {
+  }
+
+  onArrowUp() {
+    this.isKeyboardNavigation = true;
+    this.scrollingUp = true;
+    this.navigateRows(-1);
+
+    setTimeout(() => {
+      this.isKeyboardNavigation = false;
+    }, 1000); // Retraso de 1 segundo
+  }
+
+  onArrowDown() {
+    this.isKeyboardNavigation = true;
+    this.scrollingUp = false;
+    this.navigateRows(1);
+
+    setTimeout(() => {
+      this.isKeyboardNavigation = false;
+    }, 1000); // Retraso de 1 segundo
+  }
+
+  private navigateRows(direction: number) {
+    if (this.mainTable) {
+      const rows = this.mainTable.nativeElement.querySelectorAll('.row-table');
+      const currentRow = this.selectedRowIndex ?? 0;
+      const targetRow = Math.max(0, Math.min(rows.length - 1, currentRow + direction));
+
+      // Scroll to the selected row
+      const rowElement = rows[targetRow] as HTMLElement;
+      rowElement.scrollIntoView({ behavior: 'auto', block: 'center' });
+
+      // Update selectedRowIndex
+      this.selectedRowIndex = targetRow;
     }
   }
 

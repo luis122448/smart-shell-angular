@@ -62,9 +62,18 @@
   .container-dialog-table{
   @apply h-auto sm:min-h-[200px] md:min-h-[250px] lg:min-h-[350px] overflow-auto
   }
-  // .container-dialog-table{
-  //   @apply h-1/2 sm:h-[200px] md:h-[250px] lg:h-[350px] overflow-auto
-  // }
+
+  .container-dialog-table-300{
+    @apply h-auto sm:min-h-[300px] md:min-h-[350px] lg:min-h-[450px] overflow-auto
+  }
+
+  .container-dialog-table-350{
+    @apply h-auto sm:min-h-[350px] md:min-h-[400px] lg:min-h-[500px] overflow-auto
+  }
+
+  .container-dialog-table-400{
+    @apply h-auto sm:min-h-[400px] md:min-h-[450px] lg:min-h-[550px] overflow-auto
+  }
 
   .main-dialog-table{
     @apply w-full h-auto text-sm text-left text-gray-500 dark:text-gray-400
@@ -76,6 +85,10 @@
 
   .row-table{
     @apply text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700
+  }
+
+  .row-table.selected-row {
+    @apply bg-gray-300 dark:bg-gray-950
   }
 
   .footer-table{
@@ -104,7 +117,7 @@
   }
 
   .footer-table-external{
-    @apply w-full text-xs font-bold py-3 px-9 text-right text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400
+    @apply w-full text-xs font-bold py-3 px-9 sticky bottom-0 z-10 text-right text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400
   }
 }
 

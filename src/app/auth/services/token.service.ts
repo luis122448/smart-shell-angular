@@ -45,8 +45,8 @@ export class TokenService {
       const tokenDate = new Date(0);
       tokenDate.setUTCSeconds(decodeToken.exp);
       const today = new Date();
-      console.log('Hoy es : ',today)
-      console.log('El token vence el : ', tokenDate)
+      // console.log('Hoy es : ',today)
+      // console.log('El token vence el : ', tokenDate)
       return tokenDate.getTime() > today.getTime();
     }
     return false;
@@ -54,18 +54,18 @@ export class TokenService {
 
   isValidRefreshToken() {
     const token = this.getRefreshToken();
-    console.log(token)
+    // console.log(token)
     if (!token) {
       return false;
     }
     const decodeToken = jwt_decode<JwtPayload>(token);
-    console.log(decodeToken)
+    // console.log(decodeToken)
     if (decodeToken && decodeToken?.exp) {
       const tokenDate = new Date(0);
       tokenDate.setUTCSeconds(decodeToken.exp);
       const today = new Date();
-      console.log('Hoy es : ',today)
-      console.log('El token vence el : ', tokenDate)
+      // console.log('Hoy es : ',today)
+      // console.log('El token vence el : ', tokenDate)
       return tokenDate.getTime() > today.getTime();
     }
     return false;

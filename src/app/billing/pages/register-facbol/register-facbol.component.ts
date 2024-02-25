@@ -37,7 +37,7 @@ export class RegisterFacbolComponent implements OnInit {
   faMagnifyingGlass = faMagnifyingGlass;
   faXmark = faXmark;
   // DataSource
-  dataSource = DataSourceDocumentHeader.getInstance();
+  dataHeaderSource = DataSourceDocumentHeader.getInstance();
   // SubStatus
   statusBuspar = false;
 
@@ -94,13 +94,13 @@ export class RegisterFacbolComponent implements OnInit {
     private facbolGlobalStatusService: FacbolGlobalStatusService,
     private defaultValuesService: DefaultValuesService
   ) {
+    this.sellers = this.defaultValuesService.getCookieValue('sellers');
+    this.currencies = this.defaultValuesService.getCookieValue('currencies');
     this.series = this.defaultValuesService
       .getCookieValue('series')
       .filter((data) => data.typcomdoc === 1);
-    this.sellers = this.defaultValuesService.getCookieValue('sellers');
-    this.currencies = this.defaultValuesService.getCookieValue('currencies');
     this.reasons = this.defaultValuesService
-      .getCookieValue('reasons')
+    .getCookieValue('reasons')
       .filter((data) => data.typcomdoc === 1 && data.ingsalcom === 1);
     const defaultSeries = this.series.find((data) => data.defaul === 'Y');
     const defaultReason = this.reasons.find((data) => data.defaul === 'Y');
@@ -132,7 +132,8 @@ export class RegisterFacbolComponent implements OnInit {
     return field ? field.invalid && field.touched : true;
   }
 
-  openDialogGetCli() {
+  openDialogGetCli(isCode: boolean) {
+    // Validar que los campos obligatorios estén llenos
     if (
       !(
         this.formDocumentHeader.get('typcomdoc')?.value &&
@@ -149,16 +150,30 @@ export class RegisterFacbolComponent implements OnInit {
       });
       return;
     }
+    // Validad minima cantidad de digitos
+    if (isCode && this.formDocumentHeader.get('codbuspar')?.value.length < 3) {
+      this.dialog.open(DialogErrorAlertComponent,{
+        width: '400px',
+        data: { minimum_length:3 }
+      })
+      return;
+    }
+    if (!isCode && this.formDocumentHeader.get('busnam')?.value.length < 3) {
+      this.dialog.open(DialogErrorAlertComponent,{
+        width: '400px',
+        data: { minimum_length:3 }
+      })
+      return;
+    }
     const dialogRef = this.dialog.open<InterlocutorComercial>(
       DialogGetClienteComponent,
       {
         data: {
           codbuspar: this.formDocumentHeader.get('codbuspar')?.value,
-          busnam: this.formDocumentHeader.get('busnam')?.value,
+          busnam: this.formDocumentHeader.get('busnam')?.value
         },
       }
     );
-
     dialogRef.closed.subscribe((data) => {
       if (data) {
         this.formDocumentHeader.get('codbuspar')?.setValue(data.codbuspar);
@@ -191,7 +206,7 @@ export class RegisterFacbolComponent implements OnInit {
         }
         // Update values in DataSource
         console.log('formValue', dataHeader);
-        this.dataSource.getPush(dataHeader);
+        this.dataHeaderSource.getPush(dataHeader);
       }
     });
   }
@@ -207,7 +222,7 @@ export class RegisterFacbolComponent implements OnInit {
     this.formDocumentHeader.get('codbuspar')?.enable();
     this.formDocumentHeader.get('busnam')?.enable();
     this.formDocumentHeader.get('addres')?.enable();
-    this.dataSource.getPush(this.formDocumentHeader.value);
+    this.dataHeaderSource.getPush(this.formDocumentHeader.value);
     this.statusBuspar = false;
     this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
   }
@@ -229,18 +244,18 @@ export class RegisterFacbolComponent implements OnInit {
     } else {
       this.formDocumentHeader.get('tasigv')?.setValue(18.0);
     }
-    this.dataSource.updateData('incigv', incigv);
+    this.dataHeaderSource.updateData('incigv', incigv);
   }
 
   onCodcurChange(event: any) {
     const codcur = event.target.value;
-    this.dataSource.updateData('codcur', codcur);
+    this.dataHeaderSource.updateData('codcur', codcur);
     this.onTipCamChange();
   }
 
   onFemisiChange(event: any) {
     const registdate: Date = event.target.value;
-    this.dataSource.updateData('registdate', registdate);
+    this.dataHeaderSource.updateData('registdate', registdate);
     this.onTipCamChange();
   }
 
@@ -260,7 +275,7 @@ export class RegisterFacbolComponent implements OnInit {
           if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: { status: data.status, message: data.message },
+              data: data,
             });
           } else {
             if (data.list.length === 0) {
@@ -285,7 +300,7 @@ export class RegisterFacbolComponent implements OnInit {
               this.formDocumentHeader.get('exchangerate')?.disable();
             }
           }
-          this.dataSource.updateData('exchangerate', newTipcam);
+          this.dataHeaderSource.updateData('exchangerate', newTipcam);
         },
         error: (err) => {
           this.dialog.open(DialogErrorAlertComponent, {

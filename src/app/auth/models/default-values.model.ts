@@ -50,6 +50,14 @@ export interface Reason{
   defaul: string
 }
 
+export interface Situcion{
+  typcomdoc: number
+  sitcomdoc: number
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
 export interface Inventory{
   typinv: number
   abrevi: string

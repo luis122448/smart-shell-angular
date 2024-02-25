@@ -56,7 +56,7 @@
               >
                 <fa-icon
                   [icon]="faMagnifyingGlass"
-                  class="icon-operac"
+                  class="icon-operac-button"
                   size="sm"
                 ></fa-icon>
               </button>
@@ -150,7 +150,8 @@
           >
             <app-button-operac
               optionBtn="delete"
-              colorBtn="sky"
+              colorBtn="red"
+              sizeBtn="2xs"
               (click)="deleteItem(item.value)"
             ></app-button-operac>
           </td>

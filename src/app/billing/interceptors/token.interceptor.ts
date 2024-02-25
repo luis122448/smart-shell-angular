@@ -50,10 +50,10 @@ export class TokenInterceptor implements HttpInterceptor {
       const cloneRequest = request.clone({ // Clona la peticion y adiciona el Token en los Headers
         headers: request.headers.set('Authorization',`Bearer ${accessToken}`)
       })
-      console.log('Token',accessToken)
+      // console.log('Token',accessToken)
       return next.handle(cloneRequest)
     } else {
-      console.log('No Token')
+      // console.log('No Token')
       return next.handle(request)
     }
   }

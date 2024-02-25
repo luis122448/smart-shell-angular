@@ -1,5 +1,11 @@
-<main class="dialog-container">
-  <section class="dialog-title">Search de Article</section>
+<main
+  class="dialog-container"
+  (keydown.arrowup)="onArrowUp()"
+  (keydown.arrowdown)="onArrowDown()"
+>
+  <section>
+    <h1 class="dialog-title">Search de Article</h1>
+  </section>
   <section class="relative flex w-full items-center justify-around">
     <input
       type="search"
@@ -13,59 +19,76 @@
       class="absolute left-2 text-gray-600 dark:text-gray-400"
     ></fa-icon>
   </section>
-  <section class="container-dialog-table">
-    <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
-      <tr
-        class="header-table"
-        cdk-header-row
-        *cdkHeaderRowDef="displayedColumns"
-      ></tr>
-      <tr
-        class="row-table"
-        cdk-row
-        *cdkRowDef="let row; columns: displayedColumns"
-        (click)="closeDialog(row)"
-      ></tr>
-      <ng-container cdkColumnDef="codart">
-        <th
-          class="header-cell"
-          class="px-6 py-3"
-          cdk-header-cell
-          *cdkHeaderCellDef
-        >
-          Codigo
-        </th>
-        <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
-          {{ row.codart }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="descri">
-        <th
-          class="header-cell"
-          class="px-6 py-3"
-          cdk-header-cell
-          *cdkHeaderCellDef
-        >
-          Descripcion
-        </th>
-        <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
-          {{ row.descri }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="codext">
-        <th
-          class="header-cell"
-          class="px-6 py-3"
-          cdk-header-cell
-          *cdkHeaderCellDef
-        >
-          Identificador
-        </th>
-        <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
-          {{ row.codext }}
-        </td>
-      </ng-container>
-    </table>
+  <section class="section-table">
+    <article class="container-dialog-table-350">
+      <table
+        #mainTable
+        class="main-dialog-table"
+        cdk-table
+        [dataSource]="dataSource"
+        tabindex="0"
+        role="grid"
+      >
+        <tr
+          class="header-table"
+          cdk-header-row
+          *cdkHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          class="row-table"
+          cdk-rowñ
+          *cdkRowDef="let row; columns: displayedColumns; let i = index"
+          [class.selected-row]="selectedRowIndex === i"
+          (click)="closeDialog(row)"
+          (mouseover)="onMouseOver(i)"
+          (mouseout)="onMouseOut()"
+          (keydown.arrowdown)="onArrowDown()"
+          [id]="'row_' + i"
+        ></tr>
+        <ng-container cdkColumnDef="codart">
+          <th
+            class="header-cell"
+            class="px-6 py-3"
+            cdk-header-cell
+            *cdkHeaderCellDef
+          >
+            Code
+          </th>
+          <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+            {{ row.codart }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="descri">
+          <th
+            class="header-cell"
+            class="px-6 py-3"
+            cdk-header-cell
+            *cdkHeaderCellDef
+          >
+            Description
+          </th>
+          <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+            {{ row.descri }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="codext">
+          <th
+            class="header-cell"
+            class="px-6 py-3"
+            cdk-header-cell
+            *cdkHeaderCellDef
+          >
+            Code Alternative
+          </th>
+          <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+            {{ row.codext }}
+          </td>
+        </ng-container>
+      </table>
+    </article>
+    <article class="footer-table-external">
+      Total Record : {{ dataSource.getCount() }}
+    </article>
   </section>
   <section class="flex justify-end">
     <app-button-standard
