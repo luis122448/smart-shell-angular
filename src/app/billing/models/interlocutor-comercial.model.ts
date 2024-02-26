@@ -43,6 +43,7 @@ export interface DTOInterlocutorComercial {
 export interface InterlocutorComercialBasic {
   codbuspar: string
   busnam: string
+  isNewBussinessPartner: boolean
 }
 
 export interface PAGEInterlocutorComercial {

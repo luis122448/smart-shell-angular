@@ -31,15 +31,16 @@ export class BasicInfoArticleComponent implements OnInit {
   inventories: Inventory[] = []
 
   private buildForm(){
+    const today = new Date().toJSON().split('T')[0]
     this.formCrudArticle = this.formBuilder.group({
       codart: ['',[Validators.required], MyValidators.AvailableCodartArticle(this.articuloService)],
       typinv: ['',[Validators.required]],
       abrevi: ['',[Validators.required]],
       descri: ['',[Validators.required]],
-      codext: ['',[]],
+      codext: ['',[Validators.required]],
       codbar: ['',[]],
       codean: ['',[]],
-      registdate: ['',[]],
+      registdate: [today,[Validators.required]],
       cstock: ['',[Validators.required]],
       codprv: ['',[]],
       codman: ['',[]],
@@ -51,10 +52,10 @@ export class BasicInfoArticleComponent implements OnInit {
       observ: ['',[]],
       commen: ['',[]],
       status: ['',[]],
-      createby: ['',[]],
-      updateby: ['',[]],
-      createat: ['',[]],
-      updateat: ['',[]],
+      createby: [{ value: '', disabled: true }, []],
+      updateby: [{ value: '', disabled: true }, []],
+      createat: [{ value: '', disabled: true }, []],
+      updateat: [{ value: '', disabled: true }, []],
     })
   }
 
@@ -136,11 +137,14 @@ export class BasicInfoArticleComponent implements OnInit {
               this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
             }
           }
-          this.globalStatusService.setLoading(false)
         },
-        error:data =>{
-
-        }
+        error:err =>{
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: err.error
+          })
+        },
+        complete:() =>{ this.globalStatusService.setLoading(false)}
       })
     } else {
 
@@ -152,13 +156,8 @@ export class BasicInfoArticleComponent implements OnInit {
     return field ? field.invalid && field.touched : true
   }
 
-  formatDate(date: number[]): String {
-    const aux : Date = MyDate.convertToCustomDateShort(date)
-    // Si la registdate recibida es Valida ... ( Asincronismo )
-    if (aux instanceof Date && !isNaN(aux.getTime())){
-      return this.datePipe.transform(aux,'dd/MM/yy') || ''
-    }
-    return ''
+formatDate(date: number[] | Date | null): String {
+    return MyDate.convertToCustomStringLong(date)
   }
 
   returnDate(date: number[] | Date): Date {
@@ -191,13 +190,18 @@ export class BasicInfoArticleComponent implements OnInit {
         }
       })
     } else {
+      this.formCrudArticle.markAllAsTouched()
       if(this.codart?.hasError('not_available')){
         this.dialog.open(DialogErrorAlertComponent,{
           width: '400px',
           data: { status:0, message:'The article code is already registered' }
         })
+        return
       }
-      this.formCrudArticle.markAllAsTouched()
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { no_required_fields: 'S' }
+      })
     }
   }
 

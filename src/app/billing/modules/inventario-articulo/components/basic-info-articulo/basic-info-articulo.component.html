@@ -1,4 +1,4 @@
-<form [formGroup]="formCrudArticle" class="h-full w-full py-6 px-4 space-y-6">
+<form [formGroup]="formCrudArticle" class="sub-dialog-container">
   <section class="grid grid-cols-2 gap-x-4">
     <article class="col-span-1 space-y-2">
       <div class="flex">
@@ -93,7 +93,7 @@
         />
       </div>
       <div class="flex">
-        <label for="codman" class="label-input-sm label-required"
+        <label for="codman" class="label-input-sm"
           >Code Manufacturing</label
         >
         <input
@@ -234,7 +234,7 @@
         />
       </div>
       <div class="flex">
-        <label for="codean" class="label-input-sm label-required"
+        <label for="codean" class="label-input-sm"
           >Code EAN</label
         >
         <input
@@ -242,7 +242,6 @@
           type="text"
           class="input-default"
           formControlName="codean"
-          [class.input-invalid]="isInputInvalid('codean')"
           placeholder="Code EAN*"
         />
       </div>
@@ -284,7 +283,8 @@
     </div>
   </section>
   <section>
-    <label class="text-inline">Additional Information: </label>
+    <hr class="dialog-sub-title-line" />
+    <label class="dialog-sub-title">Additional Information: </label>
   </section>
   <section class="space-y-2">
     <div class="flex">
@@ -310,7 +310,55 @@
       ></textarea>
     </div>
   </section>
-  <section class="flex justify-end space-x-6">
+  <section>
+    <hr class="dialog-sub-title-line" />
+    <label class="dialog-sub-title">Audit Information : </label>
+  </section>
+  <section class="grid grid-cols-2 gap-x-4">
+    <div class="space-y-2">
+      <div class="flex">
+        <label for="createby" class="label-input-sm">Create by : </label>
+        <input
+          id="createby"
+          type="text"
+          class="input-default"
+          formControlName="createby"
+        />
+      </div>
+      <div class="flex">
+        <label for="createat" class="label-input-sm">Time : </label>
+        <input
+          id="createat"
+          type="text"
+          class="input-default"
+          disabled
+          [value]="formatDate(createat?.value)"
+        />
+      </div>
+    </div>
+    <div class="space-y-2">
+      <div class="flex">
+        <label for="updateby" class="label-input-sm">Update By : </label>
+        <input
+          id="updateby"
+          type="text"
+          class="input-default"
+          formControlName="updateby"
+        />
+      </div>
+      <div class="flex">
+        <label for="updateat" class="label-input-sm">Time : </label>
+        <input
+          id="updateat"
+          type="text"
+          class="input-default"
+          disabled
+          [value]="formatDate(updateat?.value)"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="flex justify-end space-x-4">
     <app-button-standard
       (click)="saveArticle()"
       colorBtn="green"
@@ -322,10 +370,10 @@
     <app-button-standard
       (click)="closeDialog()"
       colorBtn="red"
-      optionBtn="close"
+      optionBtn="back"
       typeBtn="button"
     >
-      Close
+      Back
     </app-button-standard>
   </section>
 </form>

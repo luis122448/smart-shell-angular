@@ -18,7 +18,7 @@
             selected
             [class.option-invalid]="isInputInvalid('codlistprice')"
           >
-            {{ listPrice?.descri }}
+            {{ listPrice?.codlistprice + ' - ' +  listPrice?.descri }}
           </option>
         </select>
       </div>
@@ -28,23 +28,10 @@
         <label for="codart" class="label-input-sm col-span-1">Art. Code</label>
         <input
           type="text"
-          placeholder="Codigo"
-          class="input-search w-40"
+          placeholder="Code"
+          class="input-default"
           formControlName="codart"
         />
-        <button
-          type="button"
-          class="button-icon-search"
-          (click)="openDialogGetArticle()"
-          (keydown.enter)="openDialogGetArticle()"
-          (keydown.tab)="openDialogGetArticle()"
-        >
-          <fa-icon
-            [icon]="faMagnifyingGlass"
-            class="icon-operac"
-            size="sm"
-          ></fa-icon>
-        </button>
       </div>
       <div class="grid grid-cols-3">
         <label for="desart" class="label-input-sm col-span-1"
@@ -52,23 +39,10 @@
         >
         <input
           type="text"
-          placeholder="Codigo"
-          class="input-search w-40"
+          placeholder="Descripction"
+          class="input-default"
           formControlName="desart"
         />
-        <button
-          type="button"
-          class="button-icon-search"
-          (click)="openDialogGetArticle()"
-          (keydown.enter)="openDialogGetArticle()"
-          (keydown.tab)="openDialogGetArticle()"
-        >
-          <fa-icon
-            [icon]="faMagnifyingGlass"
-            class="icon-operac"
-            size="sm"
-          ></fa-icon>
-        </button>
       </div>
     </article>
   </section>

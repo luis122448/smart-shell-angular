@@ -29,6 +29,10 @@ export class DataSourceDocumentHeader {
 
   public disconnect() {}
 
+  public delReset() {
+    this.data.next({} as DocumentHeader);
+  }
+
   public getInit(data: DocumentHeader) {
     this.data.next(data);
   }
@@ -73,6 +77,10 @@ export class DataSourceDocumentDetail {
   }
 
   public disconnect() {}
+
+  public delReset() {
+    this.data.next([]);
+  }
 
   public getInit(data: DocumentDetail[]) {
     this.data.next(data);

@@ -336,7 +336,7 @@ body {
 }
 
 .sub-dialog-container {
-  @apply flex h-full w-full flex-col space-y-6 pt-4 md:min-w-[700px] xl:min-w-[900px];
+  @apply flex h-full w-full flex-col pr-4 space-y-6 pt-4 md:min-w-[700px] xl:min-w-[900px];
 }
 
 .dialog-title {
@@ -345,12 +345,12 @@ body {
 }
 
 .dialog-sub-title {
-  @apply m-0 text-left text-sm text-slate-700
-  dark:bg-none dark:text-gray-400;
+  @apply m-0 font-semibold text-left text-sm text-slate-700
+  dark:bg-none dark:text-gray-400 dark:font-normal
 }
 
 .dialog-sub-title-line {
-  @apply my-2 h-px border-[1px] border-dotted bg-gray-200 dark:bg-gray-700;
+  @apply my-2 h-px border-[1px] border-dotted bg-gray-500 dark:bg-gray-700;
 }
 
 .configuration-container {
@@ -371,4 +371,8 @@ body {
 
 .divide-line {
   @apply divide-y divide-dotted divide-slate-500;
+}
+
+.resalt-text{
+  @apply text-cyan-600 font-semibold
 }

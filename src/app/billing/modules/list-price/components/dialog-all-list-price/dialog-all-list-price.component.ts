@@ -61,7 +61,10 @@ export class DialogAllListPriceComponent {
 
   crudListPrice(row: ListPrice | null) {
     this.dialog.open(DialogCrudListPriceComponent, {
-      data: row,
+      data: {
+        listPrice: row,
+        isNewListPrice: row ? false : true,
+      }
     });
   }
 

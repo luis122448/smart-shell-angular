@@ -60,7 +60,7 @@ export class CondicionPagoClienteComponent implements OnInit {
     this.formTypePaymentCondition.get('codbuspar')?.setValue(data.codbuspar)
   }
   ngOnInit(): void {
-    if (this.data.codbuspar) {
+    if (!this.data.isNewBussinessPartner){
       this.searchTypePaymentCondition()
     }
     this.tipoCondicionPagoService.getByAll()
@@ -70,15 +70,12 @@ export class CondicionPagoClienteComponent implements OnInit {
         if(data.status <= 0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status: data.status, message: data.message }
+              data: data
             })
           } else {
-            if (data.list.length === 0) {
-              // this.dialog.open(DialogErrorAlertComponent, NoDataFoundMessageDialog)
-            } else {
-              this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-            }}
-      },
+            this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
+          }
+        },
       error:error =>{
         this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',

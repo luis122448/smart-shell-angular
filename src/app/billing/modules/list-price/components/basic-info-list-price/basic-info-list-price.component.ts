@@ -13,6 +13,11 @@ import { MyDate } from '@billing-utils/date';
 import { DatePipe } from '@angular/common';
 import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
 
+interface DialogData {
+  listPrice: ListPrice,
+  isNewListPrice: boolean
+}
+
 @Component({
   selector: 'app-basic-info-list-price',
   templateUrl: './basic-info-list-price.component.html',
@@ -21,8 +26,6 @@ import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
 export class BasicInfoListPriceComponent implements OnInit {
 
   formCrudListPrice!: FormGroup;
-  id: number = 0;
-  validListPrice = false;
   currencies: Currency[] = [];
 
   private buildForm() {
@@ -30,7 +33,7 @@ export class BasicInfoListPriceComponent implements OnInit {
       codlistprice: ['', [Validators.required]],
       abrevi: ['', [Validators.required]],
       descri: ['', [Validators.required]],
-      codext: ['', []],
+      codext: ['', [Validators.required]],
       codcur: ['', [Validators.required]],
       inctax: [false, [Validators.required]],
       observ: ['', []],
@@ -50,66 +53,33 @@ export class BasicInfoListPriceComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     private datePipe: DatePipe,
-    @Inject(DIALOG_DATA) data: ListPrice | null,
+    @Inject(DIALOG_DATA) data: DialogData | null,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ) {
+    this.currencies = this.defaultValuesService.getCookieValue('currencies');
     this.buildForm();
-    if (data) {
+    if (!data?.isNewListPrice && data?.listPrice) {
       this.formCrudListPrice.patchValue({
-        codlistprice: data.codlistprice,
-        abrevi: data.abrevi,
-        descri: data.descri,
-        codext: data.codext,
-        codcur: data.codcur,
-        inctax: data.inctax === 'Y' ? true : false,
-        observ: data.observ,
-        commen: data.commen,
-        status: data.status,
-        createby: data.createby,
-        updateby: data.updateby,
-        createat: data.createat,
-        updateat: data.updateat,
+        codlistprice: data.listPrice.codlistprice,
+        abrevi: data.listPrice.abrevi,
+        descri: data.listPrice.descri,
+        codext: data.listPrice.codext,
+        codcur: data.listPrice.codcur,
+        inctax: data.listPrice.inctax === 'Y' ? true : false,
+        observ: data.listPrice.observ,
+        commen: data.listPrice.commen,
+        status: data.listPrice.status,
+        createby: data.listPrice.createby,
+        updateby: data.listPrice.updateby,
+        createat: data.listPrice.createat,
+        updateat: data.listPrice.updateat,
       });
       this.codlistprice?.disable();
-      this.validListPrice = true;
     }
   }
 
   ngOnInit(): void {
-    this.currencies = this.defaultValuesService.getCookieValue('currencies');
-    if (!this.validListPrice && this.id) {
-      this.globalStatusService.setLoading(true);
-      this.listPriceService.getById(this.id).subscribe({
-        next: (data) => {
-          if (data.object) {
-            this.formCrudListPrice.patchValue({
-              codlistprice: data.object.codlistprice,
-              abrevi: data.object.abrevi,
-              descri: data.object.descri,
-              codext: data.object.codext,
-              codcur: data.object.codcur,
-              inctax: data.object.inctax === 'Y' ? true : false,
-              observ: data.object.observ,
-              commen: data.object.commen,
-              status: data.object.status,
-              createby: data.object.createby,
-              updateby: data.object.updateby,
-              createat: data.object.createat,
-              updateat: data.object.updateat,
-            });
-          }
-          this.globalStatusService.setLoading(false);
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-      });
-    }
   }
 
   isInputInvalid(fieldName: string): boolean {
@@ -117,13 +87,8 @@ export class BasicInfoListPriceComponent implements OnInit {
     return field ? field.invalid && field.touched : true;
   }
 
-  formatDate(date: number[]): String {
-    const aux: Date = MyDate.convertToCustomDateShort(date);
-    // Si la registdate recibida es Valida ... ( Asincronismo )
-    if (aux instanceof Date && !isNaN(aux.getTime())) {
-      return this.datePipe.transform(aux, 'dd/MM/yy') || '';
-    }
-    return '';
+  formatDate(date: number[] | Date | null): String {
+    return MyDate.convertToCustomStringLong(date)
   }
 
   saveListPrice() {
@@ -135,7 +100,7 @@ export class BasicInfoListPriceComponent implements OnInit {
           if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: { status: data.status, message: data.message },
+              data: data,
             });
           }
           if (data.status >= 0) {

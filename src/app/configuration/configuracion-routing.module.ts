@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutConfigurationComponent } from './layout/layout-configuration/layout-configuration.component';
 import { AuthGuard } from '@billing/guards/auth.guard';
 import { LayoutSerieCommercialDocumentComponent } from './layout/layout-serie-commercial-document/layout-serie-commercial-document.component';
+import { LayoutCreditsComponent } from './layout/layout-credits/layout-credits.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
   {
     path: 'credits',
     canActivate: [ AuthGuard ],
-    component: LayoutConfigurationComponent
+    component: LayoutCreditsComponent
   },
   {
     path: 'serie',

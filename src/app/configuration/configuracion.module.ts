@@ -13,6 +13,8 @@ import { CrudSerieCommercialDocumentComponent } from './components/crud-serie-co
 import { BasicSerieCommercialDocumentComponent } from './components/basic-serie-commercial-document/basic-serie-commercial-document.component';
 import { HeaderConfigurationComponent } from './components/header-configuration/header-configuration.component';
 import { FormatSerieCommercialDocumentComponent } from './components/format-serie-commercial-document/format-serie-commercial-document.component';
+import { CardPresentationComponent } from './components/card-presentation/card-presentation.component';
+import { CardExperienceComponent } from './components/card-experience/card-experience.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { FormatSerieCommercialDocumentComponent } from './components/format-seri
     CrudSerieCommercialDocumentComponent,
     BasicSerieCommercialDocumentComponent,
     HeaderConfigurationComponent,
-    FormatSerieCommercialDocumentComponent
+    FormatSerieCommercialDocumentComponent,
+    CardPresentationComponent,
+    CardExperienceComponent
   ],
   imports: [
     CommonModule,

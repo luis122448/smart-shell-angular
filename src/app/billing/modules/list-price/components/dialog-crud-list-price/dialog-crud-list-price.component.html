@@ -9,7 +9,7 @@
         </ng-template>
         <app-basic-info-list-price></app-basic-info-list-price>
       </mat-tab>
-      <mat-tab>
+      <mat-tab *ngIf="!isNewListPrice">
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
             <fa-icon [icon]="faClipboardCheck"></fa-icon>
@@ -18,7 +18,7 @@
         </ng-template>
         <app-basic-article-list-price></app-basic-article-list-price>
       </mat-tab>
-      <mat-tab>
+      <mat-tab *ngIf="!isNewListPrice">
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
             <fa-icon [icon]="faFileImport"></fa-icon>

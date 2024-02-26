@@ -1,14 +1,31 @@
-<main class="h-full w-full flex justify-center overflow-hidden">
+<main class="flex h-full w-full justify-center overflow-hidden">
   <menu class="left-container">
     <app-siderbar-left></app-siderbar-left>
   </menu>
   <div [ngSwitch]="isStatusInvoice" class="main-container">
-    <app-header-invoice class="h-[120px]"></app-header-invoice>
+    <app-header-invoice class="h-[100px]"></app-header-invoice>
     <div class="body-container">
-      <app-register-facbol *ngSwitchCase="'register'"></app-register-facbol>
-      <app-search-facbol *ngSwitchCase="'search'"></app-search-facbol>
+      <section *ngSwitchCase="'register'" class="sub-main-container">
+        <article class="h-auto w-full">
+          <app-register-facbol [isNewDocument]="isNewDocumentValue"></app-register-facbol>
+        </article>
+        <article class="h-auto w-full">
+          <app-detail-items-facbol [isNewDocument]="isNewDocumentValue"></app-detail-items-facbol>
+        </article>
+        <article class="h-auto w-full px-4">
+          <app-resume-facbol (isNewDocument)="isNewDocument($event)"></app-resume-facbol>
+        </article>
+      </section>
+      <section *ngSwitchCase="'search'" class="sub-main-container">
+        <article>
+          <app-search-facbol></app-search-facbol>
+        </article>
+        <article class="w-full">
+          <app-detail-search-invoice></app-detail-search-invoice>
+        </article>
+      </section>
     </div>
-    <app-footer class="h-[80px]"></app-footer>
+    <app-footer class="h-[60px]"></app-footer>
   </div>
   <menu class="rigth-container">
     <app-siderbar-rigth></app-siderbar-rigth>
@@ -18,7 +35,8 @@
     size="large"
     color="#ffffff"
     type="ball-spin-clockwise"
-    [fullScreen]="true">
+    [fullScreen]="true"
+  >
     <p style="color: white">Loading...</p>
   </ngx-spinner>
 </main>

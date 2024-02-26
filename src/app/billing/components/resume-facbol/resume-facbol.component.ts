@@ -1,16 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { DataSourceDocumentHeader, DataSourceDocumentDetail } from '../../data/datasource-facbol.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacbolGlobalStatusService } from '../../services/facbol-global-status.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
-import { FacbolOperacService } from '../../services/facbol-operac.service';
 import { GlobalStatusService } from '../../services/global-status.service';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { Currency } from 'src/app/auth/models/default-values.model';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { DialogQuestionComponent } from '@shared/components/dialog-question/dialog-question.component';
-import { APIErrorMessage } from '@shared/model/mensaje.model';
 
 @Component({
   selector: 'app-resume-facbol',
@@ -19,6 +17,7 @@ import { APIErrorMessage } from '@shared/model/mensaje.model';
 })
 export class ResumeFacbolComponent implements OnInit {
 
+  @Output() isNewDocument = new EventEmitter<boolean>(false);
   formResumeFacBol! : FormGroup
   dataDetailSource = DataSourceDocumentDetail.getInstance()
   dataHeaderSource = DataSourceDocumentHeader.getInstance()
@@ -45,7 +44,7 @@ export class ResumeFacbolComponent implements OnInit {
     private documentInvoiceService: DocumentInvoiceService
   ){
     this.buildForm()
-    this.currencies = this.defaultValuesService.currencies
+    this.currencies = this.defaultValuesService.getCookieValue('currencies')
   }
   ngOnInit(): void {
     this.facbolGlobalStatusService.isStatusInvoiceRegister$.subscribe({
@@ -112,6 +111,7 @@ export class ResumeFacbolComponent implements OnInit {
                 this.onPrint(data.object.numint)
               }
             })
+            this.newDocument()
           }
         },
         error:err => {
@@ -134,7 +134,10 @@ export class ResumeFacbolComponent implements OnInit {
   }
 
   newDocument(){
-
+    this.isNewDocument.emit(true)
+    setTimeout(() => {
+      this.isNewDocument.emit(false)
+    }, 1000);
   }
 
   onPrint(numint: number){

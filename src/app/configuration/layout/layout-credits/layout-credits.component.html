@@ -3,11 +3,16 @@
     <app-siderbar-left></app-siderbar-left>
   </menu>
   <div class="main-container">
-    <app-header></app-header>
-    <div class="body-container">
-      <app-personal-credits></app-personal-credits>
+    <app-header class="h-[50px]"></app-header>
+    <div class="body-container flex justify-around h-screen">
+      <section class="w-1/2">
+          <app-card-presentation></app-card-presentation>
+      </section>
+      <section class="w-1/2">
+          <app-card-experience></app-card-experience>
+      </section>
     </div>
-  <app-footer></app-footer>
+    <app-footer class="h-[60px]"></app-footer>
   </div>
   <menu class="rigth-container">
     <app-siderbar-rigth></app-siderbar-rigth>

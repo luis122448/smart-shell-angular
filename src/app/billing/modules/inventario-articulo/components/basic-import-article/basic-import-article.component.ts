@@ -10,25 +10,25 @@ import { Inventory } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 interface DialogData {
-  typinv: number
+  typinv: number;
 }
 
 @Component({
   selector: 'app-basic-import-article',
   templateUrl: './basic-import-article.component.html',
-  styleUrls: ['./basic-import-article.component.scss']
+  styleUrls: ['./basic-import-article.component.scss'],
 })
-
 export class BasicImportArticleComponent implements OnInit {
-  formCrudInventoryArticle!: FormGroup
-  validListPrice = false
-  inventories : Inventory[] = []
+  formCrudInventoryArticle!: FormGroup;
+  validListPrice = false;
+  inventories: Inventory[] = [];
+  defaultInventory: Inventory | undefined;
 
-  private buildForm(){
+  private buildForm(typinv: number = 1) {
     this.formCrudInventoryArticle = this.formBuilder.group({
-      typinv: [{value:'',disabled: false},[Validators.required]],
-      file: ['', [Validators.required]]
-    })
+      typinv: [{ value: typinv, disabled: false }, [Validators.required]],
+      file: ['', [Validators.required]],
+    });
   }
 
   constructor(
@@ -37,28 +37,20 @@ export class BasicImportArticleComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     private articleService: ArticleService,
-    @Inject(DIALOG_DATA) data : DialogData,
+    @Inject(DIALOG_DATA) data: DialogData,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
-  ){
-    this.buildForm()
-    if(data.typinv) {
-      this.formCrudInventoryArticle.patchValue({
-        typinv : data.typinv
-      })
-    }
+  ) {
+    this.inventories = this.defaultValuesService.getCookieValue('inventories');
+    this.defaultInventory = this.inventories.find((data) => data.defaul === 'Y');
+    this.buildForm(this.defaultInventory?.typinv);
   }
   ngOnInit(): void {
-    this.inventories = this.defaultValuesService.getCookieValue('inventories')
-    const defaultInventory = this.inventories.find(data => data.defaul === 'Y');
-    if (defaultInventory) {
-      this.typinv?.setValue(defaultInventory.typinv);
-    }
   }
 
-  isInputInvalid(fieldName: string): boolean{
-    const field = this.formCrudInventoryArticle.get(fieldName)
-    return field ? field.invalid && field.touched : true
+  isInputInvalid(fieldName: string): boolean {
+    const field = this.formCrudInventoryArticle.get(fieldName);
+    return field ? field.invalid && field.touched : true;
   }
 
   clearArchive() {
@@ -66,107 +58,115 @@ export class BasicImportArticleComponent implements OnInit {
     if (fileInput) {
       fileInput.value = '';
     }
-    this.file?.setValue("")
+    this.file?.setValue('');
   }
 
-  selectArchive(event: any){
-    if(event?.target){
-      const data:File = event.target.files[0]
-      this.file?.setValue(data)
+  selectArchive(event: any) {
+    if (event?.target) {
+      const data: File = event.target.files[0];
+      this.file?.setValue(data);
     }
   }
 
-  importArticle(){
-
-    if(this.formCrudInventoryArticle.invalid ){
-      this.formCrudInventoryArticle.markAllAsTouched()
-      return
+  importArticle() {
+    if (this.formCrudInventoryArticle.invalid) {
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { no_fields_required: 'Y' },
+      });
+      this.formCrudInventoryArticle.markAllAsTouched();
+      return;
     }
-
-    this.globalStatusService.setLoading(true)
-    this.articleService.postByImport(this.typinv?.value, this.file?.value).subscribe({
-      next: data => {
-        console.log(data)
-        if(data.status<=0){
-          this.dialog.open(DialogErrorAlertComponent,{
+    this.globalStatusService.setLoading(true);
+    this.articleService
+      .postByImport(this.typinv?.value, this.file?.value)
+      .subscribe({
+        next: (data) => {
+          if (data.status <= 0) {
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: data,
+            });
+          }
+          const fileName = `${data.name}.${data.extension}`;
+          downloadFile(data, fileName);
+          this.clearArchive();
+        },
+        error: (err) => {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: { status:data.status, message:data.message }
-          })
-        }
-        const fileName = `${data.name}.${data.extension}`
-        downloadFile(data, fileName)
-        this.clearArchive()
-        this.globalStatusService.setLoading(false)
-      },
-      error: err => {
-        console.error(err)
-        this.clearArchive()
-        this.globalStatusService.setLoading(false)
-      }
-    })
+            data: err.error,
+          });
+          this.clearArchive();
+        },
+        complete: () => {
+          this.globalStatusService.setLoading(false);
+        },
+      });
   }
 
-  exportArticle(){
-
-    if(this.typinv?.valid == false){
-      this.typinv.markAsTouched()
-      return
+  exportArticle() {
+    if (this.typinv?.valid == false) {
+      this.typinv.markAsTouched();
+      return;
     }
 
-    this.globalStatusService.setLoading(true)
+    this.globalStatusService.setLoading(true);
     this.articleService.getByExport(this.typinv?.value).subscribe({
-      next: data => {
-        console.log(data)
-        if(data.status<=0){
-          this.dialog.open(DialogErrorAlertComponent,{
+      next: (data) => {
+        console.log(data);
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: { status:data.status, message:data.message }
-          })
-        } else{
+            data: data,
+          });
+        } else {
           const fileName = `${data.name}.${data.extension}`;
           downloadFile(data, fileName);
         }
-        this.globalStatusService.setLoading(false)
+        this.globalStatusService.setLoading(false);
       },
-      error: err => {
-        console.error(err)
-        this.globalStatusService.setLoading(false)
-      }
-    })
+      error: (err) => {
+        console.error(err);
+        this.globalStatusService.setLoading(false);
+      },
+    });
   }
 
-  exportBlankArticle(){
-    this.globalStatusService.setLoading(true)
+  exportBlankArticle() {
+    this.globalStatusService.setLoading(true);
     this.articleService.getByExport(0).subscribe({
-      next: data => {
-        console.log(data)
-        if(data.status<=0){
-          this.dialog.open(DialogErrorAlertComponent,{
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: { status:data.status, message:data.message }
-          })
-        } else{
+            data: data,
+          });
+        } else {
           const fileName = `${data.name}.${data.extension}`;
           downloadFile(data, fileName);
         }
-        this.globalStatusService.setLoading(false)
       },
-      error: err => {
-        console.error(err)
-        this.globalStatusService.setLoading(false)
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err.error,
+        })
+      },
+      complete: () => {
+        this.globalStatusService.setLoading(false);
       }
-    })
+    });
   }
 
-  closeDialog(){
-    this.dialogRef.close()
+  closeDialog() {
+    this.dialogRef.close();
   }
 
-  get typinv(){
-    return this.formCrudInventoryArticle.get('typinv')
+  get typinv() {
+    return this.formCrudInventoryArticle.get('typinv');
   }
-  get file(){
-    return this.formCrudInventoryArticle.get('file')
+  get file() {
+    return this.formCrudInventoryArticle.get('file');
   }
 }
-

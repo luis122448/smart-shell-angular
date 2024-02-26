@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { DialogGetClienteComponent } from '../../modules/interlocutor-comercial/page/dialog-get-cliente/dialog-get-cliente.component';
@@ -33,6 +33,8 @@ import {
   styleUrls: ['./register-facbol.component.scss'],
 })
 export class RegisterFacbolComponent implements OnInit {
+
+  @Input() isNewDocument = false;
   formDocumentHeader!: FormGroup;
   faMagnifyingGlass = faMagnifyingGlass;
   faXmark = faXmark;
@@ -47,12 +49,17 @@ export class RegisterFacbolComponent implements OnInit {
   sellers: Seller[];
   currencies: Currency[];
   reasons: Reason[];
+  defaultSeries: Serie | undefined;
+  defaultReason: Reason | undefined;
 
   private buildForm(
     typcomdoc: number | undefined,
     serie: string | undefined,
     reacomdoc: number | undefined
   ) {
+    // Clear Data
+    this.dataHeaderSource.delReset();
+    // Init Form
     const today = new Date().toJSON().split('T')[0]
     this.formDocumentHeader = this.formBuilder.group({
       typcomdoc: [typcomdoc, [Validators.required]],
@@ -102,9 +109,9 @@ export class RegisterFacbolComponent implements OnInit {
     this.reasons = this.defaultValuesService
     .getCookieValue('reasons')
       .filter((data) => data.typcomdoc === 1 && data.ingsalcom === 1);
-    const defaultSeries = this.series.find((data) => data.defaul === 'Y');
-    const defaultReason = this.reasons.find((data) => data.defaul === 'Y');
-    this.buildForm(1, defaultSeries?.serie, defaultReason?.reacomdoc);
+    this.defaultSeries = this.series.find((data) => data.defaul === 'Y');
+    this.defaultReason = this.reasons.find((data) => data.defaul === 'Y');
+    this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
   }
 
   ngOnInit(): void {
@@ -125,6 +132,14 @@ export class RegisterFacbolComponent implements OnInit {
         this.formDocumentHeader.markAllAsTouched();
       },
     });
+  }
+
+  ngOnChanges() {
+    if (this.isNewDocument) {
+      this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
+      this.cleanBuspar();
+      this.formDocumentHeader.markAllAsTouched();
+    }
   }
 
   isInputInvalid(fieldName: string): boolean {

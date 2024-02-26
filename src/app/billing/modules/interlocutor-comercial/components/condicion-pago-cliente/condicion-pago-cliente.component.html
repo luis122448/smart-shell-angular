@@ -1,9 +1,12 @@
 <main class="sub-dialog-container">
   <section>
-    <p class="text-inline-sm">Interlocutor Comercial : </p>
-    <form action="#" [formGroup]="formInfoIntcom" class="grid grid-cols-2 gap-x-6">
+    <form
+      action="#"
+      [formGroup]="formInfoIntcom"
+      class="grid grid-cols-2 gap-x-6"
+    >
       <div class="flex justify-start">
-        <label for="codbuspar" class="label-input-sm">Codigo</label>
+        <label for="codbuspar" class="label-input-sm">Code</label>
         <input
           id="codbuspar"
           type="text"
@@ -12,7 +15,7 @@
         />
       </div>
       <div class="flex justify-start">
-        <label for="busnam" class="label-input-sm">Razon Social</label>
+        <label for="busnam" class="label-input-sm">Business Name</label>
         <input
           id="busnam"
           type="text"
@@ -23,7 +26,11 @@
     </form>
   </section>
   <section class="container-dialog-table">
-    <table class="main-dialog-table" cdk-table [dataSource]="dataSourceTypePaymentConditionView">
+    <table
+      class="main-dialog-table"
+      cdk-table
+      [dataSource]="dataSourceTypePaymentConditionView"
+    >
       <tr
         class="header-table"
         cdk-header-row
@@ -48,36 +55,38 @@
         </td>
       </ng-container> -->
       <ng-container cdkColumnDef="destyppaycon">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Condicion de Pago</th>
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+          Pyment Condition
+        </th>
         <td class="row-cell min-w-[50px]" cdk-cell *cdkCellDef="let row">
           {{ row.destyppaycon }}
         </td>
       </ng-container>
       <ng-container cdkColumnDef="limcre">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Limite de Credito</th>
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+          Credit Limit
+        </th>
         <td class="row-cell max-w-[20px]" cdk-cell *cdkCellDef="let row">
           {{ row.limcre }}
         </td>
       </ng-container>
       <ng-container cdkColumnDef="updateby">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Usuario</th>
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Update By</th>
         <td class="row-cell" cdk-cell *cdkCellDef="let row">
           {{ row.updateby }}
         </td>
       </ng-container>
       <ng-container cdkColumnDef="updateat">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Hora/Fecha</th>
+        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+          Time
+        </th>
         <td class="row-cell" cdk-cell *cdkCellDef="let row">
           {{ formatDate(row.updateat) }}
         </td>
       </ng-container>
       <ng-container cdkColumnDef="operac">
         <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
-        <td
-          class="row-operac-cell max-w-[20px]"
-          cdk-cell
-          *cdkCellDef="let row"
-        >
+        <td class="row-operac-cell max-w-[20px]" cdk-cell *cdkCellDef="let row">
           <app-button-operac
             (click)="deleteTypePaymentCondition(row)"
             optionBtn="delete"
@@ -87,23 +96,31 @@
       </ng-container>
     </table>
   </section>
+  <section>
+    <hr class="dialog-sub-title-line" />
+    <label class="dialog-sub-title">Add Payment Condition : </label>
+  </section>
   <section class="grid grid-cols-2 gap-x-6">
-    <div>
-      <p class="text-inline-sm">Adicionar nueva Condicion de Pago : </p>
+    <article>
       <form action="#" [formGroup]="formTypePaymentCondition" class="space-y-2">
         <div class="flex justify-start">
-          <label for="typpaycon" class="label-input-sm">Codigo</label>
+          <label for="typpaycon" class="label-input-sm">Code</label>
           <select
-                name="typpaycon"
-                id="typpaycon"
-                formControlName="typpaycon"
-                class="select-default"
-              >
-                <option *ngFor="let item of optionTypePaymentCondition" [value]="item.typpaycon">{{ item.typpaycon + ' - ' + item.descri}}</option>
-              </select>
+            name="typpaycon"
+            id="typpaycon"
+            formControlName="typpaycon"
+            class="select-default"
+          >
+            <option
+              *ngFor="let item of optionTypePaymentCondition"
+              [value]="item.typpaycon"
+            >
+              {{ item.typpaycon + " - " + item.descri }}
+            </option>
+          </select>
         </div>
         <div class="flex justify-start">
-          <label for="limcre" class="label-input-sm">Limite de Credito</label>
+          <label for="limcre" class="label-input-sm">Credit Limit</label>
           <input
             id="limcre"
             type="number"
@@ -112,19 +129,17 @@
           />
         </div>
       </form>
-    </div>
-    <div>
-      <p class="text-inline-sm">Establecer Cuotas / Letras : </p>
-    </div>
+    </article>
+    <article></article>
   </section>
   <section class="flex justify-end space-x-4">
     <app-button-standard
-      (click)="addTypePaymentCondition() "
+      (click)="addTypePaymentCondition()"
       colorBtn="green"
       optionBtn="save"
       typeBtn="button"
     >
-      Guardar
+      Save
     </app-button-standard>
   </section>
 </main>

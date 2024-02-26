@@ -1,4 +1,4 @@
-<main class="relative h-full w-full space-y-6 px-4 py-6">
+<main class="sub-dialog-container">
   <section class="grid grid-cols-2 gap-x-4">
     <div class="flex">
       <label for="codart" class="label-input-sm label-required">Code</label>
@@ -53,7 +53,10 @@
       <ng-container cdkColumnDef="archive">
         <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Archive</th>
         <td class="row-cell max-w-[60px]" cdk-cell *cdkCellDef="let row">
-          <span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">{{ row.archive }}</span>
+          <span
+            class="mr-2 rounded border border-gray-500 bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-400"
+            >{{ row.archive }}</span
+          >
         </td>
       </ng-container>
       <ng-container cdkColumnDef="updateby">
@@ -85,6 +88,11 @@
       </ng-container>
     </table>
   </section>
+
+  <section>
+    <hr class="dialog-sub-title-line" />
+    <label class="dialog-sub-title">New Archive Attached : </label>
+  </section>
   <section class="grid grid-cols-2 gap-x-6">
     <article>
       <p class="text-inline-sm">Attached :</p>
@@ -115,16 +123,6 @@
             formControlName="osberv"
           />
         </div>
-        <div class="flex justify-start mt-2">
-          <app-button-standard
-            (click)="addArticleAttached()"
-            colorBtn="green"
-            optionBtn="save"
-            typeBtn="button"
-          >
-            Save
-          </app-button-standard>
-        </div>
       </form>
     </article>
     <article>
@@ -142,10 +140,20 @@
               drop
             </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ articleSpecificationSelected?.multip == 'Y' ? 'Admited Multiple Archive' : 'Only Single Archive' }}
+              {{
+                articleSpecificationSelected?.multip == "Y"
+                  ? "Admited Multiple Archive"
+                  : "Only Single Archive"
+              }}
             </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ articleSpecificationSelected?.extension == 'all' ? 'All Format Support' : 'Only format [ ' + articleSpecificationSelected?.extension + ' ]' }}
+              {{
+                articleSpecificationSelected?.extension == "all"
+                  ? "All Format Support"
+                  : "Only format [ " +
+                    articleSpecificationSelected?.extension +
+                    " ]"
+              }}
             </p>
           </div>
           <input
@@ -154,13 +162,23 @@
             class="hidden"
             id="file_input"
             (change)="selectArchive($event)"
-            [multiple]="articleSpecificationSelected?.multip == 'Y' ? true : false"
+            [multiple]="
+              articleSpecificationSelected?.multip == 'Y' ? true : false
+            "
           />
         </label>
       </div>
     </article>
   </section>
-  <section class="flex justify-end space-x-6">
+  <section class="flex justify-end space-x-4">
+    <app-button-standard
+      (click)="addArticleAttached()"
+      colorBtn="green"
+      optionBtn="save"
+      typeBtn="button"
+    >
+      Save
+    </app-button-standard>
     <app-button-standard
       (click)="closeDialog()"
       colorBtn="red"

@@ -27,7 +27,7 @@ export class DefaultValuesComponent {
     private reasonCommercialDocumentService: ReasonCommercialDocumentService,
     private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
-    private typeCommercialDocumentService: TypeCommercialDocumentService
+    private typeCommercialDocumentService: TypeCommercialDocumentService,
   ) {}
 
   onUploadDefaultValues() {

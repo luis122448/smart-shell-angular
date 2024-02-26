@@ -11,6 +11,11 @@ import { downloadFile } from '@billing-utils/function';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 
+interface DialogData {
+  listPrice: ListPrice,
+  isNewListPrice: boolean
+}
+
 @Component({
   selector: 'app-basic-import-list-price',
   templateUrl: './basic-import-list-price.component.html',
@@ -35,13 +40,13 @@ export class BasicImportListPriceComponent {
     private dialog: Dialog,
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
-    @Inject(DIALOG_DATA) data : ListPrice | null,
+    @Inject(DIALOG_DATA) data : DialogData,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ){
-    if(data) {
-      this.listPrices.push(data)
-      this.buildForm(data.codlistprice,true)
+    if(!data.isNewListPrice && data.listPrice){
+      this.listPrices.push(data.listPrice)
+      this.buildForm(data.listPrice.codlistprice,true)
     } else {
       this.listPrices = this.defaultValuesService.getCookieValue('listPrices')
       const defaultListPrice = this.listPrices.find(data => data.defaul === 'Y');

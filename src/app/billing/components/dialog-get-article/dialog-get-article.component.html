@@ -19,10 +19,9 @@
       class="absolute left-2 text-gray-600 dark:text-gray-400"
     ></fa-icon>
   </section>
-  <section class="section-table">
+  <section #mainTable class="section-table">
     <article class="container-dialog-table-350">
       <table
-        #mainTable
         class="main-dialog-table"
         cdk-table
         [dataSource]="dataSource"
@@ -36,7 +35,7 @@
         ></tr>
         <tr
           class="row-table"
-          cdk-rowñ
+          cdk-row
           *cdkRowDef="let row; columns: displayedColumns; let i = index"
           [class.selected-row]="selectedRowIndex === i"
           (click)="closeDialog(row)"
@@ -46,41 +45,24 @@
           [id]="'row_' + i"
         ></tr>
         <ng-container cdkColumnDef="codart">
-          <th
-            class="header-cell"
-            class="px-6 py-3"
-            cdk-header-cell
-            *cdkHeaderCellDef
-          >
-            Code
-          </th>
-          <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+          <td class="row-cell" dk-cell *cdkCellDef="let row">
             {{ row.codart }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="descri">
-          <th
-            class="header-cell"
-            class="px-6 py-3"
-            cdk-header-cell
-            *cdkHeaderCellDef
-          >
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
             Description
           </th>
-          <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+          <td class="row-cell"dk-cell *cdkCellDef="let row">
             {{ row.descri }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="codext">
-          <th
-            class="header-cell"
-            class="px-6 py-3"
-            cdk-header-cell
-            *cdkHeaderCellDef
-          >
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
             Code Alternative
           </th>
-          <td class="row-cell" class="px-6 py-4" cdk-cell *cdkCellDef="let row">
+          <td class="row-cell"dk-cell *cdkCellDef="let row">
             {{ row.codext }}
           </td>
         </ng-container>

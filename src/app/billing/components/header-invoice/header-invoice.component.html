@@ -1,4 +1,4 @@
-<header class="h-[120px] w-full sapce-y-6 dark:bg-slate-800 dark:text-slate-400">
+<header class="h-[50px] w-full sapce-y-6 dark:bg-slate-800 dark:text-slate-400">
   <app-header></app-header>
   <section class="h-[50px] w-full px-4 grid grid-cols-2 dark:bg-slate-800 dark:text-slate-400 items-center">
     <div [ngSwitch]="isStatusInvoice" class="col-span-1 flex items-start gap-x-4">
@@ -24,7 +24,7 @@
     </div>
     <div class="col-span-1 items-end grid grid-cols-2 gap-x-4 dark:bg-slate-800 dark:text-slate-400">
       <div class="grid grid-cols-3 items-center">
-        <label for="codbranch" class="label-default">Branch</label>
+        <label for="codbranch" class="label-default label-required">Branch</label>
         <select
           name="codbranch"
           id="codbranch"
@@ -38,7 +38,7 @@
         </select>
       </div>
       <div class="grid grid-cols-3 items-center">
-        <label for="codplaiss" class="label-default whitespace-nowrap">Place of Issue</label>
+        <label for="codplaiss" class="label-default label-required">Place of Issue</label>
         <select
           name="codplaiss"
           id="codplaiss"

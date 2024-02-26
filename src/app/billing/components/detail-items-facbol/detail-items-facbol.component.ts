@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { DocumentDetail } from '@billing-models/document-detail.model';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { DialogGetArticleComponent } from '../dialog-get-article/dialog-get-article.component';
@@ -28,9 +28,10 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./detail-items-facbol.component.scss'],
 })
 export class DetailItemsFacbolComponent implements OnInit {
+
+  @Input() isNewDocument = false;
   formDetailDocument!: FormGroup;
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
-
   dataDetailSource = DataSourceDocumentDetail.getInstance();
   dataDetail = new BehaviorSubject<FormGroup[]>([]);
 
@@ -45,6 +46,10 @@ export class DetailItemsFacbolComponent implements OnInit {
   codlistprice: number = 0;
 
   private buildForm() {
+    // Clear Form
+    this.dataDetail = new BehaviorSubject<FormGroup[]>([]);
+    this.dataDetailSource.delReset();
+    // Init Form
     this.formDetailDocument = this.formBuilder.group({
       numite: [{ value: 0, disabled: false }, [Validators.required]],
       typinv: [{ value: '', disabled: false }, [Validators.required]],
@@ -84,6 +89,12 @@ export class DetailItemsFacbolComponent implements OnInit {
         this.isStatusInvoiceRegister = false;
       },
     });
+  }
+
+  ngOnChanges() {
+    if (this.isNewDocument) {
+      this.buildForm();
+    }
   }
 
   addItem(row: DocumentDetail) {

@@ -4,25 +4,25 @@
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
             <fa-icon [icon]="faFileInvoice"></fa-icon>
-            <span class="mat-tab-label-span">Informacion Basica</span>
+            <span class="mat-tab-label-span">Basic Information</span>
           </div>
         </ng-template>
         <app-basic-info-cliente></app-basic-info-cliente>
       </mat-tab>
-      <mat-tab>
+      <mat-tab *ngIf="!isNewBussinessPartner">
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
             <fa-icon [icon]="faCreditCard"></fa-icon>
-            <span class="mat-tab-label-span">Condicion de Pago</span>
+            <span class="mat-tab-label-span">Payment Condition</span>
           </div>
         </ng-template>
         <app-condicion-pago-cliente></app-condicion-pago-cliente>
       </mat-tab>
-      <mat-tab>
+      <mat-tab *ngIf="!isNewBussinessPartner">
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
             <fa-icon [icon]="faAddressBook"></fa-icon>
-            <span class="mat-tab-label-span">Contacto</span>
+            <span class="mat-tab-label-span">Contact</span>
           </div>
         </ng-template>
         <app-contacto-cliente></app-contacto-cliente>

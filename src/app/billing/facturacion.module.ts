@@ -4,7 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FacturacionRoutingModule } from './facturacion-routing.module';
 import { LayoutInvoiceComponent } from './layout/layout-invoice/layout-invoice.component';
 import { SharedModuleFacturacion } from './modules/shared/shared.module';
-import { RegisterFacbolComponent } from './pages/register-facbol/register-facbol.component';
+import { RegisterFacbolComponent } from './components/register-facbol/register-facbol.component';
 import { SharedModule } from '../shared/shared.module';
 import { DialogGetClienteComponent } from './modules/interlocutor-comercial/page/dialog-get-cliente/dialog-get-cliente.component';
 import { DetailItemsFacbolComponent } from './components/detail-items-facbol/detail-items-facbol.component';
@@ -16,7 +16,7 @@ import { DialogCrudExchangeRateComponent } from './modules/exchange-rate/pages/d
 import { InterlocutorComercialModule } from './modules/interlocutor-comercial/interlocutor-comercial.module';
 import { InventarioArticleModule } from './modules/inventario-articulo/inventario-articulo.module';
 import { ResumeFacbolComponent } from './components/resume-facbol/resume-facbol.component';
-import { SearchFacbolComponent } from './pages/search-facbol/search-facbol.component';
+import { SearchFacbolComponent } from './components/search-facbol/search-facbol.component';
 import { DetailSearchInvoiceComponent } from './components/detail-search-invoice/detail-search-invoice.component';
 import { LayoutDashboardComponent } from './layout/layout-dashboard/layout-dashboard.component';
 import { DashboardCommercialComponent } from './pages/dashboard-commercial/dashboard-commercial.component';

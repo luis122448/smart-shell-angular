@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { MyDate } from '@billing-utils/date';
-import { DataSourceSearchDocumentInvoice } from '@billing/pages/search-facbol/search-facbol.component';
+import { DataSourceSearchDocumentInvoice } from '@billing/components/search-facbol/search-facbol.component';
 import { faBan, faBuildingColumns, faEnvelope, faPrint, faRectangleList } from '@fortawesome/free-solid-svg-icons';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 

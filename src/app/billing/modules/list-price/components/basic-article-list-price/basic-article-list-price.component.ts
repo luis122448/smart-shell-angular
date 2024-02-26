@@ -22,6 +22,11 @@ import { DialogGetArticleComponent } from '@billing/components/dialog-get-articl
 import { ModalImportListPriceComponent } from '../modal-import-list-price/modal-import-list-price.component';
 import { PageEvent } from '@angular/material/paginator';
 
+interface DialogData {
+  listPrice: ListPrice,
+  isNewListPrice: boolean
+}
+
 @Component({
   selector: 'app-basic-article-list-price',
   templateUrl: './basic-article-list-price.component.html',
@@ -31,8 +36,6 @@ export class BasicArticleListPriceComponent implements OnInit {
   faMagnifyingGlass = faMagnifyingGlass;
   formCrudListPriceArticle!: FormGroup;
   listPrice: ListPrice | null = null;
-  id: number = 0;
-  validListPrice = false;
   dataSourceListPriceArticle = new DataSourceListPriceArticle();
   displayedColumns = [
     'codart',
@@ -50,9 +53,9 @@ export class BasicArticleListPriceComponent implements OnInit {
   pageSize = 10
   pageIndex = 0
 
-  private buildForm() {
+  private buildForm(codlistprice: number = 1) {
     this.formCrudListPriceArticle = this.formBuilder.group({
-      codlistprice: [{ value: '', disabled: true }, [Validators.required]],
+      codlistprice: [{ value: codlistprice, disabled: true }, [Validators.required]],
       codart: ['',[]],
       desart: ['',[]],
     });
@@ -66,41 +69,19 @@ export class BasicArticleListPriceComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     private datePipe: DatePipe,
-    @Inject(DIALOG_DATA) data: ListPrice | null,
+    @Inject(DIALOG_DATA) data: DialogData,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ) {
-    this.buildForm();
-    if (data) {
-      this.formCrudListPriceArticle.patchValue({
-        codlistprice: data.codlistprice,
-      });
-      this.listPrice = data;
-      this.validListPrice = true;
+    if (!data.isNewListPrice && data.listPrice) {
+      this.buildForm(data.listPrice.codlistprice);
+      this.listPrice = data.listPrice;
+    } else {
+      this.buildForm();
     }
   }
+
   ngOnInit(): void {
-    if (!this.validListPrice && this.id) {
-      this.globalStatusService.setLoading(true);
-      this.listPriceService.getById(this.id).subscribe({
-        next: (data) => {
-          if (data.object) {
-            this.formCrudListPriceArticle.patchValue({
-              codlistprice: data.object.codlistprice,
-            });
-            this.listPrice = data.object;
-          }
-          this.globalStatusService.setLoading(false);
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-      });
-    }
   }
 
   isInputInvalid(fieldName: string): boolean {
@@ -117,22 +98,25 @@ export class BasicArticleListPriceComponent implements OnInit {
     return '';
   }
 
-  openDialogGetArticle() {
-    const dialogArticle = this.dialog.open<Article>(DialogGetArticleComponent, {
-      data: { codart: this.codart?.value, descri: this.desart?.value },
-    });
-    dialogArticle.closed.subscribe({
-      next: (data) => {
-        if (data) {
-          this.codart?.setValue(data.codart);
-          this.desart?.setValue(data.descri);
-        }
-      },
-      error: (err) => {
-        console.log(err.message);
-      },
-    });
-  }
+  // openDialogGetArticle() {
+  //   const dialogArticle = this.dialog.open<Article>(DialogGetArticleComponent, {
+  //     data: { codart: this.codart?.value, descri: this.desart?.value },
+  //   });
+  //   dialogArticle.closed.subscribe({
+  //     next: (data) => {
+  //       if (data) {
+  //         this.codart?.setValue(data.codart);
+  //         this.desart?.setValue(data.descri);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.dialog.open(DialogErrorAlertComponent, {
+  //         width: '400px',
+  //         data: err.error,
+  //       });
+  //     },
+  //   });
+  // }
 
   searchListPriceArticle() {
     if (this.formCrudListPriceArticle.valid) {

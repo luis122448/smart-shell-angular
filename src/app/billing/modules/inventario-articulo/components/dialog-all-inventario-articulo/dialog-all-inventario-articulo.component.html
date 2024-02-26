@@ -6,7 +6,7 @@
         <div class="grid grid-cols-5 gap-x-8">
           <div class="col-span-3 flex">
             <div class="w-48">
-              <label for="typinv" class="label-input-lg">Inventario</label>
+              <label for="typinv" class="label-input-lg">Inventory</label>
             </div>
             <select
               name="typinv"
@@ -26,7 +26,7 @@
                 -- Elegir --
               </option>
               <option *ngFor="let item of inventories" [value]="item.typinv">
-                {{ item.descri }}
+                {{ item.typinv + ' - ' +  item.descri }}
               </option>
             </select>
           </div>
@@ -82,7 +82,7 @@
     <app-button-standard
       (click)="exportImportArticle()"
       colorBtn="gray"
-      optionBtn="search"
+      optionBtn="import"
       typeBtn="button"
     >
       Export/Import
