@@ -4,7 +4,7 @@ import { TypePaymentConditionService } from '../../services/type-payment-conditi
 import { GlobalStatusService } from '../../services/global-status.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SearchDocumentInvoice } from '@billing-models/document-invoice.model';
+import { SearchDocumentInvoice, SearchFilterDocumentInvoice } from '@billing-models/document-invoice.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { faXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -37,9 +37,10 @@ export class SearchFacbolComponent implements OnInit{
   formSearchDocument! : FormGroup
   private buidForm(){
     const today = new Date().toJSON().split('T')[0]
+    const aferSevenDays = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toJSON().split('T')[0]
     this.formSearchDocument = this.formBuilder.group({
       typcomdoc : [1,[Validators.required]],
-      startat : [today,[Validators.required]],
+      startat : [aferSevenDays,[Validators.required]],
       finalat : [today,[Validators.required]],
       sitcomdoc : this.formBuilder.array([1]),
       reacomdoc : this.formBuilder.array([1]),
@@ -114,12 +115,35 @@ export class SearchFacbolComponent implements OnInit{
     }
   }
 
+  toggleSelectAllSituation(event: any){
+    const isChecked = event?.target?.checked;
+    if (isChecked) {
+      this.situations.forEach(data => {
+        this.sitcomdoc.push(this.formBuilder.control(data.sitcomdoc))
+      })
+    } else {
+      this.sitcomdoc.clear()
+    }
+  }
+
   toggleSelectionReason(option: string){
     const index = this.reacomdoc.value.indexOf(option);
     if (index === -1) {
       this.reacomdoc.push(this.formBuilder.control(option));
     } else {
       this.reacomdoc.removeAt(index);
+    }
+  }
+
+
+  toggleSelectAllReason(event: any){
+    const isChecked = event?.target?.checked;
+    if (isChecked) {
+      this.reasons.forEach(data => {
+        this.reacomdoc.push(this.formBuilder.control(data.reacomdoc))
+      })
+    } else {
+      this.reacomdoc.clear()
     }
   }
 
@@ -150,42 +174,50 @@ export class SearchFacbolComponent implements OnInit{
   }
 
   searchDocument(){
-    console.log(this.formSearchDocument.value)
     if (this.formSearchDocument.valid){
-      // Eliminar la propiedad busnam
-      delete this.formSearchDocument.value.busnam;
-      // Convertir los valores de sitcomdoc y reacomdoc en una cadena separada por comas
-      this.formSearchDocument.value.sitcomdoc = this.formSearchDocument.value.sitcomdoc.join(',');
-      this.formSearchDocument.value.reacomdoc = this.formSearchDocument.value.reacomdoc.join(',');
       this.globalStatusService.setLoading(true)
-      this.documentInvoiceService.getSearchDocument(this.formSearchDocument.value)
+      const searchFilterDocumentInvoice : SearchFilterDocumentInvoice = {
+        typcomdoc: this.typcomdoc?.value,
+        startat: this.startat?.value,
+        finalat: this.finalat?.value,
+        sitcomdoc: this.sitcomdoc.value.join(','),
+        reacomdoc: this.reacomdoc.value.join(','),
+        codbranch: this.codbranch?.value,
+        codplaiss: this.codplaiss?.value,
+        serie: this.serie?.value,
+        codcur: this.codcur?.value,
+        codsel: this.codsel?.value,
+        typpaycon: this.typpaycon?.value,
+        codbuspar: this.codbuspar?.value,
+        busnam: this.busnam?.value
+      }
+      console.log(searchFilterDocumentInvoice)
+      this.documentInvoiceService.getSearchDocument(searchFilterDocumentInvoice)
       .subscribe({
         next:data =>{
-          console.log('Info : ',data)
-          if (data.list.length === 0) {
+          if (data.status<=0) {
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { no_data_found: 'S' }
+              data: { status:data.status, meesage:data.message }
             })
           }
           this.dataSourceSearchDocument.getInit(data.list)
-          console.log('Values : ',this.dataSourceSearchDocument.get())
-          this.globalStatusService.setLoading(false)
         },
-        error:error =>{
-          console.log(error)
-          this.globalStatusService.setLoading(false)
+        error:err =>{
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status:-1, message: "An Unknow Error", logMessage: "" }
+            data: err.error
           })
-        }
+          this.globalStatusService.setLoading(false)
+        },
+        complete: () => this.globalStatusService.setLoading(false)
       })
     } else {
       this.dialog.open(DialogErrorAlertComponent,{
         width: '400px',
-        data: { status:-1, message: "Invalid query, review the required fields" }
+        data: { no_fields_required: 'Y'}
       })
+      this.formSearchDocument.markAllAsTouched()
     }
   }
 

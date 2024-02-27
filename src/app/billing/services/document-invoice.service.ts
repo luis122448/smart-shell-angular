@@ -17,10 +17,6 @@ export class DocumentInvoiceService {
     private httpClient: HttpClient
   ) { }
 
-  // getSearchDocument(filter :SearchFilterDocumentInvoice){
-  //   return this.httpClient.post<DAOSearchDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/search`, filter)
-  // }
-
   getSearchDocument(filter :SearchFilterDocumentInvoice){
     let params = new HttpParams()
     params = params.set('typcomdoc',filter.typcomdoc)
@@ -38,6 +34,25 @@ export class DocumentInvoiceService {
     return this.httpClient.get<DAOSearchDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/search`, {params})
   }
 
+  getPageDocument(filter :SearchFilterDocumentInvoice, pageSize: number, pageIndex: number){
+    let params = new HttpParams()
+    params = params.set('typcomdoc',filter.typcomdoc)
+    params = params.set('startat',filter.startat)
+    params = params.set('finalat',filter.finalat)
+    params = params.set('sitcomdoc',filter.sitcomdoc)
+    params = params.set('reacomdoc',filter.reacomdoc)
+    params = params.set('codbranch',filter.codbranch)
+    params = params.set('codplaiss',filter.codplaiss)
+    params = params.set('serie',filter.serie)
+    params = params.set('codcur',filter.codcur)
+    params = params.set('codsel',filter.codsel)
+    params = params.set('typpaycon',filter.typpaycon)
+    params = params.set('codbuspar',filter.codbuspar)
+    params = params.set('pageSize',pageSize)
+    params = params.set('pageIndex',pageIndex)
+    return this.httpClient.get<DAOSearchDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/page`, {params})
+  }
+
   getPrintDocument(numint: number){
     let params = new HttpParams()
     params = params.set('numint',numint)
@@ -50,6 +65,12 @@ export class DocumentInvoiceService {
       details: details
     }
     return this.httpClient.post<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice`, invoiceRegister)
+  }
+
+  putCancelDocument(numint: number){
+    let params = new HttpParams()
+    params = params.set('numint',numint)
+    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/cancel`, null, {params})
   }
 
 }

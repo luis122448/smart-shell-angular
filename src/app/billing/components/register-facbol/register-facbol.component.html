@@ -247,6 +247,7 @@
             selected
             hidden
             [class.option-invalid]="isInputInvalid('codsel')"
+            (change)="onCodselChange($event)"
           >
             -- Elegir --
           </option>
@@ -269,6 +270,7 @@
           class="select-default col-span-2"
           formControlName="typpaycon"
           [class.select-invalid]="isInputInvalid('typpaycon')"
+          (change)="onTyppayconChange($event)"
         >
           <option
             value=""
@@ -312,5 +314,3 @@
   </div>
 </form>
 </section>
-
-<!-- <main class="sub-main-container"></main> -->

@@ -35,6 +35,7 @@ import {
 export class RegisterFacbolComponent implements OnInit {
 
   @Input() isNewDocument = false;
+  @Input() isCalculateDocument = false;
   formDocumentHeader!: FormGroup;
   faMagnifyingGlass = faMagnifyingGlass;
   faXmark = faXmark;
@@ -139,6 +140,9 @@ export class RegisterFacbolComponent implements OnInit {
       this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
       this.cleanBuspar();
       this.formDocumentHeader.markAllAsTouched();
+    }
+    if (this.isCalculateDocument) {
+      this.dataHeaderSource.getPush(this.formDocumentHeader.getRawValue());
     }
   }
 
@@ -274,6 +278,16 @@ export class RegisterFacbolComponent implements OnInit {
     this.onTipCamChange();
   }
 
+  onCodselChange(event: any) {
+    const codsel = event.target.value;
+    this.dataHeaderSource.updateData('codsel', codsel);
+  }
+
+  onTyppayconChange(event: any) {
+    const typpaycon = event.target.value;
+    this.dataHeaderSource.updateData('typpaycon', typpaycon);
+  }
+
   onTipCamChange() {
     this.globalStatusService.setLoading(true);
     this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
@@ -327,4 +341,5 @@ export class RegisterFacbolComponent implements OnInit {
         complete: () => this.globalStatusService.setLoading(false),
       });
   }
+
 }

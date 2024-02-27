@@ -1,7 +1,9 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 import { MyDate } from '@billing-utils/date';
 import { DataSourceSearchDocumentInvoice } from '@billing/components/search-facbol/search-facbol.component';
 import { faBan, faBuildingColumns, faEnvelope, faPrint, faRectangleList } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +16,7 @@ import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert
 })
 export class DetailSearchInvoiceComponent {
 
+  @Output() pageEvent = new EventEmitter<PageEvent>()
   faRectangleList = faRectangleList
   faPrint = faPrint
   faEnvelope = faEnvelope
@@ -29,28 +32,36 @@ export class DetailSearchInvoiceComponent {
   constructor(
     private dialog: Dialog,
     private datePipe: DatePipe,
-    private documentInvoiceService: DocumentInvoiceService
+    private documentInvoiceService: DocumentInvoiceService,
+    private globalStatusService: GlobalStatusService
   ){}
 
-  byPageEvent(event: any){
-
+  byPageEvent(e: PageEvent){
+    this.pageEvent.emit(e)
   }
 
   onPrint(numint: number){
+    this.globalStatusService.setLoading(true)
     this.documentInvoiceService.getPrintDocument(numint)
     .subscribe({
       next:data =>{
         if (data.status<=0) {
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status:data.status, meesage:data.message }
+            data: data
           })
-        }
-        if (data.status>=0) {
-          console.log(data.bytes)
+        } else {
           this.openArchive(data.bytes,data.format) // PDF ( BASE64 )
         }
-      }
+      },
+      error: err =>{
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
+        this.globalStatusService.setLoading(false)
+      },
+      complete: () => this.globalStatusService.setLoading(false)
     })
   }
 
@@ -70,15 +81,38 @@ export class DetailSearchInvoiceComponent {
   }
 
   onSendEmail(numint: number){
-
+    this.globalStatusService.setLoading(true)
+    setTimeout(() => {
+      this.globalStatusService.setLoading(false)
+    }, 1500);
   }
 
   onSendSunat(numint: number){
-
+    this.globalStatusService.setLoading(true)
+    setTimeout(() => {
+      this.globalStatusService.setLoading(false)
+    }, 1500);
   }
 
   onCancel(numint: number){
-
+    this.globalStatusService.setLoading(true)
+    this.documentInvoiceService.putCancelDocument(numint).subscribe({
+      next:data =>{
+        if (data.status<=0) {
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: data
+          })
+        }
+      },
+      error: err =>{
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
+      },
+      complete: () => this.globalStatusService.setLoading(false)
+    })
   }
 
 

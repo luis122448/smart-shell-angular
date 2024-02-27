@@ -7,13 +7,21 @@
     <div class="body-container">
       <section *ngSwitchCase="'register'" class="sub-main-container">
         <article class="h-auto w-full">
-          <app-register-facbol [isNewDocument]="isNewDocumentValue"></app-register-facbol>
+          <app-register-facbol
+            [isNewDocument]="isNewDocumentValue"
+            [isCalculateDocument]="isCalculateDocumentValue"
+          ></app-register-facbol>
         </article>
         <article class="h-auto w-full">
-          <app-detail-items-facbol [isNewDocument]="isNewDocumentValue"></app-detail-items-facbol>
+          <app-detail-items-facbol
+            [isNewDocument]="isNewDocumentValue"
+          ></app-detail-items-facbol>
         </article>
         <article class="h-auto w-full px-4">
-          <app-resume-facbol (isNewDocument)="isNewDocument($event)"></app-resume-facbol>
+          <app-resume-facbol
+            (isNewDocument)="isNewDocument($event)"
+            (isCalculateDocument)="isCalculateDocument($event)"
+          ></app-resume-facbol>
         </article>
       </section>
       <section *ngSwitchCase="'search'" class="sub-main-container">

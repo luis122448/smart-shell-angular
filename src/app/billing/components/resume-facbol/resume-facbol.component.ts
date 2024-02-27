@@ -18,6 +18,7 @@ import { DialogQuestionComponent } from '@shared/components/dialog-question/dial
 export class ResumeFacbolComponent implements OnInit {
 
   @Output() isNewDocument = new EventEmitter<boolean>(false);
+  @Output() isCalculateDocument = new EventEmitter<boolean>(false);
   formResumeFacBol! : FormGroup
   dataDetailSource = DataSourceDocumentDetail.getInstance()
   dataHeaderSource = DataSourceDocumentHeader.getInstance()
@@ -59,9 +60,11 @@ export class ResumeFacbolComponent implements OnInit {
     if(this.isStatusInvoiceRegister){
       // Header
       this.globalStatusService.setLoading(true)
+      this.isCalculateDocument.emit(true)
       const dataHeader = this.dataHeaderSource.get()
       this.cursymbol = this.currencies.find(currency => currency.codcur = dataHeader.codcur)?.symbol
       // Detail
+      this.dataDetailSource.putReasignNumite()
       const dataDetail = this.dataDetailSource.getImp()
       this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
       this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
@@ -69,7 +72,10 @@ export class ResumeFacbolComponent implements OnInit {
       this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
       this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
       this.dataHeaderSource.updateImp(dataDetail)
-      this.globalStatusService.setLoading(false)
+      setTimeout(() => {
+        this.isCalculateDocument.emit(false)
+        this.globalStatusService.setLoading(false)
+      }, 300);
     } else {
       this.facbolGlobalStatusService.setStatusInvoiceSave(false);
       this.dialog.open(DialogErrorAlertComponent,{
@@ -81,6 +87,8 @@ export class ResumeFacbolComponent implements OnInit {
 
   save() {
     if(this.isStatusInvoiceRegister){
+      this.globalStatusService.setLoading(true)
+      this.calculate()
       const documentInvoiceHeader = this.dataHeaderSource.get()
       if ((documentInvoiceHeader?.imptotal ?? 0) <= 0) {
         this.dialog.open(DialogErrorAlertComponent,{
@@ -90,7 +98,6 @@ export class ResumeFacbolComponent implements OnInit {
         return
       }
       const documentInvoiceDetails = this.dataDetailSource.get().filter(data => data.numite > 0)
-      this.globalStatusService.setLoading(true)
       this.documentInvoiceService.postRegisterDocument(documentInvoiceHeader, documentInvoiceDetails)
       .subscribe({
         next:data => {

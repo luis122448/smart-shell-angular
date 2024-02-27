@@ -11,6 +11,8 @@ export class LayoutInvoiceComponent implements OnInit{
   isLoading =  false;
   isStatusInvoice : 'search' | 'register' =  'register'
   isNewDocumentValue = false
+  isCalculateDocumentValue = false
+
   constructor(
     private globalStatusService: GlobalStatusService
   ){
@@ -37,6 +39,10 @@ export class LayoutInvoiceComponent implements OnInit{
 
   isNewDocument($event:boolean){
     this.isNewDocumentValue = $event
+  }
+
+  isCalculateDocument($event:boolean){
+    this.isCalculateDocumentValue = $event
   }
 
 }
