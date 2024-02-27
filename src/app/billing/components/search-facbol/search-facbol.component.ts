@@ -37,10 +37,10 @@ export class SearchFacbolComponent implements OnInit{
   formSearchDocument! : FormGroup
   private buidForm(){
     const today = new Date().toJSON().split('T')[0]
-    const aferSevenDays = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toJSON().split('T')[0]
+    const beforeSevenDays = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toJSON().split('T')[0]
     this.formSearchDocument = this.formBuilder.group({
       typcomdoc : [1,[Validators.required]],
-      startat : [aferSevenDays,[Validators.required]],
+      startat : [beforeSevenDays,[Validators.required]],
       finalat : [today,[Validators.required]],
       sitcomdoc : this.formBuilder.array([1]),
       reacomdoc : this.formBuilder.array([1]),
