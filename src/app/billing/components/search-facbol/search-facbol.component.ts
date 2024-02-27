@@ -191,7 +191,6 @@ export class SearchFacbolComponent implements OnInit{
         codbuspar: this.codbuspar?.value,
         busnam: this.busnam?.value
       }
-      console.log(searchFilterDocumentInvoice)
       this.documentInvoiceService.getSearchDocument(searchFilterDocumentInvoice)
       .subscribe({
         next:data =>{

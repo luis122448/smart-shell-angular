@@ -2,7 +2,7 @@
   <form [formGroup]="formSearchDocument">
     <div class="grid w-full grid-cols-5 gap-x-4 px-4 lg:grid-cols-7">
       <section class="space-y-2">
-        <label for="">Situation</label>
+        <label for="label-default label-required">Situation</label>
         <div
           class="grid grid-cols-5 justify-start overflow-hidden whitespace-nowrap"
           *ngFor="let item of situations"
@@ -34,7 +34,7 @@
         </div>
       </section>
       <section class="space-y-2">
-        <label for="">Reason</label>
+        <label for="label-default label-required">Reason</label>
 
         <div
           class="grid grid-cols-5 justify-start overflow-hidden whitespace-nowrap"
@@ -289,7 +289,7 @@
     </div>
   </form>
 </section>
-<section class="pt-4 flex justify-end pr-4">
+<section class="flex justify-end py-2">
   <app-button-standard
     colorBtn="sky"
     optionBtn="search"
