@@ -99,7 +99,7 @@ export class BasicInfoArticleComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.inventories = this.defaultValuesService.getCookieValue('inventories')
+    this.inventories = this.defaultValuesService.getLocalStorageValue('inventories')
     if (!this.validArticle) {
       this.globalStatusService.setLoading(true)
       this.articuloService.getById(this.codartId)

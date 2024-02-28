@@ -45,7 +45,7 @@ export class ResumeFacbolComponent implements OnInit {
     private documentInvoiceService: DocumentInvoiceService
   ){
     this.buildForm()
-    this.currencies = this.defaultValuesService.getCookieValue('currencies')
+    this.currencies = this.defaultValuesService.getLocalStorageValue('currencies')
   }
   ngOnInit(): void {
     this.facbolGlobalStatusService.isStatusInvoiceRegister$.subscribe({

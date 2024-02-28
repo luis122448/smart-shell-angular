@@ -70,17 +70,14 @@ export class SearchFacbolComponent implements OnInit{
     private matSnackBar: MatSnackBar
   ){
     this.buidForm()
+    this.sellers = this.defaultValuesService.getLocalStorageValue('sellers')
+    this.currencies = this.defaultValuesService.getLocalStorageValue('currencies')
     this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === 1)
-    this.sellers = this.defaultValuesService.getCookieValue('sellers')
-    this.currencies = this.defaultValuesService.getCookieValue('currencies')
+    this.reasons = this.defaultValuesService.getLocalStorageValue('reasons').filter(data => data.typcomdoc === 1)
+    this.situations = this.defaultValuesService.getLocalStorageValue('situations').filter(data => data.typcomdoc === 1)
   }
 
   ngOnInit(): void {
-    this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === 1)
-    this.sellers = this.defaultValuesService.getCookieValue('sellers')
-    this.currencies = this.defaultValuesService.getCookieValue('currencies')
-    this.reasons = this.defaultValuesService.getLocalStorageValue('reasons').filter(data => data.typcomdoc === 1)
-    this.situations = this.defaultValuesService.getCookieValue('situations').filter(data => data.typcomdoc === 1)
     this.typePaymentConditionService.getByAll()
     .subscribe({
       next:data =>{
@@ -103,7 +100,7 @@ export class SearchFacbolComponent implements OnInit{
     const typcomdoc: number = parseInt(event.target.value)
     this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === typcomdoc)
     this.reasons = this.defaultValuesService.getLocalStorageValue('reasons').filter(data => data.typcomdoc === typcomdoc)
-    this.situations = this.defaultValuesService.getCookieValue('situations').filter(data => data.typcomdoc === typcomdoc)
+    this.situations = this.defaultValuesService.getLocalStorageValue('situations').filter(data => data.typcomdoc === typcomdoc)
   }
 
   toggleSelectionSituation(option: string){

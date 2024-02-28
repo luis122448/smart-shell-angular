@@ -174,7 +174,7 @@ export class LoginFormComponent {
   async onUploadDefaultValues() {
     await this.sellerService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'sellers',
           data.list.map((data) => {
             return {
@@ -195,7 +195,7 @@ export class LoginFormComponent {
     });
     await this.typeCommercialDocumentService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'documents',
           data.list.map((data) => {
             return {
@@ -216,7 +216,7 @@ export class LoginFormComponent {
     });
     await this.serieCommercialDocumentService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'series',
           data.list.map((data) => {
             return {
@@ -238,7 +238,7 @@ export class LoginFormComponent {
     });
     await this.reasonCommercialDocumentService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'reasons',
           data.list.map((data) => {
             return {
@@ -261,7 +261,7 @@ export class LoginFormComponent {
     });
     await this.situationCommercialDocumentService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'situations',
           data.list.map((data) => {
             return {
@@ -283,7 +283,7 @@ export class LoginFormComponent {
     });
     await this.typeInventoryService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'inventories',
           data.list.map((data) => {
             return {
@@ -304,7 +304,7 @@ export class LoginFormComponent {
     });
     await this.listPriceService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'listPrices',
           data.list.map((data) => {
             return {
@@ -325,7 +325,7 @@ export class LoginFormComponent {
     });
     await this.typeCommercialDocumentService.getAll().subscribe({
       next: (data) => {
-        this.defaultValuesService.setCookieValue(
+        this.defaultValuesService.setLocalStorageValue(
           'documents',
           data.list.map((data) => {
             return {

@@ -41,7 +41,7 @@ export class BasicImportArticleComponent implements OnInit {
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ) {
-    this.inventories = this.defaultValuesService.getCookieValue('inventories');
+    this.inventories = this.defaultValuesService.getLocalStorageValue('inventories');
     this.defaultInventory = this.inventories.find((data) => data.defaul === 'Y');
     this.buildForm(this.defaultInventory?.typinv);
   }
