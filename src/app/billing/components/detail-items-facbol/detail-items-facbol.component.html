@@ -16,7 +16,7 @@
           <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Item</th>
           <td
             cdk-cell
-            class="w-20 px-2 py-3"
+            class="w-8 px-2 py-3"
             *cdkCellDef="let item; let i = index"
           >
             <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).numite }}</span>
@@ -26,7 +26,7 @@
           <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>T Inv.</th>
           <td
             cdk-cell
-            class="w-32 px-2 py-3"
+            class="w-16 px-2 py-3"
             *cdkCellDef="let item; let i = index"
           >
           <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).desinv }}</span>
@@ -44,7 +44,7 @@
               <input
                 type="text"
                 placeholder="Code"
-                class="input-search w-20"
+                class="input-search"
                 formControlName="codart"
                 (keydown.enter)="openDialogGetArticle(item.value)"
                 [value]="item.value.codart"
@@ -98,7 +98,7 @@
         <ng-container cdkColumnDef="quantity">
           <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Cantid</th>
           <td
-            class="px-2 py-3"
+            class="w-12 px-2 py-3"
             cdk-cell
             *cdkCellDef="let item"
             [formGroup]="item"

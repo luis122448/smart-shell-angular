@@ -49,9 +49,12 @@ export class DefaultValuesService {
   constructor(
     private cookieService: CookieService
   ) {
-    this.setCookieValue('branches',this.branches)
-    this.setCookieValue('currencies',this.currencies)
+    // this.setCookieValue('branches',this.branches)
+    // this.setCookieValue('currencies',this.currencies)
     this.setCookie('dark',this.dark.toString())
+    this.setLocalStorageValue('branches', this.branches)
+    this.setLocalStorageValue('currencies', this.currencies)
+    // this.setLocalStorage('dark', this.dark.toString())
   }
 
   public getCookieValue(key: string): any[] {
@@ -78,6 +81,40 @@ export class DefaultValuesService {
 
   public removeCookie(key: string): void {
     this.cookieService.delete(key);
+  }
+
+  public removeAllCookiesExceptSpecified(): void {
+    const cookiesToKeep: string[] = ['token-smart-shell', 'token-refresh-smart-shell', 'dark'];
+    Object.entries(this.cookieService.getAll()).forEach(([key, value]) => {
+      if (!cookiesToKeep.includes(key)) {
+        this.cookieService.delete(key);
+      }
+    });
+  }
+
+  public getLocalStorageValue(key: string): any[] {
+    const localStorageValue = localStorage.getItem(key);
+    if (localStorageValue) {
+      return JSON.parse(localStorageValue);
+    }
+    return [];
+  }
+
+  public getLocalStorage(key: string): string | null {
+    return localStorage.getItem(key);
+  }
+
+  public setLocalStorageValue(key: string, value: any[]): void {
+    localStorage.removeItem(key);
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  public setLocalStorage(key: string, value: string): void {
+    localStorage.setItem(key, value);
+  }
+
+  public removeLocalStorage(key: string): void {
+    localStorage.removeItem(key);
   }
 
 }

@@ -57,7 +57,7 @@ export class BasicInfoListPriceComponent implements OnInit {
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ) {
-    this.currencies = this.defaultValuesService.getCookieValue('currencies');
+    this.currencies = this.defaultValuesService.getLocalStorageValue('currencies')
     this.buildForm();
     if (!data?.isNewListPrice && data?.listPrice) {
       this.formCrudListPrice.patchValue({

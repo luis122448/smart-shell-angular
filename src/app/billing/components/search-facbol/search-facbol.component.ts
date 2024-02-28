@@ -70,16 +70,16 @@ export class SearchFacbolComponent implements OnInit{
     private matSnackBar: MatSnackBar
   ){
     this.buidForm()
-    this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === 1)
+    this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === 1)
     this.sellers = this.defaultValuesService.getCookieValue('sellers')
     this.currencies = this.defaultValuesService.getCookieValue('currencies')
   }
 
   ngOnInit(): void {
-    this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === 1)
+    this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === 1)
     this.sellers = this.defaultValuesService.getCookieValue('sellers')
     this.currencies = this.defaultValuesService.getCookieValue('currencies')
-    this.reasons = this.defaultValuesService.getCookieValue('reasons').filter(data => data.typcomdoc === 1)
+    this.reasons = this.defaultValuesService.getLocalStorageValue('reasons').filter(data => data.typcomdoc === 1)
     this.situations = this.defaultValuesService.getCookieValue('situations').filter(data => data.typcomdoc === 1)
     this.typePaymentConditionService.getByAll()
     .subscribe({
@@ -101,8 +101,8 @@ export class SearchFacbolComponent implements OnInit{
 
   changeTypcomdoc(event: any){
     const typcomdoc: number = parseInt(event.target.value)
-    this.series = this.defaultValuesService.getCookieValue('series').filter(data => data.typcomdoc === typcomdoc)
-    this.reasons = this.defaultValuesService.getCookieValue('reasons').filter(data => data.typcomdoc === typcomdoc)
+    this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === typcomdoc)
+    this.reasons = this.defaultValuesService.getLocalStorageValue('reasons').filter(data => data.typcomdoc === typcomdoc)
     this.situations = this.defaultValuesService.getCookieValue('situations').filter(data => data.typcomdoc === typcomdoc)
   }
 

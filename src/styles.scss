@@ -136,7 +136,7 @@ body {
 
 // Button Icon Search Style
 .input-search {
-  @apply h-7 w-auto rounded-sm border-2 border-r border-slate-800 px-2 py-1 text-xs text-slate-800
+  @apply h-7 w-full rounded-sm border-2 border-r border-slate-800 px-2 py-1 text-xs text-slate-800
   hover:border-sky-700 hover:outline-none
   hover:ring-1 hover:ring-sky-700
   disabled:bg-slate-300

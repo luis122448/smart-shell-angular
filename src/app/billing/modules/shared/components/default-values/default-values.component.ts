@@ -32,7 +32,7 @@ export class DefaultValuesComponent {
 
   onUploadDefaultValues() {
     this.globalStatusService.setLoading(true);
-
+    this.defaultValuesService.removeAllCookiesExceptSpecified();
     // Realiza todas las llamadas en paralelo
     forkJoin([
       this.sellerService.getAll().pipe(catchError(this.handleError)),
@@ -65,7 +65,11 @@ export class DefaultValuesComponent {
   // Método para procesar y almacenar los datos
   processResult(cookieName: string, data: any) {
     if (data?.list) {
-      this.defaultValuesService.setCookieValue(
+      // this.defaultValuesService.setCookieValue(
+      //   cookieName,
+      //   data.list.map((item: any) => this.mapData(item, cookieName))
+      // );
+      this.defaultValuesService.setLocalStorageValue(
         cookieName,
         data.list.map((item: any) => this.mapData(item, cookieName))
       );

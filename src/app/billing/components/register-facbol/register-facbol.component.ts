@@ -102,13 +102,13 @@ export class RegisterFacbolComponent implements OnInit {
     private facbolGlobalStatusService: FacbolGlobalStatusService,
     private defaultValuesService: DefaultValuesService
   ) {
-    this.sellers = this.defaultValuesService.getCookieValue('sellers');
-    this.currencies = this.defaultValuesService.getCookieValue('currencies');
+    this.sellers = this.defaultValuesService.getLocalStorageValue('sellers');
+    this.currencies = this.defaultValuesService.getLocalStorageValue('currencies');
     this.series = this.defaultValuesService
-      .getCookieValue('series')
+      .getLocalStorageValue('series')
       .filter((data) => data.typcomdoc === 1);
     this.reasons = this.defaultValuesService
-    .getCookieValue('reasons')
+    .getLocalStorageValue('reasons')
       .filter((data) => data.typcomdoc === 1 && data.ingsalcom === 1);
     this.defaultSeries = this.series.find((data) => data.defaul === 'Y');
     this.defaultReason = this.reasons.find((data) => data.defaul === 'Y');
@@ -249,10 +249,10 @@ export class RegisterFacbolComponent implements OnInit {
   changeTypcomdoc(event: any) {
     const typcomdoc: number = parseInt(event.target.value);
     this.series = this.defaultValuesService
-      .getCookieValue('series')
+      .getLocalStorageValue('series')
       .filter((data) => data.typcomdoc === typcomdoc);
     this.reasons = this.defaultValuesService
-      .getCookieValue('reasons')
+      .getLocalStorageValue('reasons')
       .filter((data) => data.typcomdoc === typcomdoc && data.ingsalcom === 1);
   }
 
