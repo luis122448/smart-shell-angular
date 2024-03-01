@@ -11,6 +11,8 @@ import { DialogDeleteQuestionComponent } from '@shared-components/dialog-delete-
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
 import { DialogAllListPriceComponent } from '@billing/modules/list-price/components/dialog-all-list-price/dialog-all-list-price.component';
+import { AlertStandardComponent } from '@shared/components/alert-standard/alert-standard.component';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 
 
 @Component({
@@ -37,7 +39,7 @@ export class SiderbarRigthComponent {
     private router: Router
   ){}
 
-  openDialogCliente(){
+  openDialogBusinessPartner(){
     this.dialog.open<InterlocutorComercial>(DialogAllClienteComponent,DialogDefaultConfig)
   }
 
@@ -51,6 +53,27 @@ export class SiderbarRigthComponent {
 
   openDialogListPrice(){
     this.dialog.open(DialogAllListPriceComponent,DialogDefaultConfig)
+  }
+
+  openDialogTransport(){
+    this.dialog.open(DialogErrorAlertComponent,{
+      width: '400px',
+      data: { status: -1, message: 'Functionality not available' }
+    })
+  }
+
+  openDialogSeller(){
+    this.dialog.open(DialogErrorAlertComponent,{
+      width: '400px',
+      data: { status: -1, message: 'Functionality not available' }
+    })
+  }
+
+  openDialogPaymentCondition(){
+    this.dialog.open(DialogErrorAlertComponent,{
+      width: '400px',
+      data: { status: -1, message: 'Functionality not available' }
+    })
   }
 
   openDialogSesion(){

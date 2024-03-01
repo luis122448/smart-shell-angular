@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { faTrashArrowUp,faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrashArrowUp,faTrash, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { Mensaje } from '../../model/mensaje.model';
 
 @Component({
@@ -12,6 +12,7 @@ export class DialogDeleteQuestionComponent {
 
   faTrashArrowUp = faTrashArrowUp
   faTrash = faTrash
+  faCircleXmark = faCircleXmark
   mensaje: Mensaje = {
     status: -3,
     message: 'El mensaje de Error no llego al componente, revisar el codigo'

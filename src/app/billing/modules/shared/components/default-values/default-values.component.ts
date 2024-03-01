@@ -10,6 +10,8 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
+import { TypeBusinessPartnerService } from '@billing-services/type-business-partner.service';
+import { ListPriceService } from '@billing-services/list-price.service';
 
 @Component({
   selector: 'app-default-values',
@@ -28,6 +30,8 @@ export class DefaultValuesComponent {
     private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
     private typeCommercialDocumentService: TypeCommercialDocumentService,
+    private typeBusinessPartnerService: TypeBusinessPartnerService,
+    private listPriceService: ListPriceService
   ) {}
 
   onUploadDefaultValues() {
@@ -49,6 +53,8 @@ export class DefaultValuesComponent {
       this.situationCommercialDocumentService
         .getAll()
         .pipe(catchError(this.handleError)),
+      this.typeBusinessPartnerService.getAll().pipe(catchError(this.handleError)),
+      this.listPriceService.getAll().pipe(catchError(this.handleError)),
     ]).subscribe((results: any[]) => {
       // Procesa los resultados después de que todas las llamadas se completen
       // 'results' es un array con los resultados de cada llamada
@@ -58,6 +64,8 @@ export class DefaultValuesComponent {
       this.processResult('inventories', results[3]);
       this.processResult('documents', results[4]);
       this.processResult('situations', results[5]);
+      this.processResult('typeBusinessPartners', results[6]);
+      this.processResult('listprices', results[7]);
       this.globalStatusService.setLoading(false); // Finaliza la carga después de procesar los datos
     });
   }
@@ -132,6 +140,21 @@ export class DefaultValuesComponent {
           abrevi: data.abrevi,
           descri: data.descri,
           defaul: 'N',
+        };
+      case 'typeBusinessPartners':
+        return {
+          typbuspar: data.typbuspar,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          codext: data.codext,
+          defaul: data.defaul,
+        };
+      case 'listprices':
+        return {
+          codlistprice: data.codlistprice,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          default: data.defaul,
         };
       default:
         return null;

@@ -31,9 +31,9 @@ export class BasicArticleAttachedComponent {
   optionArticleSpecification : ArticleSpecification[] = []
   articleSpecificationSelected : ArticleSpecification | null = null
 
-  buildForm(){
+  buildForm(codart: string = ''){
     this.formArticleAttached = this.formBuilder.group({
-      codart: ['',[Validators.required]],
+      codart: [codart,[Validators.required]],
       typspe: ['',[Validators.required]],
       observ: ['',[]],
       file: ['',[Validators.required]]
@@ -51,23 +51,33 @@ export class BasicArticleAttachedComponent {
     private matSnackBar: MatSnackBar,
     @Inject(DIALOG_DATA) data : ArticleBasic
   ){
-    this.buildForm()
+    this.buildForm(data.codart)
     this.basicArticle = data
-    this.codart?.setValue(this.basicArticle.codart)
   }
 
   ngOnInit(): void {
     if(this.basicArticle.typinv){
+      this.globalStatusService.setLoading(true)
       this.articleSpecificationService.getByAll(this.basicArticle.typinv).subscribe({
         next:data =>{
           if(data.status <= 0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status: data.status, message: data.message }
+              data: data
             })
           }
           this.optionArticleSpecification = data.list
           this.dataSourceArticleAttached.getInitSpecification(data.list)
+        },
+        error:err =>{
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: err.error
+          })
+          this.globalStatusService.setLoading(false)
+        },
+        complete:() => {
+          this.globalStatusService.setLoading(false)
         }
       })
     }
@@ -83,22 +93,19 @@ export class BasicArticleAttachedComponent {
         if(data.status <= 0){
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status: data.status, message: data.message }
+            data: data
           })
-        } else {
-          if (data.list.length === 0) {
-            this.dialog.open(DialogErrorAlertComponent, NoDataFoundMessageDialog)
-          } else {
-            this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
         }
         this.dataSourceArticleAttached.getInit(data.list)
-        this.globalStatusService.setLoading(false)
-      }},
-      error:error =>{
+      },
+      error:err =>{
         this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status: -3, message: error.message }
+            data: err.error
           })
+        this.globalStatusService.setLoading(false)
+      },
+      complete:() => {
         this.globalStatusService.setLoading(false)
       }
     })

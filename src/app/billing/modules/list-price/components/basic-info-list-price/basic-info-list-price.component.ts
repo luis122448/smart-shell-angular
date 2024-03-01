@@ -10,7 +10,6 @@ import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
-import { DatePipe } from '@angular/common';
 import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
 
 interface DialogData {
@@ -27,10 +26,11 @@ export class BasicInfoListPriceComponent implements OnInit {
 
   formCrudListPrice!: FormGroup;
   currencies: Currency[] = [];
+  listprices: ListPrice[] = [];
 
-  private buildForm() {
+  private buildForm(codlistprice: number = 0) {
     this.formCrudListPrice = this.formBuilder.group({
-      codlistprice: ['', [Validators.required]],
+      codlistprice: [codlistprice, [Validators.required]],
       abrevi: ['', [Validators.required]],
       descri: ['', [Validators.required]],
       codext: ['', [Validators.required]],
@@ -52,28 +52,17 @@ export class BasicInfoListPriceComponent implements OnInit {
     private dialog: Dialog,
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
-    private datePipe: DatePipe,
     @Inject(DIALOG_DATA) data: DialogData | null,
     private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ) {
     this.currencies = this.defaultValuesService.getLocalStorageValue('currencies')
-    this.buildForm();
+    this.listprices = this.defaultValuesService.getLocalStorageValue('listprices')
+    this.buildForm(data?.listPrice?.codlistprice);
     if (!data?.isNewListPrice && data?.listPrice) {
       this.formCrudListPrice.patchValue({
-        codlistprice: data.listPrice.codlistprice,
-        abrevi: data.listPrice.abrevi,
-        descri: data.listPrice.descri,
-        codext: data.listPrice.codext,
-        codcur: data.listPrice.codcur,
+        ...data.listPrice,
         inctax: data.listPrice.inctax === 'Y' ? true : false,
-        observ: data.listPrice.observ,
-        commen: data.listPrice.commen,
-        status: data.listPrice.status,
-        createby: data.listPrice.createby,
-        updateby: data.listPrice.updateby,
-        createat: data.listPrice.createat,
-        updateat: data.listPrice.updateat,
       });
       this.codlistprice?.disable();
     }
@@ -110,6 +99,16 @@ export class BasicInfoListPriceComponent implements OnInit {
             );
             this.dialogRef.close();
           }
+        },
+        error: (err) => {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: err.error,
+          });
+          this.globalStatusService.setLoading(false);
+        },
+        complete: () => {
+          this.globalStatusService.setLoading(false);
         },
       });
     } else {

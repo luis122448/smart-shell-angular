@@ -1,4 +1,4 @@
-<main class="dialog-container">
+<main class="crud-container relative">
   <mat-tab-group
     [selectedIndex]="selectedTab.value"
     (selectedIndexChange)="selectedTab.setValue($event)"
@@ -7,19 +7,25 @@
       <ng-template mat-tab-label>
         <div class="mat-tab-label-container">
           <fa-icon [icon]="faFileInvoice"></fa-icon>
-          <span class="mat-tab-label-span">Historial</span>
+          <span class="mat-tab-label-span">History</span>
         </div>
       </ng-template>
-      <app-basic-all-exchange-rate (onClose)="onClose($event)" (onSave)="onCrud($event)"></app-basic-all-exchange-rate>
+      <app-basic-all-exchange-rate
+        (onClose)="onClose($event)"
+        (onSave)="onCrud($event)"
+      ></app-basic-all-exchange-rate>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="mat-tab-label-container">
           <fa-icon [icon]="faFilePen"></fa-icon>
-          <span class="mat-tab-label-span">Registrar</span>
+          <span class="mat-tab-label-span">Registrer</span>
         </div>
       </ng-template>
-      <app-basic-info-exchange-rate (onClose)="onClose($event)" (onSave)="onCrud($event)"></app-basic-info-exchange-rate>
+      <app-basic-info-exchange-rate
+        (onClose)="onClose($event)"
+        (onSave)="onCrud($event)"
+      ></app-basic-info-exchange-rate>
     </mat-tab>
     <!-- <mat-tab>
       <ng-template mat-tab-label>
@@ -31,4 +37,10 @@
       No Implementado!
     </mat-tab> -->
   </mat-tab-group>
+  <app-button-operac
+    optionBtn="close"
+    colorBtn="red"
+    class="absolute top-0 right-6 z-10"
+    (click)="closeDialog()"
+  ></app-button-operac>
 </main>

@@ -2,14 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { faFileInvoice,faClipboardCheck, faShoppingBag, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { FormControl } from '@angular/forms';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-
-interface DialogData {
-  typinv: number,
-  codart: string,
-  descri: string,
-  articulo: any,
-  newArticle: boolean
-}
+import { ArticleBasic } from '@billing-models/article.model';
 
 @Component({
   selector: 'app-dialog-crud-articulo',
@@ -27,9 +20,9 @@ export class DialogCrudArticleComponent{
 
   constructor(
     private dialogRef:DialogRef,
-    @Inject(DIALOG_DATA) private data: DialogData
+    @Inject(DIALOG_DATA) private data: ArticleBasic
   ){
-    this.isNewArticle = data.newArticle
+    this.isNewArticle = data.isNewArticle
   }
 
   closeDialog(){

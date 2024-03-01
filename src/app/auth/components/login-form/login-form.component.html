@@ -88,6 +88,7 @@
             class="input-login"
             [(ngModel)]="verificationCode[i]"
             (input)="onCodeInputChange(i, $event)"
+            (keyup.enter)="doVerifyCode()"
             maxlength="1"
           />
         </div>

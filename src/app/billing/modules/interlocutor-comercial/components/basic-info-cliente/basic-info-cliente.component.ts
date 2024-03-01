@@ -21,6 +21,9 @@ import {
 } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
 import { DatePipe } from '@angular/common';
+import { TypeBusinessPartner } from '@billing-models/type-business-partner.model';
+import { TypeBusinessPartnerDefaultValues } from 'src/app/auth/models/default-values.model';
+import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
   selector: 'app-basic-info-cliente',
@@ -33,6 +36,7 @@ export class BasicInfoClienteComponent implements OnInit {
   codbusparId: string = '';
   existeCliente = false;
   imageInterlocutorComercialURL = IMAGENOUPLOAD;
+  typeBusinessPartners: TypeBusinessPartnerDefaultValues[] = [];
 
   private buildForm() {
     this.formCrudCliente = this.formBuilder.group({
@@ -72,15 +76,16 @@ export class BasicInfoClienteComponent implements OnInit {
     });
   }
   constructor(
-    private datePipe: DatePipe,
     private formBuilder: FormBuilder,
     private businessPartnerService: BusinessPartnerService,
     private globalStatusService: GlobalStatusService,
+    private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     @Inject(DIALOG_DATA) private data: InterlocutorComercialBasic
   ) {
+    this.typeBusinessPartners = this.defaultValuesService.getLocalStorageValue('typeBusinessPartners');
     this.codbusparId = this.data.codbuspar;
     this.buildForm();
   }

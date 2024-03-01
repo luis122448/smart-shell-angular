@@ -36,8 +36,9 @@
           >
             -- Elegir --
           </option>
-          <option value=1 class="option-default">Cliente</option>
-          <option value=2 class="option-default">Proveedor</option>
+          <option *ngFor="let item of typeBusinessPartners" [value]="item.typbuspar">
+            {{ item.typbuspar + ' - ' +  item.descri }}
+          </option>
         </select>
       </div>
       <div class="flex">

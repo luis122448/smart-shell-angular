@@ -72,7 +72,7 @@ export class BasicImportArticleComponent implements OnInit {
     if (this.formCrudInventoryArticle.invalid) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { no_fields_required: 'Y' },
+        data: { no_required_fields: 'Y' },
       });
       this.formCrudInventoryArticle.markAllAsTouched();
       return;

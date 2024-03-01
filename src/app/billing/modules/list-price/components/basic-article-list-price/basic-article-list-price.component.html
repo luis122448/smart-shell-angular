@@ -29,7 +29,7 @@
         <input
           type="text"
           placeholder="Code"
-          class="input-default"
+          class="input-default col-span-2"
           formControlName="codart"
         />
       </div>
@@ -40,7 +40,7 @@
         <input
           type="text"
           placeholder="Descripction"
-          class="input-default"
+          class="input-default col-span-2"
           formControlName="desart"
         />
       </div>
@@ -97,7 +97,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="desart">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+          <th class="min-w-80 header-cell" cdk-header-cell *cdkHeaderCellDef>
             Art. Description
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
@@ -114,7 +114,7 @@
         </ng-container>
         <ng-container cdkColumnDef="moddesc">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Change Descripcion?
+            Change Desc?
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.moddesc }}
@@ -125,7 +125,7 @@
             List Price
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.implistprice }}
+            {{ row.implistprice | number: '1.2-2' }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="impdesctotal">
@@ -133,7 +133,7 @@
             Discount
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.impdesctotal }}
+            {{ row.impdesctotal | number: '1.2-2' }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="impsaleprice">
@@ -141,10 +141,10 @@
             Sale Price
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.impsaleprice }}
+            {{ row.impsaleprice | number: '1.2-2' }}
           </td>
         </ng-container>
-        <ng-container cdkColumnDef="imptribtotal">
+        <!-- <ng-container cdkColumnDef="imptribtotal">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
             Total Tax
           </th>
@@ -157,7 +157,7 @@
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.imptotal }}
           </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container cdkColumnDef="operac">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">

@@ -69,11 +69,15 @@ export class MyDate{
 
   static convertToCustomStringLong(dateArray: number[] | Date | null): string {
     if (dateArray === null) {
-      return '01/01/2000 00:00:00'; // Fecha por defecto: 1 de enero de 2000 a las 00:00:00
+      return '';
     }
 
     if (dateArray instanceof Date) {
       return this.formatDateLong(dateArray);
+    }
+
+    if (dateArray.length < 3) {
+      return '';
     }
 
     const year = dateArray[0];

@@ -12,6 +12,8 @@ import { MyDate } from '@billing-utils/date';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Currency } from 'src/app/auth/models/default-values.model';
+import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
   selector: 'app-basic-all-exchange-rate',
@@ -28,6 +30,7 @@ export class BasicAllExchangeRateComponent implements OnInit {
   formSearchExchangeRate!: FormGroup;
   dataSourceExchangeRate = new DataSourceExchangeRateExchangeRate();
   displayedColumns: string[] = ['registdate','origen','destin','eventa','ecompra','operac']
+  currencies: Currency[] = []
 
   private buildForm() {
     const today = new Date().toJSON().split('T')[0]
@@ -43,6 +46,7 @@ export class BasicAllExchangeRateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tipoCambioService: ExchangeRateService,
     private globalStatusService: GlobalStatusService,
+    private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar
   ) {

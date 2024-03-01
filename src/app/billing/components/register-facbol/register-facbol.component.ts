@@ -61,13 +61,13 @@ export class RegisterFacbolComponent implements OnInit {
     // Clear Data
     this.dataHeaderSource.delReset();
     // Init Form
-    const today = new Date().toJSON().split('T')[0]
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toJSON().split('T')[0]
     this.formDocumentHeader = this.formBuilder.group({
       typcomdoc: [typcomdoc, [Validators.required]],
       sitcomdoc: [1, [Validators.required]],
       serie: [serie, [Validators.required]],
       numdoc: [0, [Validators.required]],
-      registdate: [today, [Validators.required]],
+      registdate: [yesterday, [Validators.required]],
       codbranch: [1, [Validators.required]],
       codplaiss: [1, [Validators.required]],
       ingsalcom: [1, [Validators.required]],
@@ -208,7 +208,7 @@ export class RegisterFacbolComponent implements OnInit {
             this.tipoConPag = data.list;
           });
         // Guardar en DataSource
-        const dataHeader = this.formDocumentHeader.value;
+        const dataHeader = this.formDocumentHeader.getRawValue();
 
         // Deshabilitar todos los inputs
         this.formDocumentHeader.get('typcomdoc')?.disable();
@@ -224,7 +224,6 @@ export class RegisterFacbolComponent implements OnInit {
           this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
         }
         // Update values in DataSource
-        console.log('formValue', dataHeader);
         this.dataHeaderSource.getPush(dataHeader);
       }
     });

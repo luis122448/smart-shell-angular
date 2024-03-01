@@ -71,3 +71,11 @@ export interface ListPrice{
   descri: string
   defaul: string
 }
+
+export interface TypeBusinessPartnerDefaultValues{
+  typbuspar: number
+  abrevi: string
+  descri: string
+  codext: string
+  defaul: string
+}

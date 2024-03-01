@@ -43,7 +43,7 @@ export class SerieCommercialDocumentComponent implements OnInit{
     private matSnackBar: MatSnackBar
   ){
     this.buildForm(1)
-    this.listCommercialDocument = this.defaultValuesService.getCookieValue('documents')
+    this.listCommercialDocument = this.defaultValuesService.getLocalStorageValue('documents')
   }
 
   ngOnInit(): void {

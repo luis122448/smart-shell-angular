@@ -21,7 +21,6 @@ import {
 } from '@billing-utils/constants';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TypeInventoryService } from '@billing-services/type-inventory.service';
 import { TypeInventory } from '@billing-models/type-inventory.model';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
@@ -57,7 +56,7 @@ export class DialogAllInventarioArticleComponent implements OnInit {
         status: ['', []],
       },
       {
-        validators: [MyValidators.NotNullValidatorTwo('codart', 'desart')],
+        // validators: [MyValidators.NotNullValidatorTwo('codart', 'desart')],
       }
     );
   }
@@ -76,7 +75,8 @@ export class DialogAllInventarioArticleComponent implements OnInit {
     private defaultValuesService: DefaultValuesService,
     private matSnackBar: MatSnackBar
   ) {
-    this.inventories = this.defaultValuesService.getCookieValue('inventories');
+    this.inventories =
+      this.defaultValuesService.getLocalStorageValue('inventories');
     this.defaultInventory = this.inventories.find(
       (data) => data.defaul === 'Y'
     );
@@ -85,40 +85,42 @@ export class DialogAllInventarioArticleComponent implements OnInit {
   ngOnInit(): void {}
 
   searchArticle() {
-    if (this.formSearchInventarioArticle.valid) {
-      this.globalStatusService.setLoading(true);
-      this.articuloService
-        .getPage(
-          this.typinv?.value,
-          this.codart?.value,
-          this.descri?.value,
-          this.pageSize,
-          this.pageIndex
-        )
-        .subscribe({
-          next: (data) => {
-            if (data.status <= 0) {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: data,
-              });
-            }
-            this.dataSource.getInit(data.page.content);
-            this.totalElements = data.page.totalElements;
-          },
-          error: (err) => {
+    if (this.formSearchInventarioArticle.invalid) {
+      this.formSearchInventarioArticle.markAllAsTouched();
+      return;
+    }
+
+    this.globalStatusService.setLoading(true);
+    this.articuloService
+      .getPage(
+        this.typinv?.value,
+        this.codart?.value,
+        this.descri?.value,
+        this.pageSize,
+        this.pageIndex
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: err.error,
+              data: data,
             });
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
-          },
-        });
-    } else {
-      this.formSearchInventarioArticle.markAllAsTouched();
-    }
+          }
+          this.dataSource.getInit(data.page.content);
+          this.totalElements = data.page.totalElements;
+        },
+        error: (err) => {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: err.error,
+          });
+          this.globalStatusService.setLoading(false);
+        },
+        complete: () => {
+          this.globalStatusService.setLoading(false);
+        },
+      });
   }
 
   crudArticle(row: Article | null) {
@@ -127,8 +129,8 @@ export class DialogAllInventarioArticleComponent implements OnInit {
         typinv: row?.typinv,
         codart: row?.codart,
         descri: row?.descri,
-        articulo: row,
-        newArticle: row ? false : true,
+        article: row,
+        isNewArticle: row === null ? true : false,
       },
     });
   }
@@ -160,7 +162,7 @@ export class DialogAllInventarioArticleComponent implements OnInit {
               if (data.status <= 0) {
                 this.dialog.open(DialogErrorAlertComponent, {
                   width: '400px',
-                  data: data
+                  data: data,
                 });
               } else {
                 this.matSnackBar.openFromComponent(
@@ -202,7 +204,7 @@ export class DialogAllInventarioArticleComponent implements OnInit {
               if (data.status <= 0) {
                 this.dialog.open(DialogErrorAlertComponent, {
                   width: '400px',
-                  data: data
+                  data: data,
                 });
               } else {
                 this.matSnackBar.openFromComponent(

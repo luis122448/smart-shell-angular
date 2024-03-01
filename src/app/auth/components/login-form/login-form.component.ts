@@ -18,6 +18,7 @@ import { TypeInventoryService } from '@billing-services/type-inventory.service';
 import { ListPriceService } from '@billing-services/list-price.service';
 import { TypeCommercialDocumentService } from '@billing-services/type-commercial-document.service';
 import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
+import { TypeBusinessPartnerService } from '@billing-services/type-business-partner.service';
 
 @Component({
   selector: 'app-login-form',
@@ -68,7 +69,8 @@ export class LoginFormComponent {
     private reasonCommercialDocumentService: ReasonCommercialDocumentService,
     private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
-    private listPriceService: ListPriceService
+    private listPriceService: ListPriceService,
+    private typeBusinessPartnerService: TypeBusinessPartnerService,
   ) {
     this.buildForm();
     this.buildFormVerify();
@@ -305,7 +307,7 @@ export class LoginFormComponent {
     await this.listPriceService.getAll().subscribe({
       next: (data) => {
         this.defaultValuesService.setLocalStorageValue(
-          'listPrices',
+          'listprices',
           data.list.map((data) => {
             return {
               codlistprice: data.codlistprice,
@@ -323,16 +325,17 @@ export class LoginFormComponent {
         });
       },
     });
-    await this.typeCommercialDocumentService.getAll().subscribe({
+    await this.typeBusinessPartnerService.getAll().subscribe({
       next: (data) => {
         this.defaultValuesService.setLocalStorageValue(
-          'documents',
+          'typeBusinessPartner',
           data.list.map((data) => {
             return {
-              typcomdoc: data.typcomdoc,
+              typbuspar: data.typbuspar,
               abrevi: data.abrevi,
               descri: data.descri,
-              defaul: 'N',
+              codext: data.codext,
+              defaul: data.defaul,
             };
           })
         );

@@ -5,14 +5,23 @@
         <label for="codlistprice" class="label-input-sm label-required"
           >List Price Code</label
         >
-        <input
+        <select
+          name="codlistprice"
           id="codlistprice"
-          type="text"
-          class="input-default"
+          class="select-default"
           formControlName="codlistprice"
-          [class.input-invalid]="isInputInvalid('codlistprice')"
-          placeholder="Code Article*"
-        />
+          [class.select-invalid]="isInputInvalid('codlistprice')"
+        >
+          <option
+            *ngFor="let item of listprices"
+            [value]="item.codlistprice"
+            class="option-default"
+            selected
+            [class.option-invalid]="isInputInvalid('codlistprice')"
+          >
+            {{ item.codlistprice + " - " + item.descri }}
+          </option>
+        </select>
       </div>
       <div class="flex">
         <label for="abrevi" class="label-input-sm label-required"

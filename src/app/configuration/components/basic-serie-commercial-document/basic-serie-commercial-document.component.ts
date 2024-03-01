@@ -61,8 +61,8 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
     private matSnackBar: MatSnackBar
   ) {
     this.buildForm(this.inputTypcomdoc,this.inputSerie)
-    this.listCommercialDocument = this.defaultValuesService.getCookieValue('documents')
-    this.listBranches = this.defaultValuesService.getCookieValue('branches')
+    this.listCommercialDocument = this.defaultValuesService.getLocalStorageValue('documents')
+    this.listBranches = this.defaultValuesService.getLocalStorageValue('branches')
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -134,6 +134,7 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
         width: '400px',
         data: { no_required_fields: 'S' }
       })
+      this.formCrudSerieCommercialDocument.markAllAsTouched()
       return
     }
     this.globalStatusService.setLoading(true)

@@ -355,7 +355,7 @@ body {
 }
 
 .dialog-sub-title-line {
-  @apply my-2 h-px border-[1px] border-dotted bg-gray-500 dark:bg-gray-700;
+  @apply my-2 h-px border-2 dark:border-[1px] border-dotted bg-gray-500 dark:bg-gray-700;
 }
 
 .configuration-container {

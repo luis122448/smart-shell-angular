@@ -18,6 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-success/matsnackbar-success.component';
 import { DialogDeleteQuestionComponent } from '@shared-components/dialog-delete-question/dialog-delete-question.component';
 import { PageEvent } from '@angular/material/paginator';
+import { TypeBusinessPartnerDefaultValues } from 'src/app/auth/models/default-values.model';
+import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
   selector: 'app-dialog-all-cliente',
@@ -33,6 +35,8 @@ export class DialogAllClienteComponent {
   totalElements = 0;
   pageSize = 10;
   pageIndex = 0;
+  // LocalStorage
+  typeBusinessPartners: TypeBusinessPartnerDefaultValues[] = [];
   // Formulario - Search
   private buildForm(typbuspar: number = 1) {
     this.formSearchCliente = this.formBuilder.group(
@@ -54,9 +58,11 @@ export class DialogAllClienteComponent {
     private businessPartnerService: BusinessPartnerService,
     private formBuilder: FormBuilder,
     private globalStatusService: GlobalStatusService,
+    private defaultValuesService: DefaultValuesService,
     private matSnackBar: MatSnackBar
   ) {
-    this.buildForm(1);
+    this.typeBusinessPartners = this.defaultValuesService.getLocalStorageValue('typeBusinessPartners');
+    this.buildForm(this.typeBusinessPartners.find(data => data.defaul == 'Y')?.typbuspar ?? 1);
   }
 
   isInputInvalid(fieldName: string): boolean {
@@ -92,6 +98,7 @@ export class DialogAllClienteComponent {
               width: '400px',
               data: err.error,
             });
+            this.globalStatusService.setLoading(false);
           },
           complete: () => {
              this.globalStatusService.setLoading(false);
@@ -155,6 +162,7 @@ export class DialogAllClienteComponent {
           width: '400px',
           data: err.error,
         });
+        this.globalStatusService.setLoading(false);
       },
       complete: () => {
         this.globalStatusService.setLoading(false);
@@ -197,6 +205,7 @@ export class DialogAllClienteComponent {
           width: '400px',
           data: err.error,
         });
+        this.globalStatusService.setLoading(false);
       },
       complete: () => {
         this.globalStatusService.setLoading(false);

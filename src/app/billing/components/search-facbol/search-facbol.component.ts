@@ -211,7 +211,7 @@ export class SearchFacbolComponent implements OnInit{
     } else {
       this.dialog.open(DialogErrorAlertComponent,{
         width: '400px',
-        data: { no_fields_required: 'Y'}
+        data: { no_required_fields: 'Y'}
       })
       this.formSearchDocument.markAllAsTouched()
     }

@@ -9,17 +9,17 @@
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faCommentsDollar" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Tipo de Cambio</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Exchange Rate</span>
     </button>
   </section>
   <section>
-    <button type="button" (click)="openDialogCliente()"
+    <button type="button" (click)="openDialogBusinessPartner()"
       cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
       class="menu-sidebar">
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faUsers" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Interlocutor Comercial</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Business Partner</span>
     </button>
   </section>
   <section>
@@ -29,7 +29,7 @@
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faCartFlatbe" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Inventario y Articles</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Inventory and Articles</span>
     </button>
   </section>
   <section>
@@ -39,21 +39,21 @@
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faClipboardList" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Lista de Precios</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">List of Price</span>
     </button>
   </section>
   <section>
-    <button type="button" (click)="openDialogCliente()"
+    <button type="button" (click)="openDialogTransport()"
       cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
       class="menu-sidebar">
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faTruckArrowRight" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Transportista</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Transport</span>
     </button>
   </section>
   <section>
-    <button type="button" (click)="openDialogCliente()"
+    <button type="button" (click)="openDialogSeller()"
       cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
       class="menu-sidebar">
         <div class="menu-siderbar-icon">
@@ -63,25 +63,15 @@
     </button>
   </section>
   <section>
-    <button type="button" (click)="openDialogCliente()"
+    <button type="button" (click)="openDialogPaymentCondition()"
       cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
       class="menu-sidebar">
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faCreditCard" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Condicion de Pago</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Payment Condition</span>
     </button>
   </section>
-  <!-- <section>
-    <button type="button" (click)="openDialogCompany()"
-      cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
-      class="menu-sidebar">
-        <div class="menu-siderbar-icon">
-          <fa-icon class="icon-operac" [icon]="faCreditCard" size="lg"></fa-icon>
-        </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Condicion de Pago</span>
-    </button>
-  </section> -->
   <section>
     <button type="button" (click)="openDialogSesion()"
       cdkOverlayOrigin #subMenuOverlay="cdkOverlayOrigin"
@@ -89,7 +79,7 @@
         <div class="menu-siderbar-icon">
           <fa-icon class="icon-operac" [icon]="faSquareXmark" size="lg"></fa-icon>
         </div>
-        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Cerrar Sesión</span>
+        <span class="menu-sidebar-text" [class.display-none]="!openSidebar">Sign off</span>
     </button>
   </section>
 </div>

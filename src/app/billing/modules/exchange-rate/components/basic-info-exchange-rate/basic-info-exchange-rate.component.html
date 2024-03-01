@@ -1,14 +1,14 @@
 <form [formGroup]="formCrudExchangeRate" class="sub-dialog-container">
   <section>
-    <hr class="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700" />
-    <label class="dialog-sub-title">Import : </label>
+    <hr class="dialog-sub-title-line" />
+    <label class="dialog-sub-title">Import by : </label>
   </section>
   <section>
     <app-button-import-sunat (click)="importSunat()" typeBtn="button">
     </app-button-import-sunat>
   </section>
   <section>
-    <hr class="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700" />
+    <hr class="dialog-sub-title-line" />
     <label class="dialog-sub-title">Basic Information : </label>
   </section>
   <section class="space-y-4">
@@ -115,6 +115,54 @@
         />
       </div>
     </article>
+  </section>
+  <section>
+    <hr class="dialog-sub-title-line" />
+    <label class="dialog-sub-title">Audit Information : </label>
+  </section>
+  <section class="grid grid-cols-2 gap-x-4">
+    <div class="space-y-2">
+      <div class="flex">
+        <label for="createby" class="label-input-sm">Create by : </label>
+        <input
+          id="createby"
+          type="text"
+          class="input-default"
+          formControlName="createby"
+        />
+      </div>
+      <div class="flex">
+        <label for="createat" class="label-input-sm">Time : </label>
+        <input
+          id="createat"
+          type="text"
+          class="input-default"
+          disabled
+          [value]="formatDate(createat?.value)"
+        />
+      </div>
+    </div>
+    <div class="space-y-2">
+      <div class="flex">
+        <label for="updateby" class="label-input-sm">Update By : </label>
+        <input
+          id="updateby"
+          type="text"
+          class="input-default"
+          formControlName="updateby"
+        />
+      </div>
+      <div class="flex">
+        <label for="updateat" class="label-input-sm">Time : </label>
+        <input
+          id="updateat"
+          type="text"
+          class="input-default"
+          disabled
+          [value]="formatDate(updateat?.value)"
+        />
+      </div>
+    </div>
   </section>
   <section class="flex justify-end space-x-4">
     <app-button-standard

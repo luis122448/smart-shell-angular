@@ -52,8 +52,8 @@ export class FormatSerieCommercialDocumentComponent implements OnInit, OnChanges
     private formBuilder: FormBuilder
   ) {
     this.buildForm(this.inputTypcomdoc,this.inputSerie)
-    this.listCommercialDocument = this.defaultValuesService.getCookieValue('documents')
-    this.listBranches = this.defaultValuesService.getCookieValue('branches')
+    this.listCommercialDocument = this.defaultValuesService.getLocalStorageValue('documents')
+    this.listBranches = this.defaultValuesService.getLocalStorageValue('branches')
   }
 
   ngOnChanges(changes: SimpleChanges): void {

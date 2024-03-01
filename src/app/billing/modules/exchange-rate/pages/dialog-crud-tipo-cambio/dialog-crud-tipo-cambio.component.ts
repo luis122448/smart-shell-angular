@@ -1,19 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { DataSource } from '@angular/cdk/collections';
-import { ExchangeRate } from '@billing-models/exchange-rate.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ExchangeRateService } from '../../../../services/tipo-cambio.service';
 import { faPenToSquare, faBroom, faTrashCan, faFilePen,faFileInvoice, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { NoDataFoundMessageDialog, MatSnackBarSuccessConfig } from '../../../../utils/constants';
-import { GlobalStatusService } from '../../../../services/global-status.service';
-import { decimalExchangeRate } from '../../../../utils/validator';
-import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-success/matsnackbar-success.component';
-import { MyDate } from '../../../../utils/date';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-crud-tipo-cambio',
@@ -32,7 +20,6 @@ export class DialogCrudExchangeRateComponent {
   selectedTab = new FormControl(0)
 
   constructor(
-    private datePipe: DatePipe,
     private dialogRef: DialogRef,
   ){ }
 

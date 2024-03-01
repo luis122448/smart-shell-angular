@@ -45,9 +45,12 @@ export class BasicArticleListPriceComponent implements OnInit {
     'implistprice',
     'impdesctotal',
     'impsaleprice',
-    'imptribtotal',
-    'imptotal',
+    'operac'
   ];
+
+  // 'imptribtotal',
+  // 'imptotal',
+
   // Page
   totalElements = 0
   pageSize = 10
@@ -62,7 +65,6 @@ export class BasicArticleListPriceComponent implements OnInit {
   }
 
   constructor(
-    private listPriceService: ListPriceService,
     private listPriceArticleService: ListPriceArticleService,
     private formBuilder: FormBuilder,
     private dialog: Dialog,
@@ -98,26 +100,6 @@ export class BasicArticleListPriceComponent implements OnInit {
     return '';
   }
 
-  // openDialogGetArticle() {
-  //   const dialogArticle = this.dialog.open<Article>(DialogGetArticleComponent, {
-  //     data: { codart: this.codart?.value, descri: this.desart?.value },
-  //   });
-  //   dialogArticle.closed.subscribe({
-  //     next: (data) => {
-  //       if (data) {
-  //         this.codart?.setValue(data.codart);
-  //         this.desart?.setValue(data.descri);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       this.dialog.open(DialogErrorAlertComponent, {
-  //         width: '400px',
-  //         data: err.error,
-  //       });
-  //     },
-  //   });
-  // }
-
   searchListPriceArticle() {
     if (this.formCrudListPriceArticle.valid) {
       this.globalStatusService.setLoading(true);
@@ -139,7 +121,6 @@ export class BasicArticleListPriceComponent implements OnInit {
             }
             this.dataSourceListPriceArticle.getInit(data.page.content);
             this.totalElements = data.page.totalElements
-            this.globalStatusService.setLoading(false);
           },
           error: (err) => {
             this.dialog.open(DialogErrorAlertComponent, {
@@ -150,6 +131,9 @@ export class BasicArticleListPriceComponent implements OnInit {
             this.totalElements = 0;
             this.globalStatusService.setLoading(false);
           },
+          complete: () => {
+            this.globalStatusService.setLoading(false);
+          }
         });
     } else {
       this.formCrudListPriceArticle.markAllAsTouched();
@@ -162,8 +146,11 @@ export class BasicArticleListPriceComponent implements OnInit {
 
   crudListPriceArticle(row: ListPriceArticle | null) {
     this.dialog.open(ModalImportListPriceComponent, {
-      width: '400px',
-      data: '',
+      data: {
+        row: row,
+        codlistprice: this.codlistprice?.value,
+        isNewListPriceArticle: row ? false : true,
+      },
     });
   }
 
@@ -182,6 +169,7 @@ export class BasicArticleListPriceComponent implements OnInit {
     dialogDelete.closed.subscribe({
       next: (data) => {
         if (data) {
+          this.globalStatusService.setLoading(true);
           this.listPriceArticleService
             .delDelete(row.codlistprice, row.codart)
             .subscribe({
@@ -189,7 +177,7 @@ export class BasicArticleListPriceComponent implements OnInit {
                 if (data.status <= 0) {
                   this.dialog.open(DialogErrorAlertComponent, {
                     width: '400px',
-                    data: { status: data.status, message: data.message },
+                    data: data,
                   });
                 } else {
                   this.matSnackBar.openFromComponent(
@@ -207,7 +195,11 @@ export class BasicArticleListPriceComponent implements OnInit {
                   width: '400px',
                   data: err.error,
                 });
+                this.globalStatusService.setLoading(false);
               },
+              complete: () => {
+                this.globalStatusService.setLoading(false);
+              }
             });
         }
       },

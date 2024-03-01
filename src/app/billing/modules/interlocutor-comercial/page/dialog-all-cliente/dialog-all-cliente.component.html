@@ -1,8 +1,8 @@
 <main class="dialog-container">
   <section>
-    <h1 class="dialog-title">Interlocutor Comercial</h1>
+    <h1 class="dialog-title">Business Partner</h1>
     <form [formGroup]="formSearchCliente">
-      <div class="space-y-2 divide-line">
+      <div class="divide-line space-y-2">
         <div class="grid grid-cols-5 gap-x-8">
           <div class="col-span-3 flex">
             <div class="w-48">
@@ -16,8 +16,10 @@
               formControlName="typbuspar"
               class="select-default"
             >
-              <option value="1" class="option-default">1 - CLIENTE</option>
-              <option value="2" class="option-default">2 - PROVEEDOR</option>
+
+            <option *ngFor="let item of typeBusinessPartners" [value]="item.typbuspar">
+              {{ item.typbuspar + ' - ' +  item.descri }}
+            </option>
             </select>
           </div>
           <div class="col-span-2 flex items-center justify-center space-x-4">
@@ -117,9 +119,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Accion
-          </th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
             <app-button-operac
               *ngIf="row.status === 'Y'"

@@ -4,8 +4,8 @@
   (mouseleave)="!(openSidebar = false)"
 >
   <section class="space-y-2">
-    <div class="flex items-center justify-around">
-      <div>
+    <article class="flex items-center justify-around">
+      <div class="" [class.display-none]="!openSidebar">
         <img
           src="../../../../../../assets/images/extra/Foto.jpg"
           alt=""
@@ -25,33 +25,33 @@
           </a>
         </div>
       </div>
-    </div>
-    <div class="flex justify-around px-10 pb-2">
+    </article>
+    <article class="flex justify-around mx-auto py-2">
       <img
         src="../../../../../../assets/images/extra/AngularIcon.png"
-        alt=""
+        alt="angular-icon"
         class="rounded-full"
         height="20px"
         width="20px"
       />
       <img
         src="../../../../../../assets/images/extra/SpringIcon.png"
-        alt=""
+        alt="spring-icon"
         class="rounded-full"
         height="20px"
         width="20px"
       />
       <img
         src="../../../../../../assets/images/extra/PostgresSQLIcon.png"
-        alt=""
-        class="rounded-full"
+        alt="postgres-icon"
+        class="rounded-full" [class.display-none]="!openSidebar"á
         height="20px"
         width="20px"
       />
-    </div>
+    </article>
   </section>
   <section class="flex justify-around space-x-2 py-2">
-    <div>
+    <article class="" [class.display-none]="!openSidebar">
       <img
         src="../../../../../../assets/images/extra/Foto.jpg"
         alt=""
@@ -59,19 +59,19 @@
         height="50px"
         width="50px"
       />
-    </div>
-    <div>
-      <p class="text-inline m-0 font-bold">Luis C.</p>
-      <p class="text-inline m-0">Administrador</p>
-      <p class="text-inline m-0">Online</p>
-    </div>
+    </article>
+    <article>
+      <p class="text-inline m-0 text-left font-bold whitespace-nowrap">Luis C.</p>
+      <p class="text-inline m-0 text-left whitespace-nowrap">Administrador</p>
+      <p class="text-inline m-0 text-left whitespace-nowrap">Online</p>
+    </article>
   </section>
   <section class="flex py-2">
     <input type="search" class="input-default" placeholder="Search*" />
-    <button type="button" class="button-icon-input" (click)="onSearch()">
+    <button type="button" class="button-icon-search" (click)="onSearch()">
       <fa-icon
         [icon]="faMagnifyingGlass"
-        class="text-white"
+        class="icon-operac-button"
         size="sm"
       ></fa-icon>
     </button>

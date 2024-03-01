@@ -88,5 +88,6 @@ export interface ArticleBasic{
   typinv: number
   codart: string
   descri: string
-  row: Article | null
+  article: Article | null
+  isNewArticle: boolean
 }

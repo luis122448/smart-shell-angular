@@ -11,7 +11,6 @@ import { environment } from '@enviroment';
 })
 export class ExchangeRateService {
 
-  // API_URL_SUNAT = 'https://www.sunat.gob.pe/a/txt/tipoCambio.txt'
   API_URL_SUNAT = 'https://api.sunat.dev/sunat/tc'
   API_URL = environment.API_URL
   PATH_BILLING = environment.PATH_BILLING
@@ -19,29 +18,22 @@ export class ExchangeRateService {
     private httpCliente: HttpClient
   ) { }
 
-  // getExchangeRateSunat(): Observable<ExchangeRateSunat>{
-  //   return this.httpCliente.get<string>(this.API_URL_SUNAT)
-  //   .pipe(map(data =>{
-  //     const parts = data.split('|')
-  //     return {
-  //       registdate: new Date(parts[0]),
-  //       eventa: parseFloat(parts[1]),
-  //       ecompra: parseFloat(parts[2])
-  //     }
-  //   }),
-  //   catchError(error =>{
-  //     console.log(error)
-  //     throw error;
-  //   }))
-  // }
-
   getExchangeRateSunat(date: Date): Observable<ExchangeRateSunat>{
     let params = new HttpParams()
     .set('fechaInicio', date.toISOString().split('T')[0]) // Convierte la fecha a formato "YYYY-MM-DD"
     .set('fechaFin', date.toISOString().split('T')[0]) // Convierte la fecha a formato "YYYY-MM-DD"
     .set('apikey', environment.API_SUNAT_TOKEN)
     return this.httpCliente.get<ExchangeRateAPISunat>(this.API_URL_SUNAT, { params })
-    .pipe(map(data =>{
+    .pipe(
+      // CAPTURE THE ERROR
+      // {"statusCode":400,"body":{"errors":[{"message":"error en parametros"}]}}
+      map(data =>{
+      if (data.statusCode == 400) {
+        throw new Error('The exchange rate was not found for the selected date')
+      }
+      if (data.statusCode !== 200) {
+        throw new Error(data.body.errors[0].message)
+      }
       const parts = data.body.data.tipoCambioByFecha.items[0]
       return {
         registdate: new Date(parts.fechaSunat),
@@ -50,7 +42,6 @@ export class ExchangeRateService {
       }
     }),
     catchError(error =>{
-      console.log(error)
       throw error;
     }))
   }

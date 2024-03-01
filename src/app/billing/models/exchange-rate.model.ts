@@ -1,6 +1,7 @@
 export interface ExchangeRateAPISunat{
   statusCode: number
   body: {
+    errors: any
     data: {
       tipoCambioByFecha: {
         items: {

@@ -48,7 +48,7 @@ export class BasicImportListPriceComponent {
       this.listPrices.push(data.listPrice)
       this.buildForm(data.listPrice.codlistprice,true)
     } else {
-      this.listPrices = this.defaultValuesService.getCookieValue('listPrices')
+      this.listPrices = this.defaultValuesService.getLocalStorageValue('listPrices')
       const defaultListPrice = this.listPrices.find(data => data.defaul === 'Y');
       this.buildForm(defaultListPrice?.codlistprice,false)
     }

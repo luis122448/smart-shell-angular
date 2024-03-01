@@ -1,4 +1,4 @@
-<div class="sub-dialog-container">
+<main class="sub-dialog-container">
   <section class="flex w-full justify-center">
     <form [formGroup]="formSearchExchangeRate" class="space-y-2">
       <div class="grid grid-cols-2 gap-x-8">
@@ -35,6 +35,8 @@
           >
             <option value="PEN" class="option-default">PEN</option>
             <option value="USD" class="option-default">USD</option>
+
+
           </select>
         </div>
         <div class="grid grid-cols-3">
@@ -133,12 +135,12 @@
         <ng-container cdkColumnDef="operac">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
-            <app-button-operac
+            <!-- <app-button-operac
               optionBtn="edit"
               colorBtn="sky"
               (click)="crudExchangeRate(row)"
             >
-            </app-button-operac>
+            </app-button-operac> -->
             <app-button-operac
               optionBtn="delete"
               colorBtn="red"
@@ -167,4 +169,4 @@
       Close
     </app-button-standard>
   </section>
-</div>
+</main>
