@@ -8,9 +8,10 @@ import { Dialog } from '@angular/cdk/dialog';
 import { Branch, Document } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NoDataFoundMessageDialog } from '@billing-utils/constants';
+import { MatSnackBarSuccessConfig, NoDataFoundMessageDialog } from '@billing-utils/constants';
 import { GlobalStatusService } from '@billing-services/global-status.service';
-import { ChangeSerieCommercialDocument } from '@billing-models/serie-commercial-document.model';
+import { ChangeSerieCommercialDocument, SerieCommercialDocument } from '@billing-models/serie-commercial-document.model';
+import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 
 @Component({
   selector: 'app-basic-serie-commercial-document',
@@ -20,6 +21,7 @@ import { ChangeSerieCommercialDocument } from '@billing-models/serie-commercial-
 export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges {
 
   @Input() inputTypcomdoc: number = 0
+  @Input() inputTypformat: number = 0
   @Input() inputSerie: string = ''
   @Input() inputSave: boolean = false
   @Output() changeView = new EventEmitter<ChangeSerieCommercialDocument>();
@@ -68,6 +70,10 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['inputSave'] && changes['inputSave'].currentValue){
       this.saveSerieCommercialDocument()
+    }
+    if(changes['inputTypformat'] && changes['inputTypformat'].currentValue){
+      console.log('inputTypformat',changes['inputTypformat'].currentValue)
+      this.typformat?.setValue(changes['inputTypformat'].currentValue)
     }
   }
 
@@ -138,7 +144,7 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
       return
     }
     this.globalStatusService.setLoading(true)
-    this.formCrudSerieCommercialDocument.patchValue({
+    const serieCommercialDocument : SerieCommercialDocument = {
       typcomdoc: this.typcomdoc?.value,
       serie: this.serie?.value,
       abrevi: this.abrevi?.value,
@@ -152,13 +158,10 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
       observ: this.observ?.value,
       commen: this.commen?.value,
       defaul: (this.defaul?.value)?'Y':'N',
-      status: (this.status?.value)?'Y':'N',
-      createby: null,
-      updateby: null,
-      createat: null,
-      updateat: null
-    })
-    this.serieCommercialDocumentService.postSave(this.formCrudSerieCommercialDocument.value)
+      status: (this.status?.value)?'Y':'N'
+    }
+    console.log('save',serieCommercialDocument)
+    this.serieCommercialDocumentService.postSave(serieCommercialDocument)
     .subscribe({
       next: data => {
         if(data.status < 0){
@@ -167,20 +170,25 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
             data: data
           })
         } else {
-          this.dialog.open(DialogErrorAlertComponent,NoDataFoundMessageDialog)
+          this.matSnackBar.openFromComponent(
+            MatsnackbarSuccessComponent,
+            MatSnackBarSuccessConfig
+          );
           this.changeView.emit({
             view: 'search',
             typcomdoc: data.object?.typcomdoc || 0,
             serie: data.object?.serie || ''
           })
         }
-        this.globalStatusService.setLoading(false)
       },
       error: err => {
         this.dialog.open(DialogErrorAlertComponent,{
           width: '400px',
           data: err.error
         })
+        this.globalStatusService.setLoading(false)
+      },
+      complete: () => {
         this.globalStatusService.setLoading(false)
       }
     })

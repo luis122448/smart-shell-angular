@@ -136,6 +136,14 @@ export class DetailItemsFacbolComponent implements OnInit {
   }
 
   openDialogGetArticle(item: DocumentDetail) {
+    // Validate length of codart or desart
+    if (item.codart.length < 3) {
+      this.dialog.open(DialogGetArticleComponent, {
+        width: '400px',
+        data: { minimum_length:3 }
+      })
+    }
+
     const dataHeader = this.dataHeaderSource.get();
     this.codlistprice = dataHeader.codlistprice ?? 1;
     const dialogRefArticle = this.dialog.open<Article>(

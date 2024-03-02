@@ -3,18 +3,18 @@
     <fa-icon [icon]="faCircleQuestion" size="2xl" class="text-sky-700"></fa-icon>
   </div>
   <div class="text-center text-inline">{{ this.mensaje.message }}</div>
-  <div class="flex justify-around">
+  <article class="flex justify-around w-64">
     <app-button-question
       (click)="closeDialog(true)"
-      colorBtn="sky"
+      colorBtn="red"
       typeBtn="button">
       Si
     </app-button-question>
     <app-button-question
       (click)="closeDialog(false)"
-      colorBtn="red"
+      colorBtn="green"
       typeBtn="button">
       No
     </app-button-question>
-  </div>
+  </article>
 </section>

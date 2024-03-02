@@ -10,6 +10,18 @@ export interface ApiResponseByte{
   extension: string
 }
 
+export interface ApiResponseArrayBuffer{
+  status?: number
+  message?: string
+  logMessage?: string
+  logUser?: String
+  logTime?: Date | number[],
+  arrayBuffer: ArrayBuffer,
+  format: string,
+  name: string,
+  extension: string
+}
+
 export interface ApiResponseObject<T>{
   status: number;
   message: string;

@@ -344,6 +344,10 @@ body {
   @apply flex h-full w-full flex-col pr-4 space-y-6 pt-4 md:min-w-[700px] xl:min-w-[900px];
 }
 
+.sub-dialog-container-noflex {
+  @apply h-full w-full pr-4 space-y-6 pt-4 md:min-w-[700px] xl:min-w-[900px];
+}
+
 .dialog-title {
   @apply m-0 text-left text-xl text-slate-700
   dark:bg-none dark:text-gray-400;

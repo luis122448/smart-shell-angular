@@ -29,7 +29,7 @@ export class ArticleAttachedService {
     return this.httpCLient.get<DTOArticleAttached>(`${this.API_URL}${this.PATH_BILLING}/article-attached/by-id`, { params })
   }
 
-  findByDownloader(codart: string, typeps: number): Observable<any> {
+  findByDownloader(codart: string, typeps: number): Observable<ApiResponseByte> {
     const params = new HttpParams()
       .set('codart', codart)
       .set('typeps', typeps.toString());

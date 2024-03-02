@@ -1,6 +1,108 @@
-<form [formGroup]="formArticleListPrice" class="sub-dialog-container">
-  <section>
-    <h1 class="dialog-title">List of Price Article</h1>
+<form
+  action="#"
+  [formGroup]="formArticleListPrice"
+  class="sub-dialog-container-noflex"
+>
+  <section class="section-table-150">
+    <article class="container-dialog-table">
+      <table
+        class="main-dialog-table"
+        cdk-table
+        [dataSource]="dataSourceListPriceArticle"
+      >
+        <tr
+          class="header-table"
+          cdk-header-row
+          *cdkHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          class="row-table"
+          cdk-row
+          *cdkRowDef="let row; columns: displayedColumns"
+          [class.row-table-delete]="row.status === 'N'"
+        ></tr>
+        <ng-container cdkColumnDef="codlistprice">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>List Price</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ getListPrice(row.codlistprice) }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="codart">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Art. Code
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.codart }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="desart">
+          <th class="min-w-80 header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Art. Description
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.desart }}
+          </td>
+        </ng-container>
+        <!-- <ng-container cdkColumnDef="modprice">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Change Price?
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.modprice }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="moddesc">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Change Desc?
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.moddesc }}
+          </td>
+        </ng-container> -->
+        <ng-container cdkColumnDef="implistprice">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            List Price
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.implistprice | number : "1.2-2" }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="impdesctotal">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Discount
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.impdesctotal | number : "1.2-2" }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="impsaleprice">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Sale Price
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.impsaleprice | number : "1.2-2" }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="operac">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
+          <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+            <app-button-operac
+              *ngIf="row.status === 'Y'"
+              (click)="updateListPriceArticle(row)"
+              optionBtn="edit"
+              colorBtn="sky"
+            >
+            </app-button-operac>
+            <app-button-operac
+              *ngIf="row.status === 'Y'"
+              (click)="deleteListPriceArticle(row)"
+              optionBtn="delete"
+              colorBtn="red"
+            ></app-button-operac>
+          </td>
+        </ng-container>
+      </table>
+    </article>
   </section>
   <section class="grid grid-cols-2 gap-x-4">
     <article class="col-span-1 space-y-2">

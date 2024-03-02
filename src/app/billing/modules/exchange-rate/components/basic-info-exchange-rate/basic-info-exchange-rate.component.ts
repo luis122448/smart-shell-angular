@@ -20,9 +20,10 @@ export class BasicInfoExchangeRateComponent {
   formCrudExchangeRate!: FormGroup;
 
   private buildForm() {
-    const today = new Date().toJSON().split('T')[0];
+    // const today = new Date().toJSON().split('T')[0];
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toJSON().split('T')[0];
     this.formCrudExchangeRate = this.formBuilder.group({
-      registdate: [today, [Validators.required]],
+      registdate: [yesterday, [Validators.required]],
       origen: ['PEN', [Validators.required]],
       destin: ['USD', [Validators.required]],
       fventa: [

@@ -12,6 +12,7 @@
       </ng-template>
       <app-basic-serie-commercial-document
         [inputTypcomdoc]="this.inputTypcomdoc"
+        [inputTypformat]="this.inputTypformat"
         [inputSerie]="this.inputSerie"
         [inputSave]="this.inputSave"
         (changeView)="(this.changeView)"
@@ -27,8 +28,8 @@
       <app-format-serie-commercial-document
         [inputTypcomdoc]="this.inputTypcomdoc"
         [inputSerie]="this.inputSerie"
-        [inputSave]="this.inputSave"
-        (changeView)="(this.changeView)">
+        (changeView)="(this.changeView)"
+        (changeTypeFormatCommercialDocument)="onChangetypformat($event)">
       </app-format-serie-commercial-document>
     </mat-tab>
   </mat-tab-group>

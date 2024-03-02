@@ -109,13 +109,23 @@
           </option>
         </select>
       </div>
+      <section class="flex justify-start space-x-4">
+        <app-button-standard
+          (click)="getDownloadPdf()"
+          colorBtn="green"
+          optionBtn="download"
+          typeBtn="button"
+        >
+          Download Pdf Model
+        </app-button-standard>
+      </section>
     </article>
     <article class="col-span-1 h-full w-full space-y-4 px-8">
       <div class="flex w-full items-center justify-center">
         <img
           [src]="urlFormatCommercialDocument"
           [alt]="nameFormatCommercialDocument"
-          class="m-auto h-64 w-56 rounded-sm bg-slate-100 object-cover"
+          class="m-auto h-64 w-64 rounded-sm bg-slate-100 object-contain bg-transparent"
         />
       </div>
     </article>

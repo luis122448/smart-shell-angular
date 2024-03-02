@@ -33,10 +33,11 @@ export class BasicAllExchangeRateComponent implements OnInit {
   currencies: Currency[] = []
 
   private buildForm() {
-    const today = new Date().toJSON().split('T')[0]
+    // const today = new Date().toJSON().split('T')[0]
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toJSON().split('T')[0]
     this.formSearchExchangeRate = this.formBuilder.group({
-      startat: [today, [Validators.required]],
-      finalat: [today, [Validators.required]],
+      startat: [yesterday, [Validators.required]],
+      finalat: [yesterday, [Validators.required]],
       origen: ['', []],
       destin: ['', []],
     });

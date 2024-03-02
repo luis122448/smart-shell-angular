@@ -12,11 +12,11 @@ export interface SerieCommercialDocument {
   typformat: number
   observ: string | null
   commen: string | null
-  status: string
-  createby: string
-  updateby: string
-  createat: Date | number[],
-  updateat: Date | number[],
+  status?: string
+  createby?: string
+  updateby?: string
+  createat?: Date | number[],
+  updateat?: Date | number[],
 }
 
 export interface ChangeSerieCommercialDocument{
