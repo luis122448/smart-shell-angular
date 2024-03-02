@@ -8,9 +8,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    networks:
-      - smart-shell-net  # Conexión a la red smart-shell-net
-
-networks:
-  smart-shell-net:  # Definición de la red smart-shell-net
-    external: true   # Indicador de que la red ya está creada externamente

@@ -6,7 +6,7 @@ Repositorio con el código fuente y los scripts necesarios para el despliegue de
 
 ## Características
 - Modelado e implemantacion de interfaces con HTML, CSS y TailwindCSS.
-- Implmentacion de Angular CDK para la creación de componentes reutilizables y personalizables.
+- Ligth/Dark Mode con TailwindCSS.
 - Gestión de sesiones de usuarios con JWT e interceptores de peticiones.
 - Routing y Navegación con Angular Router.
 - Formularios reactivos y validaciones con Angular Forms.
