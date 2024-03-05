@@ -1,11 +1,9 @@
 <form [formGroup]="formCrudExchangeRate" class="sub-dialog-container">
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Import by : </label>
-  </section>
-  <section>
-    <app-button-import-sunat (click)="importSunat()" typeBtn="button">
+  <section class="grid grid-cols-3 gap-x-6">
+    <label class="dialog-sub-title col-span-1">Import by : </label>
+    <app-button-import-sunat class="col-span-1" (click)="importSunat()" typeBtn="button">
     </app-button-import-sunat>
+    <app-button-import-sbs class="col-span-1"  (click)="importSunat()" typeBtn="button"></app-button-import-sbs>
   </section>
   <section>
     <hr class="dialog-sub-title-line" />
@@ -29,7 +27,7 @@
       <div>
         <div class="flex">
           <label for="origen" class="label-input-xl label-required"
-            >Moneda Origen</label
+            >Origin Currency</label
           >
           <select id="origen" class="input-default" formControlName="origen">
             <option value="PEN">PEN</option>
@@ -40,7 +38,7 @@
       <div>
         <div class="flex">
           <label for="destin" class="label-input-xl label-required"
-            >Moneda Destino</label
+            >Destiny Currency</label
           >
           <select id="destin" class="input-default" formControlName="destin">
             <option value="PEN">PEN</option>
@@ -53,7 +51,7 @@
   <section class="grid grid-cols-3 gap-x-12">
     <article class="grid grid-rows-2 gap-y-2">
       <div class="flex flex-col space-y-1">
-        <label for="fventa" class="label-input-sm label-required">Factor Venta</label>
+        <label for="fventa" class="label-input-sm label-required">Selling Factor</label>
         <input
           type="number"
           min="0"
@@ -63,7 +61,7 @@
         />
       </div>
       <div class="flex flex-col space-y-1">
-        <label for="fcompra" class="label-input-sm label-required">Factor Compra</label>
+        <label for="fcompra" class="label-input-sm label-required">Buying Factor</label>
         <input
           type="number"
           min="0"
@@ -75,7 +73,7 @@
     </article>
     <article class="grid grid-rows-2 gap-y-2">
       <div class="flex flex-col space-y-1">
-        <label for="cventa" class="label-input-sm">Contabilidad Venta</label>
+        <label for="cventa" class="label-input-sm">Accounting Sales</label>
         <input
           type="number"
           min="0"
@@ -84,7 +82,7 @@
         />
       </div>
       <div class="flex flex-col space-y-1">
-        <label for="ccompra" class="label-input-sm">Contabilidad Compra</label>
+        <label for="ccompra" class="label-input-sm">Accounting Purchase</label>
         <input
           type="number"
           min="0"
@@ -95,7 +93,7 @@
     </article>
     <article class="grid grid-rows-2 gap-y-2">
       <div class="flex flex-col space-y-1">
-        <label for="eventa" class="label-input-sm label-required">Entidad Venta</label>
+        <label for="eventa" class="label-input-sm label-required">Sales Entity</label>
         <input
           type="number"
           min="0"
@@ -105,7 +103,7 @@
         />
       </div>
       <div class="flex flex-col space-y-1">
-        <label for="ecompra" class="label-input-sm label-required">Entidad Compra</label>
+        <label for="ecompra" class="label-input-sm label-required">Purchasing Entity</label>
         <input
           type="number"
           min="0"

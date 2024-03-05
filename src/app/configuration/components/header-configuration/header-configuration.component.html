@@ -1,20 +1,26 @@
-<header class="h-[120px] w-full sapce-y-6 dark:bg-slate-800 dark:text-slate-400">
+<header
+  class="sapce-y-6 h-[120px] w-full dark:bg-slate-800 dark:text-slate-400"
+>
   <app-header></app-header>
-  <section class="h-[50px] w-full px-4 grid grid-cols-2 dark:bg-slate-800 dark:text-slate-400 items-center">
-    <section class="dialog-title">{{this.title}}</section>
-    <section class="flex justify-end space-x-6">
+  <section
+    class="grid h-[50px] w-full grid-cols-2 px-4 dark:bg-slate-800 dark:text-slate-400"
+  >
+    <section class="dialog-title my-auto">{{ this.title }}</section>
+    <section class="flex justify-end space-x-6 my-auto">
       <app-button-standard
-      (click)="onSave()"
-      colorBtn="green"
-      optionBtn="save"
-      typeBtn="button"
-      >Save</app-button-standard>
+        (click)="onSave()"
+        colorBtn="green"
+        optionBtn="save"
+        typeBtn="button"
+        >Save</app-button-standard
+      >
       <app-button-standard
         (click)="onLeave()"
         colorBtn="red"
         optionBtn="close"
         typeBtn="button"
-        >Close</app-button-standard>
+        >Close</app-button-standard
+      >
     </section>
   </section>
 </header>

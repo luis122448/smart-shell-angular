@@ -12,7 +12,7 @@
 }
 
 .items-container {
-  @apply grid w-full grid-cols-2 space-x-2 px-4;
+  @apply grid w-full grid-cols-2 space-x-2 md:space-x-4 lg:space-x-8 xl:space-x-12 px-4
 }
 
 .left-container {
@@ -87,5 +87,5 @@
 }
 
 .footer-default {
-  @apply m-auto bg-slate-100 p-4 dark:bg-slate-900 dark:text-gray-400;
+  @apply my-auto bg-slate-100 py-2 px-4 dark:bg-slate-900 dark:text-gray-400;
 }

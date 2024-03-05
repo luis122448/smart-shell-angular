@@ -4,7 +4,7 @@
   </menu>
   <div [ngSwitch]="isStatusConfiguration" class="main-container">
     <app-header-configuration
-      class="h-[120px]"
+      class="h-[100px]"
       (changeViewOnly)="changeViewOnly($event)"
       (changeSave)="changeSave($event)"
       [title]="this.title"
@@ -22,7 +22,7 @@
         [inputSave]="this.save"
       ></app-crud-serie-commercial-document>
     </div>
-    <app-footer class="h-[80px]"></app-footer>
+    <app-footer class="h-[60px]"></app-footer>
   </div>
   <menu class="rigth-container">
     <app-siderbar-rigth></app-siderbar-rigth>

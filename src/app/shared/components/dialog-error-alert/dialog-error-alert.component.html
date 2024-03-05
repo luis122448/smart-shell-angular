@@ -6,7 +6,7 @@
     <div class="flex justify-center">
       <fa-icon [icon]="faCircleMinus" size="2xl" class="text-sky-600"></fa-icon>
     </div>
-    <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+    <div class="text-inline text-center font-semibold dark:font-normal">{{ this.mensaje.message }}</div>
     <div class="flex justify-center gap-x-4">
       <app-button-standard
         (click)="onClose()"
@@ -25,7 +25,7 @@
     <div class="flex justify-center">
       <fa-icon [icon]="faCircleInfo" size="2xl" class="text-sky-600"></fa-icon>
     </div>
-    <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+    <div class="text-inline text-center font-semibold dark:font-normal">{{ this.mensaje.message }}</div>
     <div class="flex justify-center gap-x-4">
       <app-button-standard
         (click)="onClose()"
@@ -48,7 +48,7 @@
         class="text-yellow-700"
       ></fa-icon>
     </div>
-    <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+    <div class="text-inline text-center font-semibold dark:font-normal">{{ this.mensaje.message }}</div>
     <div class="flex justify-center gap-x-4">
       <app-button-standard
         (click)="onClose()"
@@ -87,7 +87,7 @@
           class="text-red-600"
         ></fa-icon>
       </div>
-      <div class="text-inline text-center">{{ this.mensaje.message }}</div>
+      <div class="text-inline text-center font-semibold dark:font-normal">{{ this.mensaje.message }}</div>
       <div class="flex justify-center gap-x-4">
         <app-button-standard
           (click)="onClose()"

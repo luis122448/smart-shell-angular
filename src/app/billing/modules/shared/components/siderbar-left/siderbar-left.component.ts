@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { faXmark, faPenToSquare, faChartLine, faFileInvoice, faShop, faGears, faUserTag, faMagnifyingGlass, faFilm } from '@fortawesome/free-solid-svg-icons';
 import { faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { faBuilding } from '@fortawesome/free-regular-svg-icons';
@@ -17,6 +16,15 @@ export class SiderbarLeftComponent {
   faLinkedin = faLinkedin
   openSidebar = false;
   baseUrl: string;
+  stackTechs: string[] = [
+    "angular",
+    "springio"
+  ]
+  stackTechsDisplay: string[] = [
+    "postgresql",
+    "mongodb",
+    "redis",
+  ]
 
   menuSidebar = [
     {

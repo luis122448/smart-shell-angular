@@ -20,7 +20,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('typinv')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option *ngFor="let item of inventories" [value]="item.typinv">
             {{ item.descri }}
@@ -187,7 +187,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('cstock')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option value="NONE" class="option-default">Out of control (None)</option>
           <option value="UNITY" class="option-default">Control by Article (Unity)</option>
@@ -211,7 +211,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('coduni')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option value="UNITY" class="option-default">Unit</option>
           <option value="BOX" class="option-default">Box</option>

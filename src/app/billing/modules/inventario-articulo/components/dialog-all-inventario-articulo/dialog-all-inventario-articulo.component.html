@@ -23,7 +23,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('typinv')"
               >
-                -- Elegir --
+                -- Choose --
               </option>
               <option *ngFor="let item of inventories" [value]="item.typinv">
                 {{ item.typinv + ' - ' +  item.descri }}

@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  stackTechs: string[] = [
+    "angular",
+    "springio",
+    "postgresql",
+    "mongodb",
+    "redis",
+    "docker",
+  ]
+
 }

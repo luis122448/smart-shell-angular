@@ -23,6 +23,7 @@ import { DialogQuestionComponent } from './components/dialog-question/dialog-que
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import { StackTechComponent } from './components/stack-tech/stack-tech.component';
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -42,6 +43,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     HeaderComponent,
     FooterComponent,
     VideoPlayerComponent,
+    StackTechComponent,
   ],
   imports: [
     CommonModule,
@@ -73,7 +75,8 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     DialogQuestionComponent,
     HeaderComponent,
     FooterComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    StackTechComponent
   ]
 })
 export class SharedModule { }

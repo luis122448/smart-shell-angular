@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button-import-sbs',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./button-import-sbs.component.scss']
 })
 export class ButtonImportSbsComponent {
-
+  @Input() disabled = false;
+  @Input() loading = false;
+  @Input() typeBtn: 'reset' | 'submit' | 'button' = 'button';
 }

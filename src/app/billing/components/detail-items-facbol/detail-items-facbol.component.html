@@ -13,7 +13,7 @@
           *cdkRowDef="let row; columns: displayedColumns; let i = index"
         ></tr>
         <ng-container cdkColumnDef="numite">
-          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Item</th>
+          <th class="w-8 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Item</th>
           <td
             cdk-cell
             class="w-8 px-2 py-3"
@@ -23,7 +23,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="typinv">
-          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>T Inv.</th>
+          <th class="w-16 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>T Inv.</th>
           <td
             cdk-cell
             class="w-16 px-2 py-3"
@@ -44,9 +44,10 @@
               <input
                 type="text"
                 placeholder="Code"
-                class="input-search"
+                class="input-default"
                 formControlName="codart"
-                (keydown.enter)="openDialogGetArticle(item.value)"
+                [class.input-invalid]="isInputInvalid('codart')"
+                (keyup.enter)="openDialogGetArticle(item.value)"
                 [value]="item.value.codart"
               />
               <button
@@ -96,7 +97,7 @@
           </td>
         </ng-container> -->
         <ng-container cdkColumnDef="quantity">
-          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Cantid</th>
+          <th class="w-16 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Cantid</th>
           <td
             class="w-16 px-2 py-3"
             cdk-cell
@@ -114,11 +115,11 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="price">
-          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>
+          <th class="w-24 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>
             Unit Price
           </th>
           <td
-            class="px-2 py-3"
+            class="w-24 px-2 py-3"
             cdk-cell
             *cdkCellDef="let item"
             [formGroup]="item"
@@ -137,12 +138,12 @@
         </ng-container>
         <ng-container cdkColumnDef="subtotal">
           <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Import</th>
-          <td class="px-2 py-3" cdk-cell *cdkCellDef="let item; let i = index">
+          <td class="w-28 px-2 py-3" cdk-cell *cdkCellDef="let item; let i = index">
             <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).implistprice | number:'1.2-2' }}</span>
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Ac?</th>
+          <th class="w-20 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Ac?</th>
           <td
             class="w-20 flex justify-around px-2 py-3 items-center"
             cdk-cell

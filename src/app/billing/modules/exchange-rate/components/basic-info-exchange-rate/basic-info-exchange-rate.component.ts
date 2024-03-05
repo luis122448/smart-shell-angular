@@ -107,13 +107,6 @@ export class BasicInfoExchangeRateComponent {
             eventa: data.eventa.toFixed(2),
             ecompra: data.ecompra.toFixed(2),
           });
-          // this.crudFecha?.setValue(data.registdate.toISOString().split('T')[0])
-          // this.crudEventa?.setValue(data.eventa.toFixed(2))
-          // this.crudEcompra?.setValue(data.ecompra.toFixed(2))
-          // this.crudFventa?.setValue(data.eventa.toFixed(2))
-          // this.crudFcompra?.setValue(data.ecompra.toFixed(2))
-          // this.crudCventa?.setValue(data.eventa.toFixed(2))
-          // this.crudCcompra?.setValue(data.ecompra.toFixed(2))
           this.matSnackBar.openFromComponent(
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig

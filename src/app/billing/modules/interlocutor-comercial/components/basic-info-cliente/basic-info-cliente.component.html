@@ -34,7 +34,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('typbuspar')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option *ngFor="let item of typeBusinessPartners" [value]="item.typbuspar">
             {{ item.typbuspar + ' - ' +  item.descri }}
@@ -61,7 +61,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('typidedoc')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option value=1 class="option-default">DNI</option>
           <option value=2 class="option-default">RUC</option>

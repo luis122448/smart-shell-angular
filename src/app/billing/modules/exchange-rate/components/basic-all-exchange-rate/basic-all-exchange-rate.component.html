@@ -3,7 +3,7 @@
     <form [formGroup]="formSearchExchangeRate" class="space-y-2">
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
-          <label for="startat" class="label-input-sm">Fecha Inicio</label>
+          <label for="startat" class="label-input-sm">Start date</label>
           <input
             id="startat"
             name="startat"
@@ -13,7 +13,7 @@
           />
         </div>
         <div class="grid grid-cols-3">
-          <label for="finalat" class="label-input-sm">Fecha Final</label>
+          <label for="finalat" class="label-input-sm">Final date</label>
           <input
             id="finalat"
             name="finalat"
@@ -26,7 +26,7 @@
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
           <div class="w-56">
-            <label for="origen" class="label-input-sm">Moneda Origen</label>
+            <label for="origen" class="label-input-sm">Origin Currency</label>
           </div>
           <select
             id="origen"
@@ -41,7 +41,7 @@
         </div>
         <div class="grid grid-cols-3">
           <div class="w-56">
-            <label for="destin" class="label-input-sm">Moneda Destino</label>
+            <label for="destin" class="label-input-sm">Destiny Currency</label>
           </div>
           <select
             id="destin"
@@ -62,7 +62,7 @@
       typeBtn="button"
       (click)="searchExchangeRate()"
     >
-      Buscar
+      Search
     </app-button-standard>
     <app-button-standard
       colorBtn="green"
@@ -70,7 +70,7 @@
       typeBtn="button"
       (click)="crudExchangeRate(null)"
     >
-      Nuevo
+      New
     </app-button-standard>
   </section>
   <section class="section-table">
@@ -91,7 +91,7 @@
           *cdkRowDef="let row; columns: displayedColumns"
         ></tr>
         <ng-container cdkColumnDef="registdate">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Fecha</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Date</th>
           <td
             cdk-cell
             class="row-cell min-w-[140px] text-center"
@@ -102,7 +102,7 @@
         </ng-container>
         <ng-container cdkColumnDef="origen">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Moneda Origen
+            Origin Currency
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.origen }}
@@ -110,7 +110,7 @@
         </ng-container>
         <ng-container cdkColumnDef="destin">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Moneda Destino
+            Destiny Currency
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.destin }}
@@ -118,7 +118,7 @@
         </ng-container>
         <ng-container cdkColumnDef="eventa">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Entidad Venta
+            Sales Entity
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.eventa }}
@@ -126,21 +126,15 @@
         </ng-container>
         <ng-container cdkColumnDef="ecompra">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Entidad Compra
+            Purchasing Entity
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.ecompra }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
-            <!-- <app-button-operac
-              optionBtn="edit"
-              colorBtn="sky"
-              (click)="crudExchangeRate(row)"
-            >
-            </app-button-operac> -->
             <app-button-operac
               optionBtn="delete"
               colorBtn="red"

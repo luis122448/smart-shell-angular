@@ -39,7 +39,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('serie')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option
             *ngFor="let item of series"
@@ -70,7 +70,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('reacomdoc')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option
             *ngFor="let item of reasons"
@@ -83,12 +83,12 @@
       </div>
       <div class="grid grid-cols-3 items-center">
         <label for="codbuspar" class="text-inline label-required"
-          >Cliente</label
+          >Customer</label
         >
         <div class="col-span-2 flex">
           <input
             type="text"
-            placeholder="Codigo de Cliente"
+            placeholder="Client code"
             class="input-default"
             formControlName="codbuspar"
             [class.input-invalid]="isInputInvalid('codbuspar')"
@@ -121,11 +121,11 @@
         </div>
       </div>
       <div class="grid grid-cols-3 items-center">
-        <label class="text-inline label-required">Razon Social</label>
+        <label class="text-inline label-required">Business name</label>
         <div class="col-span-2 flex">
           <input
             type="text"
-            placeholder="Razon Social"
+            placeholder="Business name"
             class="input-default"
             formControlName="busnam"
             [class.input-invalid]="isInputInvalid('busnam')"
@@ -146,13 +146,13 @@
         </div>
       </div>
       <div class="grid grid-cols-3 items-center">
-        <label class="text-inline label-required">Direccion</label>
+        <label class="text-inline label-required">Address</label>
         <textarea
           formControlName="addres"
           class="textarea-default col-span-2"
           cols="60"
           rows="20"
-          placeholder="Direccion Comercial o Domicilio Fiscal"
+          placeholder="Commercial Address or Tax Address"
           [class.input-invalid]="isInputInvalid('addres')"
         ></textarea>
       </div>
@@ -160,7 +160,7 @@
     <section class="flex-col space-y-2">
       <div class="grid grid-cols-3 items-center">
         <label for="registdate" class="text-inline label-required"
-          >Fecha de Emisión</label
+          >Date of issue</label
         >
         <input
           id="registdate"
@@ -173,7 +173,7 @@
       </div>
       <div class="grid grid-cols-3 items-center">
         <label for="codcur" class="text-inline label-required"
-          >Moneda</label
+          >Currency</label
         >
         <div class="col-span-2 grid grid-cols-3">
           <select
@@ -196,14 +196,14 @@
             formControlName="incigv"
             (change)="onIncigvChange($event)"
           >
-            <option class="option-default" value="1">Si</option>
+            <option class="option-default" value="1">Yes</option>
             <option class="option-default" value="0">No</option>
           </select>
         </div>
       </div>
       <div class="grid grid-cols-3 items-center">
         <label for="exchangerate" class="text-inline label-required"
-          >Tipo de Cambio</label
+          >Exhange Rate</label
         >
         <div class="col-span-2 grid grid-cols-3">
           <input
@@ -249,7 +249,7 @@
             [class.option-invalid]="isInputInvalid('codsel')"
             (change)="onCodselChange($event)"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option
             *ngFor="let item of sellers"
@@ -262,7 +262,7 @@
       </div>
       <div class="grid grid-cols-3 items-center">
         <label for="typcomdoc" class="text-inline label-required"
-          >Condicion de Pago</label
+          >Payment Condition</label
         >
         <select
           name="typcomdoc"
@@ -280,7 +280,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('typpaycon')"
           >
-            -- Elegir --
+            -- Choose --
           </option>
           <option
             *ngFor="let item of tipoConPag"
@@ -292,21 +292,21 @@
         </select>
       </div>
       <div class="grid grid-cols-3 items-center">
-        <label for="refere" class="text-inline">Referencia</label>
+        <label for="refere" class="text-inline">Reference</label>
         <input
           name="refere"
           type="text"
           class="input-default col-span-2"
-          placeholder="Referencia"
+          placeholder="Reference"
           formControlName="refere"
         />
       </div>
       <div class="grid grid-cols-3 items-center">
-        <label for="observ" class="text-inline">Observacion</label>
+        <label for="observ" class="text-inline">Observation</label>
         <textarea
           name="observ"
           class="input-default col-span-2"
-          placeholder="Observación"
+          placeholder="Observation"
           formControlName="observ"
         ></textarea>
       </div>

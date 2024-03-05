@@ -71,6 +71,7 @@ export class DialogGetArticleComponent implements OnInit {
             width: '400px',
             data: err.error
           })
+          this.globalStatusService.setLoading(false)
           this.closeDialog(null)
         },
         complete: () => this.globalStatusService.setLoading(false)
@@ -90,6 +91,7 @@ export class DialogGetArticleComponent implements OnInit {
             width: '400px',
             data: err.error
           })
+          this.globalStatusService.setLoading(false)
           this.closeDialog(null)
         },
         complete: () => this.globalStatusService.setLoading(false)

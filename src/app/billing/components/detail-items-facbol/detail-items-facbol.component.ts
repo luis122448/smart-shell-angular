@@ -21,6 +21,7 @@ import {
 } from '../../data/datasource-facbol.service';
 import { FacbolGlobalStatusService } from '../../services/facbol-global-status.service';
 import { BehaviorSubject } from 'rxjs';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 
 @Component({
   selector: 'app-detail-items-facbol',
@@ -97,6 +98,11 @@ export class DetailItemsFacbolComponent implements OnInit {
     }
   }
 
+  isInputInvalid(fieldName: string): boolean {
+    const field = this.detailDocument.get(fieldName);
+    return field ? field.invalid && field.touched : true;
+  }
+
   addItem(row: DocumentDetail) {
     const detailForm = this.formBuilder.group({
       numite: [{ value: row.numite, disabled: false }, [Validators.required]],
@@ -138,10 +144,11 @@ export class DetailItemsFacbolComponent implements OnInit {
   openDialogGetArticle(item: DocumentDetail) {
     // Validate length of codart or desart
     if (item.codart.length < 3) {
-      this.dialog.open(DialogGetArticleComponent, {
+      this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
         data: { minimum_length:3 }
       })
+      return;
     }
 
     const dataHeader = this.dataHeaderSource.get();

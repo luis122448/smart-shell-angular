@@ -33,7 +33,6 @@ import {
   styleUrls: ['./register-facbol.component.scss'],
 })
 export class RegisterFacbolComponent implements OnInit {
-
   @Input() isNewDocument = false;
   @Input() isCalculateDocument = false;
   formDocumentHeader!: FormGroup;
@@ -61,7 +60,9 @@ export class RegisterFacbolComponent implements OnInit {
     // Clear Data
     this.dataHeaderSource.delReset();
     // Init Form
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toJSON().split('T')[0]
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+      .toJSON()
+      .split('T')[0];
     this.formDocumentHeader = this.formBuilder.group({
       typcomdoc: [typcomdoc, [Validators.required]],
       sitcomdoc: [1, [Validators.required]],
@@ -74,7 +75,7 @@ export class RegisterFacbolComponent implements OnInit {
       reacomdoc: [reacomdoc, [Validators.required]],
       codcur: ['PEN', [Validators.required]],
       exchangerate: [
-        '',
+        {value:0.0.toFixed(2),disabled:true},
         [Validators.required, Validators.pattern(/^\d{1,4}(\.\d{1,4})?$/)],
       ],
       codbuspar: ['', [Validators.required]],
@@ -85,7 +86,7 @@ export class RegisterFacbolComponent implements OnInit {
       codsel: ['', [Validators.required]],
       typpaycon: ['', [Validators.required]],
       incigv: [1, [Validators.required]],
-      tasigv: [18.0, [Validators.required]],
+      tasigv: [{value:18.00.toFixed(2),disabled:true}, [Validators.required]],
       refere: ['', []],
       observ: ['', []],
       commen: ['', []],
@@ -103,12 +104,13 @@ export class RegisterFacbolComponent implements OnInit {
     private defaultValuesService: DefaultValuesService
   ) {
     this.sellers = this.defaultValuesService.getLocalStorageValue('sellers');
-    this.currencies = this.defaultValuesService.getLocalStorageValue('currencies');
+    this.currencies =
+      this.defaultValuesService.getLocalStorageValue('currencies');
     this.series = this.defaultValuesService
       .getLocalStorageValue('series')
       .filter((data) => data.typcomdoc === 1);
     this.reasons = this.defaultValuesService
-    .getLocalStorageValue('reasons')
+      .getLocalStorageValue('reasons')
       .filter((data) => data.typcomdoc === 1 && data.ingsalcom === 1);
     this.defaultSeries = this.series.find((data) => data.defaul === 'Y');
     this.defaultReason = this.reasons.find((data) => data.defaul === 'Y');
@@ -137,7 +139,11 @@ export class RegisterFacbolComponent implements OnInit {
 
   ngOnChanges() {
     if (this.isNewDocument) {
-      this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
+      this.buildForm(
+        1,
+        this.defaultSeries?.serie,
+        this.defaultReason?.reacomdoc
+      );
       this.cleanBuspar();
       this.formDocumentHeader.markAllAsTouched();
     }
@@ -171,17 +177,17 @@ export class RegisterFacbolComponent implements OnInit {
     }
     // Validad minima cantidad de digitos
     if (isCode && this.formDocumentHeader.get('codbuspar')?.value.length < 3) {
-      this.dialog.open(DialogErrorAlertComponent,{
+      this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { minimum_length:3 }
-      })
+        data: { minimum_length: 3 },
+      });
       return;
     }
     if (!isCode && this.formDocumentHeader.get('busnam')?.value.length < 3) {
-      this.dialog.open(DialogErrorAlertComponent,{
+      this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { minimum_length:3 }
-      })
+        data: { minimum_length: 3 },
+      });
       return;
     }
     const dialogRef = this.dialog.open<InterlocutorComercial>(
@@ -189,7 +195,7 @@ export class RegisterFacbolComponent implements OnInit {
       {
         data: {
           codbuspar: this.formDocumentHeader.get('codbuspar')?.value,
-          busnam: this.formDocumentHeader.get('busnam')?.value
+          busnam: this.formDocumentHeader.get('busnam')?.value,
         },
       }
     );
@@ -257,10 +263,10 @@ export class RegisterFacbolComponent implements OnInit {
 
   onIncigvChange(event: any) {
     const incigv = event.target.value;
-    if (incigv === 'N') {
-      this.formDocumentHeader.get('tasigv')?.setValue(0.0);
+    if (incigv === '0') {
+      this.formDocumentHeader.get('tasigv')?.setValue(0.0.toFixed(2));
     } else {
-      this.formDocumentHeader.get('tasigv')?.setValue(18.0);
+      this.formDocumentHeader.get('tasigv')?.setValue(18.00.toFixed(2));
     }
     this.dataHeaderSource.updateData('incigv', incigv);
   }
@@ -299,46 +305,33 @@ export class RegisterFacbolComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          var newTipcam = 0;
           if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
               data: data,
             });
+            this.formDocumentHeader.get('exchangerate')?.setValue(0.00.toFixed(2));
+            this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
           } else {
-            if (data.list.length === 0) {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: {
-                  status: -1,
-                  message:
-                    'No existe tipo de cambio, para la registdate seleccionada',
-                },
-              });
-              this.formDocumentHeader.get('exchangerate')?.setValue('');
-            } else {
-              this.matSnackBar.openFromComponent(
-                MatsnackbarSuccessComponent,
-                MatSnackBarSuccessConfig
-              );
-              newTipcam = data.list[0].eventa;
-              this.formDocumentHeader.get('exchangerate')?.enable();
-              this.formDocumentHeader.get('exchangerate')?.setValue(newTipcam);
-              this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
-              this.formDocumentHeader.get('exchangerate')?.disable();
-            }
+            this.matSnackBar.openFromComponent(
+              MatsnackbarSuccessComponent,
+              MatSnackBarSuccessConfig
+            );
+            this.formDocumentHeader.get('exchangerate')?.setValue(data.list[0].eventa);
+            this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
+            this.dataHeaderSource.updateData('exchangerate', data.list[0].eventa);
           }
-          this.dataHeaderSource.updateData('exchangerate', newTipcam);
         },
-        error: (err) => {
+        error: err => {
           this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
             data: err.error,
           });
+          this.formDocumentHeader.get('exchangerate')?.setValue(0.00.toFixed(2));
           this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+          this.globalStatusService.setLoading(false);
         },
         complete: () => this.globalStatusService.setLoading(false),
       });
   }
-
 }

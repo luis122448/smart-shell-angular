@@ -7,7 +7,7 @@
     <article class="flex items-center justify-around">
       <div class="" [class.display-none]="!openSidebar">
         <img
-          src="../../../../../../assets/images/extra/Foto.jpg"
+          src="../../../../../../assets/images/icon/icon-admin.webp"
           alt=""
           class="rounded-full"
           height="40px"
@@ -17,53 +17,46 @@
       <div>
         <p class="m-0">My Project</p>
         <div class="flex justify-around">
-          <a href="">
+          <a href="https://github.com/luis122448" target="_blank">
             <fa-icon [icon]="faGithubSquare" size="xl"></fa-icon>
           </a>
-          <a href="">
+          <a
+            href="https://www.linkedin.com/in/luis-antonio-calvo-quispe-57a33b229/"
+            target="_blank"
+          >
             <fa-icon [icon]="faLinkedin" size="xl"></fa-icon>
           </a>
         </div>
       </div>
     </article>
-    <article class="flex justify-around mx-auto py-2">
-      <img
-        src="../../../../../../assets/images/extra/AngularIcon.png"
-        alt="angular-icon"
-        class="rounded-full"
-        height="20px"
-        width="20px"
-      />
-      <img
-        src="../../../../../../assets/images/extra/SpringIcon.png"
-        alt="spring-icon"
-        class="rounded-full"
-        height="20px"
-        width="20px"
-      />
-      <img
-        src="../../../../../../assets/images/extra/PostgresSQLIcon.png"
-        alt="postgres-icon"
-        class="rounded-full" [class.display-none]="!openSidebar"á
-        height="20px"
-        width="20px"
-      />
+    <article class="mx-auto flex justify-center space-x-2 py-2">
+      <app-stack-tech [stackTechs]="stackTechs" [size]="6"></app-stack-tech>
+      <app-stack-tech
+        [stackTechs]="stackTechsDisplay"
+        [size]="6"
+        [class.display-none]="!openSidebar"
+      ></app-stack-tech>
     </article>
   </section>
   <section class="flex justify-around space-x-2 py-2">
     <article class="" [class.display-none]="!openSidebar">
       <img
-        src="../../../../../../assets/images/extra/Foto.jpg"
+        src="../../../../../../assets/images/icon/icon-anonymous.webp"
         alt=""
-        class="rounded-md"
-        height="50px"
-        width="50px"
+        class="rounded-full"
+        height="48px"
+        width="48px"
       />
     </article>
     <article>
-      <p class="text-inline m-0 text-left font-bold whitespace-nowrap">Luis C.</p>
-      <p class="text-inline m-0 text-left whitespace-nowrap">Administrador</p>
-      <p class="text-inline m-0 text-left whitespace-nowrap">Online</p>
+      <p class="text-inline m-0 whitespace-nowrap text-left font-bold">Test</p>
+      <p class="text-inline m-0 whitespace-nowrap text-left">Anoynmous</p>
+      <p class="text-inline m-0 whitespace-nowrap text-left">
+        <span
+          class="me-1 inline-block h-2 w-2 rounded-full bg-green-500"
+        ></span>
+        <span>Online</span>
+      </p>
     </article>
   </section>
   <section class="flex py-2">
@@ -99,16 +92,21 @@
               class="menu-sidebar space-x-2"
             >
               <div class="menu-siderbar-icon">
-                <fa-icon class="icon-operac" [icon]="item.icon" size="lg"></fa-icon>
+                <fa-icon
+                  class="icon-operac"
+                  [icon]="item.icon"
+                  size="lg"
+                ></fa-icon>
               </div>
-              <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{ item.rotulo }}</span>
+              <span
+                class="menu-sidebar-text"
+                [class.display-none]="!openSidebar"
+                >{{ item.rotulo }}</span
+              >
             </button>
             <div [style.display]="accordionItem.expanded ? '' : 'none'">
               <li *ngFor="let itemSub of item.subMenu">
-                <a
-                  (click)="toRedirec(itemSub.link)"
-                  class="menu-sidebar"
-                >
+                <a (click)="toRedirec(itemSub.link)" class="menu-sidebar">
                   <div class="menu-siderbar-icon">
                     <fa-icon
                       *ngIf="itemSub.icon"

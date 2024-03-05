@@ -13,7 +13,7 @@
     >
       <section>
         <div
-          class="relative flex w-[320px] justify-around"
+          class="relative flex md:w-[280px] w-[360px] justify-around"
         >
           <input
             #nameInput
@@ -36,7 +36,7 @@
       </section>
       <section>
         <div
-          class="relative flex w-[320px] justify-around"
+          class="relative flex md:w-[280px] w-[360px] justify-around"
         >
           <input
             formControlName="password"
@@ -68,7 +68,7 @@
       <form [formGroup]="formVerifyCode">
         <section>
           <div
-            class="relative flex w-[320px] justify-around"
+            class="relative flex md:w-[280px] w-[360px] justify-around"
           >
             <input
               #nameInput
@@ -81,7 +81,7 @@
         </section>
       </form>
       <section>
-        <div class="flex w-[320px] justify-around space-x-3">
+        <div class="flex md:w-[280px] w-[360px] justify-around space-x-3">
           <input
             *ngFor="let i of [0, 1, 2, 3, 4, 5]"
             type="text"
