@@ -1,20 +1,30 @@
+export interface ApiResponseAuth<T>{
+  status: number,
+  message: string,
+  logMessage?: string
+  logUser?: String
+  logTime?: Date | number[],
+  object: T | null
+}
+
 export interface Auth{
+  company: string,
   coduser: string,
   password: string
 }
 
-export interface ResponseAuth{
-  status: number,
-  message: string,
+export interface AuthVerify{
+  company: string,
   coduser: string,
-  verifyCode: string
-}
-
-export interface ResponseAuthVerify{
-  status: number,
-  message: string,
-  coduser: string,
-  codrol: string,
+  role: string,
   token: string,
   refreshToken: string
+}
+
+export interface GenericAuth{
+  company?: string,
+  coduser?: string,
+  code?: string
+  token?: string,
+  refreshToken?: string
 }

@@ -16,7 +16,7 @@ export class SellerService {
   ) { }
 
   getAll(){
-    return this.httpCLient.get<DAOSeller>(`${this.API_URL}${this.PATH_BILLING}/seller`);
+    return this.httpCLient.get<DAOSeller>(`${this.API_URL}${this.PATH_BILLING}/seller/by-all`);
   }
 
 }

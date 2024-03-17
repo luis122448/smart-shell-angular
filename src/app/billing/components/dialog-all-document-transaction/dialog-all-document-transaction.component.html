@@ -1,0 +1,95 @@
+<main class="dialog-container relative">
+  <section>
+    <h1 class="dialog-title">Document History Transactions</h1>
+  </section>
+  <section class="section-table">
+    <article class="container-dialog-table">
+      <table
+        class="main-dialog-table"
+        cdk-table
+        [dataSource]="listDocumentTransaction"
+      >
+        <tr
+          class="header-table"
+          cdk-header-row
+          *cdkHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          class="row-table"
+          cdk-row
+          *cdkRowDef="let row; columns: displayedColumns"
+        ></tr>
+        <ng-container cdkColumnDef="index">
+          <th class="header-cell w-8" cdk-header-cell *cdkHeaderCellDef>
+            Index
+          </th>
+          <td class="row-cell w-8 text-center" cdk-cell *cdkCellDef="let row">
+            {{ row.index }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="createat">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Register Date
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ formatDate(row.createat) }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="createby">
+          <th class="header-cell w-12" cdk-header-cell *cdkHeaderCellDef>
+            Code User
+          </th>
+          <td class="row-cell w-12" cdk-cell *cdkCellDef="let row">
+            {{ row.createby }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="observ">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Observation
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.observ }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="commen">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Comment</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.commen }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="impsaleprice">
+          <th class="header-cell w-10" cdk-header-cell *cdkHeaderCellDef>
+            Sale Price
+          </th>
+          <td class="row-cell w-10" cdk-cell *cdkCellDef="let row">
+            {{ row.impsaleprice.toFixed(2) }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="imptotal">
+          <th class="header-cell w-10" cdk-header-cell *cdkHeaderCellDef>
+            Total Import
+          </th>
+          <td class="row-cell w-10" cdk-cell *cdkCellDef="let row">
+            {{ row.imptotal.toFixed(2) }}
+          </td>
+        </ng-container>
+      </table>
+    </article>
+  </section>
+  <section class="flex justify-end space-x-4">
+    <app-button-standard
+      (click)="closeDialog()"
+      colorBtn="red"
+      optionBtn="close"
+      typeBtn="button"
+    >
+      Close
+    </app-button-standard>
+  </section>
+  <app-button-operac
+    optionBtn="close"
+    colorBtn="red"
+    class="absolute right-6 top-0 z-10"
+    (click)="closeDialog()"
+  ></app-button-operac>
+</main>

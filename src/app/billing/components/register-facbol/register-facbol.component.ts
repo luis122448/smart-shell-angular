@@ -26,6 +26,9 @@ import {
   Seller,
   Serie,
 } from 'src/app/auth/models/default-values.model';
+import { DocumentHeader } from '@billing-models/document-header.model';
+import { DocumentInvoice } from '@billing-models/document-invoice.model';
+import { MyDate } from '@billing-utils/date';
 
 @Component({
   selector: 'app-register-facbol',
@@ -34,14 +37,13 @@ import {
 })
 export class RegisterFacbolComponent implements OnInit {
   @Input() isNewDocument = false;
+  @Input() isEditDocumentValue: DocumentInvoice | undefined = undefined;
   @Input() isCalculateDocument = false;
   formDocumentHeader!: FormGroup;
   faMagnifyingGlass = faMagnifyingGlass;
   faXmark = faXmark;
-  // DataSource
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
-  // SubStatus
-  statusBuspar = false;
+  statusBuspar : 'search' | 'register' | 'disabled' = 'search'
 
   // Obj
   tipoConPag: IntcomCondicionPagoView[] = [];
@@ -75,7 +77,7 @@ export class RegisterFacbolComponent implements OnInit {
       reacomdoc: [reacomdoc, [Validators.required]],
       codcur: ['PEN', [Validators.required]],
       exchangerate: [
-        {value:0.0.toFixed(2),disabled:true},
+        { value: (0.0).toFixed(2), disabled: true },
         [Validators.required, Validators.pattern(/^\d{1,4}(\.\d{1,4})?$/)],
       ],
       codbuspar: ['', [Validators.required]],
@@ -86,7 +88,10 @@ export class RegisterFacbolComponent implements OnInit {
       codsel: ['', [Validators.required]],
       typpaycon: ['', [Validators.required]],
       incigv: [1, [Validators.required]],
-      tasigv: [{value:18.00.toFixed(2),disabled:true}, [Validators.required]],
+      tasigv: [
+        { value: (18.0).toFixed(2), disabled: true },
+        [Validators.required],
+      ],
       refere: ['', []],
       observ: ['', []],
       commen: ['', []],
@@ -131,7 +136,6 @@ export class RegisterFacbolComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.log(error);
         this.formDocumentHeader.markAllAsTouched();
       },
     });
@@ -139,12 +143,21 @@ export class RegisterFacbolComponent implements OnInit {
 
   ngOnChanges() {
     if (this.isNewDocument) {
-      this.buildForm(
-        1,
-        this.defaultSeries?.serie,
-        this.defaultReason?.reacomdoc
-      );
-      this.cleanBuspar();
+      this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
+      this.formDocumentHeader.markAllAsTouched();
+    }
+    if (this.isEditDocumentValue) {
+      const dataHeaderDocument = this.isEditDocumentValue.header;
+      console.log('dataHeaderDocument', dataHeaderDocument);
+      this.dataHeaderSource.getInit(dataHeaderDocument);
+      this.formDocumentHeader.patchValue({
+        ...dataHeaderDocument,
+        registdate: this.returnDate(dataHeaderDocument.registdate)
+          .toISOString()
+          .substring(0, 10),
+      });
+      this.changePaymentCondition(dataHeaderDocument.codbuspar);
+      this.disableHeaderForm();
       this.formDocumentHeader.markAllAsTouched();
     }
     if (this.isCalculateDocument) {
@@ -152,9 +165,17 @@ export class RegisterFacbolComponent implements OnInit {
     }
   }
 
-  isInputInvalid(fieldName: string): boolean {
-    const field = this.formDocumentHeader.get(fieldName);
-    return field ? field.invalid && field.touched : true;
+    isInputInvalid(fieldName: string): boolean {
+      const field = this.formDocumentHeader.get(fieldName);
+      return field ? field.invalid && field.touched : true;
+    }
+
+  returnDate(date: number[] | Date): Date {
+    if (date instanceof Date) {
+      return date;
+    }
+    const aux: Date = MyDate.convertToCustomDateShort(date);
+    return aux;
   }
 
   openDialogGetCli(isCode: boolean) {
@@ -208,31 +229,30 @@ export class RegisterFacbolComponent implements OnInit {
         // this.formDocumentHeader.get('codlistprice')?.setValue(data.codlistprice)
         this.formDocumentHeader.get('codlistprice')?.setValue(1); // Default
         // Asignar las Condiciones Pago
-        this.businessPartnerService
-          .getByCodintcomCondicionPago(data.codbuspar)
-          .subscribe((data) => {
-            this.tipoConPag = data.list;
-          });
+        this.changePaymentCondition(data.codbuspar);
         // Guardar en DataSource
         const dataHeader = this.formDocumentHeader.getRawValue();
-
         // Deshabilitar todos los inputs
-        this.formDocumentHeader.get('typcomdoc')?.disable();
-        this.formDocumentHeader.get('serie')?.disable();
-        this.formDocumentHeader.get('codmot')?.disable();
-        this.formDocumentHeader.get('codbuspar')?.disable();
-        this.formDocumentHeader.get('busnam')?.disable();
-        this.formDocumentHeader.get('addres')?.disable();
-        this.statusBuspar = true;
-        if (this.formDocumentHeader.get('addres')?.value === 0) {
-          this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
-        } else {
-          this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
-        }
+        this.disableHeaderForm();
         // Update values in DataSource
         this.dataHeaderSource.getPush(dataHeader);
       }
     });
+  }
+
+  disableHeaderForm() {
+    this.formDocumentHeader.get('typcomdoc')?.disable();
+    this.formDocumentHeader.get('serie')?.disable();
+    this.formDocumentHeader.get('codmot')?.disable();
+    this.formDocumentHeader.get('codbuspar')?.disable();
+    this.formDocumentHeader.get('busnam')?.disable();
+    this.formDocumentHeader.get('addres')?.disable();
+    this.statusBuspar = 'register';
+    if (this.formDocumentHeader.get('addres')?.value === 0) {
+      this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+    } else {
+      this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
+    }
   }
 
   cleanBuspar() {
@@ -247,8 +267,33 @@ export class RegisterFacbolComponent implements OnInit {
     this.formDocumentHeader.get('busnam')?.enable();
     this.formDocumentHeader.get('addres')?.enable();
     this.dataHeaderSource.getPush(this.formDocumentHeader.value);
-    this.statusBuspar = false;
+    this.statusBuspar = 'search';
     this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+  }
+
+  changePaymentCondition(codbuspar: string) {
+    this.globalStatusService.setLoading(true);
+    this.businessPartnerService
+      .getByCodintcomCondicionPago(codbuspar)
+      .subscribe({
+        next: (data) => {
+          if(data.status <= 0){
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: data,
+            });
+          }
+          this.tipoConPag = data.list;
+          this.globalStatusService.setLoading(false);
+        },
+        error: (err) => {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: err.error,
+          });
+        },
+        complete: () => this.globalStatusService.setLoading(false),
+      });
   }
 
   changeTypcomdoc(event: any) {
@@ -264,9 +309,9 @@ export class RegisterFacbolComponent implements OnInit {
   onIncigvChange(event: any) {
     const incigv = event.target.value;
     if (incigv === '0') {
-      this.formDocumentHeader.get('tasigv')?.setValue(0.0.toFixed(2));
+      this.formDocumentHeader.get('tasigv')?.setValue((0.0).toFixed(2));
     } else {
-      this.formDocumentHeader.get('tasigv')?.setValue(18.00.toFixed(2));
+      this.formDocumentHeader.get('tasigv')?.setValue((18.0).toFixed(2));
     }
     this.dataHeaderSource.updateData('incigv', incigv);
   }
@@ -310,24 +355,33 @@ export class RegisterFacbolComponent implements OnInit {
               width: '400px',
               data: data,
             });
-            this.formDocumentHeader.get('exchangerate')?.setValue(0.00.toFixed(2));
+            this.formDocumentHeader
+              .get('exchangerate')
+              ?.setValue((0.0).toFixed(2));
             this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
           } else {
             this.matSnackBar.openFromComponent(
               MatsnackbarSuccessComponent,
               MatSnackBarSuccessConfig
             );
-            this.formDocumentHeader.get('exchangerate')?.setValue(data.list[0].eventa);
+            this.formDocumentHeader
+              .get('exchangerate')
+              ?.setValue(data.list[0].eventa);
             this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
-            this.dataHeaderSource.updateData('exchangerate', data.list[0].eventa);
+            this.dataHeaderSource.updateData(
+              'exchangerate',
+              data.list[0].eventa
+            );
           }
         },
-        error: err => {
+        error: (err) => {
           this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
             data: err.error,
           });
-          this.formDocumentHeader.get('exchangerate')?.setValue(0.00.toFixed(2));
+          this.formDocumentHeader
+            .get('exchangerate')
+            ?.setValue((0.0).toFixed(2));
           this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
           this.globalStatusService.setLoading(false);
         },

@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { GlobalStatusService } from '../../services/global-status.service';
+import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
+import { DataSourceDocumentDetail, DataSourceDocumentHeader } from '@billing/data/datasource-facbol.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
+import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
+import { DocumentInvoice } from '@billing-models/document-invoice.model';
 
 @Component({
   selector: 'app-layout',
@@ -9,12 +17,18 @@ import { GlobalStatusService } from '../../services/global-status.service';
 export class LayoutInvoiceComponent implements OnInit{
 
   isLoading =  false;
+  isEditDocumentValue : DocumentInvoice | undefined = undefined
   isStatusInvoice : 'search' | 'register' =  'register'
   isNewDocumentValue = false
   isCalculateDocumentValue = false
+  dataDetailSource = DataSourceDocumentDetail.getInstance();
+  dataHeaderSource = DataSourceDocumentHeader.getInstance();
 
   constructor(
-    private globalStatusService: GlobalStatusService
+    private globalStatusService: GlobalStatusService,
+    private documentInvoiceService: DocumentInvoiceService,
+    private dialog: Dialog,
+    private matSnackBar: MatSnackBar,
   ){
     this.isStatusInvoice = this.globalStatusService.getStatusInvoice()
     this.globalStatusService.isLoading$.subscribe(
@@ -39,6 +53,45 @@ export class LayoutInvoiceComponent implements OnInit{
 
   isNewDocument($event:boolean){
     this.isNewDocumentValue = $event
+    this.isEditDocumentValue = undefined
+  }
+
+  isModifyDocument($event:number){
+    this.globalStatusService.setLoading(true)
+    this.documentInvoiceService.getByNumint($event).subscribe({
+      next:data =>{
+        if(data.status<=0){
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: data
+          })
+        } else {
+          if (data.object?.header && data.object?.details) {
+            this.matSnackBar.openFromComponent(
+              MatsnackbarSuccessComponent,
+              MatSnackBarSuccessConfig
+            );
+            this.isEditDocumentValue = data.object
+            this.globalStatusService.setStatusInvoice('register')
+          } else {
+            this.dialog.open(DialogErrorAlertComponent,{
+              width: '400px',
+              data: { no_data_found: 'Y' }
+            })
+          }
+        }
+      },
+      error:err =>{
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
+        this.globalStatusService.setLoading(false)
+      },
+      complete:() =>{
+        this.globalStatusService.setLoading(false)
+      }
+    })
   }
 
   isCalculateDocument($event:boolean){

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnChanges, OnInit, Output, Input } from '@angular/core';
 import {
   DataSourceDocumentHeader,
   DataSourceDocumentDetail,
@@ -12,13 +12,17 @@ import { DefaultValuesService } from 'src/app/auth/services/default-values.servi
 import { Currency } from 'src/app/auth/models/default-values.model';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { DialogQuestionComponent } from '@shared/components/dialog-question/dialog-question.component';
+import { DocumentInvoice } from '@billing-models/document-invoice.model';
+import { DocumentHeader } from '@billing-models/document-header.model';
+import { DocumentDetail } from '@billing-models/document-detail.model';
 
 @Component({
   selector: 'app-resume-facbol',
   templateUrl: './resume-facbol.component.html',
   styleUrls: ['./resume-facbol.component.scss'],
 })
-export class ResumeFacbolComponent implements OnInit {
+export class ResumeFacbolComponent implements OnInit, OnChanges {
+  @Input() isEditDocumentValue : DocumentInvoice | undefined = undefined
   @Output() isNewDocument = new EventEmitter<boolean>(false);
   @Output() isCalculateDocument = new EventEmitter<boolean>(false);
   formResumeFacBol!: FormGroup;
@@ -74,6 +78,12 @@ export class ResumeFacbolComponent implements OnInit {
         this.isStatusInvoiceRegister = false;
       },
     });
+  }
+
+  ngOnChanges() {
+    if (this.isEditDocumentValue) {
+      this.calculate();
+    }
   }
 
   calculate() {
@@ -133,13 +143,61 @@ export class ResumeFacbolComponent implements OnInit {
       });
       return;
     }
-
-    this.globalStatusService.setLoading(true);
     const documentInvoiceDetails = this.dataDetailSource
       .get()
       .filter((data) => data.numite > 0);
+    if (this.isEditDocumentValue) {
+      this.updateDocument(documentInvoiceHeader, documentInvoiceDetails);
+    } else {
+      this.saveDocument(documentInvoiceHeader, documentInvoiceDetails);
+    }
+  }
+
+  saveDocument(header: DocumentHeader, details: DocumentDetail[]) {
+    this.globalStatusService.setLoading(true);
     this.documentInvoiceService
-      .postRegisterDocument(documentInvoiceHeader, documentInvoiceDetails)
+    .postRegisterDocument(header, details)
+    .subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: data,
+          });
+        }
+        if (data.status >= 0) {
+          const dialogRef = this.dialog.open(DialogQuestionComponent, {
+            width: '400px',
+            data: {
+              status: 0,
+              message: 'Do you want to print the document?',
+            },
+          });
+          dialogRef.closed.subscribe((response) => {
+            if (response) {
+              this.onPrint(data.object.numint);
+            }
+          });
+          this.newDocument();
+        }
+      },
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err.error,
+        });
+        this.globalStatusService.setLoading(false);
+      },
+      complete: () => {
+        this.globalStatusService.setLoading(false);
+      },
+    });
+  }
+
+  updateDocument(header: DocumentHeader, details: DocumentDetail[]) {
+    this.globalStatusService.setLoading(true);
+    this.documentInvoiceService
+      .putModifyDocument(header, details)
       .subscribe({
         next: (data) => {
           if (data.status <= 0) {
@@ -191,13 +249,20 @@ export class ResumeFacbolComponent implements OnInit {
         if (data.status <= 0) {
           this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: { status: data.status, meesage: data.message },
+            data: data,
           });
         }
         if (data.status >= 0) {
-          console.log(data.bytes);
           this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
         }
+      },
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err.error,
+        });
+      },
+      complete: () => {
         this.globalStatusService.setLoading(false);
       },
     });

@@ -3,22 +3,25 @@
     <app-siderbar-left></app-siderbar-left>
   </menu>
   <div [ngSwitch]="isStatusInvoice" class="main-container">
-    <app-header-invoice class="h-[100px]"></app-header-invoice>
+    <app-header-invoice (isNewDocument)="isNewDocument($event)" class="h-[100px]"></app-header-invoice>
     <div class="body-container">
       <section *ngSwitchCase="'register'" class="sub-main-container">
         <article class="h-auto w-full">
           <app-register-facbol
             [isNewDocument]="isNewDocumentValue"
+            [isEditDocumentValue]="isEditDocumentValue"
             [isCalculateDocument]="isCalculateDocumentValue"
           ></app-register-facbol>
         </article>
         <article class="h-auto w-full">
           <app-detail-items-facbol
             [isNewDocument]="isNewDocumentValue"
+            [isEditDocumentValue]="isEditDocumentValue"
           ></app-detail-items-facbol>
         </article>
         <article class="h-auto w-full px-4">
           <app-resume-facbol
+            [isEditDocumentValue]="isEditDocumentValue"
             (isNewDocument)="isNewDocument($event)"
             (isCalculateDocument)="isCalculateDocument($event)"
           ></app-resume-facbol>
@@ -29,7 +32,7 @@
           <app-search-facbol></app-search-facbol>
         </article>
         <article class="w-full">
-          <app-detail-search-invoice></app-detail-search-invoice>
+          <app-detail-search-invoice (modifyDocument)="isModifyDocument($event)"></app-detail-search-invoice>
         </article>
       </section>
     </div>

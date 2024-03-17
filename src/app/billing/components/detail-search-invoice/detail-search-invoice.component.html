@@ -24,7 +24,7 @@
         <td class="row-operac-cell max-w-[15px]" cdk-cell *cdkCellDef="let row">
           <button
             class="relative h-7 w-7"
-            (click)="row.isOpen = !row.isOpen"
+            (click)="onOpenOverlay(row.numint)"
             type="button"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
@@ -33,6 +33,7 @@
           </button>
           <ng-template
             cdkConnectedOverlay
+            [cdkConnectedOverlayOffsetX]="12"
             [cdkConnectedOverlayOrigin]="trigger"
             [cdkConnectedOverlayOpen]="row.isOpen"
           >
@@ -44,20 +45,53 @@
                 class="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
+                <li *ngIf="row.sitcomdoc == 1">
+                  <a class="siderbar-section-text" (click)="onEdit(row.numint)">
+                    <div class="relative h-7 w-7">
+                      <fa-icon
+                        [icon]="faFilePen"
+                        class="icon-overlay"
+                      ></fa-icon>
+                    </div>
+                    Modify
+                  </a>
+                </li>
+                <li *ngIf="row.sitcomdoc == 1">
+                  <a class="siderbar-section-text" (click)="onApproved(row.numint)">
+                    <div class="relative h-7 w-7">
+                      <fa-icon
+                        [icon]="faFilePen"
+                        class="icon-overlay"
+                      ></fa-icon>
+                    </div>
+                    Aproved
+                  </a>
+                </li>
+                <li *ngIf="row.sitcomdoc == 2">
+                  <a class="siderbar-section-text" (click)="onInAccount(row.numint)">
+                    <div class="relative h-7 w-7">
+                      <fa-icon
+                        [icon]="faFilePen"
+                        class="icon-overlay"
+                      ></fa-icon>
+                    </div>
+                    In Account
+                  </a>
+                </li>
                 <li>
                   <a
-                    class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    class="siderbar-section-text"
                     (click)="onPrint(row.numint)"
                   >
                     <div class="relative h-7 w-7">
                       <fa-icon [icon]="faPrint" class="icon-overlay"></fa-icon>
                     </div>
-                    Imprimir
+                    Print
                   </a>
                 </li>
-                <li>
+                <li *ngIf="row.sitcomdoc == 3">
                   <a
-                    class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    class="siderbar-section-text"
                     (click)="onSendEmail(row.numint)"
                   >
                     <div class="relative h-7 w-7">
@@ -66,12 +100,12 @@
                         class="icon-overlay"
                       ></fa-icon>
                     </div>
-                    Enviar por Email
+                    Send by Email
                   </a>
                 </li>
-                <li>
+                <li *ngIf="row.sitcomdoc == 3">
                   <a
-                    class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    class="siderbar-section-text"
                     (click)="onSendSunat(row.numint)"
                   >
                     <div class="relative h-7 w-7">
@@ -80,18 +114,42 @@
                         class="icon-overlay"
                       ></fa-icon>
                     </div>
-                    Enviar a Sunat</a
+                    Send by Sunat</a
                   >
                 </li>
                 <li>
                   <a
-                    class="flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    (click)="onCancel(row.numint)"
+                    class="siderbar-section-text"
+                    (click)="onViewTransactions(row.numint)"
+                  >
+                    <div class="relative h-7 w-7">
+                      <fa-icon
+                        [icon]="faList"
+                        class="icon-overlay"
+                      ></fa-icon>
+                    </div>
+                    Transactions</a
+                  >
+                </li>
+                <li *ngIf="row.sitcomdoc != 4">
+                  <a
+                    class="siderbar-section-text"
+                    (click)="onCancel(row.numint,row)"
                   >
                     <div class="relative h-7 w-7">
                       <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
                     </div>
-                    Anular</a
+                    Cancel</a
+                  >
+                </li><li *ngIf="row.sitcomdoc == 4">
+                  <a
+                    class="siderbar-section-text"
+                    (click)="onDelete(row.numint,row)"
+                  >
+                    <div class="relative h-7 w-7">
+                      <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
+                    </div>
+                    Delete</a
                   >
                 </li>
               </ul>
@@ -188,13 +246,13 @@
           Sale Price
         </th>
         <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.impsaleprice }}
+          {{ row.impsaleprice | number : "1.2-2" }}
         </td>
       </ng-container>
       <ng-container cdkColumnDef="imptotal">
         <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Total</th>
         <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.imptotal }}
+          {{ row.imptotal | number : "1.2-2" }}
         </td>
       </ng-container>
     </table>

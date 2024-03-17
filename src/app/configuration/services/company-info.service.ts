@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@enviroment';
-import { CompanyInfo, DTOCompanyInfo } from '../models/company-info.model';
+import { CompanyInfo } from '../models/company-info.model';
+import { ApiResponseList } from '@billing-models/api-reponse.model';
 
 
 @Injectable({
@@ -16,16 +17,12 @@ export class CompanyInfoService {
     private httpCLient: HttpClient
   ) { }
 
-  getById(numint: number){
-    let params = new HttpParams()
-    params = params.set('numint',numint)
-    return this.httpCLient.get<DTOCompanyInfo>(`${this.API_URL}${this.PATH_BILLING}/company-info/by-id`, {params})
+  getByAll(){
+    return this.httpCLient.get<ApiResponseList<CompanyInfo>>(`${this.API_URL}${this.PATH_BILLING}/company-info/by-all`)
   }
 
-  putUpdate(numint: number, data: CompanyInfo){
-    let params = new HttpParams()
-    params = params.set('numint',numint)
-    return this.httpCLient.put<DTOCompanyInfo>(`${this.API_URL}${this.PATH_BILLING}/company-info`, data, {params})
+  putUpdate(data: CompanyInfo){
+    return this.httpCLient.put<ApiResponseList<CompanyInfo>>(`${this.API_URL}${this.PATH_BILLING}/company-info`, data)
   }
 
 }

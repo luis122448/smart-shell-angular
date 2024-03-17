@@ -43,8 +43,8 @@ export class SearchFacbolComponent implements OnInit{
       typcomdoc : [1,[Validators.required]],
       startat : [beforeSevenDays,[Validators.required]],
       finalat : [yesterday,[Validators.required]],
-      sitcomdoc : this.formBuilder.array([1]),
-      reacomdoc : this.formBuilder.array([1]),
+      sitcomdoc : this.formBuilder.array([0]),
+      reacomdoc : this.formBuilder.array([0]),
       codbranch : ['-1',[]],
       codplaiss : ['-1',[]],
       serie : ['-1',[]],
@@ -76,6 +76,12 @@ export class SearchFacbolComponent implements OnInit{
     this.series = this.defaultValuesService.getLocalStorageValue('series').filter(data => data.typcomdoc === 1)
     this.reasons = this.defaultValuesService.getLocalStorageValue('reasons').filter(data => data.typcomdoc === 1)
     this.situations = this.defaultValuesService.getLocalStorageValue('situations').filter(data => data.typcomdoc === 1)
+    this.situations.forEach(data => {
+      this.sitcomdoc.push(this.formBuilder.control(data.sitcomdoc))
+    })
+    this.reasons.forEach(data => {
+      this.reacomdoc.push(this.formBuilder.control(data.reacomdoc))
+    })
   }
 
   ngOnInit(): void {
@@ -132,7 +138,6 @@ export class SearchFacbolComponent implements OnInit{
       this.reacomdoc.removeAt(index);
     }
   }
-
 
   toggleSelectAllReason(event: any){
     const isChecked = event?.target?.checked;
@@ -195,7 +200,7 @@ export class SearchFacbolComponent implements OnInit{
           if (data.status<=0) {
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status:data.status, meesage:data.message }
+              data: data
             })
           }
           this.dataSourceSearchDocument.getInit(data.list)
@@ -205,6 +210,7 @@ export class SearchFacbolComponent implements OnInit{
             width: '400px',
             data: err.error
           })
+          this.dataSourceSearchDocument.getInit([])
           this.globalStatusService.setLoading(false)
         },
         complete: () => this.globalStatusService.setLoading(false)
@@ -283,6 +289,14 @@ export class DataSourceSearchDocumentInvoice extends DataSource<SearchDocumentIn
 
   getInit(data: SearchDocumentInvoice[]) {
     this.data.next(data);
+  }
+
+  onChangeOpen(numint: number){
+    const aux = this.data.getValue();
+    aux.forEach(data => data.isOpen = false);
+    const index = aux.findIndex(data => data.numint === numint);
+    aux[index].isOpen = true;
+    this.data.next(aux);
   }
 
   get() {

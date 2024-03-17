@@ -22,6 +22,7 @@ import {
 import { FacbolGlobalStatusService } from '../../services/facbol-global-status.service';
 import { BehaviorSubject } from 'rxjs';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { DocumentInvoice } from '@billing-models/document-invoice.model';
 
 @Component({
   selector: 'app-detail-items-facbol',
@@ -29,8 +30,8 @@ import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert
   styleUrls: ['./detail-items-facbol.component.scss'],
 })
 export class DetailItemsFacbolComponent implements OnInit {
-
   @Input() isNewDocument = false;
+  @Input() isEditDocumentValue : DocumentInvoice | undefined = undefined
   formDetailDocument!: FormGroup;
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
   dataDetailSource = DataSourceDocumentDetail.getInstance();
@@ -95,6 +96,13 @@ export class DetailItemsFacbolComponent implements OnInit {
   ngOnChanges() {
     if (this.isNewDocument) {
       this.buildForm();
+    }
+    if (this.isEditDocumentValue) {
+      this.buildForm();
+      const dataDetailDocument = this.isEditDocumentValue.details;
+      for (let i = 0; i < dataDetailDocument.length; i++) {
+        this.addItem(dataDetailDocument[i]);
+      }
     }
   }
 
@@ -203,19 +211,4 @@ export class DetailItemsFacbolComponent implements OnInit {
     return this.formDetailDocument.controls['detailDocument'] as FormArray;
   }
 
-  // get formattedPrice(index: number): string {
-  //   const detailDocument = this.formDetailDocument.get('detailDocument').value;
-  //   const price = detailDocument && detailDocument[index]?.price || 0;
-  //   return price.toFixed(2);
-  // }
-
-  // detailDocumentControlsById(index: number) {
-  //   return (this.formDetailDocument.get('detailDocume~nt') as FormArray)
-  //     .controls[index] as FormControl;
-  // }
-
-  // detailDocumentById(index: number) {
-  //   return (this.formDetailDocument.get('detailDocument') as FormArray)
-  //     .controls[index] as FormGroup;
-  // }
 }

@@ -95,7 +95,7 @@
             (keyup.enter)="openDialogGetCli(true)"
           />
           <button
-            *ngIf="!statusBuspar"
+            *ngIf="statusBuspar == 'search'"
             type="button"
             class="button-icon-search"
             (click)="openDialogGetCli(true)"
@@ -107,7 +107,7 @@
             ></fa-icon>
           </button>
           <button
-            *ngIf="statusBuspar"
+            *ngIf="statusBuspar == 'register'"
             type="button"
             class="button-icon-search"
             (click)="cleanBuspar()"

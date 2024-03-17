@@ -81,6 +81,7 @@ export class BasicInfoArticleComponent implements OnInit {
     if (data.article && !this.isNewArticle) {
       this.formCrudArticle.patchValue({
         ...data.article,
+        codext: data.article.codext,
         registdate: this.returnDate(data.article.registdate)
           .toISOString()
           .substring(0, 10),
@@ -88,6 +89,10 @@ export class BasicInfoArticleComponent implements OnInit {
         editdescri: data.article.editdescri === 'Y' ? true : false,
         printcomment: data.article.printcomment === 'Y' ? true : false,
       });
+      if (data.article.image) {
+        this.imageArticleURL = `data:image/webp;base64,${data.article.image}`;
+        this.noImage = false;
+      }
       this.codart?.disable();
     }
   }
@@ -107,7 +112,6 @@ export class BasicInfoArticleComponent implements OnInit {
       return date;
     }
     const aux: Date = MyDate.convertToCustomDateShort(date);
-    // Si la registdate recibida es Valida ... ( Asincronismo )
     return aux;
   }
 
@@ -201,7 +205,7 @@ export class BasicInfoArticleComponent implements OnInit {
       const data: File = event.target.files[0];
       if (data) {
         const format = data.name.split('.').pop()?.toLowerCase();
-        if (format === 'jpg') {
+        if (format === 'webp') {
           const reader = new FileReader();
           reader.onload = (e: any) => {
             try {
@@ -209,7 +213,10 @@ export class BasicInfoArticleComponent implements OnInit {
               this.imageArticleURL = URL.createObjectURL(data);
               this.image?.setValue(Array.from(new Uint8Array(fileContent)));
             } catch (error) {
-              console.error('Error during file loading:', error);
+              this.dialog.open(DialogErrorAlertComponent, {
+                width: '400px',
+                data: { status: -3, message: 'Error loading image!', logmessage: error },
+              })
             }
           };
           reader.readAsArrayBuffer(data);
@@ -218,7 +225,10 @@ export class BasicInfoArticleComponent implements OnInit {
           event.target.value = null;
           this.imageArticleURL = IMAGENOUPLOAD;
           this.noImage = true;
-          this.dialog.open(DialogErrorAlertComponent, NoJpgFormatImage);
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: { status: -3, message: 'Invalid format! Only webp image format is accepted.' },
+          });
         }
       }
     }

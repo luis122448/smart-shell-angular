@@ -32,10 +32,8 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
 
   private buildForm(){
     this.formCrudCompany = this.formBuilder.group({
-      numint: ['',[Validators.required]],
-      typidedoc: ['',[Validators.required]],
-      nroidedoc: ['',[Validators.required]],
-      comnam: ['',[Validators.required]],
+      company: ['',[Validators.required]],
+      appellation: ['',[Validators.required]],
       addres: ['',[Validators.required]],
       poscod: ['',[Validators.required]],
       image: ['',[]],
@@ -73,64 +71,67 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.globalStatusService.setLoading(true)
-    this.companyInfoService.getById(1)
+    this.companyInfoService.getByAll()
     .subscribe({
       next: data => {
         if (data.status<=0) {
           this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: { status: data.status, message: data.message }
+            data: data
           })
         } else {
-          if (!data.object) {
+          if (!data.list[0]) {
           } else {
             this.formCrudCompany.patchValue({
-              numint: data.object.numint,
-              typidedoc: data.object.typidedoc,
-              nroidedoc: data.object.nroidedoc,
-              comnam: data.object.comnam,
-              addres: data.object.addres,
-              poscod: data.object.poscod,
-              image: data.object.image,
-              icon: data.object.icon,
-              logo: data.object.logo,
-              background: data.object.background,
-              gloss: data.object.gloss,
-              observ: data.object.observ,
-              commen: data.object.commen,
-              status: data.object.status,
-              createby: data.object.createby,
-              updateby: data.object.updateby,
-              createat: data.object.createat,
-              updateat: data.object.updateat
+              company: data.list[0].company,
+              appellation: data.list[0].appellation,
+              addres: data.list[0].addres,
+              poscod: data.list[0].poscod,
+              image: data.list[0].image,
+              icon: data.list[0].icon,
+              logo: data.list[0].logo,
+              background: data.list[0].background,
+              gloss: data.list[0].gloss,
+              observ: data.list[0].observ,
+              commen: data.list[0].commen,
+              status: data.list[0].status,
+              createby: data.list[0].createby,
+              updateby: data.list[0].updateby,
+              createat: data.list[0].createat,
+              updateat: data.list[0].updateat
             })
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-            if (data.object.image){
-              const imageUrl = `data:image/jpeg;base64,${data.object.image}`
+            if (data.list[0].image){
+              const imageUrl = `data:image/jpeg;base64,${data.list[0].image}`
               this.imageCompanyImageURL = imageUrl;
             }
-            if (data.object.icon){
-              const imageUrl = `data:image/jpeg;base64,${data.object.icon}`
+            if (data.list[0].icon){
+              const imageUrl = `data:image/jpeg;base64,${data.list[0].icon}`
               this.imageCompanyIconURL = imageUrl;
             }
-            if (data.object.logo){
-              const imageUrl = `data:image/jpeg;base64,${data.object.logo}`
+            if (data.list[0].logo){
+              const imageUrl = `data:image/jpeg;base64,${data.list[0].logo}`
               this.imageCompanyLogoURL = imageUrl;
             }
-            if (data.object.background){
-              const imageUrl = `data:image/jpeg;base64,${data.object.background}`
+            if (data.list[0].background){
+              const imageUrl = `data:image/jpeg;base64,${data.list[0].background}`
               this.imageCompanyBackgroundURL = imageUrl;
             }
-            if (data.object.gloss){
-              const imageUrl = `data:image/jpeg;base64,${data.object.gloss}`
+            if (data.list[0].gloss){
+              const imageUrl = `data:image/jpeg;base64,${data.list[0].gloss}`
               this.imageCompanyGlossURL = imageUrl;
             }
           }
         }
-      this.globalStatusService.setLoading(false)
       },
-      error:e =>{
-        console.log(e.message)
+      error:err =>{
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
+        this.globalStatusService.setLoading(false)
+      },
+      complete:() => {
         this.globalStatusService.setLoading(false)
       }
     })
@@ -237,22 +238,27 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
   saveCompany(){
     if(this.formCrudCompany.valid){
       this.globalStatusService.setLoading(true)
-      this.companyInfoService.putUpdate(this.numint?.value,this.formCrudCompany.value)
+      this.companyInfoService.putUpdate(this.formCrudCompany.value)
       .subscribe({
         next:data =>{
           if(data.status<=0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { data }
+              data: data
             })
           }
           if(data.status>=0){
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
           }
+        },
+        error:err =>{
+          this.dialog.open(DialogErrorAlertComponent,{
+            width: '400px',
+            data: err.error
+          })
           this.globalStatusService.setLoading(false)
         },
-        error:e =>{
-          console.log(e.message)
+        complete:() => {
           this.globalStatusService.setLoading(false)
         }
       })
@@ -267,11 +273,11 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
   get typidedoc(){
     return this.formCrudCompany.get('typidedoc')
   }
-  get nroidedoc(){
-    return this.formCrudCompany.get('nroidedoc')
+  get company(){
+    return this.formCrudCompany.get('company')
   }
-  get comnam(){
-    return this.formCrudCompany.get('comnam')
+  get appellation(){
+    return this.formCrudCompany.get('appellation')
   }
   get addres(){
     return this.formCrudCompany.get('addres')

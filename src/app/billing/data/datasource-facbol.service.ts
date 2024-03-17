@@ -37,7 +37,7 @@ export class DataSourceDocumentHeader {
     this.data.next(data);
   }
 
-  public get() {
+  public get(): DocumentHeader {
     return this.data.getValue();
   }
 

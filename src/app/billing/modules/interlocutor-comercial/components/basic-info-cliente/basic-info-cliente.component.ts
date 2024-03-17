@@ -148,6 +148,7 @@ export class BasicInfoClienteComponent implements OnInit {
             width: '400px',
             data: err.error,
           });
+          this.globalStatusService.setLoading(false);
         },
         complete: () => {
           this.globalStatusService.setLoading(false);

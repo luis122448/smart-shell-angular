@@ -97,13 +97,13 @@ body {
 }
 
 .input-login {
-  @apply mx-auto h-10 w-full rounded-md border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
+  @apply mx-auto h-10 tracking-widest w-full rounded-md border-2 border-slate-800 px-2 py-1 text-xs text-slate-800 placeholder-transparent
   hover:border-sky-700 hover:outline-none
   hover:ring-1 hover:ring-sky-700
   focus:border-sky-700 focus:outline-none
   focus:ring-2 focus:ring-sky-700
   disabled:bg-slate-300 disabled:font-semibold
-  dark:border-0 dark:bg-gray-700 dark:text-gray-400;
+  dark:border-0 dark:bg-gray-700 dark:text-gray-400 dark:disabled:bg-slate-800;
 }
 
 // Input Disable
@@ -295,6 +295,11 @@ body {
   dark:text-gray-400;
 }
 
+.text-inline-md {
+  @apply m-0 p-0 text-sm text-slate-800
+  dark:text-gray-400;
+}
+
 .sidebar-section-text {
   @apply m-0 p-0 text-sm text-slate-800
   dark:text-gray-400;
@@ -384,4 +389,8 @@ body {
 
 .resalt-text{
   @apply text-cyan-600 font-semibold
+}
+
+.siderbar-section-text {
+  @apply flex w-full justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white
 }

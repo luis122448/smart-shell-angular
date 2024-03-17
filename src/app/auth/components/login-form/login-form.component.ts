@@ -8,7 +8,7 @@ import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-success/matsnackbar-success.component';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
-import { faPen, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faEye, faEyeSlash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { MatsnackbarMessageComponent } from '@shared-components/matsnackbar-message/matsnackbar-message.component';
 import { DefaultValuesService } from '../../services/default-values.service';
 import { SellerService } from '@billing-services/vendedor.service';
@@ -28,10 +28,11 @@ import { TypeBusinessPartnerService } from '@billing-services/type-business-part
 export class LoginFormComponent {
   fromAuthLogin!: FormGroup;
   formVerifyCode!: FormGroup;
-  codver = '';
+  code = '';
   faPen = faPen;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
+  faAddressCard = faAddressCard;
   showPassword = false;
   LoginIn = true;
   // Verrify Code
@@ -39,6 +40,7 @@ export class LoginFormComponent {
 
   private buildForm() {
     this.fromAuthLogin = this.formBuilder.group({
+      company: ['0000000001', [Validators.required]],
       coduser: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
@@ -46,8 +48,9 @@ export class LoginFormComponent {
 
   private buildFormVerify() {
     this.formVerifyCode = this.formBuilder.group({
+      company: [{ value: '0000000001', disabled: true },, [Validators.required]],
       coduser: [{ value: '', disabled: true }, [Validators.required]],
-      codver: [
+      code: [
         '',
         [Validators.required, Validators.minLength(6), Validators.maxLength(6)],
       ],
@@ -70,7 +73,7 @@ export class LoginFormComponent {
     private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
     private listPriceService: ListPriceService,
-    private typeBusinessPartnerService: TypeBusinessPartnerService,
+    private typeBusinessPartnerService: TypeBusinessPartnerService
   ) {
     this.buildForm();
     this.buildFormVerify();
@@ -87,77 +90,92 @@ export class LoginFormComponent {
   }
 
   doLogin() {
-    if (this.fromAuthLogin.valid) {
-      this.globalStatusService.setLoading(true);
-      this.authService
-        .postLogin(this.coduser?.value, this.password?.value)
-        .subscribe({
-          next: (data) => {
-            if (data.status <= 0) {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: data
-              });
-            } else {
-              this.verifyCoduser?.setValue(data.coduser);
-              this.codver = data.verifyCode;
-              this.LoginIn = false;
-              this.matSnackBar.openFromComponent(MatsnackbarMessageComponent, {
-                data: `Codigo de Verificacion : ${data.verifyCode}`,
-                duration: 7500000,
-                horizontalPosition: 'center',
-                verticalPosition: 'top'
-              });
-            }
-            this.globalStatusService.setLoading(false);
-          },
-          error: err => {
+    if (this.fromAuthLogin.invalid) {
+      this.fromAuthLogin.markAllAsTouched();
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { no_required_fields: 'Y' },
+      });
+      return;
+    }
+    this.globalStatusService.setLoading(true);
+    this.authService
+      .postLogin(this.company?.value, this.coduser?.value, this.password?.value)
+      .subscribe({
+        next: async (data) => {
+          if (data.status < 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: err
+              data: data,
             });
-            this.globalStatusService.setLoading(false);
-          },
-        });
-    } else {
-      this.fromAuthLogin.markAllAsTouched();
-    }
+          } else if (data.status === 0) {
+            this.verifyCoduser?.setValue(data.object.coduser);
+            this.code = data.object.verifyCode;
+            this.LoginIn = false;
+            this.matSnackBar.openFromComponent(MatsnackbarMessageComponent, {
+              data: `Verification code : ${data.object.verifyCode}`,
+              duration: 7500000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+          } else {
+            await this.onUploadDefaultValues();
+            this.router.navigate(['/billing']);
+          }
+        },
+        error: err => {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: err.error
+          });
+          this.globalStatusService.setLoading(false);
+        },
+        complete: () => {
+          this.globalStatusService.setLoading(false);
+        }
+      });
   }
 
   doVerifyCode() {
-    this.verifyCodver?.setValue(this.verificationCode.join(''));
-    if (this.formVerifyCode.valid) {
-      this.globalStatusService.setLoading(true);
-      this.authService
-        .postVerifyCode(this.verifyCoduser?.value, this.verifyCodver?.value)
-        .subscribe({
-          next: async (data) => {
-            if (data.status <= 0) {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: data
-              });
-            } else {
-              await this.onUploadDefaultValues();
-              this.router.navigate(['/billing']);
-              this.matSnackBar.openFromComponent(
-                MatsnackbarSuccessComponent,
-                MatSnackBarSuccessConfig
-              );
-            }
-            this.globalStatusService.setLoading(false);
-          },
-          error: err => {
+    this.verifycode?.setValue(this.verificationCode.join(''));
+    if (this.formVerifyCode.invalid) {
+      this.fromAuthLogin.markAllAsTouched();
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { no_required_fields: 'Y' },
+      });
+      return;
+    }
+    this.globalStatusService.setLoading(true);
+    this.authService
+      .postVerifyCode(this.verifyCompany?.value, this.verifyCoduser?.value, this.verifycode?.value)
+      .subscribe({
+        next: async (data) => {
+          if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: err
+              data: data,
             });
-            this.globalStatusService.setLoading(false);
-          },
-        });
-    } else {
-      this.formVerifyCode.markAllAsTouched();
-    }
+          } else {
+            await this.onUploadDefaultValues();
+            this.router.navigate(['/billing']);
+            this.matSnackBar.openFromComponent(
+              MatsnackbarSuccessComponent,
+              MatSnackBarSuccessConfig
+            );
+          }
+        },
+        error: err => {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: err.error,
+          });
+          this.globalStatusService.setLoading(false);
+        },
+        complete: () => {
+          this.globalStatusService.setLoading(false);
+        }
+      });
   }
 
   public onCodeInputChange(index: number, event: any): void {
@@ -169,6 +187,16 @@ export class LoginFormComponent {
       const nextInput = event.target.nextElementSibling as HTMLInputElement;
       if (nextInput) {
         nextInput.focus();
+      }
+    }
+  }
+
+  public onBackspace(index: number, event: any){
+    const value = event.target.value;
+    if (!value && index > 0) {
+      const previousInput = event.target.previousElementSibling as HTMLInputElement;
+      if (previousInput) {
+        previousInput.focus();
       }
     }
   }
@@ -349,16 +377,22 @@ export class LoginFormComponent {
     });
   }
 
+  get company() {
+    return this.fromAuthLogin.get('company');
+  }
   get coduser() {
     return this.fromAuthLogin.get('coduser');
   }
   get password() {
     return this.fromAuthLogin.get('password');
   }
+  get verifyCompany() {
+    return this.formVerifyCode.get('company');
+  }
   get verifyCoduser() {
     return this.formVerifyCode.get('coduser');
   }
-  get verifyCodver() {
-    return this.formVerifyCode.get('codver');
+  get verifycode() {
+    return this.formVerifyCode.get('code');
   }
 }

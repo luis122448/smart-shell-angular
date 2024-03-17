@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { GlobalStatusService } from '@billing-services/global-status.service';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
@@ -8,6 +8,7 @@ import { DefaultValuesService } from 'src/app/auth/services/default-values.servi
   styleUrls: ['./header-invoice.component.scss']
 })
 export class HeaderInvoiceComponent {
+  @Output() isNewDocument = new EventEmitter<boolean>(false);
   isLoading =  false
   isStatusInvoice : 'search' | 'register' =  'register'
   constructor(
@@ -36,10 +37,12 @@ export class HeaderInvoiceComponent {
   }
 
   onRegisterInvoice(){
+    this.isNewDocument.emit(true)
     this.globalStatusService.setStatusInvoice('register')
   }
 
   onSearchInvoice(){
+    this.isNewDocument.emit(true)
     this.globalStatusService.setStatusInvoice('search')
   }
 

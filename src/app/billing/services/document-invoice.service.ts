@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@enviroment';
-import { DAOBasicDocumentInvoice, DAOPrintDocumentInvoice, DAOSearchDocumentInvoice, SearchDocumentInvoice, SearchFilterDocumentInvoice } from '@billing-models/document-invoice.model';
+import { DAOBasicDocumentInvoice, DAOPrintDocumentInvoice, DAOSearchDocumentInvoice, DocumentInvoice, SearchDocumentInvoice, SearchFilterDocumentInvoice } from '@billing-models/document-invoice.model';
 import { DocumentDetail } from '@billing-models/document-detail.model';
 import { DocumentHeader } from '@billing-models/document-header.model';
+import { ApiResponseObject } from '@billing-models/api-reponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,12 @@ export class DocumentInvoiceService {
     return this.httpClient.get<DAOPrintDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/print`, {params})
   }
 
+  getByNumint(numint:number){
+    let params = new HttpParams()
+    params = params.set('numint',numint)
+    return this.httpClient.get<ApiResponseObject<DocumentInvoice>>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/by-numint`, {params})
+  }
+
   postRegisterDocument(header: DocumentHeader, details: DocumentDetail[]){
     const invoiceRegister = {
       header: header,
@@ -67,10 +74,38 @@ export class DocumentInvoiceService {
     return this.httpClient.post<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice`, invoiceRegister)
   }
 
-  putCancelDocument(numint: number){
+  putModifyDocument(header: DocumentHeader, details: DocumentDetail[]){
+    const invoiceRegister = {
+      header: header,
+      details: details
+    }
+    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice`, invoiceRegister)
+  }
+
+  putApprovedDocument(numint: number){
     let params = new HttpParams()
     params = params.set('numint',numint)
+    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/approved`, null, {params})
+  }
+
+  putInAccountDocument(numint: number){
+    let params = new HttpParams()
+    params = params.set('numint',numint)
+    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/in-account`, null, {params})
+  }
+
+  putCancelDocument(numint: number, commen: string){
+    let params = new HttpParams()
+    params = params.set('numint',numint)
+    params = params.set('commen',commen)
     return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/cancel`, null, {params})
+  }
+
+  putDeleteDocument(numint: number, commen: string){
+    let params = new HttpParams()
+    params = params.set('numint',numint)
+    params = params.set('commen',commen)
+    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/delete`, null, {params})
   }
 
 }

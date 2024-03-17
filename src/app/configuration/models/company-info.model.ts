@@ -1,8 +1,6 @@
 export interface CompanyInfo{
-  numint: number
-  typidedoc: number
-  nroidedoc: string
-  comnam: string
+  company: string
+  appellation: string
   addres: string
   poscod: string
   image: ArrayBuffer
@@ -17,22 +15,4 @@ export interface CompanyInfo{
   updateby: string
   createat: Date | number[],
   updateat: Date | number[],
-}
-
-export interface DAOCompanyInfo {
-  status: number
-  message: string
-  logMessage: string
-  logUser: String
-  logTime: Date | number[],
-  list: CompanyInfo[]
-}
-
-export interface DTOCompanyInfo {
-  status: number
-  message: string
-  logMessage: string
-  logUser: String
-  logTime: Date | number[],
-  object: CompanyInfo | null
 }

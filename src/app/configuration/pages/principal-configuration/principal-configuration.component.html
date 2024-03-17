@@ -2,56 +2,28 @@
   <section class="grid grid-cols-5 pt-6 gap-x-6">
     <article class="col-span-2 space-y-2">
       <div class="flex">
-        <label for="typidedoc" class="label-input-sm label-required"
-          >Type of Identity Document</label
-        >
-        <select
-          name="typidedoc"
-          id="typidedoc"
-          class="select-default"
-          formControlName="typidedoc"
-          [class.select-invalid]="isInputInvalid('typidedoc')"
-          placeholder="Type of Identity Document*"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('typidedoc')"
-          >
-            -- Choose --
-          </option>
-          <option value=1 class="option-default">DNI</option>
-          <option value=2 class="option-default">RUC</option>
-          <option value=3 class="option-default">Carnet de Extranjería</option>
-          <option value=4 class="option-default">Otro</option>
-        </select>
-      </div>
-      <div class="flex">
-        <label for="nroidedoc" class="label-input-sm label-required"
+        <label for="company" class="label-input-sm label-required"
           >Id Number</label
         >
         <input
-          id="nroidedoc"
+          id="company"
           type="text"
           class="input-default"
-          formControlName="nroidedoc"
-          [class.input-invalid]="isInputInvalid('nroidedoc')"
+          formControlName="company"
+          [class.input-invalid]="isInputInvalid('company')"
           placeholder="Id Number*"
         />
       </div>
       <div class="flex">
-        <label for="comnam" class="label-input-sm label-required"
+        <label for="appellation" class="label-input-sm label-required"
           >Company Name</label
         >
         <input
-          id="comnam"
+          id="appellation"
           type="text"
           class="input-default"
-          formControlName="comnam"
-          [class.input-invalid]="isInputInvalid('comnam')"
+          formControlName="appellation"
+          [class.input-invalid]="isInputInvalid('appellation')"
           placeholder="Company Name*"
         />
       </div>

@@ -25,6 +25,7 @@ import { HeaderInvoiceComponent } from './components/header-invoice/header-invoi
 import { SiderbarLeftComponent } from './modules/shared/components/siderbar-left/siderbar-left.component';
 import { BasicInfoExchangeRateComponent } from './modules/exchange-rate/components/basic-info-exchange-rate/basic-info-exchange-rate.component';
 import { BasicAllExchangeRateComponent } from './modules/exchange-rate/components/basic-all-exchange-rate/basic-all-exchange-rate.component';
+import { DialogAllDocumentTransactionComponent } from './components/dialog-all-document-transaction/dialog-all-document-transaction.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { BasicAllExchangeRateComponent } from './modules/exchange-rate/component
     HeaderInvoiceComponent,
     BasicInfoExchangeRateComponent,
     BasicAllExchangeRateComponent,
+    DialogAllDocumentTransactionComponent,
   ],
   imports: [
     CommonModule,

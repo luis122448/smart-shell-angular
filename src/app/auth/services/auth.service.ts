@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResponseAuth, ResponseAuthVerify } from '../models/auth.model';
+import { ApiResponseAuth, AuthVerify } from '../models/auth.model';
 import { switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs'
 import { TokenService } from './token.service';
 import { environment } from '@enviroment';
 
@@ -18,34 +17,43 @@ export class AuthService {
     private tokenService:TokenService
   ) { }
 
-  postLogin(coduser: string, password: string){
-    return this.httpClient.post<ResponseAuth>(`${this.API_URL}${this.AUTH}/login`,{
+  postLogin(company: string, coduser: string, password: string){
+    return this.httpClient.post<ApiResponseAuth<any>>(`${this.API_URL}${this.AUTH}/login`,{
+      company,
       coduser,
       password
-    })
-  }
-
-  postVerifyCode(coduser: string, codver: string){
-    return this.httpClient.post<ResponseAuthVerify>(`${this.API_URL}${this.AUTH}/verify-code`,{
-      coduser,
-      codver
     }).pipe(
       tap(data =>{
-        if(data.status === 1 && data.token && data.refreshToken){
-          this.tokenService.saveToken(data.token)
-          this.tokenService.saveRefreshToken(data.refreshToken)
+        if(data.status === 1 && data.object?.token && data.object?.refreshToken){
+          this.tokenService.saveToken(data.object.token)
+          this.tokenService.saveRefreshToken(data.object.refreshToken)
+        }
+      }),
+    )
+  }
+
+  postVerifyCode(company: string, coduser: string, verifyCode: string){
+    return this.httpClient.post<ApiResponseAuth<AuthVerify>>(`${this.API_URL}${this.AUTH}/verify-code`,{
+      company,
+      coduser,
+      verifyCode
+    }).pipe(
+      tap(data =>{
+        if(data.status === 1 && data.object?.token && data.object?.refreshToken){
+          this.tokenService.saveToken(data.object.token)
+          this.tokenService.saveRefreshToken(data.object.refreshToken)
         }
       })
     )
   }
 
   postRefreshToken(refreshToken: string){
-    return this.httpClient.post<ResponseAuthVerify>(`${this.API_URL}${this.AUTH}/refreshtoken`, {refreshToken})
+    return this.httpClient.post<ApiResponseAuth<AuthVerify>>(`${this.API_URL}${this.AUTH}/refresh-token`, {refreshToken})
     .pipe(
       tap(data =>{
-        if(data.status === 1 && data.token && data.refreshToken){
-          this.tokenService.saveToken(data.token)
-          this.tokenService.saveRefreshToken(data.refreshToken)
+        if(data.status === 1 && data.object?.token && data.object?.refreshToken){
+          this.tokenService.saveToken(data.object.token)
+          this.tokenService.saveRefreshToken(data.object.refreshToken)
         }
       })
     )

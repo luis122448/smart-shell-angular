@@ -2,67 +2,119 @@ import { Dialog } from '@angular/cdk/dialog';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
+import { DocumentTransactionService } from '@billing-services/document-transaction.service';
 import { GlobalStatusService } from '@billing-services/global-status.service';
+import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
 import { DataSourceSearchDocumentInvoice } from '@billing/components/search-facbol/search-facbol.component';
-import { faBan, faBuildingColumns, faEnvelope, faPrint, faRectangleList } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBan,
+  faBuildingColumns,
+  faEnvelope,
+  faPrint,
+  faRectangleList,
+  faFilePen,
+  faList,
+} from '@fortawesome/free-solid-svg-icons';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
+import { DialogAllDocumentTransactionComponent } from '../dialog-all-document-transaction/dialog-all-document-transaction.component';
+import { DialogQuestionCommentComponent } from '@shared/components/dialog-question-comment/dialog-question-comment.component';
+import { SearchDocumentInvoice } from '@billing-models/document-invoice.model';
+
+export interface DialogQuestionComment {
+  status: boolean;
+  commen: string;
+}
 
 @Component({
   selector: 'app-detail-search-invoice',
   templateUrl: './detail-search-invoice.component.html',
-  styleUrls: ['./detail-search-invoice.component.scss']
+  styleUrls: ['./detail-search-invoice.component.scss'],
 })
 export class DetailSearchInvoiceComponent {
-
-  @Output() pageEvent = new EventEmitter<PageEvent>()
-  faRectangleList = faRectangleList
-  faPrint = faPrint
-  faEnvelope = faEnvelope
-  faBuildingColumns = faBuildingColumns
-  faBan = faBan
-  totalElements = 0
-  pageSize = 100
-  displayedColumns = ['action','numint','document','destypcomdoc','dessitcomdoc','registdate','desreacomdoc','codbuspar','busnam'
-  ,'desplaiss','codcur','dessel','destyppaycon','impsaleprice','imptotal']
+  @Output() pageEvent = new EventEmitter<PageEvent>();
+  @Output() modifyDocument = new EventEmitter<number>();
+  faRectangleList = faRectangleList;
+  faPrint = faPrint;
+  faEnvelope = faEnvelope;
+  faBuildingColumns = faBuildingColumns;
+  faBan = faBan;
+  faFilePen = faFilePen;
+  faList = faList;
+  totalElements = 0;
+  pageSize = 100;
+  displayedColumns = [
+    'action',
+    'numint',
+    'document',
+    'destypcomdoc',
+    'dessitcomdoc',
+    'registdate',
+    'desreacomdoc',
+    'codbuspar',
+    'busnam',
+    'desplaiss',
+    'codcur',
+    'dessel',
+    'destyppaycon',
+    'impsaleprice',
+    'imptotal',
+  ];
 
   dataSourceSearchDocument = DataSourceSearchDocumentInvoice.getInstance();
 
   constructor(
     private dialog: Dialog,
     private datePipe: DatePipe,
+    private matSnackBar: MatSnackBar,
     private documentInvoiceService: DocumentInvoiceService,
+    private documentTransactionService: DocumentTransactionService,
     private globalStatusService: GlobalStatusService
-  ){}
+  ) {}
 
-  byPageEvent(e: PageEvent){
-    this.pageEvent.emit(e)
+  byPageEvent(e: PageEvent) {
+    this.pageEvent.emit(e);
   }
 
-  onPrint(numint: number){
-    this.globalStatusService.setLoading(true)
-    this.documentInvoiceService.getPrintDocument(numint)
-    .subscribe({
-      next:data =>{
-        if (data.status<=0) {
-          this.dialog.open(DialogErrorAlertComponent,{
+  onOpenOverlay(numint: number) {
+    this.dataSourceSearchDocument.onChangeOpen(numint);
+  }
+
+  onPrint(numint: number) {
+    this.globalStatusService.setLoading(true);
+    this.documentInvoiceService.getPrintDocument(numint).subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: data
-          })
+            data: data,
+          });
         } else {
-          this.openArchive(data.bytes,data.format) // PDF ( BASE64 )
+          this.matSnackBar.openFromComponent(
+            MatsnackbarSuccessComponent,
+            MatSnackBarSuccessConfig
+          );
+          this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
+          this.dataSourceSearchDocument.onChangeOpen(numint);
         }
       },
-      error: err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
           width: '400px',
-          data: err.error
-        })
-        this.globalStatusService.setLoading(false)
+          data: err.error,
+        });
+        this.globalStatusService.setLoading(false);
       },
-      complete: () => this.globalStatusService.setLoading(false)
-    })
+      complete: () => this.globalStatusService.setLoading(false),
+    });
+  }
+
+  onEdit(numint: number) {
+    this.dataSourceSearchDocument.onChangeOpen(numint);
+    this.modifyDocument.emit(numint);
   }
 
   openArchive(base64Data: string, format: string): void {
@@ -80,49 +132,200 @@ export class DetailSearchInvoiceComponent {
     window.open(fileURL, '_blank');
   }
 
-  onSendEmail(numint: number){
-    this.globalStatusService.setLoading(true)
+  onSendEmail(numint: number) {
+    this.globalStatusService.setLoading(true);
     setTimeout(() => {
-      this.globalStatusService.setLoading(false)
+      this.globalStatusService.setLoading(false);
     }, 1500);
+    this.dataSourceSearchDocument.onChangeOpen(numint);
   }
 
-  onSendSunat(numint: number){
-    this.globalStatusService.setLoading(true)
+  onSendSunat(numint: number) {
+    this.globalStatusService.setLoading(true);
     setTimeout(() => {
-      this.globalStatusService.setLoading(false)
+      this.globalStatusService.setLoading(false);
     }, 1500);
+    this.dataSourceSearchDocument.onChangeOpen(numint);
   }
 
-  onCancel(numint: number){
-    this.globalStatusService.setLoading(true)
-    this.documentInvoiceService.putCancelDocument(numint).subscribe({
-      next:data =>{
-        if (data.status<=0) {
-          this.dialog.open(DialogErrorAlertComponent,{
+  onViewTransactions(numint: number) {
+    this.globalStatusService.setLoading(true);
+    this.documentTransactionService.getByNumint(numint).subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: data
-          })
+            data: data,
+          });
+        } else {
+          this.dialog.open(DialogAllDocumentTransactionComponent, {
+            data: {
+              listDocumentTransaction: data.list,
+            },
+          });
         }
       },
-      error: err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
           width: '400px',
-          data: err.error
-        })
+          data: err.error,
+        });
+        this.globalStatusService.setLoading(false);
       },
-      complete: () => this.globalStatusService.setLoading(false)
-    })
+      complete: () => this.globalStatusService.setLoading(false),
+    });
   }
 
+  onApproved(numint: number) {
+    this.globalStatusService.setLoading(true);
+    this.documentInvoiceService.putApprovedDocument(numint).subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: data,
+          });
+        } else {
+          this.matSnackBar.openFromComponent(
+            MatsnackbarSuccessComponent,
+            MatSnackBarSuccessConfig
+          );
+          this.dataSourceSearchDocument.onChangeOpen(numint);
+        }
+      },
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err.error,
+        });
+        this.globalStatusService.setLoading(false);
+      },
+      complete: () => this.globalStatusService.setLoading(false),
+    });
+  }
+
+  onInAccount(numint: number) {
+    this.globalStatusService.setLoading(true);
+    this.documentInvoiceService.putInAccountDocument(numint).subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: data,
+          });
+        } else {
+          this.matSnackBar.openFromComponent(
+            MatsnackbarSuccessComponent,
+            MatSnackBarSuccessConfig
+          );
+          this.dataSourceSearchDocument.onChangeOpen(numint);
+        }
+      },
+      error: (err) => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err.error,
+        });
+        this.globalStatusService.setLoading(false);
+      },
+      complete: () => this.globalStatusService.setLoading(false),
+    });
+  }
+
+  onCancel(numint: number, row: SearchDocumentInvoice) {
+    const dialogRef = this.dialog.open<DialogQuestionComment>(
+      DialogQuestionCommentComponent,
+      {
+        width: '400px',
+        data: {
+          status: 1,
+          message: `Are you sure to cancel the document ${row.serie} - ${row.numdoc}?`,
+        },
+      }
+    );
+    dialogRef.closed.subscribe((data) => {
+      if (data && data.status) {
+        this.globalStatusService.setLoading(true);
+        this.documentInvoiceService
+          .putCancelDocument(numint, data.commen)
+          .subscribe({
+            next: (data) => {
+              if (data.status <= 0) {
+                this.dialog.open(DialogErrorAlertComponent, {
+                  width: '400px',
+                  data: data,
+                });
+              } else {
+                this.matSnackBar.openFromComponent(
+                  MatsnackbarSuccessComponent,
+                  MatSnackBarSuccessConfig
+                );
+                this.dataSourceSearchDocument.onChangeOpen(numint);
+              }
+            },
+            error: (err) => {
+              this.dialog.open(DialogErrorAlertComponent, {
+                width: '400px',
+                data: err.error,
+              });
+              this.globalStatusService.setLoading(false);
+            },
+            complete: () => this.globalStatusService.setLoading(false),
+          });
+      }
+    });
+  }
+
+  onDelete(numint: number, row: SearchDocumentInvoice) {
+    const dialogRef = this.dialog.open<DialogQuestionComment>(
+      DialogQuestionCommentComponent,
+      {
+        width: '400px',
+        data: {
+          status: 1,
+          message: `Are you sure to delete the document ${row.serie} - ${row.numdoc}?`,
+        },
+      }
+    );
+    dialogRef.closed.subscribe((data) => {
+      if (data && data.status) {
+        this.globalStatusService.setLoading(true);
+        this.documentInvoiceService
+          .putDeleteDocument(numint, data.commen)
+          .subscribe({
+            next: (data) => {
+              if (data.status <= 0) {
+                this.dialog.open(DialogErrorAlertComponent, {
+                  width: '400px',
+                  data: data,
+                });
+              } else {
+                this.matSnackBar.openFromComponent(
+                  MatsnackbarSuccessComponent,
+                  MatSnackBarSuccessConfig
+                );
+                this.dataSourceSearchDocument.onChangeOpen(numint);
+              }
+            },
+            error: (err) => {
+              this.dialog.open(DialogErrorAlertComponent, {
+                width: '400px',
+                data: err.error,
+              });
+              this.globalStatusService.setLoading(false);
+            },
+            complete: () => this.globalStatusService.setLoading(false),
+          });
+      }
+    });
+  }
 
   formatDate(date: number[]): String {
-    const aux : Date = MyDate.convertToCustomDateShort(date)
+    const aux: Date = MyDate.convertToCustomDateShort(date);
     // Si la registdate recibida es Valida ... ( Asincronismo )
-    if (aux instanceof Date && !isNaN(aux.getTime())){
-      return this.datePipe.transform(aux,'dd/MM/yy') || ''
+    if (aux instanceof Date && !isNaN(aux.getTime())) {
+      return this.datePipe.transform(aux, 'dd/MM/yy') || '';
     }
-    return ''
+    return '';
   }
-
 }

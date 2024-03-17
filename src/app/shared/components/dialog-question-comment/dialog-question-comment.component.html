@@ -1,0 +1,30 @@
+<section class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
+  <div class="flex justify-center">
+    <fa-icon [icon]="faCircleQuestion" size="2xl" class="text-sky-700"></fa-icon>
+  </div>
+  <div class="text-center text-inline-md font-semibold">{{ this.mensaje.message }}</div>
+  <div class="flex justify-center">
+    <textarea
+      [formControl]="formQuestion"
+      class="textarea-default"
+      cols="60"
+      rows="80"
+      placeholder="Enter a comment (Required*)"
+      [class.input-invalid]="formQuestion.invalid"
+    ></textarea>
+  </div>
+  <article class="flex justify-around w-64">
+    <app-button-question
+      (click)="closeDialog(true)"
+      colorBtn="red"
+      typeBtn="button">
+      Yes
+    </app-button-question>
+    <app-button-question
+      (click)="closeDialog(false)"
+      colorBtn="green"
+      typeBtn="button">
+      No
+    </app-button-question>
+  </article>
+</section>

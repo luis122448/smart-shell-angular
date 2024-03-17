@@ -120,6 +120,14 @@ export class BasicArticleAttachedComponent {
   }
 
   selectArchive(event: any){
+    if(this.formArticleAttached.invalid){
+      this.dialog.open(DialogErrorAlertComponent,{
+        width: '400px',
+        data: { no_required_fields: 'Y'}
+      })
+      this.formArticleAttached.markAllAsTouched()
+      return
+    }
     if(event?.target){
       const files :File[] = event.target.files
       if (files && files.length > 0) {
@@ -140,12 +148,14 @@ export class BasicArticleAttachedComponent {
   }
 
   addArticleAttached(){
-
     if(this.formArticleAttached.invalid){
+      this.dialog.open(DialogErrorAlertComponent,{
+        width: '400px',
+        data: { no_required_fields: 'Y'}
+      })
       this.formArticleAttached.markAllAsTouched()
       return
     }
-
     this.globalStatusService.setLoading(true)
     const articleAttached: ArticleAttached = {
       codart: this.codart?.value,
@@ -160,7 +170,7 @@ export class BasicArticleAttachedComponent {
         if(data.status <= 0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status: data.status, message: data.message }
+              data: data
             })
           } else {
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
@@ -168,10 +178,10 @@ export class BasicArticleAttachedComponent {
         }
         this.globalStatusService.setLoading(false)
       },
-      error:error =>{
+      error:err =>{
         this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status: -3, message: error.message }
+            data: err.error
           })
         this.globalStatusService.setLoading(false)
       }
@@ -186,7 +196,7 @@ export class BasicArticleAttachedComponent {
         if(data.status <= 0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status: data.status, message: data.message }
+              data: data
             })
           } else {
             const fileName = `${data.name}.${data.extension}`;
@@ -194,11 +204,11 @@ export class BasicArticleAttachedComponent {
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
         }
         this.globalStatusService.setLoading(false)
-      },
-      error:error =>{
+  },
+      error:err =>{
         this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status: -3, message: error.message }
+            data: err.error
           })
         this.globalStatusService.setLoading(false)
       }
@@ -213,7 +223,7 @@ export class BasicArticleAttachedComponent {
         if(data.status <= 0){
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',
-              data: { status: data.status, message: data.message }
+              data: data
             })
           } else {
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
@@ -221,10 +231,10 @@ export class BasicArticleAttachedComponent {
         }
         this.globalStatusService.setLoading(false)
       },
-      error:error =>{
+      error:err =>{
         this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: { status: -3, message: error.message }
+            data: err.error
           })
         this.globalStatusService.setLoading(false)
       }

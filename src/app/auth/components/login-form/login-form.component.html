@@ -12,13 +12,34 @@
       (ngSubmit)="doLogin()"
     >
       <section>
-        <div
-          class="relative flex md:w-[280px] w-[360px] justify-around"
-        >
+        <section>
+          <div class="relative flex w-[360px] justify-around md:w-[280px]">
+            <input
+              #nameInput
+              formControlName="company"
+              placeholder="Enter Company"
+              [class.input-invalid]="isInputInvalid('company')"
+              type="text"
+              class="input-login"
+            />
+            <button
+              type="button"
+              class="-z-1 absolute right-3 top-1/2 -translate-y-1/2"
+              (click)="nameInput.focus()"
+            >
+              <fa-icon [icon]="faAddressCard"></fa-icon>
+            </button>
+          </div>
+          <app-alert-standard [class.invisible]="!isInputInvalid('company')">
+            Company is required
+          </app-alert-standard>
+        </section>
+        <div class="relative flex w-[360px] justify-around md:w-[280px]">
           <input
             #nameInput
             formControlName="coduser"
-            placeholder="Enter email"
+            placeholder="Enter Code User"
+            [class.input-invalid]="isInputInvalid('coduser')"
             type="text"
             class="input-login"
           />
@@ -31,16 +52,15 @@
           </button>
         </div>
         <app-alert-standard [class.invisible]="!isInputInvalid('coduser')"
-          >Especificar su Codigo de Usuario</app-alert-standard
+          >Code User is required</app-alert-standard
         >
       </section>
       <section>
-        <div
-          class="relative flex md:w-[280px] w-[360px] justify-around"
-        >
+        <div class="relative flex w-[360px] justify-around md:w-[280px]">
           <input
             formControlName="password"
             placeholder="Enter password"
+            [class.input-invalid]="isInputInvalid('password')"
             [type]="showPassword ? 'text' : 'password'"
             class="input-login"
           />
@@ -67,9 +87,18 @@
     <div class="flex w-full flex-col items-center justify-around space-y-2">
       <form [formGroup]="formVerifyCode">
         <section>
-          <div
-            class="relative flex md:w-[280px] w-[360px] justify-around"
-          >
+          <div class="relative flex w-[360px] justify-around md:w-[280px]">
+            <input
+              #nameInput
+              formControlName="company"
+              type="text"
+              class="input-login"
+            />
+          </div>
+          <app-alert-standard class="invisible"></app-alert-standard>
+        </section>
+        <section>
+          <div class="relative flex w-[360px] justify-around md:w-[280px]">
             <input
               #nameInput
               formControlName="coduser"
@@ -81,19 +110,21 @@
         </section>
       </form>
       <section>
-        <div class="flex md:w-[280px] w-[360px] justify-around space-x-3">
+        <div class="flex w-[360px] justify-around space-x-3 md:w-[280px]">
           <input
+            [id]="i"
             *ngFor="let i of [0, 1, 2, 3, 4, 5]"
             type="text"
             class="input-login"
             [(ngModel)]="verificationCode[i]"
             (input)="onCodeInputChange(i, $event)"
             (keyup.enter)="doVerifyCode()"
+            (keyup.backspace)="onBackspace(i, $event)"
             maxlength="1"
           />
         </div>
-        <app-alert-standard [class.invisible]="!isInputInvalidVerify('codver')"
-          >Digitar su Codigo de Seguridad</app-alert-standard
+        <app-alert-standard [class.invisible]="!isInputInvalidVerify('code')"
+          >Code is required</app-alert-standard
         >
       </section>
       <section class="flex justify-center">
