@@ -7,7 +7,7 @@
           <div class="col-span-3 flex">
             <div class="w-48">
               <label for="typbuspar" class="label-input-sm"
-                >Tipo de Interlocutor</label
+                >Interlocutor Type</label
               >
             </div>
             <select
@@ -23,7 +23,7 @@
             </select>
           </div>
           <div class="col-span-2 flex items-center justify-center space-x-4">
-            <label for="status" class="label-input-xs">Inc Inactivos?</label>
+            <label for="status" class="label-input-xs">Inc Inactive?</label>
             <input
               id="status"
               type="checkbox"
@@ -34,7 +34,7 @@
         </div>
         <div class="space-y-2 pt-2">
           <div class="flex justify-start">
-            <label for="codbuspar" class="label-input-sm">Codigo</label>
+            <label for="codbuspar" class="label-input-sm">Code</label>
             <input
               id="codbuspar"
               type="text"
@@ -43,7 +43,7 @@
             />
           </div>
           <div class="flex justify-start">
-            <label for="busnam" class="label-input-sm">Razon Social</label>
+            <label for="busnam" class="label-input-sm">Business Name</label>
             <input
               id="busnam"
               type="text"
@@ -59,8 +59,7 @@
                 formSearchCliente.hasError('NotNullValidatorTwo')
               )
             "
-            >Debe usar al menos uno de estos filtros para la busqueda, considere
-            una longitud minima de 5 caracteres</app-alert-standard
+            >You must use at least one of these filters for the search, consider a minimum length of 5 characters</app-alert-standard
           >
         </div>
       </div>
@@ -73,14 +72,14 @@
         colorBtn="sky"
         optionBtn="search"
         typeBtn="button"
-        >Buscar</app-button-standard
+        >Search</app-button-standard
       >
       <app-button-standard
         (click)="crudInterlocutorComercial(null)"
         colorBtn="green"
         optionBtn="new"
         typeBtn="button"
-        >Nuevo</app-button-standard
+        >New</app-button-standard
       >
     </div>
   </section>
@@ -99,14 +98,14 @@
           [class.row-table-delete]="row.status === 'N'"
         ></tr>
         <ng-container cdkColumnDef="codbuspar">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.codbuspar }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="busnam">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Razon Social
+            Business Name
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.busnam }}
@@ -119,7 +118,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
             <app-button-operac
               *ngIf="row.status === 'Y'"

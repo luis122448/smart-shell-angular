@@ -32,7 +32,7 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
 
   private buildForm(){
     this.formCrudCompany = this.formBuilder.group({
-      company: ['',[Validators.required]],
+      company: [{value: '', disabled: true},[Validators.required]],
       appellation: ['',[Validators.required]],
       addres: ['',[Validators.required]],
       poscod: ['',[Validators.required]],
@@ -56,8 +56,6 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
-    private datePipe: DatePipe,
-    private defaultValuesService: DefaultValuesService,
     private globalStatusService: GlobalStatusService
   ){
     this.buildForm()
@@ -71,7 +69,7 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.globalStatusService.setLoading(true)
-    this.companyInfoService.getByAll()
+    this.companyInfoService.getByCompany()
     .subscribe({
       next: data => {
         if (data.status<=0) {
@@ -80,45 +78,45 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
             data: data
           })
         } else {
-          if (!data.list[0]) {
+          if (!data.object) {
           } else {
             this.formCrudCompany.patchValue({
-              company: data.list[0].company,
-              appellation: data.list[0].appellation,
-              addres: data.list[0].addres,
-              poscod: data.list[0].poscod,
-              image: data.list[0].image,
-              icon: data.list[0].icon,
-              logo: data.list[0].logo,
-              background: data.list[0].background,
-              gloss: data.list[0].gloss,
-              observ: data.list[0].observ,
-              commen: data.list[0].commen,
-              status: data.list[0].status,
-              createby: data.list[0].createby,
-              updateby: data.list[0].updateby,
-              createat: data.list[0].createat,
-              updateat: data.list[0].updateat
+              company: data.object.company,
+              appellation: data.object.appellation,
+              addres: data.object.addres,
+              poscod: data.object.poscod,
+              image: data.object.image,
+              icon: data.object.icon,
+              logo: data.object.logo,
+              background: data.object.background,
+              gloss: data.object.gloss,
+              observ: data.object.observ,
+              commen: data.object.commen,
+              status: data.object.status,
+              createby: data.object.createby,
+              updateby: data.object.updateby,
+              createat: data.object.createat,
+              updateat: data.object.updateat
             })
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-            if (data.list[0].image){
-              const imageUrl = `data:image/jpeg;base64,${data.list[0].image}`
+            if (data.object.image){
+              const imageUrl = `data:image/jpeg;base64,${data.object.image}`
               this.imageCompanyImageURL = imageUrl;
             }
-            if (data.list[0].icon){
-              const imageUrl = `data:image/jpeg;base64,${data.list[0].icon}`
+            if (data.object.icon){
+              const imageUrl = `data:image/jpeg;base64,${data.object.icon}`
               this.imageCompanyIconURL = imageUrl;
             }
-            if (data.list[0].logo){
-              const imageUrl = `data:image/jpeg;base64,${data.list[0].logo}`
+            if (data.object.logo){
+              const imageUrl = `data:image/jpeg;base64,${data.object.logo}`
               this.imageCompanyLogoURL = imageUrl;
             }
-            if (data.list[0].background){
-              const imageUrl = `data:image/jpeg;base64,${data.list[0].background}`
+            if (data.object.background){
+              const imageUrl = `data:image/jpeg;base64,${data.object.background}`
               this.imageCompanyBackgroundURL = imageUrl;
             }
-            if (data.list[0].gloss){
-              const imageUrl = `data:image/jpeg;base64,${data.list[0].gloss}`
+            if (data.object.gloss){
+              const imageUrl = `data:image/jpeg;base64,${data.object.gloss}`
               this.imageCompanyGlossURL = imageUrl;
             }
           }
@@ -236,35 +234,39 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
   }
 
   saveCompany(){
-    if(this.formCrudCompany.valid){
-      this.globalStatusService.setLoading(true)
-      this.companyInfoService.putUpdate(this.formCrudCompany.value)
-      .subscribe({
-        next:data =>{
-          if(data.status<=0){
-            this.dialog.open(DialogErrorAlertComponent,{
-              width: '400px',
-              data: data
-            })
-          }
-          if(data.status>=0){
-            this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-          }
-        },
-        error:err =>{
+    if(this.formCrudCompany.invalid){
+      this.dialog.open(DialogErrorAlertComponent,{
+        width: '400px',
+        data: { no_required_fields: 'Y'}
+      })
+      this.formCrudCompany.markAllAsTouched()
+      return;
+    }
+
+    this.globalStatusService.setLoading(true)
+    this.companyInfoService.putUpdate(this.formCrudCompany.value)
+    .subscribe({
+      next:data =>{
+        if(data.status<=0){
           this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
-            data: err.error
+            data: data
           })
-          this.globalStatusService.setLoading(false)
-        },
-        complete:() => {
-          this.globalStatusService.setLoading(false)
+        } else {
+          this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
         }
-      })
-    } else {
-      this.formCrudCompany.markAllAsTouched()
-    }
+      },
+      error:err =>{
+        this.dialog.open(DialogErrorAlertComponent,{
+          width: '400px',
+          data: err.error
+        })
+        this.globalStatusService.setLoading(false)
+      },
+      complete:() => {
+        this.globalStatusService.setLoading(false)
+      }
+    })
   }
 
   get numint(){

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '@enviroment';
 import { CompanyInfo } from '../models/company-info.model';
-import { ApiResponseList } from '@billing-models/api-reponse.model';
+import { ApiResponseObject } from '@billing-models/api-reponse.model';
 
 
 @Injectable({
@@ -17,12 +17,12 @@ export class CompanyInfoService {
     private httpCLient: HttpClient
   ) { }
 
-  getByAll(){
-    return this.httpCLient.get<ApiResponseList<CompanyInfo>>(`${this.API_URL}${this.PATH_BILLING}/company-info/by-all`)
+  getByCompany(){
+    return this.httpCLient.get<ApiResponseObject<CompanyInfo>>(`${this.API_URL}${this.PATH_BILLING}/company-info/by-idcompany`)
   }
 
   putUpdate(data: CompanyInfo){
-    return this.httpCLient.put<ApiResponseList<CompanyInfo>>(`${this.API_URL}${this.PATH_BILLING}/company-info`, data)
+    return this.httpCLient.put<ApiResponseObject<CompanyInfo>>(`${this.API_URL}${this.PATH_BILLING}/company-info`, data)
   }
 
 }
