@@ -244,7 +244,7 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
     }
 
     this.globalStatusService.setLoading(true)
-    this.companyInfoService.putUpdate(this.formCrudCompany.value)
+    this.companyInfoService.putUpdate(this.formCrudCompany.getRawValue())
     .subscribe({
       next:data =>{
         if(data.status<=0){

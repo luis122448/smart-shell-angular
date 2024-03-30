@@ -19,6 +19,7 @@ import { ListPriceService } from '@billing-services/list-price.service';
 import { TypeCommercialDocumentService } from '@billing-services/type-commercial-document.service';
 import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
 import { TypeBusinessPartnerService } from '@billing-services/type-business-partner.service';
+import { UserService } from '@billing-services/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -73,7 +74,8 @@ export class LoginFormComponent {
     private situationCommercialDocumentService: SituationCommercialDocumentService,
     private typeInventoryService: TypeInventoryService,
     private listPriceService: ListPriceService,
-    private typeBusinessPartnerService: TypeBusinessPartnerService
+    private typeBusinessPartnerService: TypeBusinessPartnerService,
+    private userService: UserService
   ) {
     this.buildForm();
     this.buildFormVerify();
@@ -202,6 +204,7 @@ export class LoginFormComponent {
   }
 
   async onUploadDefaultValues() {
+    await this.defaultValuesService.removeAllLocalStorage();
     await this.sellerService.getAll().subscribe({
       next: (data) => {
         this.defaultValuesService.setLocalStorageValue(
@@ -356,7 +359,7 @@ export class LoginFormComponent {
     await this.typeBusinessPartnerService.getAll().subscribe({
       next: (data) => {
         this.defaultValuesService.setLocalStorageValue(
-          'typeBusinessPartner',
+          'typeBusinessPartners',
           data.list.map((data) => {
             return {
               typbuspar: data.typbuspar,
@@ -375,6 +378,17 @@ export class LoginFormComponent {
         });
       },
     });
+    await this.userService.getProfile().subscribe({
+      next: (data) => {
+        this.defaultValuesService.setLocalStorageValue('user', [data.object]);
+      },
+      error: err => {
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: err.error,
+        });
+      },
+    })
   }
 
   get company() {

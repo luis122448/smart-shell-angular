@@ -7,8 +7,10 @@ import { BehaviorSubject } from 'rxjs'
 export class FacbolGlobalStatusService {
 
   private isStatusInvoiceRegister = new BehaviorSubject<boolean>(false)
+  private isStatusInvoiceRegisterDetail = new BehaviorSubject<boolean>(false)
   private isStatusInvoiceSave = new BehaviorSubject<boolean>(false)
   isStatusInvoiceRegister$ = this.isStatusInvoiceRegister.asObservable()
+  isStatusInvoiceRegisterDetail$ = this.isStatusInvoiceRegisterDetail.asObservable()
   isStatusInvoiceSave$ = this.isStatusInvoiceSave.asObservable()
 
   constructor(
@@ -20,6 +22,14 @@ export class FacbolGlobalStatusService {
 
   getStatusInvoiceRegister(){
     return this.isStatusInvoiceRegister.getValue()
+  }
+
+  setStatusInvoiceRegisterDetail(isStatus: boolean){
+    this.isStatusInvoiceRegisterDetail.next(isStatus)
+  }
+
+  getStatusInvoiceRegisterDetail(){
+    return this.isStatusInvoiceRegisterDetail.getValue()
   }
 
   setStatusInvoiceSave(isStatus: boolean){

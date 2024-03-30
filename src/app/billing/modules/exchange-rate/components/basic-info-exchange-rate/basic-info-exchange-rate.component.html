@@ -54,7 +54,8 @@
         <label for="fventa" class="label-input-sm label-required">Selling Factor</label>
         <input
           type="number"
-          min="0"
+          min="0.00"
+          step="0.01"
           formControlName="fventa"
           [class.input-invalid]="isInputInvalid('fventa')"
           class="input-default"
@@ -64,7 +65,8 @@
         <label for="fcompra" class="label-input-sm label-required">Buying Factor</label>
         <input
           type="number"
-          min="0"
+          min="0.00"
+          step="0.01"
           formControlName="fcompra"
           [class.input-invalid]="isInputInvalid('fcompra')"
           class="input-default"
@@ -76,7 +78,8 @@
         <label for="cventa" class="label-input-sm">Accounting Sales</label>
         <input
           type="number"
-          min="0"
+          min="0.00"
+          step="0.01"
           formControlName="cventa"
           class="input-default"
         />
@@ -85,7 +88,8 @@
         <label for="ccompra" class="label-input-sm">Accounting Purchase</label>
         <input
           type="number"
-          min="0"
+          min="0.00"
+          step="0.01"
           formControlName="ccompra"
           class="input-default"
         />
@@ -96,7 +100,8 @@
         <label for="eventa" class="label-input-sm label-required">Sales Entity</label>
         <input
           type="number"
-          min="0"
+          min="0.00"
+          step="0.01"
           formControlName="eventa"
           [class.input-invalid]="isInputInvalid('eventa')"
           class="input-default"
@@ -106,7 +111,8 @@
         <label for="ecompra" class="label-input-sm label-required">Purchasing Entity</label>
         <input
           type="number"
-          min="0"
+          min="0.00"
+          step="0.01"
           formControlName="ecompra"
           [class.input-invalid]="isInputInvalid('ecompra')"
           class="input-default"
@@ -169,7 +175,7 @@
       optionBtn="save"
       [typeBtn]="'button'"
     >
-      Guardar
+      Save
     </app-button-standard>
     <app-button-standard
       (click)="closeDialog()"

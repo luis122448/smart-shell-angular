@@ -23,15 +23,17 @@ import { FacbolGlobalStatusService } from '../../services/facbol-global-status.s
 import { BehaviorSubject } from 'rxjs';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { DocumentInvoice } from '@billing-models/document-invoice.model';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 
 @Component({
   selector: 'app-detail-items-facbol',
   templateUrl: './detail-items-facbol.component.html',
   styleUrls: ['./detail-items-facbol.component.scss'],
 })
-export class DetailItemsFacbolComponent implements OnInit {
+export class DetailItemsFacbolComponent{
   @Input() isNewDocument = false;
   @Input() isEditDocumentValue : DocumentInvoice | undefined = undefined
+  @Input() isCalculateDocument = false;
   formDetailDocument!: FormGroup;
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
   dataDetailSource = DataSourceDocumentDetail.getInstance();
@@ -41,8 +43,6 @@ export class DetailItemsFacbolComponent implements OnInit {
   faMagnifyingGlass = faMagnifyingGlass;
   faPenToSquare = faPenToSquare;
   faXmark = faXmark;
-  // SubStatus
-  isStatusInvoiceRegister = false;
 
   // Var
   codlistprice: number = 0;
@@ -53,19 +53,13 @@ export class DetailItemsFacbolComponent implements OnInit {
     this.dataDetailSource.delReset();
     // Init Form
     this.formDetailDocument = this.formBuilder.group({
-      numite: [{ value: 0, disabled: false }, [Validators.required]],
-      typinv: [{ value: '', disabled: false }, [Validators.required]],
-      codart: ['', [Validators.required]],
-      etiqueta: [{ value: '', disabled: false }, [Validators.required]],
-      quantity: [{ value: 0, disabled: false }, [Validators.required]],
-      price: [{ value: 0.00.toFixed(2), disabled: false }, [Validators.required]],
       detailDocument: this.formBuilder.array([]),
     });
     const detailForm : FormGroup = this.formBuilder.group({
       numite: [{ value: 0, disabled: false }, [Validators.required]],
       typinv: [{ value: '', disabled: false }, [Validators.required]],
       codart: [{ value: '', disabled: false }, [Validators.required]],
-      etiqueta: [{ value: '', disabled: true }, [Validators.required]],
+      etiqueta: [{ value: '', disabled: true }, []],
       quantity: [{ value: 0, disabled: true }, [Validators.required]],
       price: [{ value: 0.00.toFixed(2), disabled: true }, [Validators.required]],
     });
@@ -77,20 +71,10 @@ export class DetailItemsFacbolComponent implements OnInit {
     private dialog: Dialog,
     private formBuilder: FormBuilder,
     private changeDetectorRef: ChangeDetectorRef,
-    private facbolGlobalStatusService: FacbolGlobalStatusService
+    private globalStatusService: GlobalStatusService,
+    private facbolGlobalStatusService: FacbolGlobalStatusService,
   ) {
     this.buildForm();
-  }
-
-  ngOnInit(): void {
-    this.facbolGlobalStatusService.isStatusInvoiceRegister$.subscribe({
-      next: (data) => {
-        this.isStatusInvoiceRegister = data;
-      },
-      error: (error) => {
-        this.isStatusInvoiceRegister = false;
-      },
-    });
   }
 
   ngOnChanges() {
@@ -103,6 +87,33 @@ export class DetailItemsFacbolComponent implements OnInit {
       for (let i = 0; i < dataDetailDocument.length; i++) {
         this.addItem(dataDetailDocument[i]);
       }
+    }
+    if(this.isCalculateDocument){
+      if(this.detailDocument.controls.length <= 1){
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: {
+            status: -3,
+            message : `Document not have items` }
+        });
+        this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(false);
+        this.globalStatusService.setLoading(false);
+        return;
+      }
+      this.detailDocument.controls.forEach((row) => {
+        if(row.invalid && row.value.numite > 0){
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: {
+              status: -3,
+              message : `Article ${row.value.codart} not Quuantity or Price` }
+          });
+          this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(false);
+          this.globalStatusService.setLoading(false);
+          return;
+        }
+      });
+      this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(true);
     }
   }
 
@@ -122,9 +133,9 @@ export class DetailItemsFacbolComponent implements OnInit {
       ],
       quantity: [
         { value: row.quantity, disabled: false },
-        [Validators.required],
+        [Validators.required, Validators.min(1)],
       ],
-      price: [{ value: row.price, disabled: ( row.modprice === 'Y' ? true : false ) }, [Validators.required]]
+      price: [{ value: row.price.toFixed(2), disabled: ( row.modprice === 'Y' ? false : true ) }, [Validators.required, Validators.min(0.01)]]
     });
     this.detailDocument.push(detailForm);
     this.dataDetail.next(this.detailDocument.controls as FormGroup[]);
@@ -158,7 +169,6 @@ export class DetailItemsFacbolComponent implements OnInit {
       })
       return;
     }
-
     const dataHeader = this.dataHeaderSource.get();
     this.codlistprice = dataHeader.codlistprice ?? 1;
     const dialogRefArticle = this.dialog.open<Article>(
@@ -184,7 +194,7 @@ export class DetailItemsFacbolComponent implements OnInit {
           etiqueta: 0,
           quantity: 1,
           stock: data.stock ?? 0,
-          price: data.price ?? 0.0,
+          price: parseFloat(data.price?.toFixed(2) ?? '0.00'),
           moddesc: data.moddesc ?? 'N',
           modprice: data.modprice ?? 'N'
         });

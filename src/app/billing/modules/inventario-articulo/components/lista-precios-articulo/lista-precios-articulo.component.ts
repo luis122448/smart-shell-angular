@@ -46,27 +46,27 @@ export class ListaPreciosArticleComponent implements OnInit {
         [Validators.required],
       ],
       desart: [desart, [Validators.required]],
-      price: [0.0, [Validators.required]],
+      price: [0.00.toFixed(2), [Validators.required]],
       modprice: [false, [Validators.required]],
       moddesc: [false, [Validators.required]],
       desmax: [
-        0.0,
+        0.00.toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc01: [
-        0.0,
+        0.00.toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc02: [
-        0.0,
+        0.00.toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc03: [
-        0.0,
+        0.00.toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc04: [
-        0.0,
+        0.00.toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       status: ['', []],
@@ -227,6 +227,12 @@ export class ListaPreciosArticleComponent implements OnInit {
     this.buildForm(row.codart, row.desart);
     this.formArticleListPrice.patchValue({
       ...row,
+      price: row.price.toFixed(2),
+      desmax: row.desmax.toFixed(2),
+      desc01: row.desc01.toFixed(2),
+      desc02: row.desc02.toFixed(2),
+      desc03: row.desc03.toFixed(2),
+      desc04: row.desc04.toFixed(2),
       modprice: row.modprice === 'Y',
       moddesc: row.moddesc === 'Y',
     });

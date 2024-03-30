@@ -25,6 +25,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { StackTechComponent } from './components/stack-tech/stack-tech.component';
 import { DialogQuestionCommentComponent } from './components/dialog-question-comment/dialog-question-comment.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -53,7 +54,8 @@ import { DialogQuestionCommentComponent } from './components/dialog-question-com
     FontAwesomeModule,
     CdkModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [
     HttpParams

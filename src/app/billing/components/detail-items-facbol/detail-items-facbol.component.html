@@ -1,4 +1,4 @@
-<form [formGroup]="formDetailDocument">
+<form [formGroup]="formDetailDocument" class="z-0 relative">
   <section class="container-default-table">
     <table class="main-default-table" cdk-table [dataSource]="dataDetail">
       <ng-container formArrayName="detailDocument">
@@ -107,10 +107,11 @@
             <input
               type="number"
               placeholder="Cantid"
-              class="input-default"
+              class="input-default text-right"
               formControlName="quantity"
-              (change)="preCalculate(item.value, item.get('price').value)"
               min="1"
+              step="1"
+              (change)="preCalculate(item.value, item.get('price').value)"
             />
           </td>
         </ng-container>
@@ -126,20 +127,19 @@
           >
             <input
               type="number"
-              readonly
               placeholder="Unit Price"
-              class="input-default"
+              class="input-default text-right"
               formControlName="price"
               min=0.00
-              [value]="item.value.price | number:'1.2-2'"
-              [disabled]="item.get('price').disabled"
+              step="0.01"
+              (change)="preCalculate(item.value, item.get('price').value)"
             />
           </td>
         </ng-container>
         <ng-container cdkColumnDef="subtotal">
           <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Import</th>
           <td class="w-28 px-2 py-3" cdk-cell *cdkCellDef="let item; let i = index">
-            <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).implistprice | number:'1.2-2' }}</span>
+            <span class="text-input-disabled text-right">{{ dataDetailSource.getNumite(item.value.numite).implistprice | number:'1.2-2' }}</span>
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
@@ -150,6 +150,7 @@
             *cdkCellDef="let item"
           >
             <app-button-operac
+              *ngIf="item.value.numite > 0"
               optionBtn="delete"
               colorBtn="red"
               sizeBtn="2xs"

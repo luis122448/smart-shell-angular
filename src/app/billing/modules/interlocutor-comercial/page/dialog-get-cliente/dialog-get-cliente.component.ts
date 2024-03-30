@@ -66,6 +66,7 @@ export class DialogGetClienteComponent implements OnInit {
             data: err.error,
           });
           this.dialogRef.close(null);
+          this.globalStatusService.setLoading(false);
         },
         complete: () => {
           this.globalStatusService.setLoading(false);

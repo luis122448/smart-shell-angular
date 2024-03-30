@@ -19,6 +19,7 @@ export class SerieCommercialDocumentService {
   getByTypcomdoc(typcomdoc: number){
     let params = new HttpParams().set('typcomdoc',typcomdoc)
     return this.httpCLient.get<ApiResponseList<SerieCommercialDocument>>(`${this.API_URL}${this.PATH_BILLING}/serie-commercial-document/by-like`,{ params })
+
   }
 
   getById(typcomdoc: number, serie: string){

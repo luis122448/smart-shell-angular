@@ -67,7 +67,6 @@ export class BasicAllExchangeRateComponent implements OnInit {
           }
           this.dataSourceExchangeRate.getInit(data.list);
           this.totalElements = data.list.length;
-          this.globalStatusService.setLoading(false);
         },
         error: (err) => {
           this.dialog.open(DialogErrorAlertComponent, {
@@ -76,6 +75,9 @@ export class BasicAllExchangeRateComponent implements OnInit {
           });
           this.globalStatusService.setLoading(false);
         },
+        complete: () => {
+          this.globalStatusService.setLoading(false);
+        }
       });
   }
 

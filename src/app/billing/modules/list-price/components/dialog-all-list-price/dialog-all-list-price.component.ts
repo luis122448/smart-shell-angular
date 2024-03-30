@@ -1,6 +1,6 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListPrice } from '@billing-models/list-price.model';
 import { GlobalStatusService } from '@billing-services/global-status.service';
 import { ListPriceService } from '@billing-services/list-price.service';
@@ -17,7 +17,7 @@ import { DialogCrudListPriceComponent } from '../dialog-crud-list-price/dialog-c
   templateUrl: './dialog-all-list-price.component.html',
   styleUrls: ['./dialog-all-list-price.component.scss'],
 })
-export class DialogAllListPriceComponent {
+export class DialogAllListPriceComponent implements OnInit {
   dataSourceListPrice = new DataSourceListPrice();
   displayedColumns: string[] = ['codlistprice', 'descri', 'codext', 'operac'];
   totalElements = 0;
@@ -29,6 +29,10 @@ export class DialogAllListPriceComponent {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar
   ) {}
+
+  ngOnInit(): void {
+    this.searchListPrice();
+  }
 
   searchListPrice() {
     this.globalStatusService.setLoading(true);

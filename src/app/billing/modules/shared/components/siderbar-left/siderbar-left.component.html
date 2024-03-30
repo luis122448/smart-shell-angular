@@ -41,16 +41,16 @@
   <section class="flex justify-around space-x-2 py-2">
     <article class="" [class.display-none]="!openSidebar">
       <img
-        src="../../../../../../assets/images/icon/icon-anonymous.webp"
-        alt=""
+        [src]="this.imageArticleURL"
+        [alt]="user?.coduser"
         class="rounded-full"
         height="48px"
         width="48px"
       />
     </article>
     <article>
-      <p class="text-inline m-0 whitespace-nowrap text-left font-bold">Test</p>
-      <p class="text-inline m-0 whitespace-nowrap text-left">Anoynmous</p>
+      <p class="text-inline m-0 whitespace-nowrap text-left font-bold">{{user?.coduser}}</p>
+      <p class="text-inline m-0 whitespace-nowrap text-left">{{user?.nombre}}</p>
       <p class="text-inline m-0 whitespace-nowrap text-left">
         <span
           class="me-1 inline-block h-2 w-2 rounded-full bg-green-500"
@@ -69,12 +69,18 @@
       ></fa-icon>
     </button>
   </section>
-  <section class="space-y-2 divide-y divide-dotted divide-slate-500 px-2 py-4">
-    <li *ngFor="let item of menuSidebar" routerLinkActive="active">
+  <section
+    class="relative space-y-2 divide-y divide-dotted divide-slate-500 px-2 py-4"
+  >
+    <article *ngFor="let item of menuSidebar">
       <div *ngIf="item.subMenu.length === 0; else subMenu">
-        <a (click)="toRedirec(item.link)" class="menu-sidebar">
+        <a
+          class="menu-sidebar"
+          [routerLink]="['/' + item.link]"
+          routerLinkActive="menu-sidebar-active"
+        >
           <div class="menu-siderbar-icon">
-            <fa-icon class="icon-operac" [icon]="item.icon" size="lg"></fa-icon>
+            <fa-icon class="icon-operac" [icon]="item.icon" sie="lg"></fa-icon>
           </div>
           <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{
             item.rotulo
@@ -85,7 +91,6 @@
         <cdk-accordion>
           <cdk-accordion-item #accordionItem="cdkAccordionItem">
             <button
-              type="button"
               (click)="accordionItem.toggle()"
               cdkOverlayOrigin
               #subMenuOverlay="cdkOverlayOrigin"
@@ -106,7 +111,11 @@
             </button>
             <div [style.display]="accordionItem.expanded ? '' : 'none'">
               <li *ngFor="let itemSub of item.subMenu">
-                <a (click)="toRedirec(itemSub.link)" class="menu-sidebar">
+                <a
+                  class="menu-sidebar"
+                  [routerLink]="['/' + itemSub.link]"
+                  routerLinkActive="menu-sidebar-active"
+                >
                   <div class="menu-siderbar-icon">
                     <fa-icon
                       *ngIf="itemSub.icon"
@@ -126,6 +135,6 @@
           </cdk-accordion-item>
         </cdk-accordion>
       </ng-template>
-    </li>
+    </article>
   </section>
 </div>

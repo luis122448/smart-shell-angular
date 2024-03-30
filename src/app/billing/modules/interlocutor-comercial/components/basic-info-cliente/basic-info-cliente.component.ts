@@ -1,12 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BusinessPartnerService } from '@billing-services/interlocutor-comcercial.service';
-import {
-  Form,
-  FormBuilder,
-  FormGroup,
-  Validator,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Dialog, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,12 +10,9 @@ import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-succ
 import {
   IMAGENOUPLOAD,
   MatSnackBarSuccessConfig,
-  NoDataFoundMessageDialog,
   NoJpgFormatImage,
 } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
-import { DatePipe } from '@angular/common';
-import { TypeBusinessPartner } from '@billing-models/type-business-partner.model';
 import { TypeBusinessPartnerDefaultValues } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
@@ -85,10 +76,13 @@ export class BasicInfoClienteComponent implements OnInit {
     private matSnackBar: MatSnackBar,
     @Inject(DIALOG_DATA) private data: InterlocutorComercialBasic
   ) {
-    this.typeBusinessPartners = this.defaultValuesService.getLocalStorageValue('typeBusinessPartners');
+    this.typeBusinessPartners = this.defaultValuesService.getLocalStorageValue(
+      'typeBusinessPartners'
+    );
     this.codbusparId = this.data.codbuspar;
     this.buildForm();
   }
+
   ngOnInit(): void {
     if (!this.data.isNewBussinessPartner) {
       this.globalStatusService.setLoading(true);
@@ -97,7 +91,7 @@ export class BasicInfoClienteComponent implements OnInit {
           if (data.status <= 0) {
             this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: { status: data.status, message: data.message },
+              data: data,
             });
           } else if (data.object) {
             this.matSnackBar.openFromComponent(
@@ -105,39 +99,10 @@ export class BasicInfoClienteComponent implements OnInit {
               MatSnackBarSuccessConfig
             );
             this.formCrudCliente.patchValue({
-              codbuspar: data.object.codbuspar,
-              typbuspar: data.object.typbuspar,
-              typidedoc: data.object.typidedoc,
-              nroidedoc: data.object.nroidedoc,
-              codext: data.object.codext,
-              busnam: data.object.busnam,
-              apepat: data.object.apepat,
-              apemat: data.object.apemat,
-              nombre: data.object.nombre,
-              registdate: data.object.registdate,
-              poscod: data.object.poscod,
-              addres: data.object.addres,
-              codtel: data.object.codtel,
-              telefo: data.object.telefo,
-              email: data.object.email,
-              typpaycon: data.object.typpaycon,
-              limcre: data.object.limcre,
-              lispre: data.object.lispre,
-              image: data.object.image,
-              observ: data.object.observ,
-              commen: data.object.commen,
-              status: data.object.status,
-              createby: data.object.createby,
-              updateby: data.object.updateby,
-              createat: data.object.createat,
-              updateat: data.object.updateat,
+              ...data.object
             });
-            // Verificar si hay imagen para mostrar
-            // console.log(data.object.image)
+            this.codbuspar?.disable();
             if (data.object.image) {
-              // const blob = new Blob([data.object.image], { type: 'image/jpeg' });
-              // this.imageInterlocutorComercialURL = URL.createObjectURL(blob);
-              // const imageBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(data.object.image)));
               const imageUrl = `data:image/jpeg;base64,${data.object.image}`;
               this.imageInterlocutorComercialURL = imageUrl;
             }
@@ -164,73 +129,73 @@ export class BasicInfoClienteComponent implements OnInit {
   }
 
   saveInterlocutorComercial() {
-    if (this.formCrudCliente.valid) {
-      this.globalStatusService.setLoading(true);
-      if (!this.existeCliente) {
-        this.businessPartnerService
-          .postSave(this.formCrudCliente.value)
-          .subscribe({
-            next: (data) => {
-              console.log(data);
-              if (data.status <= 0) {
-                this.dialog.open(DialogErrorAlertComponent, {
-                  width: '400px',
-                  data: data,
-                });
-              } else {
-                this.matSnackBar.openFromComponent(
-                  MatsnackbarSuccessComponent,
-                  MatSnackBarSuccessConfig
-                );
-              }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              });
-            },
-            complete: () => {
-              this.globalStatusService.setLoading(false);
-            },
-          });
-      } else {
-        this.businessPartnerService
-          .putUpdate(this.codbuspar?.value, this.formCrudCliente.value)
-          .subscribe({
-            next: (data) => {
-              console.log(data);
-              if (data.status <= 0) {
-                this.dialog.open(DialogErrorAlertComponent, {
-                  width: '400px',
-                  data: data,
-                });
-              } else {
-                this.matSnackBar.openFromComponent(
-                  MatsnackbarSuccessComponent,
-                  MatSnackBarSuccessConfig
-                );
-              }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              })
-            },
-            complete: () => {
-              this.globalStatusService.setLoading(false);
-            },
-          });
-      }
-      this.dialogRef.close();
-    } else {
+    if (this.formCrudCliente.invalid) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
         data: { no_required_fields: 'S' },
-      })
+      });
       this.formCrudCliente.markAllAsTouched();
+      return;
     }
+    this.globalStatusService.setLoading(true);
+    if (!this.existeCliente) {
+      this.businessPartnerService
+        .postSave(this.formCrudCliente.value.getRawValue())
+        .subscribe({
+          next: (data) => {
+            if (data.status <= 0) {
+              this.dialog.open(DialogErrorAlertComponent, {
+                width: '400px',
+                data: data,
+              });
+            } else {
+              this.matSnackBar.openFromComponent(
+                MatsnackbarSuccessComponent,
+                MatSnackBarSuccessConfig
+              );
+            }
+          },
+          error: (err) => {
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: err.error,
+            });
+            this.globalStatusService.setLoading(false);
+          },
+          complete: () => {
+            this.globalStatusService.setLoading(false);
+          },
+        });
+    } else {
+      this.businessPartnerService
+        .putUpdate(this.codbuspar?.value, this.formCrudCliente.getRawValue())
+        .subscribe({
+          next: (data) => {
+            if (data.status <= 0) {
+              this.dialog.open(DialogErrorAlertComponent, {
+                width: '400px',
+                data: data,
+              });
+            } else {
+              this.matSnackBar.openFromComponent(
+                MatsnackbarSuccessComponent,
+                MatSnackBarSuccessConfig
+              );
+            }
+          },
+          error: (err) => {
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: err.error,
+            });
+            this.globalStatusService.setLoading(false);
+          },
+          complete: () => {
+            this.globalStatusService.setLoading(false);
+          },
+        });
+    }
+    this.dialogRef.close();
   }
 
   onImageSelected(event: any) {
@@ -263,7 +228,7 @@ export class BasicInfoClienteComponent implements OnInit {
   }
 
   formatDate(date: number[] | Date | null): String {
-    return MyDate.convertToCustomStringLong(date)
+    return MyDate.convertToCustomStringLong(date);
   }
 
   isDateValid(date: any): boolean {

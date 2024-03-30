@@ -11,6 +11,7 @@ export interface Currency{
   descri: string
   codext: string
   symbol: string
+  defaul: string
 }
 
 export interface Access{

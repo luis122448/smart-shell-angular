@@ -4,6 +4,7 @@ import { ApiResponseAuth, AuthVerify } from '../models/auth.model';
 import { switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
 import { environment } from '@enviroment';
+import { DefaultValuesService } from './default-values.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthService {
   AUTH = '/v1/auth'
   constructor(
     private httpClient:HttpClient,
-    private tokenService:TokenService
+    private tokenService:TokenService,
+    private defaultValuesService: DefaultValuesService
   ) { }
 
   postLogin(company: string, coduser: string, password: string){
@@ -62,6 +64,7 @@ export class AuthService {
   postLogout(){
     this.tokenService.removeToken()
     this.tokenService.removeRefreshToken()
+    this.defaultValuesService.removeAllLocalStorage()
   }
 
 }

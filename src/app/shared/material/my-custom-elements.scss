@@ -12,10 +12,6 @@
     @apply dark:text-gray-400 dark:bg-gray-700
   }
 
-  // mat-tab-group{
-  //   @apply h-full
-  // }
-
   .mat-tab-label-span  {
     @apply m-0 p-0 text-sm text-slate-800
     dark:text-gray-400
@@ -134,11 +130,15 @@
     @apply text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky bottom-0 z-10
   }
 
+  mat-paginator .mat-mdc-paginator-container{
+    @apply bg-gray-300 dark:bg-gray-700 dark:text-gray-400
+  }
+
   mat-paginator .mat-paginator-range-label,
   mat-paginator .mat-paginator-page-size,
   mat-paginator .mat-paginator-page-size-label,
   mat-paginator .mat-select-value {
-    @apply text-xs text-slate-800 dark:text-gray-400
+    @apply text-xs uppercase text-slate-800 dark:text-gray-400
   }
 
   mat-paginator .mat-paginator-navigation-button {

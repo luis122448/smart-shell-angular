@@ -78,7 +78,7 @@ export class RegisterFacbolComponent implements OnInit {
       codcur: ['PEN', [Validators.required]],
       exchangerate: [
         { value: (0.0).toFixed(2), disabled: true },
-        [Validators.required, Validators.pattern(/^\d{1,4}(\.\d{1,4})?$/)],
+        [Validators.required, Validators.pattern(/^\d{1,4}(\.\d{1,4})?$/), Validators.min(0.01)],
       ],
       codbuspar: ['', [Validators.required]],
       busnam: ['', [Validators.required]],
@@ -161,7 +161,15 @@ export class RegisterFacbolComponent implements OnInit {
       this.formDocumentHeader.markAllAsTouched();
     }
     if (this.isCalculateDocument) {
-      this.dataHeaderSource.getPush(this.formDocumentHeader.getRawValue());
+      if(this.formDocumentHeader.invalid){
+        this.dialog.open(DialogErrorAlertComponent, {
+          width: '400px',
+          data: { no_required_fields : 'Y' }
+        });
+        this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+        this.globalStatusService.setLoading(false);
+        return;
+      }
     }
   }
 
@@ -230,32 +238,26 @@ export class RegisterFacbolComponent implements OnInit {
         this.formDocumentHeader.get('codlistprice')?.setValue(1); // Default
         // Asignar las Condiciones Pago
         this.changePaymentCondition(data.codbuspar);
-        // Guardar en DataSource
-        const dataHeader = this.formDocumentHeader.getRawValue();
         // Deshabilitar todos los inputs
         this.disableHeaderForm();
-        // Update values in DataSource
-        this.dataHeaderSource.getPush(dataHeader);
       }
     });
   }
 
   disableHeaderForm() {
+    this.statusBuspar = 'register';
     this.formDocumentHeader.get('typcomdoc')?.disable();
     this.formDocumentHeader.get('serie')?.disable();
     this.formDocumentHeader.get('codmot')?.disable();
     this.formDocumentHeader.get('codbuspar')?.disable();
     this.formDocumentHeader.get('busnam')?.disable();
     this.formDocumentHeader.get('addres')?.disable();
-    this.statusBuspar = 'register';
-    if (this.formDocumentHeader.get('addres')?.value === 0) {
-      this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
-    } else {
-      this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
-    }
+    this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+    this.dataHeaderSource.getPush(this.formDocumentHeader.getRawValue());
   }
 
   cleanBuspar() {
+    this.statusBuspar = 'search';
     this.formDocumentHeader.get('codbuspar')?.setValue('');
     this.formDocumentHeader.get('busnam')?.setValue('');
     this.formDocumentHeader.get('addres')?.setValue('');
@@ -266,9 +268,8 @@ export class RegisterFacbolComponent implements OnInit {
     this.formDocumentHeader.get('codbuspar')?.enable();
     this.formDocumentHeader.get('busnam')?.enable();
     this.formDocumentHeader.get('addres')?.enable();
-    this.dataHeaderSource.getPush(this.formDocumentHeader.value);
-    this.statusBuspar = 'search';
     this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+    this.dataHeaderSource.getPush(this.formDocumentHeader.getRawValue());
   }
 
   changePaymentCondition(codbuspar: string) {

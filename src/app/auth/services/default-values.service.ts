@@ -15,14 +15,16 @@ export class DefaultValuesService {
       abrevi: 'PEN',
       descri: 'NUEVO SOL',
       codext: '1',
-      symbol: 'S/.'
+      symbol: 'S/.',
+      defaul: 'Y'
     },
     {
       codcur: 'USD',
       abrevi: 'USD',
       descri: 'DOLLAR',
       codext: '2',
-      symbol: '$.'
+      symbol: '$.',
+      defaul: 'N'
     }
   ]
   public branches: Branch[] = [
@@ -49,12 +51,13 @@ export class DefaultValuesService {
   constructor(
     private cookieService: CookieService
   ) {
-    // this.setCookieValue('branches',this.branches)
-    // this.setCookieValue('currencies',this.currencies)
+    // Setear el tema oscuro si es que existe la cookie
+    this.dark = this.cookieService.get('dark') === 'true' ? true : false
     this.setCookie('dark',this.dark.toString())
+
+    // Setear valores por defecto si no existen en el local storage
     this.setLocalStorageValue('branches', this.branches)
     this.setLocalStorageValue('currencies', this.currencies)
-    // this.setLocalStorage('dark', this.dark.toString())
   }
 
   public getCookieValue(key: string): any[] {
@@ -115,6 +118,10 @@ export class DefaultValuesService {
 
   public removeLocalStorage(key: string): void {
     localStorage.removeItem(key);
+  }
+
+  public removeAllLocalStorage(): void {
+    localStorage.clear();
   }
 
 }

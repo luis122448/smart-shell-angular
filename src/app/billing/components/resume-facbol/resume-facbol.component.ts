@@ -30,7 +30,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
   isStatusInvoiceRegister = false;
   currencies: Currency[] = [];
-  cursymbol: string | undefined = 'S/.';
+  currency: Currency | undefined;
 
   private buildForm() {
     this.formResumeFacBol = this.formBuilder.group({
@@ -40,7 +40,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
       ],
       impdesctotal: [
         { value: (0.0).toFixed(2), disabled: true },
-        [Validators.required],
+      [Validators.required],
       ],
       impsaleprice: [
         { value: (0.0).toFixed(2), disabled: true },
@@ -68,11 +68,13 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
     this.buildForm();
     this.currencies =
       this.defaultValuesService.getLocalStorageValue('currencies');
+    this.currency = this.currencies.find((data) => data.defaul === 'Y');
   }
+
   ngOnInit(): void {
     this.facbolGlobalStatusService.isStatusInvoiceRegister$.subscribe({
       next: (data) => {
-        this.isStatusInvoiceRegister = data;
+        this.isStatusInvoiceRegister = false;
       },
       error: (error) => {
         this.isStatusInvoiceRegister = false;
@@ -87,50 +89,37 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   }
 
   calculate() {
-    if (this.isStatusInvoiceRegister) {
-      // Header
-      this.globalStatusService.setLoading(true);
-      this.isCalculateDocument.emit(true);
-      const dataHeader = this.dataHeaderSource.get();
-      this.cursymbol = this.currencies.find(
-        (currency) => (currency.codcur = dataHeader.codcur)
-      )?.symbol;
-      // Detail
-      this.dataDetailSource.putReasignNumite();
-      const dataDetail = this.dataDetailSource.getImp();
-      this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
-      this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
-      this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
-      this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
-      this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
-      this.dataHeaderSource.updateImp(dataDetail);
-      setTimeout(() => {
-        this.isCalculateDocument.emit(false);
-        this.globalStatusService.setLoading(false);
-      }, 300);
-    } else {
-      this.facbolGlobalStatusService.setStatusInvoiceSave(false);
-      this.dialog.open(DialogErrorAlertComponent, {
-        width: '400px',
-        data: { no_required_fields: 'Y' },
-      });
-    }
+    this.globalStatusService.setLoading(true);
+    this.isCalculateDocument.emit(true);
+    const dataHeader = this.dataHeaderSource.get();
+    console.log(dataHeader.codcur);
+    console.log('currencies',this.currencies);
+    this.currency = this.currencies.find((currency) => currency.codcur === dataHeader.codcur);
+    console.log('curency',this.currency);
+    // Detail
+    this.dataDetailSource.putReasignNumite();
+    const dataDetail = this.dataDetailSource.getImp();
+    this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
+    this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
+    this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
+    this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
+    this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
+    this.dataHeaderSource.updateImp(dataDetail);
+    setTimeout(() => {
+      this.isCalculateDocument.emit(false);
+      this.globalStatusService.setLoading(false);
+    }, 300);
   }
 
   save() {
+    this.calculate();
     if (!this.isStatusInvoiceRegister) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: {
-          status: -3,
-          message:
-            'Documento incompleto!, revisar las validaciones del formulario',
-        },
+        data: { no_required_fields : 'Y' }
       });
       return;
     }
-
-    this.calculate();
     const documentInvoiceHeader = this.dataHeaderSource.get();
     if ((documentInvoiceHeader?.imptotal ?? 0) <= 0) {
       this.dialog.open(DialogErrorAlertComponent, {
@@ -138,7 +127,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
         data: {
           status: -3,
           message:
-            'El importe de Documento no puede ser menor o igual a CERO, con el motivo de VENTA',
+            'The Document amount cannot be less than or equal to ZERO, with the reason for SALE',
         },
       });
       return;

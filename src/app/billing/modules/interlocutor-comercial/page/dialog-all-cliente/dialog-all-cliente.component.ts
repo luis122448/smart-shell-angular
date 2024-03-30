@@ -46,9 +46,9 @@ export class DialogAllClienteComponent {
         busnam: ['', []],
         status: [false, []],
       },
-      {
-        validators: [MyValidators.NotNullValidatorTwo('codbuspar', 'busnam')],
-      }
+      // {
+      //   validators: [MyValidators.NotNullValidatorTwo('codbuspar', 'busnam')],
+      // }
     );
   }
 
@@ -87,7 +87,7 @@ export class DialogAllClienteComponent {
             if (data.status <= 0) {
               this.dialog.open(DialogErrorAlertComponent, {
                 width: '400px',
-                data: { status: data.status, message: data.message },
+                data: data
               });
             }
             this.dataSource.getInit(data.page.content);
@@ -144,7 +144,7 @@ export class DialogAllClienteComponent {
               if (data.status <= 0) {
                 this.dialog.open(DialogErrorAlertComponent, {
                   width: '400px',
-                  data: { status: data.status, message: data.message },
+                  data: data,
                 });
               } else {
                 this.matSnackBar.openFromComponent(
@@ -280,4 +280,5 @@ export class DataSourceInterlocutorComercial extends DataSource<InterlocutorCome
     const data = this.data.getValue();
     return data.reduce((count, data) => (count = count + 1), 0);
   }
+
 }

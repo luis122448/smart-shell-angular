@@ -34,19 +34,12 @@ export class ThemeSwitcherComponent implements OnChanges{
     }
   }
 
-// Theme switcher component code snippet
-  // @HostListener('change', ['$event']) onChange(event: Event) {
-  //   if((event?.target as HTMLInputElement)?.id === 'isDark') {
-  //     // this.switchTheme((event?.target as HTMLInputElement)?.checked ? 'dark' : 'light');
-  //     this.switchTheme((event?.target as HTMLInputElement)?.checked ? 'dark' : 'light');
-  //   }
-  // }
-
   onChange(change: boolean){
     if(change){
       this.isDark = !this.isDark;
       this.defaultValuesService.setCookie('dark',this.isDark.toString())
     }
+
     if (this.isDark) {
       this.renderer.addClass(this.document.body.parentElement, 'dark');
     } else {
