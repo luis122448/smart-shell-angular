@@ -84,7 +84,7 @@ export class DetailSearchInvoiceComponent {
   }
 
   onOpenOverlay(numint: number) {
-    this.dataSourceSearchDocument.onChangeOpen(numint);
+    this.dataSourceSearchDocument.onChangeOpen(numint,true);
   }
 
   onPrint(numint: number) {
@@ -102,7 +102,7 @@ export class DetailSearchInvoiceComponent {
             MatSnackBarSuccessConfig
           );
           this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
-          this.dataSourceSearchDocument.onChangeOpen(numint);
+          this.dataSourceSearchDocument.onChangeOpen(numint,false);
         }
       },
       error: (err) => {
@@ -117,7 +117,7 @@ export class DetailSearchInvoiceComponent {
   }
 
   onEdit(numint: number) {
-    this.dataSourceSearchDocument.onChangeOpen(numint);
+    this.dataSourceSearchDocument.onChangeOpen(numint,false);
     this.modifyDocument.emit(numint);
   }
 
@@ -141,7 +141,7 @@ export class DetailSearchInvoiceComponent {
     setTimeout(() => {
       this.globalStatusService.setLoading(false);
     }, 1500);
-    this.dataSourceSearchDocument.onChangeOpen(numint);
+    this.dataSourceSearchDocument.onChangeOpen(numint,false);
   }
 
   onSendSunat(numint: number) {
@@ -149,7 +149,7 @@ export class DetailSearchInvoiceComponent {
     setTimeout(() => {
       this.globalStatusService.setLoading(false);
     }, 1500);
-    this.dataSourceSearchDocument.onChangeOpen(numint);
+    this.dataSourceSearchDocument.onChangeOpen(numint,false);
   }
 
   onViewTransactions(numint: number) {
@@ -176,7 +176,10 @@ export class DetailSearchInvoiceComponent {
         });
         this.globalStatusService.setLoading(false);
       },
-      complete: () => this.globalStatusService.setLoading(false),
+      complete: () => {
+        this.globalStatusService.setLoading(false)
+        this.dataSourceSearchDocument.onChangeOpen(numint,false);
+      },
     });
   }
 
@@ -194,7 +197,6 @@ export class DetailSearchInvoiceComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
-          this.dataSourceSearchDocument.onChangeOpen(numint);
         }
       },
       error: (err) => {
@@ -204,7 +206,10 @@ export class DetailSearchInvoiceComponent {
         });
         this.globalStatusService.setLoading(false);
       },
-      complete: () => this.globalStatusService.setLoading(false),
+      complete: () => {
+        this.globalStatusService.setLoading(false)
+        this.dataSourceSearchDocument.onChangeOpen(numint,false);
+      },
     });
   }
 
@@ -222,7 +227,6 @@ export class DetailSearchInvoiceComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
-          this.dataSourceSearchDocument.onChangeOpen(numint);
         }
       },
       error: (err) => {
@@ -230,9 +234,13 @@ export class DetailSearchInvoiceComponent {
           width: '400px',
           data: err.error,
         });
+        this.dataSourceSearchDocument.onChangeOpen(numint,false);
         this.globalStatusService.setLoading(false);
       },
-      complete: () => this.globalStatusService.setLoading(false),
+      complete: () => {
+        this.dataSourceSearchDocument.onChangeOpen(numint,false);
+        this.globalStatusService.setLoading(false)
+      },
     });
   }
 
@@ -264,7 +272,7 @@ export class DetailSearchInvoiceComponent {
                   MatsnackbarSuccessComponent,
                   MatSnackBarSuccessConfig
                 );
-                this.dataSourceSearchDocument.onChangeOpen(numint);
+                this.dataSourceSearchDocument.onChangeOpen(numint,false);
               }
             },
             error: (err) => {
@@ -308,7 +316,7 @@ export class DetailSearchInvoiceComponent {
                   MatsnackbarSuccessComponent,
                   MatSnackBarSuccessConfig
                 );
-                this.dataSourceSearchDocument.onChangeOpen(numint);
+                this.dataSourceSearchDocument.onChangeOpen(numint,false);
               }
             },
             error: (err) => {
@@ -325,7 +333,7 @@ export class DetailSearchInvoiceComponent {
   }
 
   onClose(numint: number) {
-    this.dataSourceSearchDocument.onChangeOpen(numint);
+    this.dataSourceSearchDocument.onChangeOpen(numint,false);
   }
 
   copyToClipboard(value: string){

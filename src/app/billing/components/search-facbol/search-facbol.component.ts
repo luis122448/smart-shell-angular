@@ -291,11 +291,10 @@ export class DataSourceSearchDocumentInvoice extends DataSource<SearchDocumentIn
     this.data.next(data);
   }
 
-  onChangeOpen(numint: number){
+  onChangeOpen(numint: number, isOpen: boolean){
     const aux = this.data.getValue();
-    aux.forEach(data => data.isOpen = false);
     const index = aux.findIndex(data => data.numint === numint);
-    aux[index].isOpen = true;
+    aux[index].isOpen = isOpen;
     this.data.next(aux);
   }
 

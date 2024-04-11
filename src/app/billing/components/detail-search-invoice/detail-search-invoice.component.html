@@ -82,7 +82,7 @@
                         class="icon-overlay"
                       ></fa-icon>
                     </div>
-                    In Account
+                    On Account
                   </button>
                 </li>
                 <li>
@@ -135,7 +135,7 @@
                     Transactions</button
                   >
                 </li>
-                <li *ngIf="row.sitcomdoc != 4">
+                <li *ngIf="row.sitcomdoc != 4 && row.sitcomdoc != 5">
                   <button
                     class="siderbar-section-text-danger"
                     (click)="onCancel(row.numint, row)"
@@ -195,7 +195,7 @@
       </ng-container>
       <ng-container cdkColumnDef="dessitcomdoc">
         <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Situation</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
+        <td class="row-cell" cdk-cell *cdkCellDef="let row" [ngClass]="{'row-cell-danger': row.sitcomdoc === 4 || row.sitcomdoc === 5}">
           {{ row.dessitcomdoc }}
         </td>
       </ng-container>

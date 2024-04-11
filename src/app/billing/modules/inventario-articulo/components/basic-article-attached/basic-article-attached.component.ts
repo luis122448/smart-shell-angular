@@ -120,14 +120,6 @@ export class BasicArticleAttachedComponent {
   }
 
   selectArchive(event: any){
-    if(this.formArticleAttached.invalid){
-      this.dialog.open(DialogErrorAlertComponent,{
-        width: '400px',
-        data: { no_required_fields: 'Y'}
-      })
-      this.formArticleAttached.markAllAsTouched()
-      return
-    }
     if(event?.target){
       const files :File[] = event.target.files
       if (files && files.length > 0) {

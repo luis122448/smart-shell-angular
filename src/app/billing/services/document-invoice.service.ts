@@ -91,7 +91,7 @@ export class DocumentInvoiceService {
   putInAccountDocument(numint: number){
     let params = new HttpParams()
     params = params.set('numint',numint)
-    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/in-account`, null, {params})
+    return this.httpClient.put<DAOBasicDocumentInvoice>(`${this.API_URL}${this.PATH_BILLING}/document/invoice/on-account`, null, {params})
   }
 
   putCancelDocument(numint: number, commen: string){

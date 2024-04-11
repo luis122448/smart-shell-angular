@@ -239,6 +239,7 @@
           class="select-default col-span-2"
           formControlName="codsel"
           [class.select-invalid]="isInputInvalid('codsel')"
+          (change)="onCodselChange($event)"
         >
           <option
             value=""
@@ -247,7 +248,6 @@
             selected
             hidden
             [class.option-invalid]="isInputInvalid('codsel')"
-            (change)="onCodselChange($event)"
           >
             -- Choose --
           </option>
