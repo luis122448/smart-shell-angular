@@ -47,7 +47,7 @@
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li *ngIf="row.sitcomdoc == 1">
-                  <a class="siderbar-section-text" (click)="onEdit(row.numint)">
+                  <button class="siderbar-section-text" (click)="onEdit(row.numint)">
                     <div class="relative h-7 w-7">
                       <fa-icon
                         [icon]="faFilePen"
@@ -55,10 +55,13 @@
                       ></fa-icon>
                     </div>
                     Modify
-                  </a>
+                  </button>
                 </li>
                 <li *ngIf="row.sitcomdoc == 1">
-                  <a class="siderbar-section-text" (click)="onApproved(row.numint)">
+                  <button
+                    class="siderbar-section-text"
+                    (click)="onApproved(row.numint)"
+                  >
                     <div class="relative h-7 w-7">
                       <fa-icon
                         [icon]="faFilePen"
@@ -66,10 +69,13 @@
                       ></fa-icon>
                     </div>
                     Aproved
-                  </a>
+                  </button>
                 </li>
                 <li *ngIf="row.sitcomdoc == 2">
-                  <a class="siderbar-section-text" (click)="onInAccount(row.numint)">
+                  <button
+                    class="siderbar-section-text"
+                    (click)="onInAccount(row.numint)"
+                  >
                     <div class="relative h-7 w-7">
                       <fa-icon
                         [icon]="faFilePen"
@@ -77,10 +83,10 @@
                       ></fa-icon>
                     </div>
                     In Account
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
+                  <button
                     class="siderbar-section-text"
                     (click)="onPrint(row.numint)"
                   >
@@ -88,10 +94,10 @@
                       <fa-icon [icon]="faPrint" class="icon-overlay"></fa-icon>
                     </div>
                     Print
-                  </a>
+                  </button>
                 </li>
                 <li *ngIf="row.sitcomdoc == 3">
-                  <a
+                  <button
                     class="siderbar-section-text"
                     (click)="onSendEmail(row.numint)"
                   >
@@ -102,10 +108,10 @@
                       ></fa-icon>
                     </div>
                     Send by Email
-                  </a>
+                  </button>
                 </li>
                 <li *ngIf="row.sitcomdoc == 3">
-                  <a
+                  <button
                     class="siderbar-section-text"
                     (click)="onSendSunat(row.numint)"
                   >
@@ -115,43 +121,52 @@
                         class="icon-overlay"
                       ></fa-icon>
                     </div>
-                    Send by Sunat</a
+                    Send by Sunat</button
                   >
                 </li>
                 <li>
-                  <a
+                  <button
                     class="siderbar-section-text"
                     (click)="onViewTransactions(row.numint)"
                   >
                     <div class="relative h-7 w-7">
-                      <fa-icon
-                        [icon]="faList"
-                        class="icon-overlay"
-                      ></fa-icon>
+                      <fa-icon [icon]="faList" class="icon-overlay"></fa-icon>
                     </div>
-                    Transactions</a
+                    Transactions</button
                   >
                 </li>
                 <li *ngIf="row.sitcomdoc != 4">
-                  <a
-                    class="siderbar-section-text"
-                    (click)="onCancel(row.numint,row)"
+                  <button
+                    class="siderbar-section-text-danger"
+                    (click)="onCancel(row.numint, row)"
                   >
                     <div class="relative h-7 w-7">
                       <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
                     </div>
-                    Cancel</a
+                    Cancel</button
                   >
-                </li><li *ngIf="row.sitcomdoc == 4">
-                  <a
-                    class="siderbar-section-text"
-                    (click)="onDelete(row.numint,row)"
+                </li>
+                <li *ngIf="row.sitcomdoc == 4">
+                  <button
+                    class="siderbar-section-text-danger"
+                    (click)="onDelete(row.numint, row)"
                   >
                     <div class="relative h-7 w-7">
                       <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
                     </div>
-                    Delete</a
+                    Delete</button
                   >
+                </li>
+                <li>
+                  <button
+                    class="siderbar-section-text"
+                    (click)="row.isOpen = false"
+                    >
+                    <div class="relative h-7 w-7">
+                      <fa-icon [icon]="faXmark" class="icon-overlay"></fa-icon>
+                    </div>
+                    Close
+                  </button>
                 </li>
               </ul>
             </div>

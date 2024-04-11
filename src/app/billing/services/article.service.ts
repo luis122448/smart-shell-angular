@@ -30,17 +30,21 @@ export class ArticleService {
   }
 
   getArticleCodart(codart : string){
-    console.log(codart)
     let params = new HttpParams();
     params = params.set('codart',codart);
     return this.httpCLient.get<DAOArticle>(`${this.API_URL}${this.PATH_BILLING}/article/by-like`,{ params });
   }
 
   getArticleDescri(descri: string){
-    console.log(descri)
     let params = new HttpParams();
     params = params.set('descri',descri);
     return this.httpCLient.get<DAOArticle>(`${this.API_URL}${this.PATH_BILLING}/article/by-like`,{ params });
+  }
+
+  getByName(name: string){
+    let params = new HttpParams();
+    params = params.set('name',name);
+    return this.httpCLient.get<DAOArticle>(`${this.API_URL}${this.PATH_BILLING}/article/by-name`,{ params });
   }
 
   getPage(typinv:string, codart: string, descri: string, pageSize: number = 10,pageIndex: number = 0){

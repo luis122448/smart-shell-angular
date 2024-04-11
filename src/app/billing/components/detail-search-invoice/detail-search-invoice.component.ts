@@ -17,12 +17,14 @@ import {
   faRectangleList,
   faFilePen,
   faList,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 import { DialogAllDocumentTransactionComponent } from '../dialog-all-document-transaction/dialog-all-document-transaction.component';
 import { DialogQuestionCommentComponent } from '@shared/components/dialog-question-comment/dialog-question-comment.component';
 import { SearchDocumentInvoice } from '@billing-models/document-invoice.model';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 export interface DialogQuestionComment {
   status: boolean;
@@ -39,6 +41,7 @@ export class DetailSearchInvoiceComponent {
   @Output() modifyDocument = new EventEmitter<number>();
   faRectangleList = faRectangleList;
   faPrint = faPrint;
+  faXmark = faXmark;
   faEnvelope = faEnvelope;
   faBuildingColumns = faBuildingColumns;
   faBan = faBan;
@@ -72,7 +75,8 @@ export class DetailSearchInvoiceComponent {
     private matSnackBar: MatSnackBar,
     private documentInvoiceService: DocumentInvoiceService,
     private documentTransactionService: DocumentTransactionService,
-    private globalStatusService: GlobalStatusService
+    private globalStatusService: GlobalStatusService,
+    private clipboard: Clipboard
   ) {}
 
   byPageEvent(e: PageEvent) {
@@ -318,6 +322,14 @@ export class DetailSearchInvoiceComponent {
           });
       }
     });
+  }
+
+  onClose(numint: number) {
+    this.dataSourceSearchDocument.onChangeOpen(numint);
+  }
+
+  copyToClipboard(value: string){
+    this.clipboard.copy(value);
   }
 
   formatDate(date: number[]): String {

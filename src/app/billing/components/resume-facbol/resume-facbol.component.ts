@@ -113,13 +113,6 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
 
   save() {
     this.calculate();
-    if (!this.isStatusInvoiceRegister) {
-      this.dialog.open(DialogErrorAlertComponent, {
-        width: '400px',
-        data: { no_required_fields : 'Y' }
-      });
-      return;
-    }
     const documentInvoiceHeader = this.dataHeaderSource.get();
     if ((documentInvoiceHeader?.imptotal ?? 0) <= 0) {
       this.dialog.open(DialogErrorAlertComponent, {
@@ -138,6 +131,9 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
     if (this.isEditDocumentValue) {
       this.updateDocument(documentInvoiceHeader, documentInvoiceDetails);
     } else {
+      documentInvoiceDetails.forEach((data) => {
+        data.numite = 0;
+      })
       this.saveDocument(documentInvoiceHeader, documentInvoiceDetails);
     }
   }

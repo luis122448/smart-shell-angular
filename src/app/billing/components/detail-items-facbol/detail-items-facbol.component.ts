@@ -175,8 +175,7 @@ export class DetailItemsFacbolComponent{
       DialogGetArticleComponent,
       {
         data: {
-          codart: this.detailDocument.value[0]?.codart ?? '0',
-          desart: this.detailDocument.value[0]?.desart ?? '0',
+          name: this.detailDocument.value[0]?.codart ?? '%',
           codlistprice: this.codlistprice,
         },
       }

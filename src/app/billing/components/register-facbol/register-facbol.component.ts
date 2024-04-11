@@ -173,10 +173,10 @@ export class RegisterFacbolComponent implements OnInit {
     }
   }
 
-    isInputInvalid(fieldName: string): boolean {
-      const field = this.formDocumentHeader.get(fieldName);
-      return field ? field.invalid && field.touched : true;
-    }
+  isInputInvalid(fieldName: string): boolean {
+    const field = this.formDocumentHeader.get(fieldName);
+    return field ? field.invalid && field.touched : true;
+  }
 
   returnDate(date: number[] | Date): Date {
     if (date instanceof Date) {
