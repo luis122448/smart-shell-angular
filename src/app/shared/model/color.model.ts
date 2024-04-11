@@ -70,6 +70,7 @@ export const COLORSOPERAC:ObjColors = {
     'hover:bg-blue-800': true,
     'focus:ring-blue-300': true,
     'text-white': true,
+    'border-blue-900': true,
   },
   red: {
     'bg-red-700': true,

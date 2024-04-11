@@ -30,6 +30,7 @@ export class BasicArticleAttachedComponent {
   displayedColumns: string[] = ['destypspe','archive','updateby','updateat','operac']
   optionArticleSpecification : ArticleSpecification[] = []
   articleSpecificationSelected : ArticleSpecification | null = null
+  imageArticleURL : string | undefined | null = null
 
   buildForm(codart: string = ''){
     this.formArticleAttached = this.formBuilder.group({
@@ -126,8 +127,11 @@ export class BasicArticleAttachedComponent {
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
           // Verifica si el archivo es una imagen antes de mostrar la miniatura
+          console.log(file.type)
           if (file.type.startsWith('image/')) {
-            this.showThumbnail(file);
+            this.imageArticleURL = URL.createObjectURL(file)
+          } else {
+            this.resetImage();
           }
         }
       }
@@ -168,13 +172,17 @@ export class BasicArticleAttachedComponent {
             this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
             this.searchArticleAttached(articleAttached.codart)
         }
-        this.globalStatusService.setLoading(false)
       },
       error:err =>{
         this.dialog.open(DialogErrorAlertComponent,{
             width: '400px',
             data: err.error
           })
+        this.globalStatusService.setLoading(false)
+      },
+      complete:() => {
+        this.buildForm(this.codart?.value)
+        this.resetImage()
         this.globalStatusService.setLoading(false)
       }
     })
@@ -218,7 +226,7 @@ export class BasicArticleAttachedComponent {
               data: data
             })
           } else {
-            this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
+          this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
             this.searchArticleAttached(row.codart)
         }
         this.globalStatusService.setLoading(false)
@@ -233,22 +241,9 @@ export class BasicArticleAttachedComponent {
     })
   }
 
-  showThumbnail(file: File) {
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        const thumbnail = document.createElement('div');
-        thumbnail.className = 'file-thumbnail';
-        thumbnail.innerHTML = `
-          <img src="${event.target.result}" alt="${file.name}" />
-          <p>${file.name}</p>
-        `;
-        document.querySelector('.file-thumbnails')?.appendChild(thumbnail);
-      };
-      reader.readAsDataURL(file);
-    }
+  resetImage() {
+    this.imageArticleURL = null;
   }
-
 
   get codart(){
     return this.formArticleAttached.get('codart')

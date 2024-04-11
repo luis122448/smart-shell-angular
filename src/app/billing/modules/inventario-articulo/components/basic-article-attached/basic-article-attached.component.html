@@ -64,7 +64,7 @@
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
             Update By
           </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+          <td class="row-cell w-[10px]" cdk-cell *cdkCellDef="let row">
             {{ row.updateby }}
           </td>
         </ng-container>
@@ -72,14 +72,14 @@
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
             Update At
           </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+          <td class="row-cell w-[20px]" cdk-cell *cdkCellDef="let row">
             {{ formatDate(row.updateat) }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
           <td
-            class="row-operac-cell max-w-[20px]"
+            class="row-operac-cell max-w-[10px]"
             cdk-cell
             *cdkCellDef="let row"
           >
@@ -151,7 +151,7 @@
       <label class="import-label label-required" for="file_input"
         >Upload file</label
       >
-      <div class="flex w-full items-center justify-center">
+      <div *ngIf="!imageArticleURL; else image" class="flex w-full items-center justify-center">
         <label
           for="file_input"
           class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -161,20 +161,21 @@
               <span class="font-semibold">Click to upload</span> or drag and
               drop
             </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
+            <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">
               {{
                 articleSpecificationSelected?.multip == "Y"
                   ? "Admited Multiple Archive"
                   : "Only Single Archive"
               }}
             </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
+            <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">
               {{
                 articleSpecificationSelected?.extension == "all"
                   ? "All Format Support"
                   : "Only format [ " +
-                    articleSpecificationSelected?.extension +
-                    " ]"
+                    articleSpecificationSelected?.extension + " ]" +  ", Starts with [ " +
+                    articleSpecificationSelected?.title + " ] and Max size [ " +
+                    articleSpecificationSelected?.maxsize + "mb ]"
               }}
             </p>
           </div>
@@ -190,6 +191,26 @@
           />
         </label>
       </div>
+      <ng-template #image>
+        <div class="w-full h-32 relative">
+          <app-button-operac
+            optionBtn="close"
+            colorBtn="red"
+            class="absolute top-0 right-0"
+            (click)="resetImage()"
+          ></app-button-operac>
+          <label
+            for="dropzone-file"
+            class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            >
+            <img
+              [src]="imageArticleURL"
+              alt="image-temporal"
+              class="mx-auto h-32 w-full object-contain bg-slate-100 rounded-lg"
+            />
+          </label>
+        </div>
+      </ng-template>
     </article>
   </section>
   <section class="flex justify-end space-x-4">
