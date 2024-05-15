@@ -83,19 +83,16 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.isEditDocumentValue) {
-      this.calculate();
-    }
+    // if (this.isEditDocumentValue) {
+    //   this.calculate();
+    // }
   }
 
   calculate() {
     this.globalStatusService.setLoading(true);
     this.isCalculateDocument.emit(true);
     const dataHeader = this.dataHeaderSource.get();
-    console.log(dataHeader.codcur);
-    console.log('currencies',this.currencies);
     this.currency = this.currencies.find((currency) => currency.codcur === dataHeader.codcur);
-    console.log('curency',this.currency);
     // Detail
     this.dataDetailSource.putReasignNumite();
     const dataDetail = this.dataDetailSource.getImp();
@@ -221,10 +218,12 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   }
 
   newDocument() {
+    this.globalStatusService.setLoading(true);
     this.isNewDocument.emit(true);
     setTimeout(() => {
       this.isNewDocument.emit(false);
-    }, 1000);
+      this.globalStatusService.setLoading(false);
+    }, 300);
   }
 
   onPrint(numint: number) {

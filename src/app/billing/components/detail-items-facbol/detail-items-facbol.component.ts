@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DocumentDetail } from '@billing-models/document-detail.model';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { DialogGetArticleComponent } from '../dialog-get-article/dialog-get-article.component';
@@ -77,18 +77,19 @@ export class DetailItemsFacbolComponent{
     this.buildForm();
   }
 
-  ngOnChanges() {
-    if (this.isNewDocument) {
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes1', changes);
+    if (changes['isNewDocument'] && changes['isNewDocument'].currentValue === true) {
       this.buildForm();
     }
-    if (this.isEditDocumentValue) {
+    if (changes['isEditDocumentValue'] && changes['isEditDocumentValue'].currentValue !== undefined) {
       this.buildForm();
-      const dataDetailDocument = this.isEditDocumentValue.details;
+      const dataDetailDocument = changes['isEditDocumentValue'].currentValue.details;
       for (let i = 0; i < dataDetailDocument.length; i++) {
         this.addItem(dataDetailDocument[i]);
       }
     }
-    if(this.isCalculateDocument){
+    if(changes['isCalculateDocument'] && changes['isCalculateDocument'].currentValue === true){
       if(this.detailDocument.controls.length <= 1){
         this.dialog.open(DialogErrorAlertComponent, {
           width: '400px',

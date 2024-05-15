@@ -298,6 +298,14 @@ export class DataSourceSearchDocumentInvoice extends DataSource<SearchDocumentIn
     this.data.next(aux);
   }
 
+  onChangeSituacion(numint: number, sitcomdoc: number, dessitcomdoc: string){
+    const aux = this.data.getValue();
+    const index = aux.findIndex(data => data.numint === numint);
+    aux[index].sitcomdoc = sitcomdoc;
+    aux[index].dessitcomdoc = dessitcomdoc;
+    this.data.next(aux);
+  }
+
   get() {
     return this.data.getValue();
   }

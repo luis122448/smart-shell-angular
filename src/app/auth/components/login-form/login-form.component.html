@@ -34,7 +34,7 @@
             Company is required
           </app-alert-standard>
         </section>
-        <div class="relative flex w-[360px] justify-around md:w-[280px]">
+        <section class="relative flex w-[360px] justify-around md:w-[280px]">
           <input
             #nameInput
             formControlName="coduser"
@@ -50,7 +50,7 @@
           >
             <fa-icon [icon]="faPen"></fa-icon>
           </button>
-        </div>
+        </section>
         <app-alert-standard [class.invisible]="!isInputInvalid('coduser')"
           >Code User is required</app-alert-standard
         >

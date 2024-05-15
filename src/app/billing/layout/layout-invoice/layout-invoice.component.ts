@@ -52,8 +52,8 @@ export class LayoutInvoiceComponent implements OnInit{
   }
 
   isNewDocument($event:boolean){
-    this.isNewDocumentValue = $event
     this.isEditDocumentValue = undefined
+    this.isNewDocumentValue = $event
   }
 
   isModifyDocument($event:number){
@@ -72,6 +72,7 @@ export class LayoutInvoiceComponent implements OnInit{
               MatSnackBarSuccessConfig
             );
             this.isEditDocumentValue = data.object
+            this.isNewDocumentValue = false
             this.globalStatusService.setStatusInvoice('register')
           } else {
             this.dialog.open(DialogErrorAlertComponent,{

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { faXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { DialogGetClienteComponent } from '../../modules/interlocutor-comercial/page/dialog-get-cliente/dialog-get-cliente.component';
@@ -55,6 +55,7 @@ export class RegisterFacbolComponent implements OnInit {
   defaultReason: Reason | undefined;
 
   private buildForm(
+    numint: number | undefined,
     typcomdoc: number | undefined,
     serie: string | undefined,
     reacomdoc: number | undefined
@@ -66,6 +67,7 @@ export class RegisterFacbolComponent implements OnInit {
       .toJSON()
       .split('T')[0];
     this.formDocumentHeader = this.formBuilder.group({
+      numint: [numint, [Validators.required]],
       typcomdoc: [typcomdoc, [Validators.required]],
       sitcomdoc: [1, [Validators.required]],
       serie: [serie, [Validators.required]],
@@ -119,7 +121,7 @@ export class RegisterFacbolComponent implements OnInit {
       .filter((data) => data.typcomdoc === 1 && data.ingsalcom === 1);
     this.defaultSeries = this.series.find((data) => data.defaul === 'Y');
     this.defaultReason = this.reasons.find((data) => data.defaul === 'Y');
-    this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
+    this.buildForm(0,1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
   }
 
   ngOnInit(): void {
@@ -141,14 +143,15 @@ export class RegisterFacbolComponent implements OnInit {
     });
   }
 
-  ngOnChanges() {
-    if (this.isNewDocument) {
-      this.buildForm(1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes2', changes);
+    if (changes['isNewDocument'] && changes['isNewDocument'].currentValue === true) {
+      this.buildForm(0,1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
       this.formDocumentHeader.markAllAsTouched();
     }
-    if (this.isEditDocumentValue) {
-      const dataHeaderDocument = this.isEditDocumentValue.header;
-      console.log('dataHeaderDocument', dataHeaderDocument);
+    if (changes['isEditDocumentValue'] && changes['isEditDocumentValue'].currentValue !== undefined) {
+      const dataHeaderDocument = changes['isEditDocumentValue'].currentValue.header;
+      this.buildForm(dataHeaderDocument.numint,dataHeaderDocument.typcomdoc, dataHeaderDocument.serie, dataHeaderDocument.reacomdoc);
       this.dataHeaderSource.getInit(dataHeaderDocument);
       this.formDocumentHeader.patchValue({
         ...dataHeaderDocument,
@@ -160,7 +163,7 @@ export class RegisterFacbolComponent implements OnInit {
       this.disableHeaderForm();
       this.formDocumentHeader.markAllAsTouched();
     }
-    if (this.isCalculateDocument) {
+    if (changes['isCalculateDocument'] && changes['isCalculateDocument'].currentValue === true) {
       if(this.formDocumentHeader.invalid){
         this.dialog.open(DialogErrorAlertComponent, {
           width: '400px',

@@ -197,6 +197,7 @@ export class DetailSearchInvoiceComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
+          this.dataSourceSearchDocument.onChangeSituacion(numint, 2,'Approved');
         }
       },
       error: (err) => {
@@ -227,6 +228,7 @@ export class DetailSearchInvoiceComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
+          this.dataSourceSearchDocument.onChangeSituacion(numint, 3,'On Acc.');
         }
       },
       error: (err) => {
@@ -272,6 +274,7 @@ export class DetailSearchInvoiceComponent {
                   MatsnackbarSuccessComponent,
                   MatSnackBarSuccessConfig
                 );
+                this.dataSourceSearchDocument.onChangeSituacion(numint, 4,'Canceled');
                 this.dataSourceSearchDocument.onChangeOpen(numint,false);
               }
             },
@@ -316,6 +319,7 @@ export class DetailSearchInvoiceComponent {
                   MatsnackbarSuccessComponent,
                   MatSnackBarSuccessConfig
                 );
+                this.dataSourceSearchDocument.onChangeSituacion(numint, 5,'Deleted');
                 this.dataSourceSearchDocument.onChangeOpen(numint,false);
               }
             },
