@@ -9,7 +9,7 @@ import { Branch, Document } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarSuccessConfig, NoDataFoundMessageDialog } from '@billing-utils/constants';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { ChangeSerieCommercialDocument, SerieCommercialDocument } from '@billing-models/serie-commercial-document.model';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 
@@ -54,7 +54,6 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
   }
 
   constructor(
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private serieCommercialDocumentService: SerieCommercialDocumentService,
     private formBuilder: FormBuilder,
@@ -79,7 +78,6 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
 
   ngOnInit(): void {
     if (this.inputTypcomdoc!=0 && this.inputSerie!=''){
-      this.globalStatusService.setLoading(true)
       this.serieCommercialDocumentService.getById(this.inputTypcomdoc,this.inputSerie)
       .subscribe({
         next: data => {
@@ -111,14 +109,6 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
           })
           this.typcomdoc?.disable()
           this.serie?.disable()
-          this.globalStatusService.setLoading(false)
-        },
-        error: err => {
-          this.dialog.open(DialogErrorAlertComponent,{
-            width: '400px',
-            data: err.error
-          })
-          this.globalStatusService.setLoading(false)
         }
       })
     }
@@ -143,7 +133,6 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
       this.formCrudSerieCommercialDocument.markAllAsTouched()
       return
     }
-    this.globalStatusService.setLoading(true)
     const serieCommercialDocument : SerieCommercialDocument = {
       typcomdoc: this.typcomdoc?.value,
       serie: this.serie?.value,
@@ -160,7 +149,6 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
       defaul: (this.defaul?.value)?'Y':'N',
       status: (this.status?.value)?'Y':'N'
     }
-    console.log('save',serieCommercialDocument)
     this.serieCommercialDocumentService.postSave(serieCommercialDocument)
     .subscribe({
       next: data => {
@@ -180,16 +168,6 @@ export class BasicSerieCommercialDocumentComponent implements OnInit, OnChanges 
             serie: data.object?.serie || ''
           })
         }
-      },
-      error: err => {
-        this.dialog.open(DialogErrorAlertComponent,{
-          width: '400px',
-          data: err.error
-        })
-        this.globalStatusService.setLoading(false)
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false)
       }
     })
   }

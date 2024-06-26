@@ -9,8 +9,11 @@ import { ArticleSpecification } from '@billing-models/article-specification.mode
 import { ArticleBasic } from '@billing-models/article.model';
 import { ArticleAttachedService } from '@billing-services/article-attached.service';
 import { ArticleSpecificationService } from '@billing-services/article-specification.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
-import { MatSnackBarSuccessConfig, NoDataFoundMessageDialog } from '@billing-utils/constants';
+
+import {
+  MatSnackBarSuccessConfig,
+  NoDataFoundMessageDialog,
+} from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
 import { downloadFile } from '@billing-utils/function';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
@@ -20,25 +23,30 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Component({
   selector: 'app-basic-article-attached',
   templateUrl: './basic-article-attached.component.html',
-  styleUrls: ['./basic-article-attached.component.scss']
+  styleUrls: ['./basic-article-attached.component.scss'],
 })
 export class BasicArticleAttachedComponent {
+  basicArticle!: ArticleBasic;
+  formArticleAttached!: FormGroup;
+  dataSourceArticleAttached = new DataSourceArticleAttached();
+  displayedColumns: string[] = [
+    'destypspe',
+    'archive',
+    'updateby',
+    'updateat',
+    'operac',
+  ];
+  optionArticleSpecification: ArticleSpecification[] = [];
+  articleSpecificationSelected: ArticleSpecification | null = null;
+  imageArticleURL: string | undefined | null = null;
 
-  basicArticle! : ArticleBasic
-  formArticleAttached! : FormGroup
-  dataSourceArticleAttached = new DataSourceArticleAttached()
-  displayedColumns: string[] = ['destypspe','archive','updateby','updateat','operac']
-  optionArticleSpecification : ArticleSpecification[] = []
-  articleSpecificationSelected : ArticleSpecification | null = null
-  imageArticleURL : string | undefined | null = null
-
-  buildForm(codart: string = ''){
+  buildForm(codart: string = '') {
     this.formArticleAttached = this.formBuilder.group({
-      codart: [codart,[Validators.required]],
-      typspe: ['',[Validators.required]],
-      observ: ['',[]],
-      file: ['',[Validators.required]]
-    })
+      codart: [codart, [Validators.required]],
+      typspe: ['', [Validators.required]],
+      observ: ['', []],
+      file: ['', [Validators.required]],
+    });
   }
 
   constructor(
@@ -48,68 +56,47 @@ export class BasicArticleAttachedComponent {
     private formBuilder: FormBuilder,
     private articleAttachedService: ArticleAttachedService,
     private articleSpecificationService: ArticleSpecificationService,
-    private globalStatusService: GlobalStatusService,
     private matSnackBar: MatSnackBar,
-    @Inject(DIALOG_DATA) data : ArticleBasic
-  ){
-    this.buildForm(data.codart)
-    this.basicArticle = data
+    @Inject(DIALOG_DATA) data: ArticleBasic
+  ) {
+    this.buildForm(data.codart);
+    this.basicArticle = data;
   }
 
   ngOnInit(): void {
-    if(this.basicArticle.typinv){
-      this.globalStatusService.setLoading(true)
-      this.articleSpecificationService.getByAll(this.basicArticle.typinv).subscribe({
-        next:data =>{
-          if(data.status <= 0){
-            this.dialog.open(DialogErrorAlertComponent,{
-              width: '400px',
-              data: data
-            })
-          }
-          this.optionArticleSpecification = data.list
-          this.dataSourceArticleAttached.getInitSpecification(data.list)
-        },
-        error:err =>{
-          this.dialog.open(DialogErrorAlertComponent,{
-            width: '400px',
-            data: err.error
-          })
-          this.globalStatusService.setLoading(false)
-        },
-        complete:() => {
-          this.globalStatusService.setLoading(false)
-        }
-      })
+    if (this.basicArticle.typinv) {
+      this.articleSpecificationService
+        .getByAll(this.basicArticle.typinv)
+        .subscribe({
+          next: (data) => {
+            if (data.status <= 0) {
+              this.dialog.open(DialogErrorAlertComponent, {
+                width: '400px',
+                data: data,
+              });
+            }
+            this.optionArticleSpecification = data.list;
+            this.dataSourceArticleAttached.getInitSpecification(data.list);
+          },
+        });
     }
-    if(this.basicArticle.codart){
-      this.searchArticleAttached(this.basicArticle.codart)
+    if (this.basicArticle.codart) {
+      this.searchArticleAttached(this.basicArticle.codart);
     }
   }
 
-  searchArticleAttached(codart: string){
-    this.globalStatusService.setLoading(true)
+  searchArticleAttached(codart: string) {
     this.articleAttachedService.getByAll(codart).subscribe({
-      next:data =>{
-        if(data.status <= 0){
-          this.dialog.open(DialogErrorAlertComponent,{
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: data
-          })
+            data: data,
+          });
         }
-        this.dataSourceArticleAttached.getInit(data.list)
+        this.dataSourceArticleAttached.getInit(data.list);
       },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
-            width: '400px',
-            data: err.error
-          })
-        this.globalStatusService.setLoading(false)
-      },
-      complete:() => {
-        this.globalStatusService.setLoading(false)
-      }
-    })
+    });
   }
 
   clearArchive() {
@@ -117,190 +104,179 @@ export class BasicArticleAttachedComponent {
     if (fileInput) {
       fileInput.value = '';
     }
-    this.file?.setValue("")
+    this.file?.setValue('');
   }
 
-  selectArchive(event: any){
-    if(event?.target){
-      const files :File[] = event.target.files
+  selectArchive(event: any) {
+    if (event?.target) {
+      const files: File[] = event.target.files;
       if (files && files.length > 0) {
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
           // Verifica si el archivo es una imagen antes de mostrar la miniatura
-          console.log(file.type)
+          console.log(file.type);
           if (file.type.startsWith('image/')) {
-            this.imageArticleURL = URL.createObjectURL(file)
+            this.imageArticleURL = URL.createObjectURL(file);
           } else {
             this.resetImage();
           }
         }
       }
-      this.file?.setValue(files)
+      this.file?.setValue(files);
     }
   }
 
-  onTypspeSelectionChange(typspe: number){
-    this.articleSpecificationSelected = this.optionArticleSpecification.find(option => option.typspe == typspe) || null
+  onTypspeSelectionChange(typspe: number) {
+    this.articleSpecificationSelected =
+      this.optionArticleSpecification.find(
+        (option) => option.typspe == typspe
+      ) || null;
   }
 
-  addArticleAttached(){
-    if(this.formArticleAttached.invalid){
-      this.dialog.open(DialogErrorAlertComponent,{
+  addArticleAttached() {
+    if (this.formArticleAttached.invalid) {
+      this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { no_required_fields: 'Y'}
-      })
-      this.formArticleAttached.markAllAsTouched()
-      return
+        data: { no_required_fields: 'Y' },
+      });
+      this.formArticleAttached.markAllAsTouched();
+      return;
     }
-    this.globalStatusService.setLoading(true)
     const articleAttached: ArticleAttached = {
       codart: this.codart?.value,
       typspe: this.typspe?.value,
       observ: this.observ?.value,
       archive: '',
-      idMongo: ''
-    }
-    this.articleAttachedService.postSave(articleAttached, [], this.file?.value)
-    .subscribe({
-      next:data =>{
-        if(data.status <= 0){
-            this.dialog.open(DialogErrorAlertComponent,{
+      idMongo: '',
+    };
+    this.articleAttachedService
+      .postSave(articleAttached, [], this.file?.value)
+      .subscribe({
+        next: (data) => {
+          if (data.status <= 0) {
+            this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: data
-            })
+              data: data,
+            });
           } else {
-            this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-            this.searchArticleAttached(articleAttached.codart)
-        }
-      },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
-            width: '400px',
-            data: err.error
-          })
-        this.globalStatusService.setLoading(false)
-      },
-      complete:() => {
-        this.buildForm(this.codart?.value)
-        this.resetImage()
-        this.globalStatusService.setLoading(false)
-      }
-    })
-    this.clearArchive()
+            this.matSnackBar.openFromComponent(
+              MatsnackbarSuccessComponent,
+              MatSnackBarSuccessConfig
+            );
+            this.searchArticleAttached(articleAttached.codart);
+          }
+        },
+        complete: () => {
+          this.buildForm(this.codart?.value);
+          this.resetImage();
+        },
+      });
+    this.clearArchive();
   }
 
-  downloadArticleAttached(row: ArticleAttached){
-    this.globalStatusService.setLoading(true)
-    this.articleAttachedService.findByDownloader(row.codart,row.typspe).subscribe({
-      next:data =>{
-        if(data.status <= 0){
-            this.dialog.open(DialogErrorAlertComponent,{
+  downloadArticleAttached(row: ArticleAttached) {
+    this.articleAttachedService
+      .findByDownloader(row.codart, row.typspe)
+      .subscribe({
+        next: (data) => {
+          if (data.status <= 0) {
+            this.dialog.open(DialogErrorAlertComponent, {
               width: '400px',
-              data: data
-            })
+              data: data,
+            });
           } else {
             const fileName = `${data.name}.${data.extension}`;
             downloadFile(data, fileName);
-            this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-        }
-        this.globalStatusService.setLoading(false)
-  },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
-            width: '400px',
-            data: err.error
-          })
-        this.globalStatusService.setLoading(false)
-      }
-    })
+            this.matSnackBar.openFromComponent(
+              MatsnackbarSuccessComponent,
+              MatSnackBarSuccessConfig
+            );
+          }
+        },
+      });
   }
 
-  deleteArticleAttached(row: ArticleAttached){
-    this.globalStatusService.setLoading(true)
-    this.articleAttachedService.delDelete(row.codart,row.typspe)
-    .subscribe({
-      next:data =>{
-        if(data.status <= 0){
-            this.dialog.open(DialogErrorAlertComponent,{
-              width: '400px',
-              data: data
-            })
-          } else {
-          this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
-            this.searchArticleAttached(row.codart)
-        }
-        this.globalStatusService.setLoading(false)
-      },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
+  deleteArticleAttached(row: ArticleAttached) {
+    this.articleAttachedService.delDelete(row.codart, row.typspe).subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
             width: '400px',
-            data: err.error
-          })
-        this.globalStatusService.setLoading(false)
-      }
-    })
+            data: data,
+          });
+        } else {
+          this.matSnackBar.openFromComponent(
+            MatsnackbarSuccessComponent,
+            MatSnackBarSuccessConfig
+          );
+          this.searchArticleAttached(row.codart);
+        }
+      },
+    });
   }
 
   resetImage() {
     this.imageArticleURL = null;
   }
 
-  get codart(){
-    return this.formArticleAttached.get('codart')
+  get codart() {
+    return this.formArticleAttached.get('codart');
   }
-  get typspe(){
-    return this.formArticleAttached.get('typspe')
+  get typspe() {
+    return this.formArticleAttached.get('typspe');
   }
-  get observ(){
-    return this.formArticleAttached.get('observ')
+  get observ() {
+    return this.formArticleAttached.get('observ');
   }
-  get file(){
-    return this.formArticleAttached.get('file')
+  get file() {
+    return this.formArticleAttached.get('file');
   }
 
   formatDate(date: number[]): String {
-    const aux : Date = MyDate.convertToCustomDate(date)
+    const aux: Date = MyDate.convertToCustomDate(date);
     // Si la registdate recibida es Valida ... ( Asincronismo )
-    if (aux instanceof Date && !isNaN(aux.getTime())){
-      return this.datePipe.transform(aux,'HH:mm - dd/MM/yy') || ''
+    if (aux instanceof Date && !isNaN(aux.getTime())) {
+      return this.datePipe.transform(aux, 'HH:mm - dd/MM/yy') || '';
     }
-    return ''
+    return '';
   }
 
-  isInputInvalid(fieldName: string): boolean{
-    const field = this.formArticleAttached.get(fieldName)
-    return field ? field.invalid && field.touched : true
+  isInputInvalid(fieldName: string): boolean {
+    const field = this.formArticleAttached.get(fieldName);
+    return field ? field.invalid && field.touched : true;
   }
 
-
-  closeDialog(){
-    this.dialogRef.close()
+  closeDialog() {
+    this.dialogRef.close();
   }
-
 }
 
-export class DataSourceArticleAttached extends DataSource<ArticleAttached>{
-
-  data = new BehaviorSubject<ArticleAttached[]>([])
-  articleSpecification = new BehaviorSubject<ArticleSpecification[]>([])
+export class DataSourceArticleAttached extends DataSource<ArticleAttached> {
+  data = new BehaviorSubject<ArticleAttached[]>([]);
+  articleSpecification = new BehaviorSubject<ArticleSpecification[]>([]);
 
   connect(): Observable<ArticleAttached[]> {
-    return this.data
+    return this.data;
   }
 
-  disconnect(){}
+  disconnect() {}
 
-  getInitSpecification(data: ArticleSpecification[]){
-    this.articleSpecification.next(data)
+  getInitSpecification(data: ArticleSpecification[]) {
+    this.articleSpecification.next(data);
   }
 
-  getInit(data: ArticleAttached[]){
-    this.data.next(data.map((row: ArticleAttached) => {
-      return {
-        ...row,
-        destypspe: this.articleSpecification.getValue().find(option => option.typspe == row.typspe)?.descri || '',
-      }
-    }))
+  getInit(data: ArticleAttached[]) {
+    this.data.next(
+      data.map((row: ArticleAttached) => {
+        return {
+          ...row,
+          destypspe:
+            this.articleSpecification
+              .getValue()
+              .find((option) => option.typspe == row.typspe)?.descri || '',
+        };
+      })
+    );
   }
 
   getPush(data: ArticleAttached) {
@@ -308,9 +284,11 @@ export class DataSourceArticleAttached extends DataSource<ArticleAttached>{
     this.data.next(newData);
   }
 
-  getClean(codart: string, typspe: number){
-    const data = this.data.getValue()
-    const newData = data.filter(data => (data.typspe == typspe && data.codart == codart) ? false : true)
-    this.data.next(newData)
+  getClean(codart: string, typspe: number) {
+    const data = this.data.getValue();
+    const newData = data.filter((data) =>
+      data.typspe == typspe && data.codart == codart ? false : true
+    );
+    this.data.next(newData);
   }
 }

@@ -8,7 +8,7 @@ import {
   DAOExchangeRate,
   ExchangeRateAPISunat,
 } from '../models/exchange-rate.model';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

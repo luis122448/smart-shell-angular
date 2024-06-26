@@ -106,7 +106,6 @@ export class RegisterFacbolComponent implements OnInit {
     private businessPartnerService: BusinessPartnerService,
     private tipoCambioService: ExchangeRateService,
     private matSnackBar: MatSnackBar,
-    private globalStatusService: GlobalStatusService,
     private facbolGlobalStatusService: FacbolGlobalStatusService,
     private defaultValuesService: DefaultValuesService
   ) {
@@ -170,7 +169,6 @@ export class RegisterFacbolComponent implements OnInit {
           data: { no_required_fields : 'Y' }
         });
         this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
-        this.globalStatusService.setLoading(false);
         return;
       }
     }
@@ -276,7 +274,6 @@ export class RegisterFacbolComponent implements OnInit {
   }
 
   changePaymentCondition(codbuspar: string) {
-    this.globalStatusService.setLoading(true);
     this.businessPartnerService
       .getByCodintcomCondicionPago(codbuspar)
       .subscribe({
@@ -288,15 +285,7 @@ export class RegisterFacbolComponent implements OnInit {
             });
           }
           this.tipoConPag = data.list;
-          this.globalStatusService.setLoading(false);
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-        },
-        complete: () => this.globalStatusService.setLoading(false),
+        }
       });
   }
 
@@ -343,7 +332,6 @@ export class RegisterFacbolComponent implements OnInit {
   }
 
   onTipCamChange() {
-    this.globalStatusService.setLoading(true);
     this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
     this.tipoCambioService
       .getByLike(
@@ -379,17 +367,12 @@ export class RegisterFacbolComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
           this.formDocumentHeader
             .get('exchangerate')
             ?.setValue((0.0).toFixed(2));
           this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => this.globalStatusService.setLoading(false),
+
+        }
       });
   }
 }

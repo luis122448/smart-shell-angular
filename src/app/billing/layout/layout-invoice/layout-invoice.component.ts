@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { GlobalStatusService } from '../../services/global-status.service';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { DataSourceDocumentDetail, DataSourceDocumentHeader } from '@billing/data/datasource-facbol.service';
 import { Dialog } from '@angular/cdk/dialog';
@@ -25,8 +25,8 @@ export class LayoutInvoiceComponent implements OnInit{
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
 
   constructor(
-    private globalStatusService: GlobalStatusService,
     private documentInvoiceService: DocumentInvoiceService,
+    private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
   ){
@@ -57,7 +57,6 @@ export class LayoutInvoiceComponent implements OnInit{
   }
 
   isModifyDocument($event:number){
-    this.globalStatusService.setLoading(true)
     this.documentInvoiceService.getByNumint($event).subscribe({
       next:data =>{
         if(data.status<=0){
@@ -81,16 +80,6 @@ export class LayoutInvoiceComponent implements OnInit{
             })
           }
         }
-      },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
-          width: '400px',
-          data: err.error
-        })
-        this.globalStatusService.setLoading(false)
-      },
-      complete:() =>{
-        this.globalStatusService.setLoading(false)
       }
     })
   }

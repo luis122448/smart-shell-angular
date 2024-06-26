@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
@@ -12,8 +13,8 @@ export class HeaderInvoiceComponent {
   isLoading =  false
   isStatusInvoice : 'search' | 'register' =  'register'
   constructor(
-    private globalStatusService: GlobalStatusService,
-    private defaultValuesService: DefaultValuesService
+    private defaultValuesService: DefaultValuesService,
+    private globalStatusService: GlobalStatusService
   ){
     this.isStatusInvoice = this.globalStatusService.getStatusInvoice()
     this.globalStatusService.isLoading$.subscribe(

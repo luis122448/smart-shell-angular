@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArticleBasic } from '@billing-models/article.model';
 import { ArticleService } from '@billing-services/article.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import {
   IMAGENOUPLOAD,
   MatSnackBarSuccessConfig,
@@ -71,8 +71,7 @@ export class BasicInfoArticleComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     @Inject(DIALOG_DATA) data: ArticleBasic,
-    private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService
+    private defaultValuesService: DefaultValuesService
   ) {
     this.inventories =
       this.defaultValuesService.getLocalStorageValue('inventories');
@@ -139,7 +138,6 @@ export class BasicInfoArticleComponent implements OnInit {
     insertArticle.editdescri = insertArticle.editdescri === true ? 'Y' : 'N';
     insertArticle.printcomment =
       insertArticle.printcomment === true ? 'Y' : 'N';
-    this.globalStatusService.setLoading(true);
     if (this.isNewArticle) {
       this.articuloService.postSave(insertArticle).subscribe({
         next: (data) => {
@@ -156,17 +154,7 @@ export class BasicInfoArticleComponent implements OnInit {
             );
             this.closeDialog();
           }
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
-        },
+        }
       });
     } else {
       this.articuloService
@@ -185,17 +173,7 @@ export class BasicInfoArticleComponent implements OnInit {
               );
               this.closeDialog();
             }
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
-          },
+          }
         });
     }
   }

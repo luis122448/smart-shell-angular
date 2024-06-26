@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiResponseAuth, AuthVerify } from '../models/auth.model';
 import { switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 import { DefaultValuesService } from './default-values.service';
 
 @Injectable({

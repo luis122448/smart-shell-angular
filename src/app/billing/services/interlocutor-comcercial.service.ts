@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { InterlocutorComercial, DAOInterlocutorComercial, DTOInterlocutorComercial, PAGEInterlocutorComercial, DTOIntcomCondicionPago, IntcomCondicionPago, DAOIntcomCondicionPagoView } from '../models/interlocutor-comercial.model';
 import { of, catchError, Observable } from 'rxjs'
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

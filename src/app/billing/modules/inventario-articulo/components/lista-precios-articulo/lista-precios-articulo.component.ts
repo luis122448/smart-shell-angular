@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArticleBasic } from '@billing-models/article.model';
 import { ListPriceArticle } from '@billing-models/list-price-article.model';
 import { ListPrice } from '@billing-models/list-price.model';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { ListPriceArticleService } from '@billing-services/list-price-article.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
@@ -46,27 +46,27 @@ export class ListaPreciosArticleComponent implements OnInit {
         [Validators.required],
       ],
       desart: [desart, [Validators.required]],
-      price: [0.00.toFixed(2), [Validators.required]],
+      price: [(0.0).toFixed(2), [Validators.required]],
       modprice: [false, [Validators.required]],
       moddesc: [false, [Validators.required]],
       desmax: [
-        0.00.toFixed(2),
+        (0.0).toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc01: [
-        0.00.toFixed(2),
+        (0.0).toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc02: [
-        0.00.toFixed(2),
+        (0.0).toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc03: [
-        0.00.toFixed(2),
+        (0.0).toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       desc04: [
-        0.00.toFixed(2),
+        (0.0).toFixed(2),
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
       status: ['', []],
@@ -83,7 +83,6 @@ export class ListaPreciosArticleComponent implements OnInit {
     private formBuilder: FormBuilder,
     private matSnackBar: MatSnackBar,
     private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService,
     private listPriceArticleService: ListPriceArticleService,
     @Inject(DIALOG_DATA) data: ArticleBasic
   ) {
@@ -113,7 +112,6 @@ export class ListaPreciosArticleComponent implements OnInit {
   }
 
   searchListPriceArticle() {
-    this.globalStatusService.setLoading(true);
     this.listPriceArticleService.getByLike(this.codart?.value).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -125,16 +123,6 @@ export class ListaPreciosArticleComponent implements OnInit {
         this.dataSourceListPriceArticle.getInit(data.list);
         this.codlistprice?.setValue(this.listprices[0].codlistprice);
         this.codlistprice?.disable();
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false);
       },
     });
   }
@@ -149,7 +137,6 @@ export class ListaPreciosArticleComponent implements OnInit {
       return;
     }
     if (this.isNewListPriceArticle) {
-      this.globalStatusService.setLoading(true);
       const articleListPrice: ListPriceArticle = {
         ...this.formArticleListPrice.getRawValue(),
         modprice: this.formArticleListPrice.value.modprice ? 'Y' : 'N',
@@ -169,19 +156,8 @@ export class ListaPreciosArticleComponent implements OnInit {
             );
           }
         },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
-        },
       });
     } else {
-      this.globalStatusService.setLoading(true);
       const articleListPrice: ListPriceArticle = {
         ...this.formArticleListPrice.getRawValue(),
         modprice: this.formArticleListPrice.value.modprice ? 'Y' : 'N',
@@ -206,16 +182,6 @@ export class ListaPreciosArticleComponent implements OnInit {
                 MatSnackBarSuccessConfig
               );
             }
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
           },
         });
     }
@@ -254,7 +220,6 @@ export class ListaPreciosArticleComponent implements OnInit {
     dialogDelete.closed.subscribe({
       next: (data) => {
         if (data) {
-          this.globalStatusService.setLoading(true);
           this.listPriceArticleService
             .delDelete(row.codlistprice, row.codart)
             .subscribe({
@@ -274,16 +239,6 @@ export class ListaPreciosArticleComponent implements OnInit {
                     row.codart
                   );
                 }
-              },
-              error: (err) => {
-                this.dialog.open(DialogErrorAlertComponent, {
-                  width: '400px',
-                  data: err.error,
-                });
-                this.globalStatusService.setLoading(false);
-              },
-              complete: () => {
-                this.globalStatusService.setLoading(false);
               },
             });
         }

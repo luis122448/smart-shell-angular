@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArticleService } from '@billing-services/article.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { downloadFile } from '@billing-utils/function';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { Inventory } from 'src/app/auth/models/default-values.model';
@@ -38,15 +38,16 @@ export class BasicImportArticleComponent implements OnInit {
     private matSnackBar: MatSnackBar,
     private articleService: ArticleService,
     @Inject(DIALOG_DATA) data: DialogData,
-    private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService
+    private defaultValuesService: DefaultValuesService
   ) {
-    this.inventories = this.defaultValuesService.getLocalStorageValue('inventories');
-    this.defaultInventory = this.inventories.find((data) => data.defaul === 'Y');
+    this.inventories =
+      this.defaultValuesService.getLocalStorageValue('inventories');
+    this.defaultInventory = this.inventories.find(
+      (data) => data.defaul === 'Y'
+    );
     this.buildForm(this.defaultInventory?.typinv);
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   isInputInvalid(fieldName: string): boolean {
     const field = this.formCrudInventoryArticle.get(fieldName);
@@ -77,7 +78,6 @@ export class BasicImportArticleComponent implements OnInit {
       this.formCrudInventoryArticle.markAllAsTouched();
       return;
     }
-    this.globalStatusService.setLoading(true);
     this.articleService
       .postByImport(this.typinv?.value, this.file?.value)
       .subscribe({
@@ -92,16 +92,6 @@ export class BasicImportArticleComponent implements OnInit {
           downloadFile(data, fileName);
           this.clearArchive();
         },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.clearArchive();
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
-        },
       });
   }
 
@@ -110,8 +100,6 @@ export class BasicImportArticleComponent implements OnInit {
       this.typinv.markAsTouched();
       return;
     }
-
-    this.globalStatusService.setLoading(true);
     this.articleService.getByExport(this.typinv?.value).subscribe({
       next: (data) => {
         console.log(data);
@@ -124,17 +112,11 @@ export class BasicImportArticleComponent implements OnInit {
           const fileName = `${data.name}.${data.extension}`;
           downloadFile(data, fileName);
         }
-        this.globalStatusService.setLoading(false);
-      },
-      error: (err) => {
-        console.error(err);
-        this.globalStatusService.setLoading(false);
       },
     });
   }
 
   exportBlankArticle() {
-    this.globalStatusService.setLoading(true);
     this.articleService.getByExport(0).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -147,15 +129,6 @@ export class BasicImportArticleComponent implements OnInit {
           downloadFile(data, fileName);
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        })
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false);
-      }
     });
   }
 

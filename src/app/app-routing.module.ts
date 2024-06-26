@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { RedirectGuard } from './billing/guards/redirect.guard';
-import { AuthGuard } from './billing/guards/auth.guard';
+import { RedirectGuard } from './guards/redirect.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {

@@ -6,8 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
-import { ListPriceService } from '@billing-services/list-price.service';
 import { ListPriceArticleService } from '@billing-services/list-price-article.service';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ListPriceArticle } from '@billing-models/list-price-article.model';
@@ -17,14 +15,12 @@ import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert
 import { DialogDeleteQuestionComponent } from '@shared/components/dialog-delete-question/dialog-delete-question.component';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
-import { Article } from '@billing-models/article.model';
-import { DialogGetArticleComponent } from '@billing/components/dialog-get-article/dialog-get-article.component';
 import { ModalImportListPriceComponent } from '../modal-import-list-price/modal-import-list-price.component';
 import { PageEvent } from '@angular/material/paginator';
 
 interface DialogData {
-  listPrice: ListPrice,
-  isNewListPrice: boolean
+  listPrice: ListPrice;
+  isNewListPrice: boolean;
 }
 
 @Component({
@@ -45,22 +41,22 @@ export class BasicArticleListPriceComponent implements OnInit {
     'implistprice',
     'impdesctotal',
     'impsaleprice',
-    'operac'
+    'operac',
   ];
 
-  // 'imptribtotal',
-  // 'imptotal',
-
   // Page
-  totalElements = 0
-  pageSize = 10
-  pageIndex = 0
+  totalElements = 0;
+  pageSize = 10;
+  pageIndex = 0;
 
   private buildForm(codlistprice: number = 1) {
     this.formCrudListPriceArticle = this.formBuilder.group({
-      codlistprice: [{ value: codlistprice, disabled: true }, [Validators.required]],
-      codart: ['',[]],
-      desart: ['',[]],
+      codlistprice: [
+        { value: codlistprice, disabled: true },
+        [Validators.required],
+      ],
+      codart: ['', []],
+      desart: ['', []],
     });
   }
 
@@ -72,8 +68,7 @@ export class BasicArticleListPriceComponent implements OnInit {
     private matSnackBar: MatSnackBar,
     private datePipe: DatePipe,
     @Inject(DIALOG_DATA) data: DialogData,
-    private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService
+    private defaultValuesService: DefaultValuesService
   ) {
     if (!data.isNewListPrice && data.listPrice) {
       this.buildForm(data.listPrice.codlistprice);
@@ -83,8 +78,7 @@ export class BasicArticleListPriceComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   isInputInvalid(fieldName: string): boolean {
     const field = this.formCrudListPriceArticle.get(fieldName);
@@ -101,47 +95,34 @@ export class BasicArticleListPriceComponent implements OnInit {
   }
 
   searchListPriceArticle() {
-    if (this.formCrudListPriceArticle.valid) {
-      this.globalStatusService.setLoading(true);
-      this.listPriceArticleService
-        .getByPage(
-          this.codlistprice?.value,
-          this.codart?.value,
-          this.desart?.value,
-          this.pageSize,
-          this.pageIndex
-        )
-        .subscribe({
-          next: (data) => {
-            if (data.status <= 0) {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: data
-              });
-            }
-            this.dataSourceListPriceArticle.getInit(data.page.content);
-            this.totalElements = data.page.totalElements
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.dataSourceListPriceArticle.getInit([]);
-            this.totalElements = 0;
-            this.globalStatusService.setLoading(false);
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
-          }
-        });
-    } else {
-      this.formCrudListPriceArticle.markAllAsTouched();
+    if (this.formCrudListPriceArticle.invalid) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { no_required_fields: 'S' }
+        data: { no_required_fields: 'S' },
       });
+      this.formCrudListPriceArticle.markAllAsTouched();
+      return;
     }
+    this.listPriceArticleService
+      .getByPage(
+        this.codlistprice?.value,
+        this.codart?.value,
+        this.desart?.value,
+        this.pageSize,
+        this.pageIndex
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.status <= 0) {
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: data,
+            });
+          }
+          this.dataSourceListPriceArticle.getInit(data.page.content);
+          this.totalElements = data.page.totalElements;
+        },
+      });
   }
 
   crudListPriceArticle(row: ListPriceArticle | null) {
@@ -169,7 +150,6 @@ export class BasicArticleListPriceComponent implements OnInit {
     dialogDelete.closed.subscribe({
       next: (data) => {
         if (data) {
-          this.globalStatusService.setLoading(true);
           this.listPriceArticleService
             .delDelete(row.codlistprice, row.codart)
             .subscribe({
@@ -190,26 +170,15 @@ export class BasicArticleListPriceComponent implements OnInit {
                   );
                 }
               },
-              error: (err) => {
-                this.dialog.open(DialogErrorAlertComponent, {
-                  width: '400px',
-                  data: err.error,
-                });
-                this.globalStatusService.setLoading(false);
-              },
-              complete: () => {
-                this.globalStatusService.setLoading(false);
-              }
             });
         }
       },
     });
   }
 
-  byPageEvent(e: PageEvent){
-    this.globalStatusService.setLoading(true)
-    this.pageIndex = e.pageIndex
-    this.searchListPriceArticle()
+  byPageEvent(e: PageEvent) {
+    this.pageIndex = e.pageIndex;
+    this.searchListPriceArticle();
   }
 
   closeDialog() {

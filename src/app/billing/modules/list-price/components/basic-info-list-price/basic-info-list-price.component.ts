@@ -5,7 +5,7 @@ import { ListPriceService } from '@billing-services/list-price.service';
 import { DIALOG_DATA, Dialog, DialogRef } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
@@ -13,8 +13,8 @@ import { MyDate } from '@billing-utils/date';
 import { BasicListPrice, ListPrice } from '@billing-models/list-price.model';
 
 interface DialogData {
-  listPrice: ListPrice,
-  isNewListPrice: boolean
+  listPrice: ListPrice;
+  isNewListPrice: boolean;
 }
 
 @Component({
@@ -23,7 +23,6 @@ interface DialogData {
   styleUrls: ['./basic-info-list-price.component.scss'],
 })
 export class BasicInfoListPriceComponent implements OnInit {
-
   formCrudListPrice!: FormGroup;
   currencies: Currency[] = [];
   listprices: ListPrice[] = [];
@@ -53,11 +52,12 @@ export class BasicInfoListPriceComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     @Inject(DIALOG_DATA) data: DialogData | null,
-    private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService
+    private defaultValuesService: DefaultValuesService
   ) {
-    this.currencies = this.defaultValuesService.getLocalStorageValue('currencies')
-    this.listprices = this.defaultValuesService.getLocalStorageValue('listprices')
+    this.currencies =
+      this.defaultValuesService.getLocalStorageValue('currencies');
+    this.listprices =
+      this.defaultValuesService.getLocalStorageValue('listprices');
     this.buildForm(data?.listPrice?.codlistprice);
     if (!data?.isNewListPrice && data?.listPrice) {
       this.formCrudListPrice.patchValue({
@@ -68,8 +68,7 @@ export class BasicInfoListPriceComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   isInputInvalid(fieldName: string): boolean {
     const field = this.formCrudListPrice.get(fieldName);
@@ -77,47 +76,37 @@ export class BasicInfoListPriceComponent implements OnInit {
   }
 
   formatDate(date: number[] | Date | null): String {
-    return MyDate.convertToCustomStringLong(date)
+    return MyDate.convertToCustomStringLong(date);
   }
 
   saveListPrice() {
-    if (this.formCrudListPrice.valid) {
-      this.formCrudListPrice.value.inctax =
-        this.formCrudListPrice.value.inctax === true ? 'Y' : 'N';
-      this.listPriceService.postSave(this.formCrudListPrice.value).subscribe({
-        next: (data) => {
-          if (data.status <= 0) {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: data,
-            });
-          }
-          if (data.status >= 0) {
-            this.matSnackBar.openFromComponent(
-              MatsnackbarSuccessComponent,
-              MatSnackBarSuccessConfig
-            );
-            this.dialogRef.close();
-          }
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
-        },
-      });
-    } else {
+    if (this.formCrudListPrice.invalid) {
       this.formCrudListPrice.markAllAsTouched();
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { no_required_fields: 'S' }
-      })
+        data: { no_required_fields: 'S' },
+      });
+      return;
     }
+    this.formCrudListPrice.value.inctax =
+      this.formCrudListPrice.value.inctax === true ? 'Y' : 'N';
+    this.listPriceService.postSave(this.formCrudListPrice.value).subscribe({
+      next: (data) => {
+        if (data.status <= 0) {
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: data,
+          });
+        }
+        if (data.status >= 0) {
+          this.matSnackBar.openFromComponent(
+            MatsnackbarSuccessComponent,
+            MatSnackBarSuccessConfig
+          );
+          this.dialogRef.close();
+        }
+      },
+    });
   }
 
   closeDialog() {

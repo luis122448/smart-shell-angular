@@ -5,7 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { DocumentTransactionService } from '@billing-services/document-transaction.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
 import { DataSourceSearchDocumentInvoice } from '@billing/components/search-facbol/search-facbol.component';
@@ -25,6 +25,7 @@ import { DialogAllDocumentTransactionComponent } from '../dialog-all-document-tr
 import { DialogQuestionCommentComponent } from '@shared/components/dialog-question-comment/dialog-question-comment.component';
 import { SearchDocumentInvoice } from '@billing-models/document-invoice.model';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 
 export interface DialogQuestionComment {
   status: boolean;
@@ -74,8 +75,8 @@ export class DetailSearchInvoiceComponent {
     private datePipe: DatePipe,
     private matSnackBar: MatSnackBar,
     private documentInvoiceService: DocumentInvoiceService,
-    private documentTransactionService: DocumentTransactionService,
     private globalStatusService: GlobalStatusService,
+    private documentTransactionService: DocumentTransactionService,
     private clipboard: Clipboard
   ) {}
 
@@ -88,7 +89,6 @@ export class DetailSearchInvoiceComponent {
   }
 
   onPrint(numint: number) {
-    this.globalStatusService.setLoading(true);
     this.documentInvoiceService.getPrintDocument(numint).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -105,14 +105,6 @@ export class DetailSearchInvoiceComponent {
           this.dataSourceSearchDocument.onChangeOpen(numint,false);
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
-      complete: () => this.globalStatusService.setLoading(false),
     });
   }
 
@@ -139,7 +131,7 @@ export class DetailSearchInvoiceComponent {
   onSendEmail(numint: number) {
     this.globalStatusService.setLoading(true);
     setTimeout(() => {
-      this.globalStatusService.setLoading(false);
+
     }, 1500);
     this.dataSourceSearchDocument.onChangeOpen(numint,false);
   }
@@ -153,7 +145,6 @@ export class DetailSearchInvoiceComponent {
   }
 
   onViewTransactions(numint: number) {
-    this.globalStatusService.setLoading(true);
     this.documentTransactionService.getByNumint(numint).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -169,22 +160,13 @@ export class DetailSearchInvoiceComponent {
           });
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
       complete: () => {
-        this.globalStatusService.setLoading(false)
         this.dataSourceSearchDocument.onChangeOpen(numint,false);
       },
     });
   }
 
   onApproved(numint: number) {
-    this.globalStatusService.setLoading(true);
     this.documentInvoiceService.putApprovedDocument(numint).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -200,22 +182,13 @@ export class DetailSearchInvoiceComponent {
           this.dataSourceSearchDocument.onChangeSituacion(numint, 2,'Approved');
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
       complete: () => {
-        this.globalStatusService.setLoading(false)
         this.dataSourceSearchDocument.onChangeOpen(numint,false);
       },
     });
   }
 
   onInAccount(numint: number) {
-    this.globalStatusService.setLoading(true);
     this.documentInvoiceService.putInAccountDocument(numint).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -231,17 +204,8 @@ export class DetailSearchInvoiceComponent {
           this.dataSourceSearchDocument.onChangeSituacion(numint, 3,'On Acc.');
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.dataSourceSearchDocument.onChangeOpen(numint,false);
-        this.globalStatusService.setLoading(false);
-      },
       complete: () => {
         this.dataSourceSearchDocument.onChangeOpen(numint,false);
-        this.globalStatusService.setLoading(false)
       },
     });
   }
@@ -259,7 +223,6 @@ export class DetailSearchInvoiceComponent {
     );
     dialogRef.closed.subscribe((data) => {
       if (data && data.status) {
-        this.globalStatusService.setLoading(true);
         this.documentInvoiceService
           .putCancelDocument(numint, data.commen)
           .subscribe({
@@ -277,15 +240,7 @@ export class DetailSearchInvoiceComponent {
                 this.dataSourceSearchDocument.onChangeSituacion(numint, 4,'Canceled');
                 this.dataSourceSearchDocument.onChangeOpen(numint,false);
               }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              });
-              this.globalStatusService.setLoading(false);
-            },
-            complete: () => this.globalStatusService.setLoading(false),
+            }
           });
       }
     });
@@ -304,7 +259,6 @@ export class DetailSearchInvoiceComponent {
     );
     dialogRef.closed.subscribe((data) => {
       if (data && data.status) {
-        this.globalStatusService.setLoading(true);
         this.documentInvoiceService
           .putDeleteDocument(numint, data.commen)
           .subscribe({
@@ -322,15 +276,7 @@ export class DetailSearchInvoiceComponent {
                 this.dataSourceSearchDocument.onChangeSituacion(numint, 5,'Deleted');
                 this.dataSourceSearchDocument.onChangeOpen(numint,false);
               }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              });
-              this.globalStatusService.setLoading(false);
-            },
-            complete: () => this.globalStatusService.setLoading(false),
+            }
           });
       }
     });

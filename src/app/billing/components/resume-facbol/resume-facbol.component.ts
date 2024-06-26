@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacbolGlobalStatusService } from '../../services/facbol-global-status.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
-import { GlobalStatusService } from '../../services/global-status.service';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { Currency } from 'src/app/auth/models/default-values.model';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
@@ -60,8 +60,8 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   constructor(
     private formBuilder: FormBuilder,
     private dialog: Dialog,
-    private globalStatusService: GlobalStatusService,
     private facbolGlobalStatusService: FacbolGlobalStatusService,
+    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private documentInvoiceService: DocumentInvoiceService
   ) {
@@ -104,7 +104,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
     this.dataHeaderSource.updateImp(dataDetail);
     setTimeout(() => {
       this.isCalculateDocument.emit(false);
-      this.globalStatusService.setLoading(false);
+
     }, 300);
   }
 
@@ -163,15 +163,8 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
           this.newDocument();
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
+
       complete: () => {
-        this.globalStatusService.setLoading(false);
       },
     });
   }
@@ -209,10 +202,10 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
             width: '400px',
             data: err.error,
           });
-          this.globalStatusService.setLoading(false);
+
         },
         complete: () => {
-          this.globalStatusService.setLoading(false);
+
         },
       });
   }
@@ -222,7 +215,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
     this.isNewDocument.emit(true);
     setTimeout(() => {
       this.isNewDocument.emit(false);
-      this.globalStatusService.setLoading(false);
+
     }, 300);
   }
 
@@ -240,14 +233,8 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
           this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-      },
+
       complete: () => {
-        this.globalStatusService.setLoading(false);
       },
     });
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, Renderer2, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DOCUMENT, NgClass, CommonModule } from '@angular/common';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
@@ -20,7 +20,6 @@ export class ThemeSwitcherComponent implements OnChanges{
   document = inject(DOCUMENT);
 
   constructor(
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService
   ){
     this.renderer.addClass(this.document.body.parentElement, 'dark');

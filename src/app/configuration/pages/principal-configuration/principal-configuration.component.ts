@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import { DatePipe } from '@angular/common';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { CompanyInfoService } from '../../services/company-info.service';
 import { MyDate } from '@billing-utils/date';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
@@ -55,8 +55,7 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
     private companyInfoService: CompanyInfoService,
     private formBuilder: FormBuilder,
     private dialog: Dialog,
-    private matSnackBar: MatSnackBar,
-    private globalStatusService: GlobalStatusService
+    private matSnackBar: MatSnackBar
   ){
     this.buildForm()
   }
@@ -68,7 +67,6 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.globalStatusService.setLoading(true)
     this.companyInfoService.getByCompany()
     .subscribe({
       next: data => {
@@ -121,16 +119,6 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
             }
           }
         }
-      },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
-          width: '400px',
-          data: err.error
-        })
-        this.globalStatusService.setLoading(false)
-      },
-      complete:() => {
-        this.globalStatusService.setLoading(false)
       }
     })
   }
@@ -242,8 +230,6 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
       this.formCrudCompany.markAllAsTouched()
       return;
     }
-
-    this.globalStatusService.setLoading(true)
     this.companyInfoService.putUpdate(this.formCrudCompany.getRawValue())
     .subscribe({
       next:data =>{
@@ -255,16 +241,6 @@ export class PrincipalConfigurationComponent implements OnInit, OnChanges {
         } else {
           this.matSnackBar.openFromComponent(MatsnackbarSuccessComponent,MatSnackBarSuccessConfig)
         }
-      },
-      error:err =>{
-        this.dialog.open(DialogErrorAlertComponent,{
-          width: '400px',
-          data: err.error
-        })
-        this.globalStatusService.setLoading(false)
-      },
-      complete:() => {
-        this.globalStatusService.setLoading(false)
       }
     })
   }

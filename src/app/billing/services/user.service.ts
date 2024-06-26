@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponseObject } from '@billing-models/api-reponse.model';
 import { User } from '@billing-models/user.model';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,6 @@ import { Dialog } from '@angular/cdk/dialog';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GlobalStatusService } from '@billing-services/global-status.service';
 import { ExchangeRateService } from '@billing-services/tipo-cambio.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
@@ -21,7 +20,9 @@ export class BasicInfoExchangeRateComponent {
 
   private buildForm() {
     // const today = new Date().toJSON().split('T')[0];
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toJSON().split('T')[0];
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+      .toJSON()
+      .split('T')[0];
     this.formCrudExchangeRate = this.formBuilder.group({
       registdate: [yesterday, [Validators.required]],
       origen: ['PEN', [Validators.required]],
@@ -75,7 +76,6 @@ export class BasicInfoExchangeRateComponent {
   constructor(
     private formBuilder: FormBuilder,
     private tipoCambioService: ExchangeRateService,
-    private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar
   ) {
@@ -92,7 +92,6 @@ export class BasicInfoExchangeRateComponent {
   }
 
   importSunat() {
-    this.globalStatusService.setLoading(true);
     this.tipoCambioService
       .getExchangeRateSunat(new Date(Date.parse(this.crudFecha?.value)))
       .subscribe({
@@ -111,14 +110,6 @@ export class BasicInfoExchangeRateComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
-          this.globalStatusService.setLoading(false);
-        },
-        error: (error) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: { status: -3, message: error.message },
-          });
-          this.globalStatusService.setLoading(false);
         },
       });
   }
@@ -132,7 +123,6 @@ export class BasicInfoExchangeRateComponent {
       });
       return;
     }
-    this.globalStatusService.setLoading(true);
     if (this.crudCcompra) {
       this.crudCcompra.setValue(this.crudEcompra?.value);
     }
@@ -162,16 +152,6 @@ export class BasicInfoExchangeRateComponent {
             this.onSave.emit(false);
           }
         }
-      },
-      error: (error) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: error.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false);
       },
     });
   }

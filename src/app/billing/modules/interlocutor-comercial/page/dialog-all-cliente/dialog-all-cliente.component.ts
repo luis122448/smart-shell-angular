@@ -45,7 +45,7 @@ export class DialogAllClienteComponent {
         codbuspar: ['', []],
         busnam: ['', []],
         status: [false, []],
-      },
+      }
       // {
       //   validators: [MyValidators.NotNullValidatorTwo('codbuspar', 'busnam')],
       // }
@@ -57,12 +57,16 @@ export class DialogAllClienteComponent {
     private dialogRef: DialogRef,
     private businessPartnerService: BusinessPartnerService,
     private formBuilder: FormBuilder,
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private matSnackBar: MatSnackBar
   ) {
-    this.typeBusinessPartners = this.defaultValuesService.getLocalStorageValue('typeBusinessPartners');
-    this.buildForm(this.typeBusinessPartners.find(data => data.defaul == 'Y')?.typbuspar ?? 1);
+    this.typeBusinessPartners = this.defaultValuesService.getLocalStorageValue(
+      'typeBusinessPartners'
+    );
+    this.buildForm(
+      this.typeBusinessPartners.find((data) => data.defaul == 'Y')?.typbuspar ??
+        1
+    );
   }
 
   isInputInvalid(fieldName: string): boolean {
@@ -71,46 +75,35 @@ export class DialogAllClienteComponent {
   }
 
   searchInterlocutorComercial() {
-    if (this.formSearchCliente.valid) {
-      this.globalStatusService.setLoading(true);
-      this.businessPartnerService
-        .getByPage(
-          this.typbuspar?.value,
-          this.codbuspar?.value,
-          this.busnam?.value,
-          this.status?.value,
-          this.pageSize,
-          this.pageIndex
-        )
-        .subscribe({
-          next: (data) => {
-            if (data.status <= 0) {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: data
-              });
-            }
-            this.dataSource.getInit(data.page.content);
-            this.totalElements = data.page.totalElements;
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
-          complete: () => {
-             this.globalStatusService.setLoading(false);
-          },
-        });
-    } else {
+    if (this.formSearchCliente.invalid) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
         data: { no_required_fields: 'S' },
       });
       this.formSearchCliente.markAllAsTouched();
+      return;
     }
+    this.businessPartnerService
+      .getByPage(
+        this.typbuspar?.value,
+        this.codbuspar?.value,
+        this.busnam?.value,
+        this.status?.value,
+        this.pageSize,
+        this.pageIndex
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.status <= 0) {
+            this.dialog.open(DialogErrorAlertComponent, {
+              width: '400px',
+              data: data,
+            });
+          }
+          this.dataSource.getInit(data.page.content);
+          this.totalElements = data.page.totalElements;
+        },
+      });
   }
 
   closeDialog(row: InterlocutorComercial | null) {
@@ -119,7 +112,11 @@ export class DialogAllClienteComponent {
 
   crudInterlocutorComercial(row: InterlocutorComercial | null) {
     this.dialog.open(DialogCrudClienteComponent, {
-      data: { codbuspar: row?.codbuspar, busnam: row?.busnam, isNewBussinessPartner: row ? false : true },
+      data: {
+        codbuspar: row?.codbuspar,
+        busnam: row?.busnam,
+        isNewBussinessPartner: row ? false : true,
+      },
     });
   }
 
@@ -137,7 +134,6 @@ export class DialogAllClienteComponent {
     });
     dialogRef.closed.subscribe({
       next: (data) => {
-        this.globalStatusService.setLoading(true);
         if (data) {
           this.businessPartnerService.delDelete(row.codbuspar).subscribe({
             next: (data) => {
@@ -157,16 +153,6 @@ export class DialogAllClienteComponent {
           });
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false);
-      }
     });
   }
 
@@ -180,7 +166,6 @@ export class DialogAllClienteComponent {
     });
     dialogRef.closed.subscribe({
       next: (data) => {
-        this.globalStatusService.setLoading(true);
         if (data) {
           this.businessPartnerService.putUndelete(row.codbuspar).subscribe({
             next: (data) => {
@@ -200,21 +185,10 @@ export class DialogAllClienteComponent {
           });
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false);
-      },
     });
   }
 
   byPageEvent(e: PageEvent) {
-    this.globalStatusService.setLoading(true);
     console.log(e.pageIndex);
     this.businessPartnerService
       .getByPage(
@@ -227,7 +201,6 @@ export class DialogAllClienteComponent {
       )
       .subscribe((data) => {
         this.dataSource.getInit(data.page.content);
-        this.globalStatusService.setLoading(false);
       });
   }
 
@@ -280,5 +253,4 @@ export class DataSourceInterlocutorComercial extends DataSource<InterlocutorCome
     const data = this.data.getValue();
     return data.reduce((count, data) => (count = count + 1), 0);
   }
-
 }

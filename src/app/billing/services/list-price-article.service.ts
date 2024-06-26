@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 import { DAOListPriceArticle, DTOListPriceArticle, ListPriceArticle, ByteListPriceArticle } from '@billing-models/list-price-article.model';
 import { ApiResponseList, ApiResponseObject, ApiResponsePage } from '@billing-models/api-reponse.model';
 

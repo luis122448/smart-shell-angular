@@ -37,12 +37,10 @@ export class DialogGetClienteComponent implements OnInit {
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar,
     private businessPartnerService: BusinessPartnerService,
-    private globalStatusService: GlobalStatusService,
     @Inject(DIALOG_DATA) private data: DialogData
   ) {}
 
   ngOnInit(): void {
-    this.globalStatusService.setLoading(true);
     this.businessPartnerService
       .getByLike(this.data.codbuspar, this.data.busnam)
       .subscribe({
@@ -59,17 +57,6 @@ export class DialogGetClienteComponent implements OnInit {
           }
           this.dataSource.getInit(data.list);
           this.countRecords = this.dataSource.getCount();
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.dialogRef.close(null);
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
         }
       });
     this.input.valueChanges.pipe(debounceTime(300)).subscribe((data) => {

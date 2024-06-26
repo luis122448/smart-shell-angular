@@ -44,7 +44,6 @@ export class DialogGetArticleComponent implements OnInit {
     private dialog: Dialog,
     private articleService: ArticleService,
     private listPriceArticleService: ListPriceArticleService,
-    private globalStatusService: GlobalStatusService,
     @Inject(DIALOG_DATA) private data: DialogData
   ) {}
 
@@ -56,7 +55,6 @@ export class DialogGetArticleComponent implements OnInit {
   }
 
   loadArticle(name: string) {
-    this.globalStatusService.setLoading(true);
     this.articleService.getByName(name).subscribe({
       next: (data) => {
         this.dataSource.getInit(data.list);
@@ -66,14 +64,8 @@ export class DialogGetArticleComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
         this.closeDialog(null);
-      },
-      complete: () => this.globalStatusService.setLoading(false),
+      }
     });
   }
 
@@ -139,7 +131,6 @@ export class DialogGetArticleComponent implements OnInit {
 
   closeDialog(row: Article | null) {
     if (row) {
-      this.globalStatusService.setLoading(true);
       this.listPriceArticleService
         .getById(this.data.codlistprice, row.codart)
         .subscribe({
@@ -157,17 +148,7 @@ export class DialogGetArticleComponent implements OnInit {
               row.moddesc = 'Y';
               row.modprice = 'Y';
             }
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
-            this.dialogRef.close(row);
-          },
+          }
         });
     } else {
       this.dialogRef.close(null);

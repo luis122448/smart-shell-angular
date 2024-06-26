@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GlobalStatusService } from '@billing-services/global-status.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -63,7 +62,6 @@ export class LoginFormComponent {
     private router: Router,
     private authService: AuthService,
     private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
     // Default-Values
@@ -100,7 +98,6 @@ export class LoginFormComponent {
       });
       return;
     }
-    this.globalStatusService.setLoading(true);
     this.authService
       .postLogin(this.company?.value, this.coduser?.value, this.password?.value)
       .subscribe({
@@ -124,16 +121,6 @@ export class LoginFormComponent {
             await this.onUploadDefaultValues();
             this.router.navigate(['/billing']);
           }
-        },
-        error: err => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
         }
       });
   }
@@ -148,7 +135,6 @@ export class LoginFormComponent {
       });
       return;
     }
-    this.globalStatusService.setLoading(true);
     this.authService
       .postVerifyCode(this.verifyCompany?.value, this.verifyCoduser?.value, this.verifycode?.value)
       .subscribe({
@@ -166,16 +152,6 @@ export class LoginFormComponent {
               MatSnackBarSuccessConfig
             );
           }
-        },
-        error: err => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
         }
       });
   }

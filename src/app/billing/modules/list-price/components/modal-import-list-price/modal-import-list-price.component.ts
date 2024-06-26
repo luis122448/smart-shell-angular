@@ -7,7 +7,7 @@ import { DefaultValuesService } from 'src/app/auth/services/default-values.servi
 import { MyDate } from '@billing-utils/date';
 import { ListPriceArticleService } from '@billing-services/list-price-article.service';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 
 interface DialogData {
   row: ListPriceArticle | null;
@@ -69,7 +69,6 @@ export class ModalImportListPriceComponent {
     private dialogRef: DialogRef,
     private formBuilder: FormBuilder,
     private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService,
     private listPriceArticleService: ListPriceArticleService,
     @Inject(DIALOG_DATA) data: DialogData
   ) {
@@ -115,7 +114,6 @@ export class ModalImportListPriceComponent {
       return;
     }
     if (this.isNewListPriceArticle) {
-      this.globalStatusService.setLoading(true);
       const articleListPrice: ListPriceArticle = {
         ...this.formArticleListPrice.getRawValue(),
         modprice: this.formArticleListPrice.value.modprice ? 'Y' : 'N',
@@ -131,20 +129,11 @@ export class ModalImportListPriceComponent {
           }
           this.dialogRef.close(data);
         },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
         complete: () => {
-          this.globalStatusService.setLoading(false);
           this.closeDialog()
         },
       });
     } else {
-      this.globalStatusService.setLoading(true);
       const articleListPrice: ListPriceArticle = {
         ...this.formArticleListPrice.getRawValue(),
         modprice: this.formArticleListPrice.value.modprice ? 'Y' : 'N',
@@ -166,15 +155,7 @@ export class ModalImportListPriceComponent {
             }
             this.dialogRef.close(data);
           },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
           complete: () => {
-            this.globalStatusService.setLoading(false);
             this.closeDialog()
           },
         });

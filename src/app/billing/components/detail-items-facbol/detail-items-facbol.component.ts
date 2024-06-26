@@ -23,7 +23,7 @@ import { FacbolGlobalStatusService } from '../../services/facbol-global-status.s
 import { BehaviorSubject } from 'rxjs';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { DocumentInvoice } from '@billing-models/document-invoice.model';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 
 @Component({
   selector: 'app-detail-items-facbol',
@@ -71,14 +71,12 @@ export class DetailItemsFacbolComponent{
     private dialog: Dialog,
     private formBuilder: FormBuilder,
     private changeDetectorRef: ChangeDetectorRef,
-    private globalStatusService: GlobalStatusService,
     private facbolGlobalStatusService: FacbolGlobalStatusService,
   ) {
     this.buildForm();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changes1', changes);
     if (changes['isNewDocument'] && changes['isNewDocument'].currentValue === true) {
       this.buildForm();
     }
@@ -98,7 +96,6 @@ export class DetailItemsFacbolComponent{
             message : `Document not have items` }
         });
         this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(false);
-        this.globalStatusService.setLoading(false);
         return;
       }
       this.detailDocument.controls.forEach((row) => {
@@ -110,7 +107,6 @@ export class DetailItemsFacbolComponent{
               message : `Article ${row.value.codart} not Quuantity or Price` }
           });
           this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(false);
-          this.globalStatusService.setLoading(false);
           return;
         }
       });

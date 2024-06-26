@@ -4,8 +4,11 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BasicExchangeRate, ExchangeRate } from '@billing-models/exchange-rate.model';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+import {
+  BasicExchangeRate,
+  ExchangeRate,
+} from '@billing-models/exchange-rate.model';
+
 import { ExchangeRateService } from '@billing-services/tipo-cambio.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
@@ -21,7 +24,6 @@ import { DefaultValuesService } from 'src/app/auth/services/default-values.servi
   styleUrls: ['./basic-all-exchange-rate.component.scss'],
 })
 export class BasicAllExchangeRateComponent implements OnInit {
-
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onSave = new EventEmitter<boolean>();
   @Output() basicExchangeRate = new EventEmitter<BasicExchangeRate>();
@@ -29,12 +31,21 @@ export class BasicAllExchangeRateComponent implements OnInit {
 
   formSearchExchangeRate!: FormGroup;
   dataSourceExchangeRate = new DataSourceExchangeRateExchangeRate();
-  displayedColumns: string[] = ['registdate','origen','destin','eventa','ecompra','operac']
-  currencies: Currency[] = []
+  displayedColumns: string[] = [
+    'registdate',
+    'origen',
+    'destin',
+    'eventa',
+    'ecompra',
+    'operac',
+  ];
+  currencies: Currency[] = [];
 
   private buildForm() {
     // const today = new Date().toJSON().split('T')[0]
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toJSON().split('T')[0]
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+      .toJSON()
+      .split('T')[0];
     this.formSearchExchangeRate = this.formBuilder.group({
       startat: [yesterday, [Validators.required]],
       finalat: [yesterday, [Validators.required]],
@@ -46,7 +57,6 @@ export class BasicAllExchangeRateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private tipoCambioService: ExchangeRateService,
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar
@@ -54,7 +64,6 @@ export class BasicAllExchangeRateComponent implements OnInit {
     this.buildForm();
   }
   ngOnInit(): void {
-    this.globalStatusService.setLoading(true);
     this.tipoCambioService
       .getByLike(this.startat?.value, this.finalat?.value, '', '')
       .subscribe({
@@ -67,26 +76,15 @@ export class BasicAllExchangeRateComponent implements OnInit {
           }
           this.dataSourceExchangeRate.getInit(data.list);
           this.totalElements = data.list.length;
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
         }
       });
   }
 
   formatDate(date: number[] | Date | null): String {
-    return MyDate.convertToCustomStringShort(date)
+    return MyDate.convertToCustomStringShort(date);
   }
 
   searchExchangeRate() {
-    this.globalStatusService.setLoading(true);
     this.tipoCambioService
       .getByLike(
         this.startat?.value,
@@ -104,20 +102,11 @@ export class BasicAllExchangeRateComponent implements OnInit {
               data: data,
             });
           }
-          this.globalStatusService.setLoading(false);
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
         },
       });
   }
 
   deleteExchangeRate(row: ExchangeRate) {
-    this.globalStatusService.setLoading(true);
     this.tipoCambioService
       .delDelete(
         MyDate.convertToCustomDateShort(row.registdate),
@@ -139,26 +128,21 @@ export class BasicAllExchangeRateComponent implements OnInit {
             this.dataSourceExchangeRate.getClean(row);
             this.totalElements--;
           }
-          this.globalStatusService.setLoading(false);
-        },
-        error: (error) => {
-          console.log(error);
-          this.globalStatusService.setLoading(false);
         },
       });
   }
 
-  crudExchangeRate(data : ExchangeRate | null){
-    this.onSave.emit(true)
+  crudExchangeRate(data: ExchangeRate | null) {
+    this.onSave.emit(true);
     this.basicExchangeRate.emit({
       registdate: data?.registdate || [],
       origen: data?.origen || '',
       destin: data?.destin || '',
-    })
+    });
   }
 
-  closeDialog(){
-    this.onClose.emit(true)
+  closeDialog() {
+    this.onClose.emit(true);
   }
 
   get startat() {

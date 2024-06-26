@@ -5,7 +5,7 @@ import { Dialog, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { InterlocutorComercialBasic } from '@billing-models/interlocutor-comercial.model';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-success/matsnackbar-success.component';
 import {
   IMAGENOUPLOAD,
@@ -69,7 +69,6 @@ export class BasicInfoClienteComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private businessPartnerService: BusinessPartnerService,
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,
     private dialogRef: DialogRef,
@@ -85,7 +84,6 @@ export class BasicInfoClienteComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.data.isNewBussinessPartner) {
-      this.globalStatusService.setLoading(true);
       this.businessPartnerService.getById(this.data.codbuspar).subscribe({
         next: (data) => {
           if (data.status <= 0) {
@@ -113,10 +111,10 @@ export class BasicInfoClienteComponent implements OnInit {
             width: '400px',
             data: err.error,
           });
-          this.globalStatusService.setLoading(false);
+
         },
         complete: () => {
-          this.globalStatusService.setLoading(false);
+
         },
       });
       this.existeCliente = true;
@@ -137,7 +135,6 @@ export class BasicInfoClienteComponent implements OnInit {
       this.formCrudCliente.markAllAsTouched();
       return;
     }
-    this.globalStatusService.setLoading(true);
     if (!this.existeCliente) {
       this.businessPartnerService
         .postSave(this.formCrudCliente.value.getRawValue())
@@ -154,17 +151,7 @@ export class BasicInfoClienteComponent implements OnInit {
                 MatSnackBarSuccessConfig
               );
             }
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
-          },
+          }
         });
     } else {
       this.businessPartnerService
@@ -182,17 +169,7 @@ export class BasicInfoClienteComponent implements OnInit {
                 MatSnackBarSuccessConfig
               );
             }
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
-          complete: () => {
-            this.globalStatusService.setLoading(false);
-          },
+          }
         });
     }
     this.dialogRef.close();

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DAOTypeInventory } from '../models/type-inventory.model';
 import { catchError, of } from 'rxjs'
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponseByte } from '@billing-models/api-reponse.model';
 import { ArticleAttached, DAOArticleAttached, DTOArticleAttached } from '@billing-models/article-attached.model';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 import { Observable, from } from 'rxjs';
 
 @Injectable({

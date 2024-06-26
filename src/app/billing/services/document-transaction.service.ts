@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 import { ApiResponseList, ApiResponseObject } from '@billing-models/api-reponse.model';
 import { DocumentTransaction } from '@billing-models/document-transaction.model';
 

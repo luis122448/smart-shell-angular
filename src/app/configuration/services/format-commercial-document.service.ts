@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponseList, ApiResponseObject } from '@billing-models/api-reponse.model';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 import { FormatCommercialDocument } from '../models/format-commercial-document';
 
 @Injectable({

@@ -6,9 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MyValidators } from '@billing-utils/validator';
 import { ArticleService } from '@billing-services/article.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Article } from '@billing-models/article.model';
 import { DialogCrudArticleComponent } from '../dialog-crud-articulo/dialog-crud-articulo.component';
@@ -71,7 +70,6 @@ export class DialogAllInventarioArticleComponent implements OnInit {
     private dialogRef: DialogRef,
     private articuloService: ArticleService,
     private formBuilder: FormBuilder,
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private matSnackBar: MatSnackBar
   ) {
@@ -86,11 +84,13 @@ export class DialogAllInventarioArticleComponent implements OnInit {
 
   searchArticle() {
     if (this.formSearchInventarioArticle.invalid) {
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { no_required_fields: 'S' },
+      });
       this.formSearchInventarioArticle.markAllAsTouched();
       return;
     }
-
-    this.globalStatusService.setLoading(true);
     this.articuloService
       .getPage(
         this.typinv?.value,
@@ -109,17 +109,7 @@ export class DialogAllInventarioArticleComponent implements OnInit {
           }
           this.dataSource.getInit(data.page.content);
           this.totalElements = data.page.totalElements;
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
-        },
+        }
       });
   }
 
@@ -156,7 +146,6 @@ export class DialogAllInventarioArticleComponent implements OnInit {
     dialogRef.closed.subscribe({
       next: (data) => {
         if (data) {
-          this.globalStatusService.setLoading(true);
           this.articuloService.delDelete(row.codart).subscribe({
             next: (data) => {
               if (data.status <= 0) {
@@ -171,16 +160,7 @@ export class DialogAllInventarioArticleComponent implements OnInit {
                 );
                 this.dataSource.getClean(row.codart);
               }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              });
-            },
-            complete: () => {
-              this.globalStatusService.setLoading(false);
-            },
+            }
           });
         }
       },
@@ -198,7 +178,6 @@ export class DialogAllInventarioArticleComponent implements OnInit {
     dialogRef.closed.subscribe({
       next: (data) => {
         if (data) {
-          this.globalStatusService.setLoading(true);
           this.articuloService.putUndelete(row.codart).subscribe({
             next: (data) => {
               if (data.status <= 0) {
@@ -213,16 +192,7 @@ export class DialogAllInventarioArticleComponent implements OnInit {
                 );
                 this.dataSource.getClean(row.codart);
               }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              });
-            },
-            complete: () => {
-              this.globalStatusService.setLoading(false);
-            },
+            }
           });
         }
       },
@@ -230,7 +200,6 @@ export class DialogAllInventarioArticleComponent implements OnInit {
   }
 
   byPageEvent(e: PageEvent) {
-    this.globalStatusService.setLoading(true);
     console.log(e.pageIndex);
     this.articuloService
       .getPage(
@@ -242,7 +211,6 @@ export class DialogAllInventarioArticleComponent implements OnInit {
       )
       .subscribe((data) => {
         this.dataSource.getInit(data.page.content);
-        this.globalStatusService.setLoading(false);
       });
   }
 

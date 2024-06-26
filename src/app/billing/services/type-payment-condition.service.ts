@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { DAOTypePaymentCondition } from '@billing-models/type-payment-condition.model';
 import { catchError, of } from 'rxjs';
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Article, DAOArticle, DTOArticle, PAGEArticle } from '../models/article.model';
 import { catchError, of } from 'rxjs'
-import { environment } from '@enviroment';
+import { environment } from 'src/environments/environment';
 import { ApiResponseByte } from '@billing-models/api-reponse.model';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { ReasonCommercialDocumentService } from '@billing-services/reason-commercial-document.service';
 import { SerieCommercialDocumentService } from '@billing-services/serie-commercial-document.service';
 import { TypeCommercialDocumentService } from '@billing-services/type-commercial-document.service';
@@ -12,6 +12,7 @@ import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert
 import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
 import { TypeBusinessPartnerService } from '@billing-services/type-business-partner.service';
 import { ListPriceService } from '@billing-services/list-price.service';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 
 @Component({
   selector: 'app-default-values',
@@ -20,11 +21,11 @@ import { ListPriceService } from '@billing-services/list-price.service';
 })
 export class DefaultValuesComponent {
   constructor(
-    private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,
     // Default-Values
     private sellerService: SellerService,
+    private globalStatusService: GlobalStatusService,
     private serieCommercialDocumentService: SerieCommercialDocumentService,
     private reasonCommercialDocumentService: ReasonCommercialDocumentService,
     private situationCommercialDocumentService: SituationCommercialDocumentService,
@@ -66,7 +67,7 @@ export class DefaultValuesComponent {
       this.processResult('situations', results[5]);
       this.processResult('typeBusinessPartners', results[6]);
       this.processResult('listprices', results[7]);
-      this.globalStatusService.setLoading(false); // Finaliza la carga después de procesar los datos
+       // Finaliza la carga después de procesar los datos
     });
   }
 

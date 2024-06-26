@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '@enviroment'
+import { environment } from 'src/environments/environment'
 import { DAOReasonCommercialDocument } from '@billing-models/reason-commercial-document';
 
 @Injectable({

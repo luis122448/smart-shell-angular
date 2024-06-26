@@ -2,7 +2,6 @@ import { DataSource } from '@angular/cdk/collections';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
 import { ListPrice } from '@billing-models/list-price.model';
-import { GlobalStatusService } from '@billing-services/global-status.service';
 import { ListPriceService } from '@billing-services/list-price.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
@@ -24,7 +23,6 @@ export class DialogAllListPriceComponent implements OnInit {
 
   constructor(
     private listPriceService: ListPriceService,
-    private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private dialogRef: DialogRef,
     private matSnackBar: MatSnackBar
@@ -35,7 +33,6 @@ export class DialogAllListPriceComponent implements OnInit {
   }
 
   searchListPrice() {
-    this.globalStatusService.setLoading(true);
     this.listPriceService.getAll().subscribe({
       next: (data) => {
         this.dataSourceListPrice.getInit(data.list);
@@ -51,14 +48,6 @@ export class DialogAllListPriceComponent implements OnInit {
           );
         }
         this.totalElements = this.dataSourceListPrice.getCount();
-        this.globalStatusService.setLoading(false);
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
       },
     });
   }
@@ -68,7 +57,7 @@ export class DialogAllListPriceComponent implements OnInit {
       data: {
         listPrice: row,
         isNewListPrice: row ? false : true,
-      }
+      },
     });
   }
 
@@ -88,7 +77,7 @@ export class DialogAllListPriceComponent implements OnInit {
               if (data.status <= 0) {
                 this.dialog.open(DialogErrorAlertComponent, {
                   width: '400px',
-                  data: data
+                  data: data,
                 });
               } else {
                 this.matSnackBar.openFromComponent(
@@ -98,13 +87,6 @@ export class DialogAllListPriceComponent implements OnInit {
                 this.dataSourceListPrice.getClean(row.codlistprice);
                 this.totalElements = this.dataSourceListPrice.getCount();
               }
-            },
-            error: (err) => {
-              this.dialog.open(DialogErrorAlertComponent, {
-                width: '400px',
-                data: err.error,
-              });
-              this.globalStatusService.setLoading(false);
             },
           });
         }

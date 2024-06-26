@@ -16,7 +16,7 @@ import { FormatCommercialDocumentService } from '../../services/format-commercia
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { FormatCommercialDocument } from '../../models/format-commercial-document';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import {
   IMAGENOUPLOAD,
   MatSnackBarSuccessConfig,
@@ -28,6 +28,7 @@ import {
   ApiResponseArrayBuffer,
   ApiResponseByte,
 } from '@billing-models/api-reponse.model';
+import { GlobalStatusService } from '@billing-services/global-status.service';
 
 @Component({
   selector: 'app-format-serie-commercial-document',
@@ -62,9 +63,9 @@ export class FormatSerieCommercialDocumentComponent implements OnInit {
 
   constructor(
     private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService,
     private serieCommercialDocumentService: SerieCommercialDocumentService,
     private formatCommercialDocumentService: FormatCommercialDocumentService,
+    private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
     private formBuilder: FormBuilder
@@ -78,7 +79,6 @@ export class FormatSerieCommercialDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.inputTypcomdoc != 0 && this.inputSerie != '') {
-      this.globalStatusService.setLoading(true);
       this.serieCommercialDocumentService
         .getById(this.inputTypcomdoc, this.inputSerie)
         .subscribe({
@@ -100,15 +100,7 @@ export class FormatSerieCommercialDocumentComponent implements OnInit {
             this.typcomdoc?.disable();
             this.serie?.disable();
             this.codbranch?.disable();
-            this.globalStatusService.setLoading(false);
-          },
-          error: (err) => {
-            this.dialog.open(DialogErrorAlertComponent, {
-              width: '400px',
-              data: err.error,
-            });
-            this.globalStatusService.setLoading(false);
-          },
+          }
         });
       this.getFormatCommercialDocument(this.inputTypcomdoc);
     }
@@ -132,7 +124,6 @@ export class FormatSerieCommercialDocumentComponent implements OnInit {
   }
 
   getFormatCommercialDocument(typcomdoc: number) {
-    this.globalStatusService.setLoading(true);
     this.formatCommercialDocumentService.getByTypcomdoc(typcomdoc).subscribe({
       next: (data) => {
         if (data.status <= 0) {
@@ -149,14 +140,6 @@ export class FormatSerieCommercialDocumentComponent implements OnInit {
           typformat: this.formatCommercialDocumnet?.typformat,
         });
         this.getImage();
-        this.globalStatusService.setLoading(false);
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-        this.globalStatusService.setLoading(false);
       },
     });
   }
@@ -196,7 +179,7 @@ export class FormatSerieCommercialDocumentComponent implements OnInit {
           data: { status: -1, message: err.meesage },
         });
       });
-    this.globalStatusService.setLoading(false);
+
   }
 
   changeFormatCommercialDocument() {

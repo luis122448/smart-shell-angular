@@ -11,7 +11,7 @@ import { TypePaymentConditionService } from '@billing-services/type-payment-cond
 import { DataSource } from '@angular/cdk/collections';
 import { TypePaymentCondition } from '@billing-models/type-payment-condition.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogErrorAlertComponent } from '@shared-components/dialog-error-alert/dialog-error-alert.component';
 import {
@@ -59,7 +59,6 @@ export class CondicionPagoClienteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private businessPartnerService: BusinessPartnerService,
     private tipoCondicionPagoService: TypePaymentConditionService,
-    private globalStatusService: GlobalStatusService,
     private matSnackBar: MatSnackBar,
     @Inject(DIALOG_DATA) private data: InterlocutorComercialBasic
   ) {
@@ -74,7 +73,6 @@ export class CondicionPagoClienteComponent implements OnInit {
     if (!this.data.isNewBussinessPartner) {
       this.searchTypePaymentCondition();
     }
-    this.globalStatusService.setLoading(true);
     this.tipoCondicionPagoService.getByAll().subscribe({
       next: (data) => {
         this.optionTypePaymentCondition = data.list;
@@ -85,20 +83,10 @@ export class CondicionPagoClienteComponent implements OnInit {
           });
         }
       },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-      },
-      complete: () => {
-        this.globalStatusService.setLoading(false);
-      },
     });
   }
 
   searchTypePaymentCondition() {
-    this.globalStatusService.setLoading(true);
     this.businessPartnerService
       .getByCodintcomCondicionPago(this.codbuspar?.value)
       .subscribe({
@@ -111,21 +99,10 @@ export class CondicionPagoClienteComponent implements OnInit {
             });
           }
         },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
-        },
       });
   }
 
   addTypePaymentCondition() {
-    this.globalStatusService.setLoading(true);
     const intcomCondicionPago: IntcomCondicionPago = {
       codbuspar: this.data.codbuspar,
       typpaycon: this.typpaycon?.value,
@@ -147,13 +124,11 @@ export class CondicionPagoClienteComponent implements OnInit {
             );
             this.searchTypePaymentCondition();
           }
-          this.globalStatusService.setLoading(false);
         },
       });
   }
 
   deleteTypePaymentCondition(row: TypePaymentCondition) {
-    this.globalStatusService.setLoading(true);
     this.businessPartnerService
       .delDeleteCondicionPago(this.data.codbuspar, row.typpaycon)
       .subscribe({
@@ -170,16 +145,6 @@ export class CondicionPagoClienteComponent implements OnInit {
             );
             this.searchTypePaymentCondition();
           }
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-          this.globalStatusService.setLoading(false);
-        },
-        complete: () => {
-          this.globalStatusService.setLoading(false);
         },
       });
   }
