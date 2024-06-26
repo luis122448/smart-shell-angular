@@ -110,7 +110,7 @@ export class BasicInfoExchangeRateComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
-        },
+        }
       });
   }
 

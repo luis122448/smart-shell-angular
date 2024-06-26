@@ -4,7 +4,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@enviroment":["src/app/environments/environment"],
+      "@enviroment":["src/environments/environment"],
       "@billing-models/*":["src/app/billing/models/*"],
       "@billing-services/*":["src/app/billing/services/*"],
       "@billing-utils/*":["src/app/billing/utils/*"],
