@@ -104,7 +104,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
     this.dataHeaderSource.updateImp(dataDetail);
     setTimeout(() => {
       this.isCalculateDocument.emit(false);
-
+      this.globalStatusService.setLoading(false);
     }, 300);
   }
 
@@ -136,7 +136,6 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   }
 
   saveDocument(header: DocumentHeader, details: DocumentDetail[]) {
-    this.globalStatusService.setLoading(true);
     this.documentInvoiceService
     .postRegisterDocument(header, details)
     .subscribe({
@@ -162,15 +161,11 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
           });
           this.newDocument();
         }
-      },
-
-      complete: () => {
-      },
+      }
     });
   }
 
   updateDocument(header: DocumentHeader, details: DocumentDetail[]) {
-    this.globalStatusService.setLoading(true);
     this.documentInvoiceService
       .putModifyDocument(header, details)
       .subscribe({
@@ -196,17 +191,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
             });
             this.newDocument();
           }
-        },
-        error: (err) => {
-          this.dialog.open(DialogErrorAlertComponent, {
-            width: '400px',
-            data: err.error,
-          });
-
-        },
-        complete: () => {
-
-        },
+        }
       });
   }
 
@@ -215,7 +200,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
     this.isNewDocument.emit(true);
     setTimeout(() => {
       this.isNewDocument.emit(false);
-
+      this.globalStatusService.setLoading(false);
     }, 300);
   }
 
@@ -232,10 +217,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
         if (data.status >= 0) {
           this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
         }
-      },
-
-      complete: () => {
-      },
+      }
     });
   }
 
