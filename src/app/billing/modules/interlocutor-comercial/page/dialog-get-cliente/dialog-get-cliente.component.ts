@@ -57,6 +57,9 @@ export class DialogGetClienteComponent implements OnInit {
           }
           this.dataSource.getInit(data.list);
           this.countRecords = this.dataSource.getCount();
+        },
+        error: (err) => {
+          this.dialogRef.close(null);
         }
       });
     this.input.valueChanges.pipe(debounceTime(300)).subscribe((data) => {

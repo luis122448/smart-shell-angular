@@ -14,10 +14,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ArticleService } from '../../services/article.service';
-import { GlobalStatusService } from '../../services/global-status.service';
 import { ListPriceArticleService } from '@billing-services/list-price-article.service';
-import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
-import { Data } from '@angular/router';
 
 export interface DialogData {
   name: string;
@@ -65,7 +62,7 @@ export class DialogGetArticleComponent implements OnInit {
       },
       error: (err) => {
         this.closeDialog(null);
-      }
+      },
     });
   }
 
@@ -130,29 +127,32 @@ export class DialogGetArticleComponent implements OnInit {
   }
 
   closeDialog(row: Article | null) {
-    if (row) {
-      this.listPriceArticleService
-        .getById(this.data.codlistprice, row.codart)
-        .subscribe({
-          next: (data) => {
-            if (data.object) {
-              row.desinv = 'MERC';
-              row.price = data.object.price;
-              row.stock = 0;
-              row.moddesc = data.object.moddesc;
-              row.modprice = data.object.modprice;
-            } else {
-              row.desinv = 'UND';
-              row.price = 0;
-              row.stock = 0;
-              row.moddesc = 'Y';
-              row.modprice = 'Y';
-            }
-          }
-        });
-    } else {
+    if (!row) {
       this.dialogRef.close(null);
+      return;
     }
+    this.listPriceArticleService
+      .getById(this.data.codlistprice, row.codart)
+      .subscribe({
+        next: (data) => {
+          if (data.object) {
+            row.desinv = 'MERC';
+            row.price = data.object.price;
+            row.stock = 0;
+            row.moddesc = data.object.moddesc;
+            row.modprice = data.object.modprice;
+          } else {
+            row.desinv = 'UND';
+            row.price = 0;
+            row.stock = 0;
+            row.moddesc = 'Y';
+            row.modprice = 'Y';
+          }
+          this.dialogRef.close(row);
+        }, error: (err) => {
+          this.dialogRef.close(null);
+        }
+      });
   }
 }
 
