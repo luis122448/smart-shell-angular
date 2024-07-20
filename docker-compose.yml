@@ -1,5 +1,3 @@
-version: '3.8'  # Puedes ajustar la versión según la que desees usar
-
 services:
   postgres:
     container_name: smart-shell-angular
