@@ -1,5 +1,5 @@
 services:
-  postgres:
+  smart-shell-angular:
     container_name: smart-shell-angular
     build:
       context: .
