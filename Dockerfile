@@ -8,8 +8,8 @@ ARG API_URL
 ARG API_SUNAT_TOKEN
 
 # Set environment variables for the build process
-ENV API_URL=${API_URL}
-ENV API_SUNAT_TOKEN=${API_SUNAT_TOKEN}
+ENV API_URL: $API_URL
+ENV API_SUNAT_TOKEN: $API_SUNAT_TOKEN
 
 # Copy the package.json and package-lock.json files to the container
 COPY ./angular.json /home/app
