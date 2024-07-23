@@ -1,10 +1,22 @@
 version: '3.8'  # Puedes ajustar la versión según la que desees usar
 
 services:
-  postgres:
+  smart-shell-angular:
     container_name: smart-shell-angular
+    env_file:
+      - ./.env
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        API_URL: API_URL
+        API_SUNAT_TOKEN: API_SUNAT_TOKEN
+    environment:
+        API_URL: API_URL
+        API_SUNAT_TOKEN: API_SUNAT_TOKEN
     ports:
       - "80:80"
+
+networks:
+  smart-shell-net:
+    external: true
