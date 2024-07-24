@@ -18,12 +18,13 @@ COPY ./tsconfig*.json /home/app
 COPY ./tailwind.config.js /home/app
 RUN npm install
 
-# Replace environment placeholders
-RUN sed -i "s#process.env['API_URL']#'$API_URL'#g" src/environments/environment.ts
-RUN sed -i "s#process.env['API_SUNAT_TOKEN']#'$API_SUNAT_TOKEN'#g" src/environments/environment.ts
-
 # Copy the source code to the container
 COPY ./src /home/app/src
+
+# Replace environment placeholders
+RUN sed -i "s#process.env['API_URL']#'$API_URL'#g" /home/app/src/environments/environment.ts
+RUN sed -i "s#process.env['API_SUNAT_TOKEN']#'$API_SUNAT_TOKEN'#g" /home/app/src/environments/environment.ts
+
 RUN npm run build --omit=dev
 
 # Serve app with nginx server
