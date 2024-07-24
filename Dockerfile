@@ -36,5 +36,4 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /home/app/dist/smart-shell /usr/share/nginx/html
 
-# Expose port 80
 EXPOSE 4200

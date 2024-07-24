@@ -13,7 +13,7 @@ services:
         API_URL: API_URL
         API_SUNAT_TOKEN: API_SUNAT_TOKEN
     ports:
-      - "80:80"
+      - "4200:4200"
 
 networks:
   smart-shell-net:
