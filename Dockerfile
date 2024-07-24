@@ -36,4 +36,4 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /home/app/dist/smart-shell /usr/share/nginx/html
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 4200
