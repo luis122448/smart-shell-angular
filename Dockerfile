@@ -25,7 +25,7 @@ COPY ./src /home/app/src
 RUN sed -i "s#process.env['API_URL']#'$API_URL'#g" /home/app/src/environments/environment.ts
 RUN sed -i "s#process.env['API_SUNAT_TOKEN']#'$API_SUNAT_TOKEN'#g" /home/app/src/environments/environment.ts
 
-RUN npm run build --omit=dev
+RUN npm run build --prod
 
 # Serve app with nginx server
 # Use official nginx image as the base image
