@@ -7,11 +7,11 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        API_URL: API_URL
-        API_SUNAT_TOKEN: API_SUNAT_TOKEN
+        API_URL: $API_URL
+        API_SUNAT_TOKEN: $API_SUNAT_TOKEN
     environment:
-        API_URL: API_URL
-        API_SUNAT_TOKEN: API_SUNAT_TOKEN
+        API_URL: $API_URL
+        API_SUNAT_TOKEN: $API_SUNAT_TOKEN
     ports:
       - "4200:4200"
 
