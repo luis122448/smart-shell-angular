@@ -22,8 +22,8 @@ RUN npm install
 COPY ./src /home/app/src
 
 # Replace environment placeholders
-RUN sed -i "s#\\[API_URL\\]#'$API_URL'#g" /home/app/src/environments/environment.ts
-RUN sed -i "s#\\[API_SUNAT_TOKEN\\]#'$API_SUNAT_TOKEN'#g" /home/app/src/environments/environment.ts
+RUN sed -i "s#\\[API_URL\\]#$API_URL#g" /home/app/src/environments/environment.ts
+RUN sed -i "s#\\[API_SUNAT_TOKEN\\]#$API_SUNAT_TOKEN#g" /home/app/src/environments/environment.ts
 
 RUN npm run build --prod
 
