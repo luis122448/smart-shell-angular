@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+        SERVICE_NAME = 'smart-shell-angular'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/luis122448/smart-shell-angular'
+            }
+        }
+
+        stage('Stop Container') {
+            steps {
+                script {
+                    def containerExists = sh(script: "docker ps -q -f name=${SERVICE_NAME}", returnStatus: true)
+                    if (containerExists == 0) {
+                        sh "docker-compose -f ${DOCKER_COMPOSE_FILE} stop ${SERVICE_NAME}"
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} build ${SERVICE_NAME}"
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d ${SERVICE_NAME}"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment was successful!'
+        }
+        failure {
+            script {
+                def previousCommit = sh(script: "git rev-parse HEAD~1", returnStdout: true).trim()
+                sh "git reset --hard ${previousCommit}"
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} build ${SERVICE_NAME}"
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d ${SERVICE_NAME}"
+                error('Deployment failed. Rolled back to previous commit.')
+            }
+        }
+    }
+}
