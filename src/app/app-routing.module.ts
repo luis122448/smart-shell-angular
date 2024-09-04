@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { RedirectGuard } from './guards/redirect.guard';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -13,7 +12,7 @@ const routes: Routes = [
   {
     path:"billing",
     canActivate: [ AuthGuard ],
-    loadChildren: () => import("./billing/facturacion.module").then(m => m.FacturacionModule)
+    loadChildren: () => import("@billing/billing.module").then(m => m.BillingModule)
   },
   {
     path:"ecommerce",
@@ -22,7 +21,7 @@ const routes: Routes = [
   {
     path: "configuration",
     canActivate: [ AuthGuard ],
-    loadChildren: () => import("./configuration/configuracion.module").then(m => m.ConfiguracionModule)
+    loadChildren: () => import("./configuration/configuration.module").then(m => m.ConfigurationModule)
   }
 ];
 

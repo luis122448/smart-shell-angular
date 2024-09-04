@@ -47,7 +47,7 @@ export class SiderbarLeftComponent implements OnInit {
     {
       rotulo: 'Billing',
       id: '',
-      link: 'billing/invoice',
+      link: 'billing/invoice-receipt',
       icon: faShop,
       subMenu: [],
       open: false,

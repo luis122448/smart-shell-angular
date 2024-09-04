@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { InterlocutorComercial, DAOInterlocutorComercial, DTOInterlocutorComercial, PAGEInterlocutorComercial, DTOIntcomCondicionPago, IntcomCondicionPago, DAOIntcomCondicionPagoView } from '../models/interlocutor-comercial.model';
+import { BusinessPartner, DAOBusinessPartner, DTOBusinessPartner, PAGEBusinessPartner, DTOIntcomCondicionPago, IntcomCondicionPago, DAOIntcomCondicionPagoView } from '../models/business-partner.model';
 import { of, catchError, Observable } from 'rxjs'
 import { environment } from 'src/environments/environment';
 
@@ -22,11 +22,11 @@ export class BusinessPartnerService {
     params = params.set('codbuspar',codbuspar)
     params = params.set('busnam',busnam)
     params = params.set('status',status)
-    return this.httpCLient.get<DAOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-like`,{ params })
+    return this.httpCLient.get<DAOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-like`,{ params })
   }
 
-  getById(codbuspar: string): Observable<DTOInterlocutorComercial>{
-    return this.httpCLient.get<DTOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
+  getById(codbuspar: string): Observable<DTOBusinessPartner>{
+    return this.httpCLient.get<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
     .pipe(catchError(
       error => of({
         'status':-3,
@@ -45,11 +45,11 @@ export class BusinessPartnerService {
     }
     params = params.set('size',pageSize.toString())
     params = params.set('page',pageIndex.toString())
-    return this.httpCLient.get<PAGEInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-page`,{ params })
+    return this.httpCLient.get<PAGEBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-page`,{ params })
   }
 
-  postSave(data: InterlocutorComercial): Observable<DTOInterlocutorComercial>{
-    return this.httpCLient.post<DTOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}`,data)
+  postSave(data: BusinessPartner): Observable<DTOBusinessPartner>{
+    return this.httpCLient.post<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}`,data)
     .pipe(catchError(
       error => of({
         'status':-3,
@@ -58,8 +58,8 @@ export class BusinessPartnerService {
       })))
   }
 
-  putUpdate(codbuspar: string, data: InterlocutorComercial): Observable<DTOInterlocutorComercial>{
-    return this.httpCLient.put<DTOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`,data)
+  putUpdate(codbuspar: string, data: BusinessPartner): Observable<DTOBusinessPartner>{
+    return this.httpCLient.put<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`,data)
     .pipe(catchError(
       error => of({
         'status':-3,
@@ -68,8 +68,8 @@ export class BusinessPartnerService {
       })))
   }
 
-  delDelete(codbuspar: string): Observable<DTOInterlocutorComercial>{
-    return this.httpCLient.delete<DTOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
+  delDelete(codbuspar: string): Observable<DTOBusinessPartner>{
+    return this.httpCLient.delete<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
     .pipe(catchError(
       error => of({
         'status':-3,
@@ -78,8 +78,8 @@ export class BusinessPartnerService {
       })))
   }
 
-  putUndelete(codbuspar: string): Observable<DTOInterlocutorComercial>{
-    return this.httpCLient.put<DTOInterlocutorComercial>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/undelete/${codbuspar}`,{})
+  putUndelete(codbuspar: string): Observable<DTOBusinessPartner>{
+    return this.httpCLient.put<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/undelete/${codbuspar}`,{})
     .pipe(catchError(
       error => of({
         'status':-3,

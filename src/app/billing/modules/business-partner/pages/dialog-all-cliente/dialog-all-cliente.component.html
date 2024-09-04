@@ -1,0 +1,173 @@
+<main class="dialog-container">
+  <section>
+    <h1 class="dialog-title">Business Partner</h1>
+    <form [formGroup]="formSearchCliente">
+      <div class="divide-line space-y-2">
+        <div class="grid grid-cols-5 gap-x-8">
+          <div class="col-span-3 flex">
+            <div class="w-48">
+              <label for="typbuspar" class="label-input-sm"
+                >Interlocutor Type</label
+              >
+            </div>
+            <select
+              name="typbuspar"
+              id="typbuspar"
+              formControlName="typbuspar"
+              class="select-default"
+            >
+
+            <option *ngFor="let item of typeBusinessPartners" [value]="item.typbuspar">
+              {{ item.typbuspar + ' - ' +  item.descri }}
+            </option>
+            </select>
+          </div>
+          <div class="col-span-2 flex items-center justify-center space-x-4">
+            <label for="status" class="label-input-xs">Inc Inactive?</label>
+            <input
+              id="status"
+              type="checkbox"
+              class="checkbox-default"
+              formControlName="status"
+            />
+          </div>
+        </div>
+        <div class="space-y-2 pt-2">
+          <div class="flex justify-start">
+            <label for="codbuspar" class="label-input-sm">Code</label>
+            <input
+              id="codbuspar"
+              type="text"
+              class="input-default"
+              formControlName="codbuspar"
+            />
+          </div>
+          <div class="flex justify-start">
+            <label for="busnam" class="label-input-sm">Business Name</label>
+            <input
+              id="busnam"
+              type="text"
+              class="input-default"
+              formControlName="busnam"
+            />
+          </div>
+          <app-alert-standard
+            [class.invisible]="
+              !(
+                codbuspar?.touched &&
+                busnam?.touched &&
+                formSearchCliente.hasError('NotNullValidatorTwo')
+              )
+            "
+            >You must use at least one of these filters for the search, consider a minimum length of 5 characters</app-alert-standard
+          >
+        </div>
+      </div>
+    </form>
+  </section>
+  <section>
+    <div class="flex justify-end space-x-4">
+      <app-button-standard
+        (click)="searchBusinessPartner()"
+        colorBtn="sky"
+        optionBtn="search"
+        typeBtn="button"
+        >Search</app-button-standard
+      >
+      <app-button-standard
+        (click)="crudBusinessPartner(null)"
+        colorBtn="green"
+        optionBtn="new"
+        typeBtn="button"
+        >New</app-button-standard
+      >
+    </div>
+  </section>
+  <section class="section-table">
+    <article class="container-dialog-table">
+      <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
+        <tr
+          class="header-table"
+          cdk-header-row
+          *cdkHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          class="row-table"
+          cdk-row
+          *cdkRowDef="let row; columns: displayedColumns"
+          [class.row-table-delete]="row.status === 'N'"
+        ></tr>
+        <ng-container cdkColumnDef="codbuspar">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.codbuspar }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="busnam">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            Business Name
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.busnam }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="nroidedoc">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>RUC/DNI</th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.nroidedoc }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="operac">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action</th>
+          <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+            <app-button-operac
+              *ngIf="row.status === 'Y'"
+              (click)="crudBusinessPartner(row)"
+              optionBtn="edit"
+              colorBtn="sky"
+            >
+            </app-button-operac>
+            <app-button-operac
+              *ngIf="row.status === 'Y'"
+              (click)="cleanBusinessPartner(row)"
+              optionBtn="clean"
+              colorBtn="sky"
+            >
+            </app-button-operac>
+            <app-button-operac
+              *ngIf="row.status === 'Y'"
+              (click)="deleteBusinessPartner(row)"
+              optionBtn="delete"
+              colorBtn="red"
+            ></app-button-operac>
+            <app-button-operac
+              *ngIf="row.status === 'N'"
+              (click)="undeleteBusinessPartner(row)"
+              optionBtn="undelete"
+              colorBtn="yellow"
+            ></app-button-operac>
+          </td>
+        </ng-container>
+      </table>
+    </article>
+    <mat-paginator
+      (page)="byPageEvent($event)"
+      [hidePageSize]="true"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </section>
+  <section class="flex justify-end">
+    <app-button-standard
+      (click)="closeDialog(null)"
+      colorBtn="red"
+      optionBtn="close"
+      typeBtn="button"
+    >
+      Close
+    </app-button-standard>
+  </section>
+</main>

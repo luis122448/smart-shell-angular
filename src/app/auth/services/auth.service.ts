@@ -12,7 +12,8 @@ import { DefaultValuesService } from './default-values.service';
 export class AuthService {
 
   API_URL = environment.API_URL
-  AUTH = '/v1/auth'
+  AUTH = environment.PATH_AUTH
+
   constructor(
     private httpClient:HttpClient,
     private tokenService:TokenService,
