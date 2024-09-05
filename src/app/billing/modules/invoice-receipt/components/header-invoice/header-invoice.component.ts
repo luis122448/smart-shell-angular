@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { GlobalStatusService } from '@billing-services/global-status.service';
-
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({

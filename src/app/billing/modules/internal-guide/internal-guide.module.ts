@@ -16,15 +16,9 @@ import { SharedModule } from '@shared/shared.module';
     ResumeInternalGuideComponent,
     SearchInternalGuideComponent,
     RegisterInternalGuideComponent,
-    LayoutInternalGuideComponent
+    LayoutInternalGuideComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedBillingModule,
-    SharedModule
-  ],
-  exports: [
-    LayoutInternalGuideComponent
-  ]
+  imports: [CommonModule, SharedBillingModule, SharedModule],
+  exports: [LayoutInternalGuideComponent, SearchInternalGuideComponent],
 })
-export class InternalGuideModule { }
+export class InternalGuideModule {}
