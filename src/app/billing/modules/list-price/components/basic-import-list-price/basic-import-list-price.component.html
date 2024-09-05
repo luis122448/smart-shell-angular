@@ -1,119 +1,123 @@
 <form
   [formGroup]="formCrudListPriceArticle"
   class="sub-dialog-container"
->
+  >
   <section class="export-container grid grid-cols-2 gap-x-4">
     <article class="col-span-1 space-y-2">
       <div class="flex">
         <label for="codlistprice" class="export-label label-required"
           >Price List</label
-        >
-        <select
-          name="codlistprice"
-          id="codlistprice"
-          class="select-default"
-          formControlName="codlistprice"
-          [class.select-invalid]="isInputInvalid('codlistprice')"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('codlistprice')"
           >
-            -- Choose --
-          </option>
-          <option *ngFor="let item of listPrices" [value]="item.codlistprice">
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-    </article>
-    <article class="col-span-1 space-y-2">
-      <app-button-standard
-        (click)="generateListPriceArticle()"
-        colorBtn="green"
-        optionBtn="export"
-        typeBtn="button"
-      >
-        Generate
-      </app-button-standard>
-    </article>
-  </section>
-  <section class="export-container grid grid-cols-2 gap-x-4">
-    <article class="col-span-1 space-y-2">
-      <div class="flex">
-        <label for="codlistprice" class="export-label label-required"
-          >Price List</label
-        >
-        <select
-          name="codlistprice"
-          id="codlistprice"
-          class="select-default"
-          formControlName="codlistprice"
-          [class.select-invalid]="isInputInvalid('codlistprice')"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('codlistprice')"
+          <select
+            name="codlistprice"
+            id="codlistprice"
+            class="select-default"
+            formControlName="codlistprice"
+            [class.select-invalid]="isInputInvalid('codlistprice')"
+            >
+            <option
+              value=""
+              class="option-default"
+              disabled
+              selected
+              hidden
+              [class.option-invalid]="isInputInvalid('codlistprice')"
+              >
+              -- Choose --
+            </option>
+            @for (item of listPrices; track item) {
+              <option [value]="item.codlistprice">
+                {{ item.descri }}
+              </option>
+            }
+          </select>
+        </div>
+      </article>
+      <article class="col-span-1 space-y-2">
+        <app-button-standard
+          (click)="generateListPriceArticle()"
+          colorBtn="green"
+          optionBtn="export"
+          typeBtn="button"
           >
-            -- Choose --
-          </option>
-          <option *ngFor="let item of listPrices" [value]="item.codlistprice">
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-    </article>
-    <article class="col-span-1 space-y-2">
-      <app-button-standard
-        (click)="exportListPriceArticle()"
-        colorBtn="green"
-        optionBtn="export"
-        typeBtn="button"
-      >
-        Export
-      </app-button-standard>
-    </article>
-  </section>
-  <section class="import-container grid grid-cols-2 gap-x-4">
-    <article class="col-span-1 space-y-2">
-      <label class="import-label label-required" for="file_input"
-        >Upload file
-      </label>
-      <input
-        class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-        id="file_input"
-        type="file"
-        (change)="selectArchive($event)"
-        [class.select-invalid]="isInputInvalid('file')"
-      />
-    </article>
-    <article class="col-span-1 space-y-2">
-      <app-button-standard
-        (click)="importListPriceArticle()"
-        colorBtn="green"
-        optionBtn="import"
-        typeBtn="button"
-      >
-        Import
-      </app-button-standard>
-    </article>
-  </section>
-  <section class="flex justify-end space-x-6">
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</form>
+          Generate
+        </app-button-standard>
+      </article>
+    </section>
+    <section class="export-container grid grid-cols-2 gap-x-4">
+      <article class="col-span-1 space-y-2">
+        <div class="flex">
+          <label for="codlistprice" class="export-label label-required"
+            >Price List</label
+            >
+            <select
+              name="codlistprice"
+              id="codlistprice"
+              class="select-default"
+              formControlName="codlistprice"
+              [class.select-invalid]="isInputInvalid('codlistprice')"
+              >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('codlistprice')"
+                >
+                -- Choose --
+              </option>
+              @for (item of listPrices; track item) {
+                <option [value]="item.codlistprice">
+                  {{ item.descri }}
+                </option>
+              }
+            </select>
+          </div>
+        </article>
+        <article class="col-span-1 space-y-2">
+          <app-button-standard
+            (click)="exportListPriceArticle()"
+            colorBtn="green"
+            optionBtn="export"
+            typeBtn="button"
+            >
+            Export
+          </app-button-standard>
+        </article>
+      </section>
+      <section class="import-container grid grid-cols-2 gap-x-4">
+        <article class="col-span-1 space-y-2">
+          <label class="import-label label-required" for="file_input"
+            >Upload file
+          </label>
+          <input
+            class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+            id="file_input"
+            type="file"
+            (change)="selectArchive($event)"
+            [class.select-invalid]="isInputInvalid('file')"
+            />
+        </article>
+        <article class="col-span-1 space-y-2">
+          <app-button-standard
+            (click)="importListPriceArticle()"
+            colorBtn="green"
+            optionBtn="import"
+            typeBtn="button"
+            >
+            Import
+          </app-button-standard>
+        </article>
+      </section>
+      <section class="flex justify-end space-x-6">
+        <app-button-standard
+          (click)="closeDialog()"
+          colorBtn="red"
+          optionBtn="close"
+          typeBtn="button"
+          >
+          Close
+        </app-button-standard>
+      </section>
+    </form>

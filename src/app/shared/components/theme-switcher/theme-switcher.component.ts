@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, Renderer2, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DOCUMENT, NgClass, CommonModule } from '@angular/common';
+import { DOCUMENT, NgClass } from '@angular/common';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';

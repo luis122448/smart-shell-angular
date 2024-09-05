@@ -1,8 +1,14 @@
 <section class="dialog-container w-full h-auto flex-col justify-center items-center space-y-4">
   <article class="flex justify-center">
-    <fa-icon *ngIf="this.mensaje.status === 0" [icon]="faTrash" size="2xl" class="text-red-600"></fa-icon>
-    <fa-icon *ngIf="this.mensaje.status === 1" [icon]="faTrashArrowUp" size="2xl" class="text-yellow-700"></fa-icon>
-    <fa-icon *ngIf="this.mensaje.status === -1" [icon]="faCircleXmark" size="2xl" class="text-green-600"></fa-icon>
+    @if (this.mensaje.status === 0) {
+      <fa-icon [icon]="faTrash" size="2xl" class="text-red-600"></fa-icon>
+    }
+    @if (this.mensaje.status === 1) {
+      <fa-icon [icon]="faTrashArrowUp" size="2xl" class="text-yellow-700"></fa-icon>
+    }
+    @if (this.mensaje.status === -1) {
+      <fa-icon [icon]="faCircleXmark" size="2xl" class="text-green-600"></fa-icon>
+    }
   </article>
   <article class="text-center text-inline">{{ this.mensaje.message }}</article>
   <article class="flex justify-around w-64">

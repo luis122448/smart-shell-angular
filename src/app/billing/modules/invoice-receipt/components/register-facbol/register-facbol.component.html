@@ -1,316 +1,323 @@
 <section class="h-auto w-full pt-6">
-<form [formGroup]="formDocumentHeader">
-  <div class="items-container">
-    <section class="flex-col space-y-2">
-      <div class="dense-3 grid grid-cols-3 items-center">
-        <label for="typcomdoc" class="text-inline label-required"
-          >Type Document</label
-        >
-        <select
-          name="typcomdoc"
-          id="typcomdoc"
-          class="select-default col-span-2"
-          formControlName="typcomdoc"
-          [class.select-invalid]="isInputInvalid('typcomdoc')"
-          placeholder="Type Document*"
-          (change)="changeTypcomdoc($event)"
-        >
-          <option [value]="1" selected class="option-default">
-            Invoice
-          </option>
-          <option [value]="2" class="option-default">Ticket</option>
-        </select>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="serie" class="text-inline label-required">Serie</label>
-        <select
-          name="serie"
-          id="serie"
-          class="select-default col-span-2"
-          formControlName="serie"
-          [class.select-invalid]="isInputInvalid('serie')"
-          placeholder="Serie*"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('serie')"
-          >
-            -- Choose --
-          </option>
-          <option
-            *ngFor="let item of series"
-            [value]="item.serie"
-            class="option-default"
-          >
-            {{ item.serie + " - " + item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="reacomdoc" class="text-inline label-required"
-          >Reason</label
-        >
-        <select
-          name="reacomdoc"
-          id="reacomdoc"
-          class="select-default col-span-2"
-          formControlName="reacomdoc"
-          [class.select-invalid]="isInputInvalid('reacomdoc')"
-          placeholder="Reason*"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('reacomdoc')"
-          >
-            -- Choose --
-          </option>
-          <option
-            *ngFor="let item of reasons"
-            [value]="item.reacomdoc"
-            class="option-default"
-          >
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="codbuspar" class="text-inline label-required"
-          >Customer</label
-        >
-        <div class="col-span-2 flex">
-          <input
-            type="text"
-            placeholder="Client code"
-            class="input-default"
-            formControlName="codbuspar"
-            [class.input-invalid]="isInputInvalid('codbuspar')"
-            (keyup.enter)="openDialogGetCli(true)"
-          />
-          <button
-            *ngIf="statusBuspar == 'search'"
-            type="button"
-            class="button-icon-search"
-            (click)="openDialogGetCli(true)"
-          >
-            <fa-icon
-              [icon]="faMagnifyingGlass"
-              class="icon-operac-button"
-              size="sm"
-            ></fa-icon>
-          </button>
-          <button
-            *ngIf="statusBuspar == 'register'"
-            type="button"
-            class="button-icon-search"
-            (click)="cleanBuspar()"
-          >
-            <fa-icon
-              [icon]="faXmark"
-              class="icon-operac-button"
-              size="sm"
-            ></fa-icon>
-          </button>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label class="text-inline label-required">Business name</label>
-        <div class="col-span-2 flex">
-          <input
-            type="text"
-            placeholder="Business name"
-            class="input-default"
-            formControlName="busnam"
-            [class.input-invalid]="isInputInvalid('busnam')"
-            (keyup.enter)="openDialogGetCli(false)"
-          />
-          <button
-            *ngIf="!statusBuspar"
-            type="button"
-            class="button-icon-search"
-            (click)="openDialogGetCli(false)"
-          >
-            <fa-icon
-              [icon]="faMagnifyingGlass"
-              class="icon-operac-button"
-              size="sm"
-            ></fa-icon>
-          </button>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label class="text-inline label-required">Address</label>
-        <textarea
-          formControlName="addres"
-          class="textarea-default col-span-2"
-          cols="60"
-          rows="20"
-          placeholder="Commercial Address or Tax Address"
-          [class.input-invalid]="isInputInvalid('addres')"
-        ></textarea>
-      </div>
-    </section>
-    <section class="flex-col space-y-2">
-      <div class="grid grid-cols-3 items-center">
-        <label for="registdate" class="text-inline label-required"
-          >Date of issue</label
-        >
-        <input
-          id="registdate"
-          name="registdate"
-          type="date"
-          class="input-auto col-span-2"
-          formControlName="registdate"
-          (input)="onFemisiChange($event)"
-        />
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="codcur" class="text-inline label-required"
-          >Currency</label
-        >
-        <div class="col-span-2 grid grid-cols-3">
-          <select
-            name="codcur"
-            id="codcur"
-            class="select-default"
-            formControlName="codcur"
-            (change)="onCodcurChange($event)"
-          >
-            <option class="option-default" value="PEN">PEN</option>
-            <option class="option-default" value="USD">USD</option>
-          </select>
-          <label for="incigv" class="text-inline label-required pl-6"
-            >Igv?</label
-          >
-          <select
-            name="incigv"
-            id="incigv"
-            class="select-default"
-            formControlName="incigv"
-            (change)="onIncigvChange($event)"
-          >
-            <option class="option-default" value="1">Yes</option>
-            <option class="option-default" value="0">No</option>
-          </select>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="exchangerate" class="text-inline label-required"
-          >Exhange Rate</label
-        >
-        <div class="col-span-2 grid grid-cols-3">
-          <input
-            type="text"
-            class="input-default"
-            name="exchangerate"
-            id="exchangerate"
-            formControlName="exchangerate"
-            [class.input-invalid]="isInputInvalid('exchangerate')"
-            placeholder="Tip Cambio*"
-          />
-          <label for="tasigv" class="text-inline label-required pl-6"
-            >Igv</label
-          >
-          <input
-            type="text"
-            class="input-default"
-            name="tasigv"
-            id="tasigv"
-            formControlName="tasigv"
-            [class.input-invalid]="isInputInvalid('tasigv')"
-            placeholder="Tas Igv*"
-          />
-        </div>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="codsel" class="text-inline label-required"
-          >Seller</label
-        >
-        <select
-          name="codsel"
-          id="codsel"
-          class="select-default col-span-2"
-          formControlName="codsel"
-          [class.select-invalid]="isInputInvalid('codsel')"
-          (change)="onCodselChange($event)"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('codsel')"
-          >
-            -- Choose --
-          </option>
-          <option
-            *ngFor="let item of sellers"
-            [value]="item.codsel"
-            class="option-default"
-          >
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="typcomdoc" class="text-inline label-required"
-          >Payment Condition</label
-        >
-        <select
-          name="typcomdoc"
-          id="typcomdoc"
-          class="select-default col-span-2"
-          formControlName="typpaycon"
-          [class.select-invalid]="isInputInvalid('typpaycon')"
-          (change)="onTyppayconChange($event)"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('typpaycon')"
-          >
-            -- Choose --
-          </option>
-          <option
-            *ngFor="let item of tipoConPag"
-            [value]="item.typpaycon"
-            class="option-default"
-          >
-            {{ item.typpaycon + " - " + item.destyppaycon }}
-          </option>
-        </select>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="refere" class="text-inline">Reference</label>
-        <input
-          name="refere"
-          type="text"
-          class="input-default col-span-2"
-          placeholder="Reference"
-          formControlName="refere"
-        />
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="observ" class="text-inline">Observation</label>
-        <textarea
-          name="observ"
-          class="input-default col-span-2"
-          placeholder="Observation"
-          formControlName="observ"
-        ></textarea>
-      </div>
-    </section>
-  </div>
-</form>
-</section>
+  <form [formGroup]="formDocumentHeader">
+    <div class="items-container">
+      <section class="flex-col space-y-2">
+        <div class="dense-3 grid grid-cols-3 items-center">
+          <label for="typcomdoc" class="text-inline label-required"
+            >Type Document</label
+            >
+            <select
+              name="typcomdoc"
+              id="typcomdoc"
+              class="select-default col-span-2"
+              formControlName="typcomdoc"
+              [class.select-invalid]="isInputInvalid('typcomdoc')"
+              placeholder="Type Document*"
+              (change)="changeTypcomdoc($event)"
+              >
+              <option [value]="1" selected class="option-default">
+                Invoice
+              </option>
+              <option [value]="2" class="option-default">Ticket</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-3 items-center">
+            <label for="serie" class="text-inline label-required">Serie</label>
+            <select
+              name="serie"
+              id="serie"
+              class="select-default col-span-2"
+              formControlName="serie"
+              [class.select-invalid]="isInputInvalid('serie')"
+              placeholder="Serie*"
+              >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('serie')"
+                >
+                -- Choose --
+              </option>
+              @for (item of series; track item) {
+                <option
+                  [value]="item.serie"
+                  class="option-default"
+                  >
+                  {{ item.serie + " - " + item.descri }}
+                </option>
+              }
+            </select>
+          </div>
+          <div class="grid grid-cols-3 items-center">
+            <label for="reacomdoc" class="text-inline label-required"
+              >Reason</label
+              >
+              <select
+                name="reacomdoc"
+                id="reacomdoc"
+                class="select-default col-span-2"
+                formControlName="reacomdoc"
+                [class.select-invalid]="isInputInvalid('reacomdoc')"
+                placeholder="Reason*"
+                >
+                <option
+                  value=""
+                  class="option-default"
+                  disabled
+                  selected
+                  hidden
+                  [class.option-invalid]="isInputInvalid('reacomdoc')"
+                  >
+                  -- Choose --
+                </option>
+                @for (item of reasons; track item) {
+                  <option
+                    [value]="item.reacomdoc"
+                    class="option-default"
+                    >
+                    {{ item.descri }}
+                  </option>
+                }
+              </select>
+            </div>
+            <div class="grid grid-cols-3 items-center">
+              <label for="codbuspar" class="text-inline label-required"
+                >Customer</label
+                >
+                <div class="col-span-2 flex">
+                  <input
+                    type="text"
+                    placeholder="Client code"
+                    class="input-default"
+                    formControlName="codbuspar"
+                    [class.input-invalid]="isInputInvalid('codbuspar')"
+                    (keyup.enter)="openDialogGetCli(true)"
+                    />
+                  @if (statusBuspar == 'search') {
+                    <button
+                      type="button"
+                      class="button-icon-search"
+                      (click)="openDialogGetCli(true)"
+                      >
+                      <fa-icon
+                        [icon]="faMagnifyingGlass"
+                        class="icon-operac-button"
+                        size="sm"
+                      ></fa-icon>
+                    </button>
+                  }
+                  @if (statusBuspar == 'register') {
+                    <button
+                      type="button"
+                      class="button-icon-search"
+                      (click)="cleanBuspar()"
+                      >
+                      <fa-icon
+                        [icon]="faXmark"
+                        class="icon-operac-button"
+                        size="sm"
+                      ></fa-icon>
+                    </button>
+                  }
+                </div>
+              </div>
+              <div class="grid grid-cols-3 items-center">
+                <label class="text-inline label-required">Business name</label>
+                <div class="col-span-2 flex">
+                  <input
+                    type="text"
+                    placeholder="Business name"
+                    class="input-default"
+                    formControlName="busnam"
+                    [class.input-invalid]="isInputInvalid('busnam')"
+                    (keyup.enter)="openDialogGetCli(false)"
+                    />
+                  @if (!statusBuspar) {
+                    <button
+                      type="button"
+                      class="button-icon-search"
+                      (click)="openDialogGetCli(false)"
+                      >
+                      <fa-icon
+                        [icon]="faMagnifyingGlass"
+                        class="icon-operac-button"
+                        size="sm"
+                      ></fa-icon>
+                    </button>
+                  }
+                </div>
+              </div>
+              <div class="grid grid-cols-3 items-center">
+                <label class="text-inline label-required">Address</label>
+                <textarea
+                  formControlName="addres"
+                  class="textarea-default col-span-2"
+                  cols="60"
+                  rows="20"
+                  placeholder="Commercial Address or Tax Address"
+                  [class.input-invalid]="isInputInvalid('addres')"
+                ></textarea>
+              </div>
+            </section>
+            <section class="flex-col space-y-2">
+              <div class="grid grid-cols-3 items-center">
+                <label for="registdate" class="text-inline label-required"
+                  >Date of issue</label
+                  >
+                  <input
+                    id="registdate"
+                    name="registdate"
+                    type="date"
+                    class="input-auto col-span-2"
+                    formControlName="registdate"
+                    (input)="onFemisiChange($event)"
+                    />
+                </div>
+                <div class="grid grid-cols-3 items-center">
+                  <label for="codcur" class="text-inline label-required"
+                    >Currency</label
+                    >
+                    <div class="col-span-2 grid grid-cols-3">
+                      <select
+                        name="codcur"
+                        id="codcur"
+                        class="select-default"
+                        formControlName="codcur"
+                        (change)="onCodcurChange($event)"
+                        >
+                        <option class="option-default" value="PEN">PEN</option>
+                        <option class="option-default" value="USD">USD</option>
+                      </select>
+                      <label for="incigv" class="text-inline label-required pl-6"
+                        >Igv?</label
+                        >
+                        <select
+                          name="incigv"
+                          id="incigv"
+                          class="select-default"
+                          formControlName="incigv"
+                          (change)="onIncigvChange($event)"
+                          >
+                          <option class="option-default" value="1">Yes</option>
+                          <option class="option-default" value="0">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-3 items-center">
+                      <label for="exchangerate" class="text-inline label-required"
+                        >Exhange Rate</label
+                        >
+                        <div class="col-span-2 grid grid-cols-3">
+                          <input
+                            type="text"
+                            class="input-default"
+                            name="exchangerate"
+                            id="exchangerate"
+                            formControlName="exchangerate"
+                            [class.input-invalid]="isInputInvalid('exchangerate')"
+                            placeholder="Tip Cambio*"
+                            />
+                          <label for="tasigv" class="text-inline label-required pl-6"
+                            >Igv</label
+                            >
+                            <input
+                              type="text"
+                              class="input-default"
+                              name="tasigv"
+                              id="tasigv"
+                              formControlName="tasigv"
+                              [class.input-invalid]="isInputInvalid('tasigv')"
+                              placeholder="Tas Igv*"
+                              />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-3 items-center">
+                          <label for="codsel" class="text-inline label-required"
+                            >Seller</label
+                            >
+                            <select
+                              name="codsel"
+                              id="codsel"
+                              class="select-default col-span-2"
+                              formControlName="codsel"
+                              [class.select-invalid]="isInputInvalid('codsel')"
+                              (change)="onCodselChange($event)"
+                              >
+                              <option
+                                value=""
+                                class="option-default"
+                                disabled
+                                selected
+                                hidden
+                                [class.option-invalid]="isInputInvalid('codsel')"
+                                >
+                                -- Choose --
+                              </option>
+                              @for (item of sellers; track item) {
+                                <option
+                                  [value]="item.codsel"
+                                  class="option-default"
+                                  >
+                                  {{ item.descri }}
+                                </option>
+                              }
+                            </select>
+                          </div>
+                          <div class="grid grid-cols-3 items-center">
+                            <label for="typcomdoc" class="text-inline label-required"
+                              >Payment Condition</label
+                              >
+                              <select
+                                name="typcomdoc"
+                                id="typcomdoc"
+                                class="select-default col-span-2"
+                                formControlName="typpaycon"
+                                [class.select-invalid]="isInputInvalid('typpaycon')"
+                                (change)="onTyppayconChange($event)"
+                                >
+                                <option
+                                  value=""
+                                  class="option-default"
+                                  disabled
+                                  selected
+                                  hidden
+                                  [class.option-invalid]="isInputInvalid('typpaycon')"
+                                  >
+                                  -- Choose --
+                                </option>
+                                @for (item of tipoConPag; track item) {
+                                  <option
+                                    [value]="item.typpaycon"
+                                    class="option-default"
+                                    >
+                                    {{ item.typpaycon + " - " + item.destyppaycon }}
+                                  </option>
+                                }
+                              </select>
+                            </div>
+                            <div class="grid grid-cols-3 items-center">
+                              <label for="refere" class="text-inline">Reference</label>
+                              <input
+                                name="refere"
+                                type="text"
+                                class="input-default col-span-2"
+                                placeholder="Reference"
+                                formControlName="refere"
+                                />
+                            </div>
+                            <div class="grid grid-cols-3 items-center">
+                              <label for="observ" class="text-inline">Observation</label>
+                              <textarea
+                                name="observ"
+                                class="input-default col-span-2"
+                                placeholder="Observation"
+                                formControlName="observ"
+                              ></textarea>
+                            </div>
+                          </section>
+                        </div>
+                      </form>
+                    </section>

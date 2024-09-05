@@ -2,7 +2,7 @@
   class="sidebar-left"
   (mouseenter)="!(openSidebar = true)"
   (mouseleave)="!(openSidebar = false)"
->
+  >
   <section class="space-y-2">
     <article class="flex items-center justify-around">
       <div class="" [class.display-none]="!openSidebar">
@@ -12,7 +12,7 @@
           class="rounded-full"
           height="40px"
           width="40px"
-        />
+          />
       </div>
       <div>
         <p class="m-0">My Project</p>
@@ -23,7 +23,7 @@
           <a
             href="https://www.linkedin.com/in/luis-antonio-calvo-quispe-57a33b229/"
             target="_blank"
-          >
+            >
             <fa-icon [icon]="faLinkedin" size="xl"></fa-icon>
           </a>
         </div>
@@ -46,7 +46,7 @@
         class="rounded-full"
         height="48px"
         width="48px"
-      />
+        />
     </article>
     <article>
       <p class="text-inline m-0 whitespace-nowrap text-left font-bold">{{user?.coduser}}</p>
@@ -71,70 +71,127 @@
   </section>
   <section
     class="relative space-y-2 divide-y divide-dotted divide-slate-500 px-2 py-4"
-  >
-    <article *ngFor="let item of menuSidebar">
-      <div *ngIf="item.subMenu.length === 0; else subMenu">
-        <a
-          class="menu-sidebar"
-          [routerLink]="['/' + item.link]"
-          routerLinkActive="menu-sidebar-active"
-        >
-          <div class="menu-siderbar-icon">
-            <fa-icon class="icon-operac" [icon]="item.icon" sie="lg"></fa-icon>
-          </div>
-          <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{
-            item.rotulo
-          }}</span>
-        </a>
-      </div>
-      <ng-template #subMenu>
-        <cdk-accordion>
-          <cdk-accordion-item #accordionItem="cdkAccordionItem">
-            <button
-              (click)="accordionItem.toggle()"
-              cdkOverlayOrigin
-              #subMenuOverlay="cdkOverlayOrigin"
-              class="menu-sidebar space-x-2"
-            >
-              <div class="menu-siderbar-icon">
-                <fa-icon
-                  class="icon-operac"
-                  [icon]="item.icon"
-                  size="lg"
-                ></fa-icon>
-              </div>
-              <span
-                class="menu-sidebar-text"
-                [class.display-none]="!openSidebar"
-                >{{ item.rotulo }}</span
+    >
+    @for (item of menuSidebar; track item) {
+      <article>
+        @if (item.subMenu.length === 0) {
+          <div>
+            <a
+              class="menu-sidebar"
+              [routerLink]="['/' + item.link]"
+              routerLinkActive="menu-sidebar-active"
               >
-            </button>
-            <div [style.display]="accordionItem.expanded ? '' : 'none'">
-              <li *ngFor="let itemSub of item.subMenu">
-                <a
-                  class="menu-sidebar"
-                  [routerLink]="['/' + itemSub.link]"
-                  routerLinkActive="menu-sidebar-active"
+              <div class="menu-siderbar-icon">
+                <fa-icon class="icon-operac" [icon]="item.icon" sie="lg"></fa-icon>
+              </div>
+              <span class="menu-sidebar-text" [class.display-none]="!openSidebar">{{
+                item.rotulo
+              }}</span>
+            </a>
+          </div>
+        } @else {
+          <cdk-accordion>
+            <cdk-accordion-item #accordionItem="cdkAccordionItem">
+              <button
+                (click)="accordionItem.toggle()"
+                cdkOverlayOrigin
+                #subMenuOverlay="cdkOverlayOrigin"
+                class="menu-sidebar space-x-2"
                 >
-                  <div class="menu-siderbar-icon">
-                    <fa-icon
-                      *ngIf="itemSub.icon"
-                      class="icon-operac"
-                      [icon]="itemSub.icon"
-                      size="lg"
-                    ></fa-icon>
-                  </div>
-                  <span
-                    class="menu-sidebar-text"
-                    [class.display-none]="!openSidebar"
-                    >{{ itemSub.rotulo }}</span
+                <div class="menu-siderbar-icon">
+                  <fa-icon
+                    class="icon-operac"
+                    [icon]="item.icon"
+                    size="lg"
+                  ></fa-icon>
+                </div>
+                <span
+                  class="menu-sidebar-text"
+                  [class.display-none]="!openSidebar"
+                  >{{ item.rotulo }}</span
                   >
-                </a>
-              </li>
-            </div>
-          </cdk-accordion-item>
-        </cdk-accordion>
-      </ng-template>
-    </article>
-  </section>
-</div>
+                </button>
+                <div [style.display]="accordionItem.expanded ? '' : 'none'">
+                  @for (itemSub of item.subMenu; track itemSub) {
+                    <li>
+                      <a
+                        class="menu-sidebar"
+                        [routerLink]="['/' + itemSub.link]"
+                        routerLinkActive="menu-sidebar-active"
+                        >
+                        <div class="menu-siderbar-icon">
+                          @if (itemSub.icon) {
+                            <fa-icon
+                              class="icon-operac"
+                              [icon]="itemSub.icon"
+                              size="lg"
+                            ></fa-icon>
+                          }
+                        </div>
+                        <span
+                          class="menu-sidebar-text"
+                          [class.display-none]="!openSidebar"
+                          >{{ itemSub.rotulo }}</span
+                          >
+                        </a>
+                      </li>
+                    }
+                  </div>
+                </cdk-accordion-item>
+              </cdk-accordion>
+            }
+            <ng-template #subMenu>
+              <cdk-accordion>
+                <cdk-accordion-item #accordionItem="cdkAccordionItem">
+                  <button
+                    (click)="accordionItem.toggle()"
+                    cdkOverlayOrigin
+                    #subMenuOverlay="cdkOverlayOrigin"
+                    class="menu-sidebar space-x-2"
+                    >
+                    <div class="menu-siderbar-icon">
+                      <fa-icon
+                        class="icon-operac"
+                        [icon]="item.icon"
+                        size="lg"
+                      ></fa-icon>
+                    </div>
+                    <span
+                      class="menu-sidebar-text"
+                      [class.display-none]="!openSidebar"
+                      >{{ item.rotulo }}</span
+                      >
+                    </button>
+                    <div [style.display]="accordionItem.expanded ? '' : 'none'">
+                      @for (itemSub of item.subMenu; track itemSub) {
+                        <li>
+                          <a
+                            class="menu-sidebar"
+                            [routerLink]="['/' + itemSub.link]"
+                            routerLinkActive="menu-sidebar-active"
+                            >
+                            <div class="menu-siderbar-icon">
+                              @if (itemSub.icon) {
+                                <fa-icon
+                                  class="icon-operac"
+                                  [icon]="itemSub.icon"
+                                  size="lg"
+                                ></fa-icon>
+                              }
+                            </div>
+                            <span
+                              class="menu-sidebar-text"
+                              [class.display-none]="!openSidebar"
+                              >{{ itemSub.rotulo }}</span
+                              >
+                            </a>
+                          </li>
+                        }
+                      </div>
+                    </cdk-accordion-item>
+                  </cdk-accordion>
+                </ng-template>
+              </article>
+            }
+          </section>
+        </div>

@@ -14,7 +14,7 @@
               formControlName="typinv"
               class="select-default"
               [class.select-invalid]="isInputInvalid('typinv')"
-            >
+              >
               <option
                 value=""
                 class="option-default"
@@ -22,12 +22,14 @@
                 selected
                 hidden
                 [class.option-invalid]="isInputInvalid('typinv')"
-              >
+                >
                 -- Choose --
               </option>
-              <option *ngFor="let item of inventories" [value]="item.typinv">
-                {{ item.typinv + ' - ' +  item.descri }}
-              </option>
+              @for (item of inventories; track item) {
+                <option [value]="item.typinv">
+                  {{ item.typinv + ' - ' +  item.descri }}
+                </option>
+              }
             </select>
           </div>
           <div class="col-span-2 flex items-center justify-center space-x-4">
@@ -37,7 +39,7 @@
               type="checkbox"
               class="checkbox-default"
               formControlName="status"
-            />
+              />
           </div>
         </div>
         <div class="space-y-2 pt-2">
@@ -49,7 +51,7 @@
                 type="text"
                 class="input-default"
                 formControlName="codart"
-              />
+                />
             </div>
           </div>
           <div>
@@ -60,7 +62,7 @@
                 type="text"
                 class="input-default"
                 formControlName="descri"
-              />
+                />
             </div>
           </div>
           <app-alert-standard
@@ -73,123 +75,127 @@
             "
             >Debe usar al menos uno de estos filtros para la busqueda, considere
             una longitud minima de 5 caracteres</app-alert-standard
-          >
+            >
+          </div>
         </div>
-      </div>
-    </form>
-  </section>
-  <section class="flex justify-end space-x-4">
-    <app-button-standard
-      (click)="exportImportArticle()"
-      colorBtn="gray"
-      optionBtn="import"
-      typeBtn="button"
-    >
-      Export/Import
-    </app-button-standard>
-    <app-button-standard
-      (click)="searchArticle()"
-      colorBtn="sky"
-      optionBtn="search"
-      typeBtn="button"
-    >
-      Buscar
-    </app-button-standard>
-    <app-button-standard
-      (click)="crudArticle(null)"
-      colorBtn="green"
-      optionBtn="new"
-      typeBtn="button"
-      >Nuevo</app-button-standard
-    >
-  </section>
-  <section class="section-table">
-    <article class="container-dialog-table">
-      <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
-        <tr
-          class="header-table"
-          cdk-header-row
-          *cdkHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
-        <tr
-          class="row-table"
-          cdk-row
-          *cdkRowDef="let row; columns: displayedColumns"
-          [class.row-table-delete]="row.status === 'N'"
-        ></tr>
-        <ng-container cdkColumnDef="codart">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.codart }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="descri">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Descripcion
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.descri }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="codext">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Codigo Externo
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.codext }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
-          <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="crudArticle(row)"
-              optionBtn="edit"
-              colorBtn="sky"
-            >
-            </app-button-operac>
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="cleanArticle(row)"
-              optionBtn="clean"
-              colorBtn="sky"
-            >
-            </app-button-operac>
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="deleteArticle(row)"
-              optionBtn="delete"
-              colorBtn="red"
-            ></app-button-operac>
-            <app-button-operac
-              *ngIf="row.status === 'N'"
-              (click)="undeleteArticle(row)"
-              optionBtn="undelete"
-              colorBtn="yellow"
-            ></app-button-operac>
-          </td>
-        </ng-container>
-      </table>
-    </article>
-    <mat-paginator
-      (page)="byPageEvent($event)"
-      [hidePageSize]="true"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page"
-    >
-    </mat-paginator>
-  </section>
-  <section class="flex justify-end">
-    <app-button-standard
-      (click)="closeDialog(null)"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</main>
+      </form>
+    </section>
+    <section class="flex justify-end space-x-4">
+      <app-button-standard
+        (click)="exportImportArticle()"
+        colorBtn="gray"
+        optionBtn="import"
+        typeBtn="button"
+        >
+        Export/Import
+      </app-button-standard>
+      <app-button-standard
+        (click)="searchArticle()"
+        colorBtn="sky"
+        optionBtn="search"
+        typeBtn="button"
+        >
+        Buscar
+      </app-button-standard>
+      <app-button-standard
+        (click)="crudArticle(null)"
+        colorBtn="green"
+        optionBtn="new"
+        typeBtn="button"
+        >Nuevo</app-button-standard
+        >
+      </section>
+      <section class="section-table">
+        <article class="container-dialog-table">
+          <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
+            <tr
+              class="header-table"
+              cdk-header-row
+              *cdkHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr
+              class="row-table"
+              cdk-row
+              *cdkRowDef="let row; columns: displayedColumns"
+              [class.row-table-delete]="row.status === 'N'"
+            ></tr>
+            <ng-container cdkColumnDef="codart">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.codart }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="descri">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Descripcion
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.descri }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="codext">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Codigo Externo
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.codext }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="operac">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
+              <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+                @if (row.status === 'Y') {
+                  <app-button-operac
+                    (click)="crudArticle(row)"
+                    optionBtn="edit"
+                    colorBtn="sky"
+                    >
+                  </app-button-operac>
+                }
+                @if (row.status === 'Y') {
+                  <app-button-operac
+                    (click)="cleanArticle(row)"
+                    optionBtn="clean"
+                    colorBtn="sky"
+                    >
+                  </app-button-operac>
+                }
+                @if (row.status === 'Y') {
+                  <app-button-operac
+                    (click)="deleteArticle(row)"
+                    optionBtn="delete"
+                    colorBtn="red"
+                  ></app-button-operac>
+                }
+                @if (row.status === 'N') {
+                  <app-button-operac
+                    (click)="undeleteArticle(row)"
+                    optionBtn="undelete"
+                    colorBtn="yellow"
+                  ></app-button-operac>
+                }
+              </td>
+            </ng-container>
+          </table>
+        </article>
+        <mat-paginator
+          (page)="byPageEvent($event)"
+          [hidePageSize]="true"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page"
+          >
+        </mat-paginator>
+      </section>
+      <section class="flex justify-end">
+        <app-button-standard
+          (click)="closeDialog(null)"
+          colorBtn="red"
+          optionBtn="close"
+          typeBtn="button"
+          >
+          Close
+        </app-button-standard>
+      </section>
+    </main>

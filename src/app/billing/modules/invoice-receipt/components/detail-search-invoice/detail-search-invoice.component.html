@@ -4,7 +4,7 @@
       class="main-dialog-table"
       cdk-table
       [dataSource]="dataSourceSearchDocument"
-    >
+      >
       <tr
         class="header-table"
         cdk-header-row
@@ -28,7 +28,7 @@
             type="button"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
-          >
+            >
             <fa-icon [icon]="faRectangleList" class="icon-operac"></fa-icon>
           </button>
           <ng-template
@@ -37,251 +37,265 @@
             [cdkConnectedOverlayOrigin]="trigger"
             [cdkConnectedOverlayOpen]="row.isOpen"
             [cdkConnectedOverlayHasBackdrop]="true"
-          >
+            >
             <div
               id="dropdown"
               class="z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700"
-            >
+              >
               <ul
                 class="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
-              >
-                <li *ngIf="row.sitcomdoc == 1">
-                  <button class="siderbar-section-text" (click)="onEdit(row.numint)">
-                    <div class="relative h-7 w-7">
-                      <fa-icon
-                        [icon]="faFilePen"
-                        class="icon-overlay"
-                      ></fa-icon>
-                    </div>
-                    Modify
-                  </button>
-                </li>
-                <li *ngIf="row.sitcomdoc == 1">
-                  <button
-                    class="siderbar-section-text"
-                    (click)="onApproved(row.numint)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon
-                        [icon]="faFilePen"
-                        class="icon-overlay"
-                      ></fa-icon>
-                    </div>
-                    Aproved
-                  </button>
-                </li>
-                <li *ngIf="row.sitcomdoc == 2">
-                  <button
-                    class="siderbar-section-text"
-                    (click)="onInAccount(row.numint)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon
-                        [icon]="faFilePen"
-                        class="icon-overlay"
-                      ></fa-icon>
-                    </div>
-                    On Account
-                  </button>
-                </li>
+                >
+                @if (row.sitcomdoc == 1) {
+                  <li>
+                    <button class="siderbar-section-text" (click)="onEdit(row.numint)">
+                      <div class="relative h-7 w-7">
+                        <fa-icon
+                          [icon]="faFilePen"
+                          class="icon-overlay"
+                        ></fa-icon>
+                      </div>
+                      Modify
+                    </button>
+                  </li>
+                }
+                @if (row.sitcomdoc == 1) {
+                  <li>
+                    <button
+                      class="siderbar-section-text"
+                      (click)="onApproved(row.numint)"
+                      >
+                      <div class="relative h-7 w-7">
+                        <fa-icon
+                          [icon]="faFilePen"
+                          class="icon-overlay"
+                        ></fa-icon>
+                      </div>
+                      Aproved
+                    </button>
+                  </li>
+                }
+                @if (row.sitcomdoc == 2) {
+                  <li>
+                    <button
+                      class="siderbar-section-text"
+                      (click)="onInAccount(row.numint)"
+                      >
+                      <div class="relative h-7 w-7">
+                        <fa-icon
+                          [icon]="faFilePen"
+                          class="icon-overlay"
+                        ></fa-icon>
+                      </div>
+                      On Account
+                    </button>
+                  </li>
+                }
                 <li>
                   <button
                     class="siderbar-section-text"
                     (click)="onPrint(row.numint)"
-                  >
+                    >
                     <div class="relative h-7 w-7">
                       <fa-icon [icon]="faPrint" class="icon-overlay"></fa-icon>
                     </div>
                     Print
                   </button>
                 </li>
-                <li *ngIf="row.sitcomdoc == 3">
-                  <button
-                    class="siderbar-section-text"
-                    (click)="onSendEmail(row.numint)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon
-                        [icon]="faEnvelope"
-                        class="icon-overlay"
-                      ></fa-icon>
+                @if (row.sitcomdoc == 3) {
+                  <li>
+                    <button
+                      class="siderbar-section-text"
+                      (click)="onSendEmail(row.numint)"
+                      >
+                      <div class="relative h-7 w-7">
+                        <fa-icon
+                          [icon]="faEnvelope"
+                          class="icon-overlay"
+                        ></fa-icon>
+                      </div>
+                      Send by Email
+                    </button>
+                  </li>
+                }
+                @if (row.sitcomdoc == 3) {
+                  <li>
+                    <button
+                      class="siderbar-section-text"
+                      (click)="onSendSunat(row.numint)"
+                      >
+                      <div class="relative h-7 w-7">
+                        <fa-icon
+                          [icon]="faBuildingColumns"
+                          class="icon-overlay"
+                        ></fa-icon>
+                      </div>
+                      Send by Sunat</button
+                      >
+                    </li>
+                  }
+                  <li>
+                    <button
+                      class="siderbar-section-text"
+                      (click)="onViewTransactions(row.numint)"
+                      >
+                      <div class="relative h-7 w-7">
+                        <fa-icon [icon]="faList" class="icon-overlay"></fa-icon>
+                      </div>
+                      Transactions</button
+                      >
+                    </li>
+                    @if (row.sitcomdoc != 4 && row.sitcomdoc != 5) {
+                      <li>
+                        <button
+                          class="siderbar-section-text-danger"
+                          (click)="onCancel(row.numint, row)"
+                          >
+                          <div class="relative h-7 w-7">
+                            <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
+                          </div>
+                          Cancel</button
+                          >
+                        </li>
+                      }
+                      @if (row.sitcomdoc == 4) {
+                        <li>
+                          <button
+                            class="siderbar-section-text-danger"
+                            (click)="onDelete(row.numint, row)"
+                            >
+                            <div class="relative h-7 w-7">
+                              <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
+                            </div>
+                            Delete</button
+                            >
+                          </li>
+                        }
+                        <li>
+                          <button
+                            class="siderbar-section-text"
+                            (click)="row.isOpen = false"
+                            >
+                            <div class="relative h-7 w-7">
+                              <fa-icon [icon]="faXmark" class="icon-overlay"></fa-icon>
+                            </div>
+                            Close
+                          </button>
+                        </li>
+                      </ul>
                     </div>
-                    Send by Email
-                  </button>
-                </li>
-                <li *ngIf="row.sitcomdoc == 3">
-                  <button
-                    class="siderbar-section-text"
-                    (click)="onSendSunat(row.numint)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon
-                        [icon]="faBuildingColumns"
-                        class="icon-overlay"
-                      ></fa-icon>
-                    </div>
-                    Send by Sunat</button
-                  >
-                </li>
-                <li>
-                  <button
-                    class="siderbar-section-text"
-                    (click)="onViewTransactions(row.numint)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon [icon]="faList" class="icon-overlay"></fa-icon>
-                    </div>
-                    Transactions</button
-                  >
-                </li>
-                <li *ngIf="row.sitcomdoc != 4 && row.sitcomdoc != 5">
-                  <button
-                    class="siderbar-section-text-danger"
-                    (click)="onCancel(row.numint, row)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
-                    </div>
-                    Cancel</button
-                  >
-                </li>
-                <li *ngIf="row.sitcomdoc == 4">
-                  <button
-                    class="siderbar-section-text-danger"
-                    (click)="onDelete(row.numint, row)"
-                  >
-                    <div class="relative h-7 w-7">
-                      <fa-icon [icon]="faBan" class="icon-overlay"></fa-icon>
-                    </div>
-                    Delete</button
-                  >
-                </li>
-                <li>
-                  <button
-                    class="siderbar-section-text"
-                    (click)="row.isOpen = false"
-                    >
-                    <div class="relative h-7 w-7">
-                      <fa-icon [icon]="faXmark" class="icon-overlay"></fa-icon>
-                    </div>
-                    Close
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </ng-template>
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="numint">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Number</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.numint }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="document">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Document</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.serie + " - " + row.numdoc }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="destypcomdoc">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Type Document
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.destypcomdoc }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="dessitcomdoc">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Situation</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row" [ngClass]="{'row-cell-danger': row.sitcomdoc === 4 || row.sitcomdoc === 5}">
-          {{ row.dessitcomdoc }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="registdate">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Register Date
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ formatDate(row.registdate) }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="desreacomdoc">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Reason</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.desreacomdoc }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="codbuspar">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Bussiner Partner
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.codbuspar }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="busnam">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Descripcion
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.busnam }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="desplaiss">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Place of Issue
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.desplaiss }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="codcur">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Currency</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.codcur }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="dessel">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Seller</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.dessel }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="destyppaycon">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Payment Condition
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.destyppaycon }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="impsaleprice">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-          Sale Price
-        </th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.impsaleprice | number : "1.2-2" }}
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="imptotal">
-        <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Total</th>
-        <td class="row-cell" cdk-cell *cdkCellDef="let row">
-          {{ row.imptotal | number : "1.2-2" }}
-        </td>
-      </ng-container>
-    </table>
-  </article>
-  <article>
-    <mat-paginator
-      (page)="byPageEvent($event)"
-      [hidePageSize]="true"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page"
-    >
-    </mat-paginator>
-  </article>
-</section>
+                  </ng-template>
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="numint">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Number</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.numint }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="document">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Document</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.serie + " - " + row.numdoc }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="destypcomdoc">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Type Document
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.destypcomdoc }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="dessitcomdoc">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Situation</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row" [ngClass]="{'row-cell-danger': row.sitcomdoc === 4 || row.sitcomdoc === 5}">
+                  {{ row.dessitcomdoc }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="registdate">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Register Date
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ formatDate(row.registdate) }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="desreacomdoc">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Reason</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.desreacomdoc }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="codbuspar">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Bussiner Partner
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.codbuspar }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="busnam">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Descripcion
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.busnam }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="desplaiss">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Place of Issue
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.desplaiss }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="codcur">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Currency</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.codcur }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="dessel">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Seller</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.dessel }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="destyppaycon">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Payment Condition
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.destyppaycon }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="impsaleprice">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                  Sale Price
+                </th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.impsaleprice | number : "1.2-2" }}
+                </td>
+              </ng-container>
+              <ng-container cdkColumnDef="imptotal">
+                <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Total</th>
+                <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                  {{ row.imptotal | number : "1.2-2" }}
+                </td>
+              </ng-container>
+            </table>
+          </article>
+          <article>
+            <mat-paginator
+              (page)="byPageEvent($event)"
+              [hidePageSize]="true"
+              [length]="totalElements"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page"
+              >
+            </mat-paginator>
+          </article>
+        </section>

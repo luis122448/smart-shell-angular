@@ -4,375 +4,378 @@
       <div class="flex">
         <label for="typinv" class="label-input-sm label-required"
           >Type Inventory</label
-        >
-        <select
-          name="typinv"
-          id="typinv"
-          class="select-default"
-          formControlName="typinv"
-          [class.select-invalid]="isInputInvalid('typinv')"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('typinv')"
           >
-            -- Choose --
-          </option>
-          <option *ngFor="let item of inventories" [value]="item.typinv">
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="flex">
-        <label for="codart" class="label-input-sm label-required"
-          >Article Code</label
-        >
-        <input
-          id="codart"
-          type="text"
-          class="input-default"
-          formControlName="codart"
-          [class.input-invalid]="isInputInvalid('codart')"
-          placeholder="Code Article*"
-        />
-      </div>
-      <div class="flex">
-        <label for="abrevi" class="label-input-sm label-required"
-          >Abbreviation</label
-        >
-        <input
-          id="abrevi"
-          type="text"
-          class="input-default"
-          formControlName="abrevi"
-          [class.input-invalid]="isInputInvalid('abrevi')"
-          placeholder="Abbreviation"
-        />
-      </div>
-      <div class="flex">
-        <label for="descri" class="label-input-sm label-required"
-          >Description</label
-        >
-        <input
-          id="descri"
-          type="text"
-          class="input-default"
-          formControlName="descri"
-          [class.input-invalid]="isInputInvalid('descri')"
-          placeholder="Description"
-        />
-      </div>
-      <div class="flex">
-        <label for="codext" class="label-input-sm label-required"
-          >External Code</label
-        >
-        <input
-          id="codext"
-          type="text"
-          class="input-default"
-          formControlName="codext"
-          [class.input-invalid]="isInputInvalid('codext')"
-          placeholder="External Code"
-        />
-      </div>
-      <div class="flex">
-        <label for="registdate" class="label-input-sm label-required"
-          >Registed Date</label
-        >
-        <input
-          id="registdate"
-          type="date"
-          class="input-default"
-          formControlName="registdate"
-          [class.input-invalid]="isInputInvalid('registdate')"
-          placeholder="Registed Date"
-        />
-      </div>
-      <div class="flex">
-        <label for="codman" class="label-input-sm"
-          >Code Manufacturing</label
-        >
-        <input
-          id="codman"
-          type="text"
-          class="input-default"
-          formControlName="codman"
-          [class.input-invalid]="isInputInvalid('codman')"
-          placeholder="Manufacturing Code"
-        />
-      </div>
-    </article>
-    <article class="col-span-1 h-full w-full px-8 space-y-4">
-      <div class="flex w-full items-center justify-center">
-        <div *ngIf="noImage; else image">
-          <label
-            for="dropzone-file"
-            class="dark:hover:bg-bray-800 flex h-64 w-56 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-          >
-            <div class="flex flex-col items-center justify-center pb-6 pt-5">
-              <svg
-                class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 16"
+          <select
+            name="typinv"
+            id="typinv"
+            class="select-default"
+            formControlName="typinv"
+            [class.select-invalid]="isInputInvalid('typinv')"
+            >
+            <option
+              value=""
+              class="option-default"
+              disabled
+              selected
+              hidden
+              [class.option-invalid]="isInputInvalid('typinv')"
               >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                />
-              </svg>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                <span class="font-semibold">Click to upload</span> or drag and
-                drop
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">
-                Only JPG (MAX. 800x400px)
-              </p>
-            </div>
-            <input
-              id="dropzone-file"
-              type="file"
-              class="hidden"
-              (change)="selectedImage($event)"
-            />
-          </label>
+              -- Choose --
+            </option>
+            @for (item of inventories; track item) {
+              <option [value]="item.typinv">
+                {{ item.descri }}
+              </option>
+            }
+          </select>
         </div>
-        <ng-template #image>
-          <div class="w-full h-64 relative">
-            <app-button-operac
-              optionBtn="close"
-              colorBtn="red"
-              class="absolute top-0 right-0"
-              (click)="resetImage()"
-            ></app-button-operac>
-            <label
-              for="dropzone-file"
-              class="dark:hover:bg-bray-800 flex h-64 w-56 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-              >
-              <img
-                [src]="imageArticleURL"
-                alt=""
-                class="m-auto object-cover bg-slate-100"
+        <div class="flex">
+          <label for="codart" class="label-input-sm label-required"
+            >Article Code</label
+            >
+            <input
+              id="codart"
+              type="text"
+              class="input-default"
+              formControlName="codart"
+              [class.input-invalid]="isInputInvalid('codart')"
+              placeholder="Code Article*"
               />
-            </label>
           </div>
-        </ng-template>
-      </div>
-    </article>
-  </section>
-  <section class="grid grid-cols-2 gap-x-4">
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="cstock" class="label-input-sm label-required">Control by Stock</label>
-        <select
-          name="cstock"
-          id="cstock"
-          class="select-default"
-          formControlName="cstock"
-          [class.select-invalid]="isInputInvalid('cstock')"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('cstock')"
-          >
-            -- Choose --
-          </option>
-          <option value="NONE" class="option-default">Out of control (None)</option>
-          <option value="UNITY" class="option-default">Control by Article (Unity)</option>
-          <option value="SPECIFIC" class="option-default">Control by Etiqueta (Unity Specific)</option>
-        </select>
-      </div>
-      <div class="flex">
-        <label for="coduni" class="label-input-sm label-required">Default Unit</label>
-        <select
-          name="coduni"
-          id="coduni"
-          class="select-default"
-          formControlName="coduni"
-          [class.select-invalid]="isInputInvalid('coduni')"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('coduni')"
-          >
-            -- Choose --
-          </option>
-          <option value="UNITY" class="option-default">Unit</option>
-          <option value="BOX" class="option-default">Box</option>
-          <option value="KILO" class="option-default">Kilo</option>
-        </select>
-      </div>
-    </div>
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="codbar" class="label-input-sm"
-          >Code Bar</label
-        >
-        <input
-          id="codbar"
-          type="text"
-          class="input-default"
-          formControlName="codbar"
-          placeholder="Code Bar*"
-        />
-      </div>
-      <div class="flex">
-        <label for="codean" class="label-input-sm"
-          >Code EAN</label
-        >
-        <input
-          id="codean"
-          type="text"
-          class="input-default"
-          formControlName="codean"
-          placeholder="Code EAN*"
-        />
-      </div>
-    </div>
-  </section>
-  <section class="grid grid-cols-3 gap-x-4">
-    <div class="col-span-1 flex justify-around">
-      <label for="stocknegative" class="label-input-sm label-required"
-        >Stock Negative?</label
-      >
-      <input
-              id="stocknegative"
-              type="checkbox"
-              class="checkbox-default"
-              formControlName="stocknegative"
-      />
-    </div>
-    <div class="col-span-1 flex justify-around">
-      <label for="editdescri" class="label-input-sm label-required"
-        >Edit Description?</label
-      >
-      <input
-              id="editdescri"
-              type="checkbox"
-              class="checkbox-default"
-              formControlName="editdescri"
-      />
-    </div>
-    <div class="col-span-1 flex justify-around">
-      <label for="printcomment" class="label-input-sm label-required"
-        >Print Comment?</label
-      >
-      <input
-              id="printcomment"
-              type="checkbox"
-              class="checkbox-default"
-              formControlName="printcomment"
-      />
-    </div>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Additional Information: </label>
-  </section>
-  <section class="space-y-2">
-    <div class="flex">
-      <label for="observ" class="label-input-xl">Observation</label>
-      <textarea
-        name=""
-        id="observ"
-        cols="30"
-        rows="10"
-        class="textarea-default"
-        formControlName="observ"
-      ></textarea>
-    </div>
-    <div class="flex">
-      <label for="commen" class="label-input-xl">Comment</label>
-      <textarea
-        name=""
-        id="commen"
-        cols="30"
-        rows="10"
-        class="textarea-default"
-        formControlName="commen"
-      ></textarea>
-    </div>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Audit Information : </label>
-  </section>
-  <section class="grid grid-cols-2 gap-x-4">
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="createby" class="label-input-sm">Create by : </label>
-        <input
-          id="createby"
-          type="text"
-          class="input-default"
-          formControlName="createby"
-        />
-      </div>
-      <div class="flex">
-        <label for="createat" class="label-input-sm">Time : </label>
-        <input
-          id="createat"
-          type="text"
-          class="input-default"
-          disabled
-          [value]="formatDate(createat?.value)"
-        />
-      </div>
-    </div>
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="updateby" class="label-input-sm">Update By : </label>
-        <input
-          id="updateby"
-          type="text"
-          class="input-default"
-          formControlName="updateby"
-        />
-      </div>
-      <div class="flex">
-        <label for="updateat" class="label-input-sm">Time : </label>
-        <input
-          id="updateat"
-          type="text"
-          class="input-default"
-          disabled
-          [value]="formatDate(updateat?.value)"
-        />
-      </div>
-    </div>
-  </section>
-  <section class="flex justify-end space-x-4">
-    <app-button-standard
-      (click)="saveArticle()"
-      colorBtn="green"
-      optionBtn="save"
-      typeBtn="button"
-    >
-      Save
-    </app-button-standard>
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="back"
-      typeBtn="button"
-    >
-      Back
-    </app-button-standard>
-  </section>
-</form>
+          <div class="flex">
+            <label for="abrevi" class="label-input-sm label-required"
+              >Abbreviation</label
+              >
+              <input
+                id="abrevi"
+                type="text"
+                class="input-default"
+                formControlName="abrevi"
+                [class.input-invalid]="isInputInvalid('abrevi')"
+                placeholder="Abbreviation"
+                />
+            </div>
+            <div class="flex">
+              <label for="descri" class="label-input-sm label-required"
+                >Description</label
+                >
+                <input
+                  id="descri"
+                  type="text"
+                  class="input-default"
+                  formControlName="descri"
+                  [class.input-invalid]="isInputInvalid('descri')"
+                  placeholder="Description"
+                  />
+              </div>
+              <div class="flex">
+                <label for="codext" class="label-input-sm label-required"
+                  >External Code</label
+                  >
+                  <input
+                    id="codext"
+                    type="text"
+                    class="input-default"
+                    formControlName="codext"
+                    [class.input-invalid]="isInputInvalid('codext')"
+                    placeholder="External Code"
+                    />
+                </div>
+                <div class="flex">
+                  <label for="registdate" class="label-input-sm label-required"
+                    >Registed Date</label
+                    >
+                    <input
+                      id="registdate"
+                      type="date"
+                      class="input-default"
+                      formControlName="registdate"
+                      [class.input-invalid]="isInputInvalid('registdate')"
+                      placeholder="Registed Date"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="codman" class="label-input-sm"
+                      >Code Manufacturing</label
+                      >
+                      <input
+                        id="codman"
+                        type="text"
+                        class="input-default"
+                        formControlName="codman"
+                        [class.input-invalid]="isInputInvalid('codman')"
+                        placeholder="Manufacturing Code"
+                        />
+                    </div>
+                  </article>
+                  <article class="col-span-1 h-full w-full px-8 space-y-4">
+                    <div class="flex w-full items-center justify-center">
+                      @if (noImage) {
+                        <div>
+                          <label
+                            for="dropzone-file"
+                            class="dark:hover:bg-bray-800 flex h-64 w-56 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                            >
+                            <div class="flex flex-col items-center justify-center pb-6 pt-5">
+                              <svg
+                                class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 20 16"
+                                >
+                                <path
+                                  stroke="currentColor"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                  />
+                              </svg>
+                              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span class="font-semibold">Click to upload</span> or drag and
+                                drop
+                              </p>
+                              <p class="text-xs text-gray-500 dark:text-gray-400">
+                                Only JPG (MAX. 800x400px)
+                              </p>
+                            </div>
+                            <input
+                              id="dropzone-file"
+                              type="file"
+                              class="hidden"
+                              (change)="selectedImage($event)"
+                              />
+                          </label>
+                        </div>
+                      } @else {
+                        <div class="w-full h-64 relative">
+                          <app-button-operac
+                            optionBtn="close"
+                            colorBtn="red"
+                            class="absolute top-0 right-0"
+                            (click)="resetImage()"
+                          ></app-button-operac>
+                          <label
+                            for="dropzone-file"
+                            class="dark:hover:bg-bray-800 flex h-64 w-56 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                            >
+                            <img
+                              [src]="imageArticleURL"
+                              alt=""
+                              class="m-auto object-cover bg-slate-100"
+                              />
+                          </label>
+                        </div>
+                      }
+                    </div>
+                  </article>
+                </section>
+                <section class="grid grid-cols-2 gap-x-4">
+                  <div class="space-y-2">
+                    <div class="flex">
+                      <label for="cstock" class="label-input-sm label-required">Control by Stock</label>
+                      <select
+                        name="cstock"
+                        id="cstock"
+                        class="select-default"
+                        formControlName="cstock"
+                        [class.select-invalid]="isInputInvalid('cstock')"
+                        >
+                        <option
+                          value=""
+                          class="option-default"
+                          disabled
+                          selected
+                          hidden
+                          [class.option-invalid]="isInputInvalid('cstock')"
+                          >
+                          -- Choose --
+                        </option>
+                        <option value="NONE" class="option-default">Out of control (None)</option>
+                        <option value="UNITY" class="option-default">Control by Article (Unity)</option>
+                        <option value="SPECIFIC" class="option-default">Control by Etiqueta (Unity Specific)</option>
+                      </select>
+                    </div>
+                    <div class="flex">
+                      <label for="coduni" class="label-input-sm label-required">Default Unit</label>
+                      <select
+                        name="coduni"
+                        id="coduni"
+                        class="select-default"
+                        formControlName="coduni"
+                        [class.select-invalid]="isInputInvalid('coduni')"
+                        >
+                        <option
+                          value=""
+                          class="option-default"
+                          disabled
+                          selected
+                          hidden
+                          [class.option-invalid]="isInputInvalid('coduni')"
+                          >
+                          -- Choose --
+                        </option>
+                        <option value="UNITY" class="option-default">Unit</option>
+                        <option value="BOX" class="option-default">Box</option>
+                        <option value="KILO" class="option-default">Kilo</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex">
+                      <label for="codbar" class="label-input-sm"
+                        >Code Bar</label
+                        >
+                        <input
+                          id="codbar"
+                          type="text"
+                          class="input-default"
+                          formControlName="codbar"
+                          placeholder="Code Bar*"
+                          />
+                      </div>
+                      <div class="flex">
+                        <label for="codean" class="label-input-sm"
+                          >Code EAN</label
+                          >
+                          <input
+                            id="codean"
+                            type="text"
+                            class="input-default"
+                            formControlName="codean"
+                            placeholder="Code EAN*"
+                            />
+                        </div>
+                      </div>
+                    </section>
+                    <section class="grid grid-cols-3 gap-x-4">
+                      <div class="col-span-1 flex justify-around">
+                        <label for="stocknegative" class="label-input-sm label-required"
+                          >Stock Negative?</label
+                          >
+                          <input
+                            id="stocknegative"
+                            type="checkbox"
+                            class="checkbox-default"
+                            formControlName="stocknegative"
+                            />
+                        </div>
+                        <div class="col-span-1 flex justify-around">
+                          <label for="editdescri" class="label-input-sm label-required"
+                            >Edit Description?</label
+                            >
+                            <input
+                              id="editdescri"
+                              type="checkbox"
+                              class="checkbox-default"
+                              formControlName="editdescri"
+                              />
+                          </div>
+                          <div class="col-span-1 flex justify-around">
+                            <label for="printcomment" class="label-input-sm label-required"
+                              >Print Comment?</label
+                              >
+                              <input
+                                id="printcomment"
+                                type="checkbox"
+                                class="checkbox-default"
+                                formControlName="printcomment"
+                                />
+                            </div>
+                          </section>
+                          <section>
+                            <hr class="dialog-sub-title-line" />
+                            <label class="dialog-sub-title">Additional Information: </label>
+                          </section>
+                          <section class="space-y-2">
+                            <div class="flex">
+                              <label for="observ" class="label-input-xl">Observation</label>
+                              <textarea
+                                name=""
+                                id="observ"
+                                cols="30"
+                                rows="10"
+                                class="textarea-default"
+                                formControlName="observ"
+                              ></textarea>
+                            </div>
+                            <div class="flex">
+                              <label for="commen" class="label-input-xl">Comment</label>
+                              <textarea
+                                name=""
+                                id="commen"
+                                cols="30"
+                                rows="10"
+                                class="textarea-default"
+                                formControlName="commen"
+                              ></textarea>
+                            </div>
+                          </section>
+                          <section>
+                            <hr class="dialog-sub-title-line" />
+                            <label class="dialog-sub-title">Audit Information : </label>
+                          </section>
+                          <section class="grid grid-cols-2 gap-x-4">
+                            <div class="space-y-2">
+                              <div class="flex">
+                                <label for="createby" class="label-input-sm">Create by : </label>
+                                <input
+                                  id="createby"
+                                  type="text"
+                                  class="input-default"
+                                  formControlName="createby"
+                                  />
+                              </div>
+                              <div class="flex">
+                                <label for="createat" class="label-input-sm">Time : </label>
+                                <input
+                                  id="createat"
+                                  type="text"
+                                  class="input-default"
+                                  disabled
+                                  [value]="formatDate(createat?.value)"
+                                  />
+                              </div>
+                            </div>
+                            <div class="space-y-2">
+                              <div class="flex">
+                                <label for="updateby" class="label-input-sm">Update By : </label>
+                                <input
+                                  id="updateby"
+                                  type="text"
+                                  class="input-default"
+                                  formControlName="updateby"
+                                  />
+                              </div>
+                              <div class="flex">
+                                <label for="updateat" class="label-input-sm">Time : </label>
+                                <input
+                                  id="updateat"
+                                  type="text"
+                                  class="input-default"
+                                  disabled
+                                  [value]="formatDate(updateat?.value)"
+                                  />
+                              </div>
+                            </div>
+                          </section>
+                          <section class="flex justify-end space-x-4">
+                            <app-button-standard
+                              (click)="saveArticle()"
+                              colorBtn="green"
+                              optionBtn="save"
+                              typeBtn="button"
+                              >
+                              Save
+                            </app-button-standard>
+                            <app-button-standard
+                              (click)="closeDialog()"
+                              colorBtn="red"
+                              optionBtn="back"
+                              typeBtn="button"
+                              >
+                              Back
+                            </app-button-standard>
+                          </section>
+                        </form>
