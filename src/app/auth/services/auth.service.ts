@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponseAuth, AuthVerify } from '../models/auth.model';
+import { ApiResponseAuth, ApiResponseMetadata, AuthVerify } from "../models/auth.model";
 import { switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
 import { environment } from 'src/environments/environment';
 import { DefaultValuesService } from './default-values.service';
+import { MetadataModel } from "@auth/models/default-values.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
   ) { }
 
   postLogin(company: string, coduser: string, password: string){
-    return this.httpClient.post<ApiResponseAuth<any>>(`${this.API_URL}${this.AUTH}/login`,{
+    return this.httpClient.post<ApiResponseMetadata<any, MetadataModel>>(`${this.API_URL}${this.AUTH}/login`,{
       company,
       coduser,
       password
@@ -36,7 +37,7 @@ export class AuthService {
   }
 
   postVerifyCode(company: string, coduser: string, verifyCode: string){
-    return this.httpClient.post<ApiResponseAuth<AuthVerify>>(`${this.API_URL}${this.AUTH}/verify-code`,{
+    return this.httpClient.post<ApiResponseMetadata<AuthVerify, MetadataModel>>(`${this.API_URL}${this.AUTH}/verify-code`,{
       company,
       coduser,
       verifyCode

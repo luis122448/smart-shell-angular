@@ -39,7 +39,7 @@
           </div>
           <div class="flex">
             <label for="descri" class="label-input-sm label-required"
-              >Description</label
+              >{{ 'DESCRIPTION' | translate }}</label
               >
               <input
                 id="descri"
@@ -47,7 +47,7 @@
                 class="input-default"
                 formControlName="descri"
                 [class.input-invalid]="isInputInvalid('descri')"
-                placeholder="Description"
+                placeholder="{{ 'DESCRIPTION' | translate }}"
                 />
             </div>
             <div class="flex">
@@ -67,7 +67,7 @@
             <article class="h-full w-full px-8 space-y-4">
               <div class="flex">
                 <label for="codcur" class="label-input-sm label-required"
-                  >Currency</label
+                  >{{ 'CURRENCY' | translate }}</label
                   >
                   <select
                     name="codcur"
@@ -84,7 +84,7 @@
                       hidden
                       [class.option-invalid]="isInputInvalid('codcur')"
                       >
-                      -- Choose --
+                      -- {{ 'CHOOSE' | translate }} --
                     </option>
                     @for (item of currencies; track item) {
                       <option [value]="item.codcur">
@@ -112,7 +112,7 @@
               </section>
               <section class="space-y-2">
                 <div class="flex">
-                  <label for="observ" class="label-input-xl">Observation</label>
+                  <label for="observ" class="label-input-xl">{{ 'OBSERVATION' | translate }}</label>
                   <textarea
                     name=""
                     id="observ"

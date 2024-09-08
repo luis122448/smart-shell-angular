@@ -24,7 +24,7 @@
               hidden
               [class.option-invalid]="isInputInvalid('typcomdoc')"
               >
-              -- Choose --
+              -- {{ 'CHOOSE' | translate }} --
             </option>
             @for (item of listCommercialDocument; track item) {
               <option
@@ -37,7 +37,7 @@
           </select>
         </div>
         <div class="flex">
-          <label for="serie" class="label-input-sm label-required">Serie</label>
+          <label for="serie" class="label-input-sm label-required">{{ 'SERIE' | translate }}</label>
           <input
             id="serie"
             type="text"
@@ -67,7 +67,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('codbranch')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of listBranches; track item) {
                 <option
@@ -96,7 +96,7 @@
             </div>
             <div class="flex">
               <label for="descri" class="label-input-sm label-required"
-                >Description</label
+                >{{ 'DESCRIPTION' | translate }}</label
                 >
                 <input
                   id="descri"
@@ -104,7 +104,7 @@
                   class="input-default"
                   formControlName="descri"
                   [class.input-invalid]="isInputInvalid('descri')"
-                  placeholder="Description"
+                  placeholder="{{ 'DESCRIPTION' | translate }}"
                   />
               </div>
               <div class="flex">
@@ -143,7 +143,7 @@
                         hidden
                         [class.option-invalid]="isInputInvalid('typcorrel')"
                         >
-                        -- Choose --
+                        -- {{ 'CHOOSE' | translate }} --
                       </option>
                       <option value="A" class="option-default">Automatic</option>
                       <option value="M" class="option-default">Manual</option>
@@ -203,7 +203,7 @@
                   </section>
                   <section class="space-y-2">
                     <div class="flex">
-                      <label for="observ" class="label-input-xl">Observation</label>
+                      <label for="observ" class="label-input-xl">{{ 'OBSERVATION' | translate }}</label>
                       <textarea
                         name=""
                         id="observ"

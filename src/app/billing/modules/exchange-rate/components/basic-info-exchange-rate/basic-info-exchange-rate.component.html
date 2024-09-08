@@ -53,6 +53,7 @@
       <div class="flex flex-col space-y-1">
         <label for="fventa" class="label-input-sm label-required">Selling Factor</label>
         <input
+          id="fventa"
           type="number"
           min="0.00"
           step="0.01"
@@ -64,6 +65,7 @@
       <div class="flex flex-col space-y-1">
         <label for="fcompra" class="label-input-sm label-required">Buying Factor</label>
         <input
+          id="fcompra"
           type="number"
           min="0.00"
           step="0.01"
@@ -77,6 +79,7 @@
       <div class="flex flex-col space-y-1">
         <label for="cventa" class="label-input-sm">Accounting Sales</label>
         <input
+          id="cventa"
           type="number"
           min="0.00"
           step="0.01"
@@ -87,6 +90,7 @@
       <div class="flex flex-col space-y-1">
         <label for="ccompra" class="label-input-sm">Accounting Purchase</label>
         <input
+          id="ccompra"
           type="number"
           min="0.00"
           step="0.01"
@@ -99,6 +103,7 @@
       <div class="flex flex-col space-y-1">
         <label for="eventa" class="label-input-sm label-required">Sales Entity</label>
         <input
+          id="eventa"
           type="number"
           min="0.00"
           step="0.01"
@@ -110,6 +115,7 @@
       <div class="flex flex-col space-y-1">
         <label for="ecompra" class="label-input-sm label-required">Purchasing Entity</label>
         <input
+          id="ecompra"
           type="number"
           min="0.00"
           step="0.01"
@@ -183,7 +189,7 @@
       optionBtn="close"
       [typeBtn]="'button'"
     >
-      Close
+      {{ 'CLOSE' | translate }}
     </app-button-standard>
   </section>
 </form>

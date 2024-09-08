@@ -23,7 +23,7 @@
               hidden
               [class.option-invalid]="isInputInvalid('codlistprice')"
               >
-              -- Choose --
+              -- {{ 'CHOOSE' | translate }} --
             </option>
             @for (item of listPrices; track item) {
               <option [value]="item.codlistprice">
@@ -65,7 +65,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('codlistprice')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of listPrices; track item) {
                 <option [value]="item.codlistprice">

@@ -1,6 +1,6 @@
 export interface SituationCommercialDocument{
   typcomdoc: number
-  ingsalcom: number
+  inout: number
   sitcomdoc: number
   abrevi: string
   descri: string

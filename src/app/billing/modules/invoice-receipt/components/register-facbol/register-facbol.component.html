@@ -22,14 +22,13 @@
             </select>
           </div>
           <div class="grid grid-cols-3 items-center">
-            <label for="serie" class="text-inline label-required">Serie</label>
+            <label for="serie" class="text-inline label-required">{{ 'SERIE' | translate }}</label>
             <select
               name="serie"
               id="serie"
               class="select-default col-span-2"
               formControlName="serie"
               [class.select-invalid]="isInputInvalid('serie')"
-              placeholder="Serie*"
               >
               <option
                 value=""
@@ -39,7 +38,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('serie')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of series; track item) {
                 <option
@@ -53,7 +52,7 @@
           </div>
           <div class="grid grid-cols-3 items-center">
             <label for="reacomdoc" class="text-inline label-required"
-              >Reason</label
+              >{{ 'REASON' | translate }}</label
               >
               <select
                 name="reacomdoc"
@@ -61,7 +60,6 @@
                 class="select-default col-span-2"
                 formControlName="reacomdoc"
                 [class.select-invalid]="isInputInvalid('reacomdoc')"
-                placeholder="Reason*"
                 >
                 <option
                   value=""
@@ -71,7 +69,7 @@
                   hidden
                   [class.option-invalid]="isInputInvalid('reacomdoc')"
                   >
-                  -- Choose --
+                  -- {{ 'CHOOSE' | translate }} --
                 </option>
                 @for (item of reasons; track item) {
                   <option
@@ -85,10 +83,11 @@
             </div>
             <div class="grid grid-cols-3 items-center">
               <label for="codbuspar" class="text-inline label-required"
-                >Customer</label
+                >{{ 'CUSTOMER' | translate }}</label
                 >
                 <div class="col-span-2 flex">
                   <input
+                    id="codbuspar"
                     type="text"
                     placeholder="Client code"
                     class="input-default"
@@ -125,11 +124,12 @@
                 </div>
               </div>
               <div class="grid grid-cols-3 items-center">
-                <label class="text-inline label-required">Business name</label>
+                <label for="busnam" class="text-inline label-required">{{ 'BUSINESS_NAME' | translate }}</label>
                 <div class="col-span-2 flex">
                   <input
+                    id="busnam"
                     type="text"
-                    placeholder="Business name"
+                    placeholder="{{ 'BUSINESS_NAME' | translate }}"
                     class="input-default"
                     formControlName="busnam"
                     [class.input-invalid]="isInputInvalid('busnam')"
@@ -151,7 +151,7 @@
                 </div>
               </div>
               <div class="grid grid-cols-3 items-center">
-                <label class="text-inline label-required">Address</label>
+                <label class="text-inline label-required">{{ 'ADDRESS' | translate }}</label>
                 <textarea
                   formControlName="addres"
                   class="textarea-default col-span-2"
@@ -165,7 +165,7 @@
             <section class="flex-col space-y-2">
               <div class="grid grid-cols-3 items-center">
                 <label for="registdate" class="text-inline label-required"
-                  >Date of issue</label
+                  >{{ 'DATE_OF_ISSUE' | translate }}</label
                   >
                   <input
                     id="registdate"
@@ -178,7 +178,7 @@
                 </div>
                 <div class="grid grid-cols-3 items-center">
                   <label for="codcur" class="text-inline label-required"
-                    >Currency</label
+                    >{{ 'CURRENCY' | translate }}</label
                     >
                     <div class="col-span-2 grid grid-cols-3">
                       <select
@@ -208,7 +208,7 @@
                     </div>
                     <div class="grid grid-cols-3 items-center">
                       <label for="exchangerate" class="text-inline label-required"
-                        >Exhange Rate</label
+                        >{{ 'EXCHANGE_RATE' | translate}}</label
                         >
                         <div class="col-span-2 grid grid-cols-3">
                           <input
@@ -254,7 +254,7 @@
                                 hidden
                                 [class.option-invalid]="isInputInvalid('codsel')"
                                 >
-                                -- Choose --
+                                -- {{ 'CHOOSE' | translate }} --
                               </option>
                               @for (item of sellers; track item) {
                                 <option
@@ -286,7 +286,7 @@
                                   hidden
                                   [class.option-invalid]="isInputInvalid('typpaycon')"
                                   >
-                                  -- Choose --
+                                  -- {{ 'CHOOSE' | translate }} --
                                 </option>
                                 @for (item of tipoConPag; track item) {
                                   <option
@@ -309,7 +309,7 @@
                                 />
                             </div>
                             <div class="grid grid-cols-3 items-center">
-                              <label for="observ" class="text-inline">Observation</label>
+                              <label for="observ" class="text-inline">{{ 'OBSERVATION' | translate }}</label>
                               <textarea
                                 name="observ"
                                 class="input-default col-span-2"

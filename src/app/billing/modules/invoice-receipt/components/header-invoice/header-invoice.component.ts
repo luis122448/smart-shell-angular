@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { GlobalStatusService } from '@billing-services/global-status.service';
+
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
@@ -8,50 +9,26 @@ import { DefaultValuesService } from 'src/app/auth/services/default-values.servi
   styleUrls: ['./header-invoice.component.scss']
 })
 export class HeaderInvoiceComponent {
-  @Output() isNewDocument = new EventEmitter<boolean>(false);
-  isLoading =  false
-  isStatusInvoice : 'search' | 'register' =  'register'
-  constructor(
-    private defaultValuesService: DefaultValuesService,
-    private globalStatusService: GlobalStatusService
-  ){
-    this.isStatusInvoice = this.globalStatusService.getStatusInvoice()
-    this.globalStatusService.isLoading$.subscribe(
-      {
-        next:data =>{this.isLoading = data},
-        error:error =>{this.isLoading = false}
-      })
+  @Output() isNewDocument = new EventEmitter<boolean>();
+  isStatusInvoiceReceipt = this.globalStatusService.isStatusInvoiceReceipt;
+
+  constructor(private globalStatusService: GlobalStatusService) {}
+
+  onRegisterInvoice() {
+    this.isNewDocument.emit(true);
+    this.globalStatusService.setStatusInvoiceReceipt('register');
   }
 
-  ngOnInit(): void {
-    this.globalStatusService.isLoading$.subscribe(
-      {
-        next:data =>{this.isLoading = data},
-        error:error =>{this.isLoading = false}
-      })
-    this.globalStatusService.isStatusInvoice$.subscribe(
-      {
-        next:data =>{this.isStatusInvoice = data },
-        error:error =>{this.isStatusInvoice = 'register'}
-      })
+  onSearchInvoice() {
+    this.isNewDocument.emit(true);
+    this.globalStatusService.setStatusInvoiceReceipt('search');
   }
 
-  onRegisterInvoice(){
-    this.isNewDocument.emit(true)
-    this.globalStatusService.setStatusInvoice('register')
+  onBranchChange(event: any) {
+    this.globalStatusService.setBranch((event as HTMLSelectElement).value);
   }
 
-  onSearchInvoice(){
-    this.isNewDocument.emit(true)
-    this.globalStatusService.setStatusInvoice('search')
+  onPlaceOfIssueChange(event: any) {
+    this.globalStatusService.setPlaceOfIssue((event as HTMLSelectElement).value);
   }
-
-  onBranchChange(event: any){
-    this.globalStatusService.setBranchSubject((event as HTMLSelectElement).value)
-  }
-
-  onPlaceOfIssueChange(event: any){
-    this.globalStatusService.setPlaceOfIssue((event as HTMLSelectElement).value)
-  }
-
 }

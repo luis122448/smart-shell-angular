@@ -7,6 +7,16 @@ export interface ApiResponseAuth<T>{
   object: T | null
 }
 
+export interface ApiResponseMetadata<T, Q>{
+  status: number,
+  message: string,
+  logMessage?: string
+  logUser?: String
+  logTime?: Date | number[],
+  object: T | null
+  metadata: Q | null
+}
+
 export interface Auth{
   company: string,
   coduser: string,

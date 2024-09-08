@@ -39,7 +39,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('typinv')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of inventories; track item) {
                 <option [value]="item.typinv">

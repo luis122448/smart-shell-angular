@@ -6,7 +6,7 @@
       class="grid grid-cols-2 gap-x-6"
       >
       <div class="flex justify-start">
-        <label for="codbuspar" class="label-input-sm">Code</label>
+        <label for="codbuspar" class="label-input-sm">{{ 'CODE' | translate }}</label>
         <input
           id="codbuspar"
           type="text"
@@ -15,7 +15,7 @@
           />
       </div>
       <div class="flex justify-start">
-        <label for="busnam" class="label-input-sm">Business Name</label>
+        <label for="busnam" class="label-input-sm">{{ 'BUSINESS_NAME' | translate }}</label>
         <input
           id="busnam"
           type="text"
@@ -104,7 +104,7 @@
   <article>
     <form action="#" [formGroup]="formTypePaymentCondition" class="space-y-2">
       <div class="flex justify-start">
-        <label for="typpaycon" class="label-input-sm">Code</label>
+        <label for="typpaycon" class="label-input-sm">{{ 'CODE' | translate }}</label>
         <select
           name="typpaycon"
           id="typpaycon"

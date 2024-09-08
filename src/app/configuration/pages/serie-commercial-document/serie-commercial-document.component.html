@@ -25,7 +25,7 @@
             hidden
             [class.option-invalid]="isInputInvalid('typcomdoc')"
             >
-            -- Choose --
+            -- {{ 'CHOOSE' | translate }} --
           </option>
           @for (item of listCommercialDocument; track item) {
             <option
@@ -63,7 +63,7 @@
         </ng-container>
         <ng-container cdkColumnDef="descri">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Description
+            {{ 'DESCRIPTION' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.descri }}
@@ -71,7 +71,7 @@
         </ng-container>
         <ng-container cdkColumnDef="codext">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Code Alternative
+            {{ 'ALTERNATIVE_CODE' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.codext }}

@@ -76,7 +76,7 @@
 <section class="grid grid-cols-2 pt-6">
   <div class="flex justify-start space-x-4">
     <app-button-standard
-      [disabledBtn]="isStatusInvoiceRegister"
+      [disabledBtn]="isStatusInvoiceReceiptRegister"
       optionBtn="new"
       colorBtn="sky"
       (click)="newDocument()"
@@ -85,14 +85,14 @@
   </div>
   <div class="flex justify-end space-x-4">
     <app-button-standard
-      [disabledBtn]="isStatusInvoiceRegister"
+      [disabledBtn]="isStatusInvoiceReceiptRegister"
       optionBtn="calculate"
       colorBtn="sky"
       (click)="calculate()"
       >Calculate</app-button-standard
     >
     <app-button-standard
-      [disabledBtn]="isStatusInvoiceRegister"
+      [disabledBtn]="isStatusInvoiceReceiptRegister"
       optionBtn="save"
       colorBtn="sky"
       (click)="save()"

@@ -15,6 +15,7 @@ import { BasicImportArticleComponent } from '@billing-module-inventory-article/c
 import { ListPriceModule } from '@billing-module-list-price/list-price.module';
 import { BasicArticleAttachedComponent } from '@billing-module-inventory-article/components/basic-article-attached/basic-article-attached.component';
 import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SharedBillingModule } from '@billing-modules/shared/shared-billing.modu
     ReactiveFormsModule,
     ListPriceModule,
     SharedModule,
-    SharedBillingModule
+    SharedBillingModule,
+    TranslateModule,
   ],
   exports:[
     BasicInfoArticleComponent,

@@ -1,12 +1,12 @@
 <main class="dialog-container">
   <section>
-    <h1 class="dialog-title">Inventory and Articles</h1>
+    <h1 class="dialog-title">{{ 'INVENTORY_AND_ARTICLES' | translate }}</h1>
     <form [formGroup]="formSearchInventoryArticle">
       <div class="divide-line space-y-2">
         <div class="grid grid-cols-5 gap-x-8">
           <div class="col-span-3 flex">
             <div class="w-48">
-              <label for="typinv" class="label-input-lg">Inventory</label>
+              <label for="typinv" class="label-input-lg">{{ 'INVENTORY' | translate }}</label>
             </div>
             <select
               name="typinv"
@@ -23,7 +23,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('typinv')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of inventories; track item) {
                 <option [value]="item.typinv">
@@ -33,7 +33,7 @@
             </select>
           </div>
           <div class="col-span-2 flex items-center justify-center space-x-4">
-            <label for="status" class="label-input-xs">Inc Inactive?</label>
+            <label for="status" class="label-input-xs">{{ 'INC_INACTIVE?' | translate }}</label>
             <input
               id="status"
               type="checkbox"
@@ -45,7 +45,7 @@
         <div class="space-y-2 pt-2">
           <div>
             <div class="flex justify-start">
-              <label for="codart" class="label-input-sm">Article Code</label>
+              <label for="codart" class="label-input-sm">Article {{ 'CODE' | translate }}</label>
               <input
                 id="codart"
                 type="text"
@@ -56,7 +56,7 @@
           </div>
           <div>
             <div class="flex justify-start">
-              <label for="descri" class="label-input-sm">Description</label>
+              <label for="descri" class="label-input-sm">{{ 'DESCRIPTION' | translate }}</label>
               <input
                 id="descri"
                 type="text"

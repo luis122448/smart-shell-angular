@@ -1,0 +1,44 @@
+{
+  "HELLO": "Hello",
+  "WELCOME": "Welcome to our website",
+
+  "COD_BUSINESS_PARTNER": "Cod Business Partner",
+  "INTERLOCUTOR_TYPE": "Interlocutor Type",
+  "SEARCH_BUSINESS_PARTNER": "Search Business Partner",
+  "WRITE_CODE_OR_BUSINESS_NAME": "Write Code or Business Name",
+  "BUSINESS_PARTNER": "Business Partner",
+  "BUSINESS_NAME": "Business Name",
+  "ADDRESS": "Address",
+
+  "COD_ARTICLE": "Cod Article",
+  "SEARCH_ARTICLE": "Search Article",
+  "WRITE_CODE_OR_ARTICLE_NAME": "Write Code or Article Name",
+  "DESCRIPTION": "Description",
+  "ALTERNATIVE_CODE": "Alternative Code",
+  "INVENTORY_AND_ARTICLES": "Inventory and Articles",
+  "INVENTORY": "Inventory",
+  "AMOUNT": "Amount",
+
+  "CODE": "Code",
+  "CUSTOMER": "Customer",
+  "EXCHANGE_RATE": "Exchange Rate",
+  "N_DOCUMENT": "N° Document",
+  "TYPE_DOCUMENT": "Type Document",
+  "SITUATION": "Situation",
+  "INOUT": "In/Out",
+  "REASON": "Reason",
+  "SERIE": "Serie",
+  "IMPORT": "Import",
+
+  "SELECT_ALL": "Select All",
+  "CLOSE": "Close",
+  "CHOOSE": "Choose",
+  "TOTAL_RECORDS": "Total Records",
+  "INC_INACTIVE?": "Inc Inactive?",
+  "OBSERVATION": "Observation",
+  "DATE_OF_ISSUE": "Date of Issue",
+
+  "INVENTORY_TAKING": "Inventory Taking",
+  "INTERNAL_GUIDE": "Internal Guide"
+
+}

@@ -1,7 +1,7 @@
 <main class="sub-dialog-container">
   <section class="grid grid-cols-2 gap-x-4">
     <div class="flex">
-      <label for="codart" class="label-input-sm label-required">Code</label>
+      <label for="codart" class="label-input-sm label-required">{{ 'CODE' | translate }}</label>
       <input
         id="codart"
         type="text"
@@ -13,7 +13,7 @@
     </div>
     <div class="flex">
       <label for="descri" class="label-input-sm label-required"
-        >Description</label
+        >{{ 'DESCRIPTION' | translate }}</label
         >
         <input
           id="descri"
@@ -124,7 +124,7 @@
                   hidden
                   [class.option-invalid]="isInputInvalid('typspe')"
                   >
-                  -- Choose --
+                  -- {{ 'CHOOSE' | translate }} --
                 </option>
                 @for (item of optionArticleSpecification; track item) {
                   <option
@@ -136,7 +136,7 @@
               </select>
             </div>
             <div class="flex justify-start">
-              <label for="observ" class="label-input-sm">Observation</label>
+              <label for="observ" class="label-input-sm">{{ 'OBSERVATION' | translate }}</label>
               <textarea
                 name=""
                 id="observ"

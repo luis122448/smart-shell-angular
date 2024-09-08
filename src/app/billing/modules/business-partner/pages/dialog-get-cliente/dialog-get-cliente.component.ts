@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { PageEvent } from "@angular/material/paginator";
 
 export interface DialogData {
   codbuspar: string;
@@ -25,10 +26,13 @@ export class DialogGetClienteComponent implements OnInit {
   dataSource = new DataSourceBusinessPartner();
   displayedColumns: string[] = ['codbuspar', 'busnam', 'nroidedoc'];
   input = new FormControl('', { nonNullable: true });
-  countRecords = 0;
   selectedRowIndex: number | null = 0;
   scrollingUp = false;
   isKeyboardNavigation = false;
+  // Page
+  totalElements = 0;
+  pageSize = 25;
+  pageIndex = 0;
 
   constructor(
     private dialog: Dialog,
@@ -39,7 +43,7 @@ export class DialogGetClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.businessPartnerService
-      .getByLike(this.data.codbuspar, this.data.busnam)
+      .getByPage(-1, this.data.codbuspar, this.data.busnam, true, 25, 0)
       .subscribe({
         next: (data) => {
           if (data.status <= 0){
@@ -49,11 +53,11 @@ export class DialogGetClienteComponent implements OnInit {
             });
             this.dialogRef.close(null);
           }
-          if (data.status > 0 && data.list.length === 1) {
-            this.dialogRef.close(data.list[0]);
+          if (data.status > 0 && data.page.content.length === 1) {
+            this.dialogRef.close(data.page.content[0]);
           }
-          this.dataSource.getInit(data.list);
-          this.countRecords = this.dataSource.getCount();
+          this.dataSource.getInit(data.page.content);
+          this.totalElements = data.page.totalElements;
         },
         error: (err) => {
           this.dialogRef.close(null);
@@ -78,6 +82,22 @@ export class DialogGetClienteComponent implements OnInit {
     }
   }
 
+  byPageEvent(e: PageEvent) {
+    console.log(e.pageIndex);
+    this.businessPartnerService
+      .getByPage(
+        -1,
+        this.data.codbuspar,
+        this.data.busnam,
+        true,
+        this.pageSize,
+        e.pageIndex
+      )
+      .subscribe((data) => {
+        this.dataSource.getInit(data.page.content);
+      });
+  }
+
   onMouseOver(index: number) {
     if (!this.isKeyboardNavigation) {
       this.selectedRowIndex = index;
@@ -94,7 +114,7 @@ export class DialogGetClienteComponent implements OnInit {
 
     setTimeout(() => {
       this.isKeyboardNavigation = false;
-    }, 1000); // Retraso de 1 segundo
+    }, 1000);
   }
 
   onArrowDown() {
@@ -104,7 +124,7 @@ export class DialogGetClienteComponent implements OnInit {
 
     setTimeout(() => {
       this.isKeyboardNavigation = false;
-    }, 1000); // Retraso de 1 segundo
+    }, 1000);
   }
 
   private navigateRows(direction: number) {
@@ -112,12 +132,8 @@ export class DialogGetClienteComponent implements OnInit {
       const rows = this.mainTable.nativeElement.querySelectorAll('.row-table');
       const currentRow = this.selectedRowIndex ?? 0;
       const targetRow = Math.max(0, Math.min(rows.length - 1, currentRow + direction));
-
-      // Scroll to the selected row
       const rowElement = rows[targetRow] as HTMLElement;
       rowElement.scrollIntoView({ behavior: 'auto', block: 'center' });
-
-      // Update selectedRowIndex
       this.selectedRowIndex = targetRow;
     }
   }

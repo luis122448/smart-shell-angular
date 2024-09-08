@@ -31,16 +31,15 @@ import { DialogImportArticleComponent } from '../dialog-import-article/dialog-im
   templateUrl: './dialog-all-inventario-articulo.component.html',
   styleUrls: ['./dialog-all-inventario-articulo.component.scss'],
 })
-export class DialogAllInventoryArticleComponent implements OnInit {
+export class DialogAllInventoryArticleComponent {
   dataSource = new DataSourceArticle();
   displayedColumns: string[] = ['codart', 'descri', 'codext', 'operac'];
   optionTipinv: TypeInventory[] = [];
   selectTipinv: TypeInventory | null = null;
   formSearchInventoryArticle!: FormGroup;
-  countRecords = 0;
   // Page
   totalElements = 0;
-  pageSize = 10;
+  pageSize = 25;
   pageIndex = 0;
   // Default Values
   inventories: Inventory[] = [];
@@ -52,7 +51,7 @@ export class DialogAllInventoryArticleComponent implements OnInit {
         typinv: [typinv, [Validators.required]],
         codart: ['', []],
         descri: ['', []],
-        status: ['', []],
+        status: [true, [Validators.required]],
       },
       {
         // validators: [MyValidators.NotNullValidatorTwo('codart', 'desart')],
@@ -80,7 +79,6 @@ export class DialogAllInventoryArticleComponent implements OnInit {
     );
     this.buildForm(this.defaultInventory?.typinv);
   }
-  ngOnInit(): void {}
 
   searchArticle() {
     if (this.formSearchInventoryArticle.invalid) {
@@ -92,10 +90,11 @@ export class DialogAllInventoryArticleComponent implements OnInit {
       return;
     }
     this.articuloService
-      .getPage(
+      .getByPage(
         this.typinv?.value,
         this.codart?.value,
         this.descri?.value,
+        true,
         this.pageSize,
         this.pageIndex
       )
@@ -120,7 +119,7 @@ export class DialogAllInventoryArticleComponent implements OnInit {
         codart: row?.codart,
         descri: row?.descri,
         article: row,
-        isNewArticle: row === null ? true : false,
+        isNewArticle: row === null,
       },
     });
   }
@@ -202,10 +201,11 @@ export class DialogAllInventoryArticleComponent implements OnInit {
   byPageEvent(e: PageEvent) {
     console.log(e.pageIndex);
     this.articuloService
-      .getPage(
+      .getByPage(
         this.typinv?.value,
         this.codart?.value,
         this.descri?.value,
+        this.status?.value,
         this.pageSize,
         e.pageIndex
       )
@@ -226,6 +226,9 @@ export class DialogAllInventoryArticleComponent implements OnInit {
   }
   get descri(): AbstractControl | null {
     return this.formSearchInventoryArticle.get('descri');
+  }
+  get status(): AbstractControl | null {
+    return this.formSearchInventoryArticle.get('status');
   }
 }
 

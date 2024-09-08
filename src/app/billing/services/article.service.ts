@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Article, DAOArticle, DTOArticle, PAGEArticle } from '../models/article.model';
 import { catchError, of } from 'rxjs'
 import { environment } from 'src/environments/environment';
-import { ApiResponseByte } from '@billing-models/api-reponse.model';
+import { ApiResponseByte, ApiResponsePage } from "@billing-models/api-reponse.model";
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +47,17 @@ export class ArticleService {
     return this.httpCLient.get<DAOArticle>(`${this.API_URL}${this.PATH_BILLING}/article/by-name`,{ params });
   }
 
-  getPage(typinv:string, codart: string, descri: string, pageSize: number = 10,pageIndex: number = 0){
+  getByPage(typinv:number, codart: string, descri: string, status: boolean, pageSize: number = 25, pageIndex: number = 0){
     let params = new HttpParams()
-    params = params.set('typinv',typinv)
+    params = params.set('typinv',typinv.toString())
     params = params.set('codart',codart)
     params = params.set('descri',descri)
+    if (!status) {
+      params = params.set('status','Y')
+    }
     params = params.set('size',pageSize.toString())
     params = params.set('page',pageIndex.toString())
-    return this.httpCLient.get<PAGEArticle>(`${this.API_URL}${this.PATH_BILLING}/article/by-page`,{ params })
+    return this.httpCLient.get<ApiResponsePage<Article>>(`${this.API_URL}${this.PATH_BILLING}/article/by-page`,{ params })
   }
 
   getById(codart: string){

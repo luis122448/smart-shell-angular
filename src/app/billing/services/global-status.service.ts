@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Injectable({
@@ -7,60 +6,41 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class GlobalStatusService {
 
-  private isLoadingSubject = new BehaviorSubject<boolean>(false);
-  private isStatusInvoiceSubject = new BehaviorSubject<'search' | 'register'>('register');
-  private isStatusConfigurationSubject = new BehaviorSubject<'company' | 'serie'>('company');
-  private isBranchSubject = new BehaviorSubject<string>('1');
-  private isPlaceOfIssue = new BehaviorSubject<string>('1');
-  isLoading$ = this.isLoadingSubject.asObservable()
-  isStatusInvoice$ = this.isStatusInvoiceSubject.asObservable()
-  isStatusConfiguration$ = this.isStatusConfigurationSubject.asObservable()
-  isBranchSubject$ = this.isBranchSubject.asObservable()
-  isPlaceOfIssue$ = this.isPlaceOfIssue.asObservable()
+  isLoading = signal<boolean>(false);
+  isStatusInvoiceReceipt = signal<'search' | 'register'>('search');
+  isStatusInternalGuide = signal<'search' | 'register'>('search');
+  isStatusConfiguration = signal<'company' | 'serie'>('company');
+  isBranch = signal<string>('1');
+  isPlaceOfIssue = signal<string>('1');
 
-  constructor(
-    private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  constructor(private ngxSpinnerService: NgxSpinnerService) {}
 
-  getLoading() {
-    return this.isLoadingSubject.getValue();
-  }
   setLoading(isLoading: boolean) {
-    this.isLoadingSubject.next(isLoading);
-    if(isLoading){
-      this.ngxSpinnerService.show()
+    this.isLoading.set(isLoading);
+    if (isLoading) {
+      this.ngxSpinnerService.show().then(r => console.log(r));
     } else {
-      this.ngxSpinnerService.hide()
+      this.ngxSpinnerService.hide().then(r => console.log(r));
     }
   }
 
-  getStatusInvoice(){
-    return this.isStatusInvoiceSubject.getValue()
-  }
-  setStatusInvoice(data: 'search' | 'register'){
-    this.isStatusInvoiceSubject.next(data)
+  setStatusInvoiceReceipt(data: 'search' | 'register') {
+    this.isStatusInvoiceReceipt.set(data);
   }
 
-  getStatusConfiguration(){
-    return this.isStatusConfigurationSubject.getValue()
+  setStatusInternalGuide(data: 'search' | 'register') {
+    this.isStatusInternalGuide.set(data);
   }
 
-  setStatusConfiguration(data: 'company' | 'serie'){
-    this.isStatusConfigurationSubject.next(data)
+  setStatusConfiguration(data: 'company' | 'serie') {
+    this.isStatusConfiguration.set(data);
   }
 
-  getBranchSubject(){
-    return this.isBranchSubject.getValue()
-  }
-  setBranchSubject(data: string){
-    this.isBranchSubject.next(data)
+  setBranch(data: string) {
+    this.isBranch.set(data);
   }
 
-  getPlaceOfIssue(){
-    return this.isPlaceOfIssue.getValue()
+  setPlaceOfIssue(data: string) {
+    this.isPlaceOfIssue.set(data);
   }
-  setPlaceOfIssue(data: string){
-    this.isPlaceOfIssue.next(data)
-  }
-
 }

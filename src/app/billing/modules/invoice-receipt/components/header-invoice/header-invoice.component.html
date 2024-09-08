@@ -2,7 +2,7 @@
   <app-header></app-header>
   <section class="h-[50px] w-full px-4 grid grid-cols-2 dark:bg-slate-800 bg-gray-300 items-center">
     <div class="col-span-1 flex items-start gap-x-4">
-      @switch (isStatusInvoice) {
+      @switch (isStatusInvoiceReceipt()) {
         @case ('search') {
           <div>
             <app-button-standard
@@ -25,7 +25,6 @@
               >
             </div>
           }
-          <!-- <app-default-values></app-default-values> -->
         }
       </div>
       <div class="col-span-1 items-end grid grid-cols-2 gap-x-4 dark:bg-slate-800 dark:text-slate-400">
@@ -35,7 +34,6 @@
             name="codbranch"
             id="codbranch"
             class="select-default col-span-2"
-            placeholder="Branch*"
             (change)="onBranchChange($event.target)"
             disabled
             >
@@ -49,10 +47,9 @@
             name="codplaiss"
             id="codplaiss"
             class="select-default col-span-2"
-            placeholder="Place of Issue*"
             (change)="onPlaceOfIssueChange($event.target)"
             >
-            <option value="1">Eccomerce</option>
+            <option value="1">Ecommerce</option>
             <option value="2">Physical Store</option>
           </select>
         </div>

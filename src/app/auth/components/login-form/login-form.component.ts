@@ -19,6 +19,7 @@ import { TypeCommercialDocumentService } from '@billing-services/type-commercial
 import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
 import { TypeBusinessPartnerService } from '@billing-services/type-business-partner.service';
 import { UserService } from '@billing-services/user.service';
+import { MetadataModel } from "@auth/models/default-values.model";
 
 @Component({
   selector: 'app-login-form',
@@ -64,16 +65,6 @@ export class LoginFormComponent {
     private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
-    // Default-Values
-    private typeCommercialDocumentService: TypeCommercialDocumentService,
-    private sellerService: SellerService,
-    private serieCommercialDocumentService: SerieCommercialDocumentService,
-    private reasonCommercialDocumentService: ReasonCommercialDocumentService,
-    private situationCommercialDocumentService: SituationCommercialDocumentService,
-    private typeInventoryService: TypeInventoryService,
-    private listPriceService: ListPriceService,
-    private typeBusinessPartnerService: TypeBusinessPartnerService,
-    private userService: UserService
   ) {
     this.buildForm();
     this.buildFormVerify();
@@ -118,7 +109,7 @@ export class LoginFormComponent {
               verticalPosition: 'top',
             });
           } else {
-            await this.onUploadDefaultValues();
+            await this.onUploadDefaultValues(data.metadata);
             this.router.navigate(['/billing']);
           }
         }
@@ -145,7 +136,7 @@ export class LoginFormComponent {
               data: data,
             });
           } else {
-            await this.onUploadDefaultValues();
+            await this.onUploadDefaultValues(data.metadata);
             this.router.navigate(['/billing']);
             this.matSnackBar.openFromComponent(
               MatsnackbarSuccessComponent,
@@ -179,192 +170,121 @@ export class LoginFormComponent {
     }
   }
 
-  async onUploadDefaultValues() {
+  async onUploadDefaultValues(metadata: MetadataModel | null) {
     await this.defaultValuesService.removeAllLocalStorage();
-    await this.sellerService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'sellers',
-          data.list.map((data) => {
-            return {
-              codsel: data.codsel,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: 'N',
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.typeCommercialDocumentService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'documents',
-          data.list.map((data) => {
-            return {
-              typcomdoc: data.typcomdoc,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: 'N',
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.serieCommercialDocumentService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'series',
-          data.list.map((data) => {
-            return {
-              typcomdoc: data.typcomdoc,
-              serie: data.serie,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: data.defaul,
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.reasonCommercialDocumentService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'reasons',
-          data.list.map((data) => {
-            return {
-              typcomdoc: data.typcomdoc,
-              ingsalcom: data.ingsalcom,
-              reacomdoc: data.reacomdoc,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: data.defaul,
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.situationCommercialDocumentService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'situations',
-          data.list.map((data) => {
-            return {
-              typcomdoc: data.typcomdoc,
-              sitcomdoc: data.sitcomdoc,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: 'N',
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.typeInventoryService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'inventories',
-          data.list.map((data) => {
-            return {
-              typinv: data.typinv,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: data.defaul,
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.listPriceService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'listprices',
-          data.list.map((data) => {
-            return {
-              codlistprice: data.codlistprice,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              defaul: data.defaul,
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.typeBusinessPartnerService.getAll().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue(
-          'typeBusinessPartners',
-          data.list.map((data) => {
-            return {
-              typbuspar: data.typbuspar,
-              abrevi: data.abrevi,
-              descri: data.descri,
-              codext: data.codext,
-              defaul: data.defaul,
-            };
-          })
-        );
-      },
-      error: (err) => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err,
-        });
-      },
-    });
-    await this.userService.getProfile().subscribe({
-      next: (data) => {
-        this.defaultValuesService.setLocalStorageValue('user', [data.object]);
-      },
-      error: err => {
-        this.dialog.open(DialogErrorAlertComponent, {
-          width: '400px',
-          data: err.error,
-        });
-      },
-    })
+    if (!metadata) {
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { status: -1, message: 'No metadata' },
+      });
+      return;
+    }
+    this.defaultValuesService.setLocalStorageValue(
+      'sellers',
+      metadata.seller.map((data) => {
+        return {
+          codsel: data.codsel,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: 'N',
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'documents',
+      metadata.typeCommercialDocument.map((data) => {
+        return {
+          typcomdoc: data.typcomdoc,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: 'N',
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'series',
+      metadata.serieCommercialDocument.map((data) => {
+        return {
+          typcomdoc: data.typcomdoc,
+          serie: data.serie,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'reasons',
+      metadata.reasonCommercialDocument.map((data) => {
+        return {
+          typcomdoc: data.typcomdoc,
+          inout: data.inout,
+          reacomdoc: data.reacomdoc,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'situations',
+      metadata.situationCommercialDocument.map((data) => {
+        return {
+          typcomdoc: data.typcomdoc,
+          sitcomdoc: data.sitcomdoc,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: 'N',
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'inventories',
+      metadata.typeInventory.map((data) => {
+        return {
+          typinv: data.typinv,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'warehouses',
+      metadata.warehouse.map((data) => {
+        return {
+          typinv: data.typinv,
+          codwarehouse: data.codwarehouse,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'listprices',
+      metadata.listPrice.map((data) => {
+        return {
+          codlistprice: data.codlistprice,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue(
+      'typeBusinessPartners',
+      metadata.typeBusinessPartner.map((data) => {
+        return {
+          typbuspar: data.typbuspar,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          codext: data.codext,
+          defaul: data.defaul,
+        };
+      })
+    );
+    this.defaultValuesService.setLocalStorageValue('user', [metadata.user]);
   }
 
   get company() {

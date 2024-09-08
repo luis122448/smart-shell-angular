@@ -20,7 +20,7 @@
               hidden
               [class.option-invalid]="isInputInvalid('typinv')"
               >
-              -- Choose --
+              -- {{ 'CHOOSE' | translate }} --
             </option>
             @for (item of inventories; track item) {
               <option [value]="item.typinv">
@@ -57,7 +57,7 @@
             </div>
             <div class="flex">
               <label for="descri" class="label-input-sm label-required"
-                >Description</label
+                >{{ 'DESCRIPTION' | translate }}</label
                 >
                 <input
                   id="descri"
@@ -65,7 +65,7 @@
                   class="input-default"
                   formControlName="descri"
                   [class.input-invalid]="isInputInvalid('descri')"
-                  placeholder="Description"
+                  placeholder="{{ 'DESCRIPTION' | translate }}"
                   />
               </div>
               <div class="flex">
@@ -190,7 +190,7 @@
                           hidden
                           [class.option-invalid]="isInputInvalid('cstock')"
                           >
-                          -- Choose --
+                          -- {{ 'CHOOSE' | translate }} --
                         </option>
                         <option value="NONE" class="option-default">Out of control (None)</option>
                         <option value="UNITY" class="option-default">Control by Article (Unity)</option>
@@ -214,7 +214,7 @@
                           hidden
                           [class.option-invalid]="isInputInvalid('coduni')"
                           >
-                          -- Choose --
+                          -- {{ 'CHOOSE' | translate }} --
                         </option>
                         <option value="UNITY" class="option-default">Unit</option>
                         <option value="BOX" class="option-default">Box</option>
@@ -290,7 +290,7 @@
                           </section>
                           <section class="space-y-2">
                             <div class="flex">
-                              <label for="observ" class="label-input-xl">Observation</label>
+                              <label for="observ" class="label-input-xl">{{ 'OBSERVATION' | translate }}</label>
                               <textarea
                                 name=""
                                 id="observ"

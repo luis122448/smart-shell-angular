@@ -1,18 +1,17 @@
 <main
-  class="dialog-container"
+  class="dialog-container relative"
   (keydown.arrowup)="onArrowUp()"
   (keydown.arrowdown)="onArrowDown()"
 >
   <section class="dialog-title">
-    <h1>Search Business Partner</h1>
+    <h1>{{ "SEARCH_BUSINESS_PARTNER" | translate }}</h1>
   </section>
   <section class="relative flex w-full items-center justify-around">
     <input
       type="search"
       class="h-10 w-full rounded-sm border-2 border-slate-800 py-1 pl-8 pr-2 text-slate-700 hover:border-sky-700 focus:border-sky-700 focus:outline-none focus:ring-1 focus:ring-sky-700 dark:bg-gray-700 dark:text-gray-400"
-      placeholder="Escribir Codigo / Razon Social"
+      placeholder="{{ 'WRITE_CODE_OR_BUSINESS_NAME' | translate }}"
       [formControl]="input"
-
     />
     <fa-icon
       [icon]="faMagnifyingGlass"
@@ -46,14 +45,16 @@
           [id]="'row_' + i"
         ></tr>
         <ng-container cdkColumnDef="codbuspar">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            {{ "CODE" | translate }}
+          </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.codbuspar }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="busnam">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Bussiness Name
+            {{ "BUSINESS_NAME" | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.busnam }}
@@ -61,7 +62,7 @@
         </ng-container>
         <ng-container cdkColumnDef="nroidedoc">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            N° Document
+            {{ "N_DOCUMENT" | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.nroidedoc }}
@@ -69,9 +70,15 @@
         </ng-container>
       </table>
     </article>
-    <article class="footer-table-external">
-      Total Record : {{ dataSource.getCount() }}
-    </article>
+    <mat-paginator
+      (page)="byPageEvent($event)"
+      [hidePageSize]="true"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </section>
   <section class="flex justify-end">
     <app-button-standard
@@ -80,7 +87,14 @@
       [colorBtn]="'red'"
       [typeBtn]="'button'"
     >
-      Close
+      {{ "CLOSE" | translate }}
     </app-button-standard>
   </section>
+
+  <app-button-operac
+    optionBtn="close"
+    colorBtn="red"
+    class="absolute right-6 top-0 z-10"
+    (click)="closeDialog(null)"
+  ></app-button-operac>
 </main>

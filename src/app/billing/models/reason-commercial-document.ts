@@ -1,6 +1,6 @@
 export interface ReasonCommercialDocument{
   typcomdoc: number
-  ingsalcom: number
+  inout: number
   reacomdoc: number
   abrevi: string
   descri: string

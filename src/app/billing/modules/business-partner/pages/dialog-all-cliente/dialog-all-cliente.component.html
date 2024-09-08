@@ -1,13 +1,13 @@
 <main class="dialog-container">
   <section>
-    <h1 class="dialog-title">Business Partner</h1>
+    <h1 class="dialog-title">{{ 'BUSINESS_NAME' | translate }}</h1>
     <form [formGroup]="formSearchCliente">
       <div class="divide-line space-y-2">
         <div class="grid grid-cols-5 gap-x-8">
           <div class="col-span-3 flex">
             <div class="w-48">
               <label for="typbuspar" class="label-input-sm"
-                >Interlocutor Type</label
+                >{{ 'INTERLOCUTOR_TYPE' | translate }}</label
                 >
               </div>
               <select
@@ -25,7 +25,7 @@
               </select>
             </div>
             <div class="col-span-2 flex items-center justify-center space-x-4">
-              <label for="status" class="label-input-xs">Inc Inactive?</label>
+              <label for="status" class="label-input-xs">{{ 'INC_INACTIVE?' | translate }}</label>
               <input
                 id="status"
                 type="checkbox"
@@ -36,7 +36,7 @@
           </div>
           <div class="space-y-2 pt-2">
             <div class="flex justify-start">
-              <label for="codbuspar" class="label-input-sm">Code</label>
+              <label for="codbuspar" class="label-input-sm">{{ 'CODE' | translate }}</label>
               <input
                 id="codbuspar"
                 type="text"
@@ -45,7 +45,7 @@
                 />
             </div>
             <div class="flex justify-start">
-              <label for="busnam" class="label-input-sm">Business Name</label>
+              <label for="busnam" class="label-input-sm">{{ 'BUSINESS_NAME' | translate }}</label>
               <input
                 id="busnam"
                 type="text"
@@ -100,7 +100,7 @@
                   [class.row-table-delete]="row.status === 'N'"
                 ></tr>
                 <ng-container cdkColumnDef="codbuspar">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'CODE' | translate }}</th>
                   <td class="row-cell" cdk-cell *cdkCellDef="let row">
                     {{ row.codbuspar }}
                   </td>

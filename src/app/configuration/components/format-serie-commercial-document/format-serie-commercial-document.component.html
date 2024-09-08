@@ -24,7 +24,7 @@
               hidden
               [class.option-invalid]="isInputInvalid('typcomdoc')"
               >
-              -- Choose --
+              -- {{ 'CHOOSE' | translate }} --
             </option>
             @for (item of listCommercialDocument; track item) {
               <option
@@ -37,7 +37,7 @@
           </select>
         </div>
         <div class="flex">
-          <label for="serie" class="label-input-sm label-required">Serie</label>
+          <label for="serie" class="label-input-sm label-required">{{ 'SERIE' | translate }}</label>
           <input
             id="serie"
             type="text"
@@ -67,7 +67,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('codbranch')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of listBranches; track item) {
                 <option
@@ -100,7 +100,7 @@
                   hidden
                   [class.option-invalid]="isInputInvalid('typformat')"
                   >
-                  -- Choose --
+                  -- {{ 'CHOOSE' | translate }} --
                 </option>
                 @for (item of listFormatCommercialDocument; track item) {
                   <option

@@ -25,7 +25,7 @@
       </article>
       <article class="col-span-1 space-y-2">
         <div class="grid grid-cols-3">
-          <label for="codart" class="label-input-sm col-span-1">Art. Code</label>
+          <label for="codart" class="label-input-sm col-span-1">Art. {{ 'CODE' | translate }}</label>
           <input
             type="text"
             placeholder="Code"
@@ -83,7 +83,7 @@
               [class.row-table-delete]="row.status === 'N'"
             ></tr>
             <ng-container cdkColumnDef="codlistprice">
-              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'CODE' | translate }}</th>
               <td class="row-cell" cdk-cell *cdkCellDef="let row">
                 {{ row.codlistprice }}
               </td>

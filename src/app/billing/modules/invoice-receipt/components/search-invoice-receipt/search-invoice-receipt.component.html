@@ -1,0 +1,311 @@
+<section class="h-auto w-full pt-6">
+  <form [formGroup]="formSearchDocument">
+    <div class="grid w-full grid-cols-5 gap-x-4 px-4 lg:grid-cols-7">
+      <section class="space-y-2">
+        <label class="label-default label-required">Situation</label>
+        @for (item of situations; track item) {
+          <div
+            class="grid grid-cols-5 justify-start overflow-hidden whitespace-nowrap"
+            >
+            <input
+              [name]="item.sitcomdoc"
+              type="checkbox"
+              class="checkbox-default"
+              [value]="item.sitcomdoc"
+              (change)="toggleSelectionSituation(item.sitcomdoc.toString())"
+              [checked]="sitcomdoc.value.includes(item.sitcomdoc)"
+              />
+            <label class="label-radio col-span-4" [for]="item.sitcomdoc">{{
+              item.abrevi
+            }}</label>
+          </div>
+        }
+        <div
+          class="grid grid-cols-5 justify-start overflow-hidden whitespace-nowrap"
+          >
+          <input
+            id="selectAllSituation"
+            type="checkbox"
+            class="checkbox-default"
+            [value]="0"
+            (change)="toggleSelectAllSituation($event)"
+            />
+          <label class="label-radio-all col-span-4" for="selectAllSituation"
+            >{{ 'SELECT_ALL' | translate }}</label
+            >
+          </div>
+        </section>
+        <section class="space-y-2">
+          <label class="label-default label-required">Reason</label>
+
+          @for (item of reasons; track item) {
+            <div
+              class="grid grid-cols-5 justify-start overflow-hidden whitespace-nowrap"
+              >
+              <input
+                [name]="item.reacomdoc"
+                type="checkbox"
+                class="checkbox-default"
+                [value]="item.reacomdoc"
+                (change)="toggleSelectionReason(item.reacomdoc.toString())"
+                [checked]="reacomdoc.value.includes(item.reacomdoc)"
+                />
+              <label class="label-radio col-span-4" [for]="item.reacomdoc">{{
+                item.abrevi
+              }}</label>
+            </div>
+          }
+          <div
+            class="grid grid-cols-5 justify-start overflow-hidden whitespace-nowrap"
+            >
+            <input
+              id="selectAllReason"
+              type="checkbox"
+              class="checkbox-default"
+              [value]="0"
+              (change)="toggleSelectAllReason($event)"
+              />
+            <label class="label-radio-all col-span-4" for="selectAllReason"
+              >{{ 'SELECT_ALL' | translate }}</label
+              >
+            </div>
+          </section>
+          <section class="col-span-3 space-y-2 lg:col-span-5">
+            <div class="grid grid-cols-2 items-center gap-x-4">
+              <div class="grid grid-cols-3">
+                <label for="startat" class="label-default label-required"
+                  >Start At</label
+                  >
+                  <input
+                    id="startat"
+                    name="startat"
+                    type="date"
+                    class="input-auto col-span-2"
+                    formControlName="startat"
+                    />
+                </div>
+                <div class="grid grid-cols-3">
+                  <label for="finalat" class="label-default label-required"
+                    >Final At</label
+                    >
+                    <input
+                      id="finalat"
+                      name="finalat"
+                      type="date"
+                      class="input-auto col-span-2"
+                      formControlName="finalat"
+                      />
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 items-center gap-x-4">
+                  <div class="grid grid-cols-3 items-center">
+                    <label for="typcomdoc" class="label-default label-required"
+                      >Type Commercial Document</label
+                      >
+                      <select
+                        name="typcomdoc"
+                        id="typcomdoc"
+                        class="select-default col-span-2"
+                        formControlName="typcomdoc"
+                        (change)="changeTypcomdoc($event)"
+                        >
+                        <option value="1" class="option-default">Invoice</option>
+                        <option value="2" class="option-default">Ticket</option>
+                      </select>
+                    </div>
+                    <div class="grid grid-cols-3 items-center">
+                      <label for="serie" class="label-default">{{ 'SERIE' | translate }}</label>
+                      <select
+                        name="serie"
+                        id="serie"
+                        class="col-span-2 select-auto"
+                        formControlName="serie"
+                        placeholder="Serie*"
+                        >
+                        <option value="-1" class="option-default" selected>
+                          -- {{ 'CHOOSE' | translate }} --
+                        </option>
+                        @for (item of series; track item) {
+                          <option
+                            [value]="item.serie"
+                            class="option-default"
+                            >
+                            {{ item.serie + " - " + item.descri }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 items-center gap-x-4">
+                    <div class="grid grid-cols-3 items-center">
+                      <label for="currency" class="label-default"> {{ 'CURRENCY' | translate }}</label>
+                      <select
+                        name="currency"
+                        id="currency"
+                        class="select-default col-span-2"
+                        >
+                        <option value="-1" class="option-default" selected>
+                          -- {{ 'CHOOSE' | translate }} --
+                        </option>
+                        @for (item of currencies; track item) {
+                          <option
+                            [value]="item.codcur"
+                            class="option-default"
+                            >
+                            {{ item.abrevi }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                    <div>
+                      <div class="grid grid-cols-3 items-center">
+                        <label for="seller" class="label-default"> Seller</label>
+                        <select
+                          name="seller"
+                          id="seller"
+                          class="select-default col-span-2"
+                          >
+                          <option value="-1" class="option-default" selected>
+                            -- {{ 'CHOOSE' | translate }} --
+                          </option>
+                          @for (item of sellers; track item) {
+                            <option
+                              [value]="item.codsel"
+                              class="option-default"
+                              >
+                              {{ item.descri }}
+                            </option>
+                          }
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 items-center gap-x-4">
+                    <div class="grid grid-cols-3 items-center">
+                      <label for="typpaycon" class="label-default">
+                        Type Payment Condition</label
+                        >
+                        <select
+                          name="typpaycon"
+                          id="typpaycon"
+                          class="select-default col-span-2"
+                          >
+                          <option value="-1" class="option-default" selected>
+                            -- {{ 'CHOOSE' | translate }} --
+                          </option>
+                          @for (item of paymentConditions; track item) {
+                            <option
+                              [value]="item.typpaycon"
+                              class="option-default"
+                              >
+                              {{ item.descri }}
+                            </option>
+                          }
+                        </select>
+                      </div>
+                      <div>
+                        <!-- <div class="grid grid-cols-3 items-center">
+                        <label for="typpaycon" class="label-default">
+                          Type Payment Condition</label
+                          >
+                          <select
+                            name="typpaycon"
+                            id="typpaycon"
+                            class="select-default col-span-2"
+                            >
+                            <option value="-1" class="option-default" selected>
+                              -- {{ 'CHOOSE' | translate }} --
+                            </option>
+                            <option
+                              *ngFor="let item of paymentConditions"
+                              [value]="item.typpaycon"
+                              class="option-default"
+                              >
+                              {{ item.descri }}
+                            </option>
+                          </select>
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 items-center gap-x-4">
+                      <div class="grid grid-cols-3 items-center">
+                        <label for="codbuspar" class="text-inline">Busness Partner</label>
+                        <div class="col-span-2 flex">
+                          <input
+                            name="codbuspar"
+                            id="codbuspar"
+                            type="text"
+                            class="input-auto"
+                            formControlName="codbuspar"
+                            [class.input-invalid]="isInputInvalid('codbuspar')"
+                            placeholder="Codigo de Cliente*"
+                            (keyup.enter)="openDialogGetCli()"
+                            />
+                          @if (!statusBuspar) {
+                            <button
+                              type="button"
+                              class="button-icon-search"
+                              (click)="openDialogGetCli()"
+                              >
+                              <fa-icon
+                                [icon]="faMagnifyingGlass"
+                                class="icon-operac"
+                                size="sm"
+                              ></fa-icon>
+                            </button>
+                          }
+                          @if (statusBuspar) {
+                            <button
+                              type="button"
+                              class="button-icon-search"
+                              (click)="cleanBuspar()"
+                              >
+                              <fa-icon
+                                [icon]="faXmark"
+                                class="icon-operac"
+                                size="xl"
+                              ></fa-icon>
+                            </button>
+                          }
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-2 items-center">
+                        <div class="col-span-2 flex">
+                          <input
+                            type="text"
+                            placeholder="Razon Social"
+                            class="input-auto"
+                            formControlName="busnam"
+                            [class.input-invalid]="isInputInvalid('busnam')"
+                            (keyup.enter)="openDialogGetCli()"
+                            placeholder="Razon Social*"
+                            />
+                          @if (!statusBuspar) {
+                            <button
+                              type="button"
+                              class="button-icon-search"
+                              (click)="openDialogGetCli()"
+                              >
+                              <fa-icon
+                                [icon]="faMagnifyingGlass"
+                                class="icon-operac"
+                                size="sm"
+                              ></fa-icon>
+                            </button>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </form>
+            </section>
+            <section class="flex justify-end py-2">
+              <app-button-standard
+                colorBtn="sky"
+                optionBtn="search"
+                (click)="searchDocument()"
+                >
+                Search
+              </app-button-standard>
+            </section>

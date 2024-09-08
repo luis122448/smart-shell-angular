@@ -19,10 +19,10 @@ export class ReasonCommercialDocumentService {
     return this.httpCLient.get<DAOReasonCommercialDocument>(`${this.API_URL}${this.PATH_BILLING}/reason-commercial-document/by-all`)
   }
 
-  getByLike(typcomdoc: number, ingsalcom: number){
+  getByLike(typcomdoc: number, inout: number){
     let params = new HttpParams()
     params = params.set('typcomdoc',typcomdoc)
-    params = params.set('ingsalcom',ingsalcom)
+    params = params.set('inout',inout)
     return this.httpCLient.get<DAOReasonCommercialDocument>(`${this.API_URL}${this.PATH_BILLING}/reason-commercial-document/by-like`,{ params })
   }
 }

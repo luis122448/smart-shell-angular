@@ -34,7 +34,7 @@
                 hidden
                 [class.option-invalid]="isInputInvalid('typbuspar')"
                 >
-                -- Choose --
+                -- {{ 'CHOOSE' | translate }} --
               </option>
               @for (item of typeBusinessPartners; track item) {
                 <option [value]="item.typbuspar">
@@ -63,7 +63,7 @@
                   hidden
                   [class.option-invalid]="isInputInvalid('typidedoc')"
                   >
-                  -- Choose --
+                  -- {{ 'CHOOSE' | translate }} --
                 </option>
                 <option value=1 class="option-default">DNI</option>
                 <option value=2 class="option-default">RUC</option>
@@ -167,7 +167,7 @@
                 </div>
                 <div class="flex">
                   <label for="addres" class="label-input-sm label-required"
-                    >Address</label
+                    >{{ 'ADDRESS' | translate }}</label
                     >
                     <input
                       id="addres"
@@ -179,7 +179,7 @@
                       />
                   </div>
                   <div class="flex">
-                    <label for="observ" class="label-input-sm">Observation</label>
+                    <label for="observ" class="label-input-sm">{{ 'OBSERVATION' | translate }}</label>
                     <textarea
                       name=""
                       id="observ"

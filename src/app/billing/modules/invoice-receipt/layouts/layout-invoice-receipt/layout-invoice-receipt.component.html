@@ -5,7 +5,7 @@
   <div class="main-container">
     <app-header-invoice (isNewDocument)="isNewDocument($event)" class="h-[100px]"></app-header-invoice>
     <div class="body-container">
-      @switch (isStatusInvoice) {
+      @switch (isStatusInvoiceReceipt()) {
         @case ('register') {
           <section class="sub-main-container">
             <article class="h-auto w-full">
@@ -34,10 +34,10 @@
         @case ('search') {
           <section class="sub-main-container">
             <article>
-              <app-search-facbol></app-search-facbol>
+              <app-search-invoice-receipt></app-search-invoice-receipt>
             </article>
             <article class="w-full">
-              <app-detail-search-invoice (modifyDocument)="isModifyDocument($event)"></app-detail-search-invoice>
+              <app-search-detail-invoice-receipt (modifyDocument)="isModifyDocument($event)"></app-search-detail-invoice-receipt>
             </article>
           </section>
         }
