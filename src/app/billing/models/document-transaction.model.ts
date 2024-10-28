@@ -8,7 +8,7 @@ export interface DocumentTransaction {
     registdate: Date | number[]
     codbranch: number
     codplaiss: number
-    ingsalcom: number
+    inout: number
     reacomdoc: number
     busnam: string
     addres: string

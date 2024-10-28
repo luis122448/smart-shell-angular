@@ -8,7 +8,7 @@
       colorBtn="sky"
       optionBtn="search"
       typeBtn="button"
-    >
+      >
       Search
     </app-button-standard>
     <app-button-standard
@@ -17,87 +17,89 @@
       optionBtn="new"
       typeBtn="button"
       >New</app-button-standard
-    >
-  </section>
-  <section class="section-table">
-    <article class="container-dialog-table-300">
-      <table
-        class="main-dialog-table"
-        cdk-table
-        [dataSource]="dataSourceListPrice"
       >
-        <tr
-          class="header-table"
-          cdk-header-row
-          *cdkHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
-        <tr
-          class="row-table"
-          cdk-row
-          *cdkRowDef="let row; columns: displayedColumns"
-          [class.row-table-delete]="row.status === 'N'"
-        ></tr>
-        <ng-container cdkColumnDef="codlistprice">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.codlistprice }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="descri">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Description
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.descri }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="codext">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Code Alternative
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.codext }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
-          <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="crudListPrice(row)"
-              optionBtn="edit"
-              colorBtn="sky"
-            >
-            </app-button-operac>
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="deleteListPrice(row)"
-              optionBtn="delete"
-              colorBtn="red"
-            ></app-button-operac>
-          </td>
-        </ng-container>
-      </table>
-    </article>
-    <article>
-      <mat-paginator
-        [hidePageSize]="true"
-        [length]="totalElements"
-        [pageSize]="1"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page"
-      >
-      </mat-paginator>
-    </article>
-  </section>
-  <section class="flex justify-end">
-    <app-button-standard
-      (click)="closeDialog(null)"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</main>
+    </section>
+    <section class="section-table">
+      <article class="container-dialog-table-300">
+        <table
+          class="main-dialog-table"
+          cdk-table
+          [dataSource]="dataSourceListPrice"
+          >
+          <tr
+            class="header-table"
+            cdk-header-row
+            *cdkHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr
+            class="row-table"
+            cdk-row
+            *cdkRowDef="let row; columns: displayedColumns"
+            [class.row-table-delete]="row.status === 'N'"
+          ></tr>
+          <ng-container cdkColumnDef="codlistprice">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'CODE' | translate }}</th>
+            <td class="row-cell" cdk-cell *cdkCellDef="let row">
+              {{ row.codlistprice }}
+            </td>
+          </ng-container>
+          <ng-container cdkColumnDef="descri">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+              {{ 'DESCRIPTION' | translate }}
+            </th>
+            <td class="row-cell" cdk-cell *cdkCellDef="let row">
+              {{ row.descri }}
+            </td>
+          </ng-container>
+          <ng-container cdkColumnDef="codext">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+              {{ 'ALTERNATIVE_CODE' | translate }}
+            </th>
+            <td class="row-cell" cdk-cell *cdkCellDef="let row">
+              {{ row.codext }}
+            </td>
+          </ng-container>
+          <ng-container cdkColumnDef="operac">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
+            <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+              @if (row.status === 'Y') {
+                <app-button-operac
+                  (click)="crudListPrice(row)"
+                  optionBtn="edit"
+                  colorBtn="sky"
+                  >
+                </app-button-operac>
+              }
+              @if (row.status === 'Y') {
+                <app-button-operac
+                  (click)="deleteListPrice(row)"
+                  optionBtn="delete"
+                  colorBtn="red"
+                ></app-button-operac>
+              }
+            </td>
+          </ng-container>
+        </table>
+      </article>
+      <article>
+        <mat-paginator
+          [hidePageSize]="true"
+          [length]="totalElements"
+          [pageSize]="1"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page"
+          >
+        </mat-paginator>
+      </article>
+    </section>
+    <section class="flex justify-end">
+      <app-button-standard
+        (click)="closeDialog(null)"
+        colorBtn="red"
+        optionBtn="close"
+        typeBtn="button"
+        >
+        Close
+      </app-button-standard>
+    </section>
+  </main>

@@ -1,97 +1,99 @@
 <form
   [formGroup]="formCrudInventoryArticle"
   class="sub-dialog-container"
->
+  >
   <section class="export-container grid grid-cols-2 gap-x-4">
     <article class="col-span-1 space-y-2">
       <label for="typinv" class="export-label"
-          >Format Blank</label
+        >Format Blank</label
         >
-    </article>
-    <article class="col-span-1 space-y-2">
-      <app-button-standard
-        (click)="exportBlankArticle()"
-        colorBtn="green"
-        optionBtn="export"
-        typeBtn="button"
-      >
-        Export
-      </app-button-standard>
-    </article>
-  </section>
-  <section class="export-container grid grid-cols-2 gap-x-4">
-    <article class="col-span-1 space-y-2">
-      <div class="flex">
-        <label for="typinv" class="export-label label-required"
-          >Type Inventory</label
-        >
-        <select
-          name="typinv"
-          id="typinv"
-          formControlName="typinv"
-          class="select-default"
-        >
-        <option
-        value=""
-        class="option-default"
-        disabled
-        selected
-        hidden
-        [class.option-invalid]="isInputInvalid('typinv')"
-      >
-        -- Choose --
-      </option>
-          <option *ngFor="let item of inventories" [value]="item.typinv">
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-    </article>
-    <article class="col-span-1 space-y-2">
-      <app-button-standard
-        (click)="exportArticle()"
-        colorBtn="green"
-        optionBtn="export"
-        typeBtn="button"
-      >
-        Export
-      </app-button-standard>
-    </article>
-  </section>
-  <section class="grid grid-cols-2 gap-x-4 import-container">
-    <article class="col-span-1 space-y-2">
-      <label
-        class="import-label label-required"
-        for="file_input"
-        >Upload file</label
-      >
-      <input
-        class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-        id="file_input"
-        type="file"
-        (change)="selectArchive($event)"
-        [class.select-invalid]="isInputInvalid('file')"
-      />
-    </article>
-    <article class="col-span-1 space-y-2">
-      <app-button-standard
-        (click)="importArticle()"
-        colorBtn="green"
-        optionBtn="import"
-        typeBtn="button"
-      >
-        Import
-      </app-button-standard>
-    </article>
-  </section>
-  <section class="flex justify-end space-x-6">
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</form>
+      </article>
+      <article class="col-span-1 space-y-2">
+        <app-button-standard
+          (click)="exportBlankArticle()"
+          colorBtn="green"
+          optionBtn="export"
+          typeBtn="button"
+          >
+          Export
+        </app-button-standard>
+      </article>
+    </section>
+    <section class="export-container grid grid-cols-2 gap-x-4">
+      <article class="col-span-1 space-y-2">
+        <div class="flex">
+          <label for="typinv" class="export-label label-required"
+            >Type Inventory</label
+            >
+            <select
+              name="typinv"
+              id="typinv"
+              formControlName="typinv"
+              class="select-default"
+              >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('typinv')"
+                >
+                -- {{ 'CHOOSE' | translate }} --
+              </option>
+              @for (item of inventories; track item) {
+                <option [value]="item.typinv">
+                  {{ item.descri }}
+                </option>
+              }
+            </select>
+          </div>
+        </article>
+        <article class="col-span-1 space-y-2">
+          <app-button-standard
+            (click)="exportArticle()"
+            colorBtn="green"
+            optionBtn="export"
+            typeBtn="button"
+            >
+            Export
+          </app-button-standard>
+        </article>
+      </section>
+      <section class="grid grid-cols-2 gap-x-4 import-container">
+        <article class="col-span-1 space-y-2">
+          <label
+            class="import-label label-required"
+            for="file_input"
+            >Upload file</label
+            >
+            <input
+              class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+              id="file_input"
+              type="file"
+              (change)="selectArchive($event)"
+              [class.select-invalid]="isInputInvalid('file')"
+              />
+          </article>
+          <article class="col-span-1 space-y-2">
+            <app-button-standard
+              (click)="importArticle()"
+              colorBtn="green"
+              optionBtn="import"
+              typeBtn="button"
+              >
+              Import
+            </app-button-standard>
+          </article>
+        </section>
+        <section class="flex justify-end space-x-6">
+          <app-button-standard
+            (click)="closeDialog()"
+            colorBtn="red"
+            optionBtn="close"
+            typeBtn="button"
+            >
+            Close
+          </app-button-standard>
+        </section>
+      </form>

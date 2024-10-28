@@ -6,7 +6,7 @@
       id="themeSwitcher"
       class="hidden"
       (click)="onChange(true)"
-    />
+      />
     <label for="themeSwitcher" class="relative cursor-pointer">
       <div class="flex h-10 w-24 items-center rounded-full bg-gray-300">
         <fa-icon
@@ -31,23 +31,26 @@
   <article [class.display-none]="isOpenSidebar" class="menu-sidebar">
     <div
       for="themeSwitcher"
-      [ngSwitch]="this.isDark"
       class="menu-siderbar-icon"
-    >
-      <fa-icon
-        *ngSwitchCase="false"
-        [icon]="faSun"
-        [class.light]="!isDark"
-        class="icon-operac"
-        size="lg"
-      ></fa-icon>
-      <fa-icon
-        *ngSwitchCase="true"
-        [icon]="faMoon"
-        [class.dark-alternative]="isDark"
-        class="icon-operac"
-        size="lg"
-      ></fa-icon>
+      >
+      @switch (this.isDark) {
+        @case (false) {
+          <fa-icon
+            [icon]="faSun"
+            [class.light]="!isDark"
+            class="icon-operac"
+            size="lg"
+          ></fa-icon>
+        }
+        @case (true) {
+          <fa-icon
+            [icon]="faMoon"
+            [class.dark-alternative]="isDark"
+            class="icon-operac"
+            size="lg"
+          ></fa-icon>
+        }
+      }
     </div>
     <span class="menu-sidebar-text" [class.display-none]="isOpenSidebar">{{
       isDark ? "Dark Mode" : "Ligth Mode"

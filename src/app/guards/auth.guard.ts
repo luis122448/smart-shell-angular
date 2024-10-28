@@ -1,6 +1,6 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { Observable } from 'rxjs';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
@@ -9,7 +9,7 @@ import { TokenService } from 'src/app/auth/services/token.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard  {
 
   constructor(
     private tokenService: TokenService,

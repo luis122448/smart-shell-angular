@@ -1,7 +1,7 @@
 <main class="sub-dialog-container">
   <section class="grid grid-cols-2 gap-x-4">
     <div class="flex">
-      <label for="codart" class="label-input-sm label-required">Code</label>
+      <label for="codart" class="label-input-sm label-required">{{ 'CODE' | translate }}</label>
       <input
         id="codart"
         type="text"
@@ -9,225 +9,246 @@
         placeholder="Code Article*"
         [value]="this.basicArticle.codart"
         disabled
-      />
+        />
     </div>
     <div class="flex">
       <label for="descri" class="label-input-sm label-required"
-        >Description</label
-      >
-      <input
-        id="descri"
-        type="text"
-        class="input-default"
-        placeholder="DescriptionArticle*"
-        [value]="this.basicArticle.descri"
-        disabled
-      />
-    </div>
-  </section>
-  <section class="section-table">
-    <article class="container-dialog-table">
-      <table
-        class="main-dialog-table"
-        cdk-table
-        [dataSource]="dataSourceArticleAttached"
-      >
-        <tr
-          class="header-table"
-          cdk-header-row
-          *cdkHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
-        <tr
-          class="row-table"
-          cdk-row
-          *cdkRowDef="let row; columns: displayedColumns"
-          [class.row-table-delete]="row.status === 'N'"
-        ></tr>
-        <ng-container cdkColumnDef="destypspe">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Specification
-          </th>
-          <td class="row-cell min-w-[20px]" cdk-cell *cdkCellDef="let row">
-            {{ row.destypspe }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="archive">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Archive</th>
-          <td class="row-cell max-w-[60px]" cdk-cell *cdkCellDef="let row">
-            <span
-              class="mr-2 rounded border border-gray-500 bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-400"
-              >{{ row.archive }}</span
-            >
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="updateby">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Update By
-          </th>
-          <td class="row-cell w-[10px]" cdk-cell *cdkCellDef="let row">
-            {{ row.updateby }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="updateat">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Update At
-          </th>
-          <td class="row-cell w-[20px]" cdk-cell *cdkCellDef="let row">
-            {{ formatDate(row.updateat) }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
-          <td
-            class="row-operac-cell max-w-[10px]"
-            cdk-cell
-            *cdkCellDef="let row"
-          >
-            <app-button-operac
-              (click)="downloadArticleAttached(row)"
-              optionBtn="download"
-              colorBtn="blue"
-            ></app-button-operac>
-            <app-button-operac
-              (click)="deleteArticleAttached(row)"
-              optionBtn="delete"
-              colorBtn="red"
-            ></app-button-operac>
-          </td>
-        </ng-container>
-      </table>
-    </article>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">New Archive Attached : </label>
-  </section>
-  <section class="grid grid-cols-2 gap-x-6">
-    <article>
-      <p class="import-label">Attached</p>
-      <form action="#" [formGroup]="formArticleAttached" class="space-y-2">
-        <div class="flex justify-start">
-          <label for="typspe" class="label-input-sm label-required">Type Specification</label>
-          <select
-            name="typspe"
-            id="typspe"
-            formControlName="typspe"
-            class="select-default"
-            [class.select-invalid]="isInputInvalid('typspe')"
-            (ngModelChange)="onTypspeSelectionChange($event)"
-          >
-            <option
-              value=""
-              class="option-default"
-              disabled
-              selected
-              hidden
-              [class.option-invalid]="isInputInvalid('typspe')"
-            >
-              -- Choose --
-            </option>
-            <option
-              *ngFor="let item of optionArticleSpecification"
-              [value]="item.typspe"
-            >
-              {{ item.typspe + " - " + item.descri }}
-            </option>
-          </select>
-        </div>
-        <div class="flex justify-start">
-          <label for="observ" class="label-input-sm">Observation</label>
-          <textarea
-            name=""
-            id="observ"
-            cols="30"
-            rows="10"
-            class="textarea-default"
-            formControlName="observ"
-          ></textarea>
-        </div>
-      </form>
-    </article>
-    <article>
-      <label class="import-label label-required" for="file_input"
-        >Upload file</label
-      >
-      <div *ngIf="!imageArticleURL; else image" class="flex w-full items-center justify-center">
-        <label
-          for="file_input"
-          class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >{{ 'DESCRIPTION' | translate }}</label
         >
-          <div class="flex flex-col items-center justify-center pb-6 pt-5">
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span> or drag and
-              drop
-            </p>
-            <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              {{
-                articleSpecificationSelected?.multip == "Y"
-                  ? "Admited Multiple Archive"
-                  : "Only Single Archive"
-              }}
-            </p>
-            <p class="mx-5 text-xs text-center font-semibold text-gray-700 dark:text-gray-300">
-              {{
-                articleSpecificationSelected?.extension == "all"
-                  ? "All Format Support"
-                  : "Only format [ " +
-                    articleSpecificationSelected?.extension + " ]" +  ", Starts with [ " +
-                    articleSpecificationSelected?.title + " ] and Max size [ " +
-                    articleSpecificationSelected?.maxsize + "mb ]"
-              }}
-            </p>
-          </div>
-          <input
-            id="dropzone-file"
-            type="file"
-            class="hidden"
-            id="file_input"
-            (change)="selectArchive($event)"
+        <input
+          id="descri"
+          type="text"
+          class="input-default"
+          placeholder="DescriptionArticle*"
+          [value]="this.basicArticle.descri"
+          disabled
+          />
+      </div>
+    </section>
+    <section class="section-table">
+      <article class="container-dialog-table">
+        <table
+          class="main-dialog-table"
+          cdk-table
+          [dataSource]="dataSourceArticleAttached"
+          >
+          <tr
+            class="header-table"
+            cdk-header-row
+            *cdkHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr
+            class="row-table"
+            cdk-row
+            *cdkRowDef="let row; columns: displayedColumns"
+            [class.row-table-delete]="row.status === 'N'"
+          ></tr>
+          <ng-container cdkColumnDef="destypspe">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+              Specification
+            </th>
+            <td class="row-cell min-w-[20px]" cdk-cell *cdkCellDef="let row">
+              {{ row.destypspe }}
+            </td>
+          </ng-container>
+          <ng-container cdkColumnDef="archive">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Archive</th>
+            <td class="row-cell max-w-[60px]" cdk-cell *cdkCellDef="let row">
+              <span
+                class="mr-2 rounded border border-gray-500 bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-400"
+                >{{ row.archive }}</span
+                >
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="updateby">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Update By
+              </th>
+              <td class="row-cell w-[10px]" cdk-cell *cdkCellDef="let row">
+                {{ row.updateby }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="updateat">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Update At
+              </th>
+              <td class="row-cell w-[20px]" cdk-cell *cdkCellDef="let row">
+                {{ formatDate(row.updateat) }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="operac">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
+              <td
+                class="row-operac-cell max-w-[10px]"
+                cdk-cell
+                *cdkCellDef="let row"
+                >
+                <app-button-operac
+                  (click)="downloadArticleAttached(row)"
+                  optionBtn="download"
+                  colorBtn="blue"
+                ></app-button-operac>
+                <app-button-operac
+                  (click)="deleteArticleAttached(row)"
+                  optionBtn="delete"
+                  colorBtn="red"
+                ></app-button-operac>
+              </td>
+            </ng-container>
+          </table>
+        </article>
+      </section>
+      <section>
+        <hr class="dialog-sub-title-line" />
+        <label class="dialog-sub-title">New Archive Attached : </label>
+      </section>
+      <section class="grid grid-cols-2 gap-x-6">
+        <article>
+          <p class="import-label">Attached</p>
+          <form action="#" [formGroup]="formArticleAttached" class="space-y-2">
+            <div class="flex justify-start">
+              <label for="typspe" class="label-input-sm label-required">Type Specification</label>
+              <select
+                name="typspe"
+                id="typspe"
+                formControlName="typspe"
+                class="select-default"
+                [class.select-invalid]="isInputInvalid('typspe')"
+                (ngModelChange)="onTypspeSelectionChange($event)"
+                >
+                <option
+                  value=""
+                  class="option-default"
+                  disabled
+                  selected
+                  hidden
+                  [class.option-invalid]="isInputInvalid('typspe')"
+                  >
+                  -- {{ 'CHOOSE' | translate }} --
+                </option>
+                @for (item of optionArticleSpecification; track item) {
+                  <option
+                    [value]="item.typspe"
+                    >
+                    {{ item.typspe + " - " + item.descri }}
+                  </option>
+                }
+              </select>
+            </div>
+            <div class="flex justify-start">
+              <label for="observ" class="label-input-sm">{{ 'OBSERVATION' | translate }}</label>
+              <textarea
+                name=""
+                id="observ"
+                cols="30"
+                rows="10"
+                class="textarea-default"
+                formControlName="observ"
+              ></textarea>
+            </div>
+          </form>
+        </article>
+        <article>
+          <label class="import-label label-required" for="file_input"
+            >Upload file</label
+            >
+            @if (!imageArticleURL) {
+              <div class="flex w-full items-center justify-center">
+                <label
+                  for="file_input"
+                  class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                  >
+                  <div class="flex flex-col items-center justify-center pb-6 pt-5">
+                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      <span class="font-semibold">Click to upload</span> or drag and
+                      drop
+                    </p>
+                    <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                      {{
+                      articleSpecificationSelected?.multip == "Y"
+                      ? "Admited Multiple Archive"
+                      : "Only Single Archive"
+                      }}
+                    </p>
+                    <p class="mx-5 text-xs text-center font-semibold text-gray-700 dark:text-gray-300">
+                      {{
+                      articleSpecificationSelected?.extension == "all"
+                      ? "All Format Support"
+                      : "Only format [ " +
+                      articleSpecificationSelected?.extension + " ]" +  ", Starts with [ " +
+                      articleSpecificationSelected?.title + " ] and Max size [ " +
+                      articleSpecificationSelected?.maxsize + "mb ]"
+                      }}
+                    </p>
+                  </div>
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    class="hidden"
+                    id="file_input"
+                    (change)="selectArchive($event)"
             [multiple]="
               articleSpecificationSelected?.multip == 'Y' ? true : false
             "
-          />
-        </label>
-      </div>
-      <ng-template #image>
-        <div class="w-full h-32 relative">
-          <app-button-operac
-            optionBtn="close"
-            colorBtn="red"
-            class="absolute top-0 right-0"
-            (click)="resetImage()"
-          ></app-button-operac>
-          <div
-            class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    />
+                </label>
+              </div>
+            } @else {
+              <div class="w-full h-32 relative">
+                <app-button-operac
+                  optionBtn="close"
+                  colorBtn="red"
+                  class="absolute top-0 right-0"
+                  (click)="resetImage()"
+                ></app-button-operac>
+                <div
+                  class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                  >
+                  <img
+                    [src]="imageArticleURL"
+                    alt="image-temporal"
+                    class="mx-auto h-32 w-full object-contain bg-slate-100 rounded-lg"
+                    />
+                </div>
+              </div>
+            }
+            <ng-template #image>
+              <div class="w-full h-32 relative">
+                <app-button-operac
+                  optionBtn="close"
+                  colorBtn="red"
+                  class="absolute top-0 right-0"
+                  (click)="resetImage()"
+                ></app-button-operac>
+                <div
+                  class="dark:hover:bg-bray-800 flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                  >
+                  <img
+                    [src]="imageArticleURL"
+                    alt="image-temporal"
+                    class="mx-auto h-32 w-full object-contain bg-slate-100 rounded-lg"
+                    />
+                </div>
+              </div>
+            </ng-template>
+          </article>
+        </section>
+        <section class="flex justify-end space-x-4">
+          <app-button-standard
+            (click)="addArticleAttached()"
+            colorBtn="green"
+            optionBtn="save"
+            typeBtn="button"
             >
-            <img
-              [src]="imageArticleURL"
-              alt="image-temporal"
-              class="mx-auto h-32 w-full object-contain bg-slate-100 rounded-lg"
-            />
-          </div>
-        </div>
-      </ng-template>
-    </article>
-  </section>
-  <section class="flex justify-end space-x-4">
-    <app-button-standard
-      (click)="addArticleAttached()"
-      colorBtn="green"
-      optionBtn="save"
-      typeBtn="button"
-    >
-      Save
-    </app-button-standard>
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</main>
+            Save
+          </app-button-standard>
+          <app-button-standard
+            (click)="closeDialog()"
+            colorBtn="red"
+            optionBtn="close"
+            typeBtn="button"
+            >
+            Close
+          </app-button-standard>
+        </section>
+      </main>

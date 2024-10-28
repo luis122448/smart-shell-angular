@@ -4,198 +4,200 @@
       <div class="flex">
         <label for="codlistprice" class="label-input-sm label-required"
           >Price List</label
-        >
-        <select
-          name="codlistprice"
-          id="codlistprice"
-          class="select-default"
-          formControlName="codlistprice"
-          [class.select-invalid]="isInputInvalid('codlistprice')"
-        >
-          <option
-            [value]="listPrice?.codlistprice"
-            class="option-default"
-            selected
-            [class.option-invalid]="isInputInvalid('codlistprice')"
           >
-            {{ listPrice?.codlistprice + ' - ' +  listPrice?.descri }}
-          </option>
-        </select>
-      </div>
-    </article>
-    <article class="col-span-1 space-y-2">
-      <div class="grid grid-cols-3">
-        <label for="codart" class="label-input-sm col-span-1">Art. Code</label>
-        <input
-          type="text"
-          placeholder="Code"
-          class="input-default col-span-2"
-          formControlName="codart"
-        />
-      </div>
-      <div class="grid grid-cols-3">
-        <label for="desart" class="label-input-sm col-span-1"
-          >Art. Descripction</label
-        >
-        <input
-          type="text"
-          placeholder="Descripction"
-          class="input-default col-span-2"
-          formControlName="desart"
-        />
-      </div>
-    </article>
-  </section>
-  <section class="flex justify-end space-x-6">
-    <app-button-standard
-      (click)="searchListPriceArticle()"
-      colorBtn="sky"
-      optionBtn="search"
-      typeBtn="button"
-    >
-      Search
-    </app-button-standard>
-    <app-button-standard
-      (click)="crudListPriceArticle(null)"
-      colorBtn="green"
-      optionBtn="add"
-      typeBtn="button"
-    >
-      New
-    </app-button-standard>
-  </section>
-  <section class="section-table">
-    <article class="container-dialog-table">
-      <table
-        class="main-dialog-table"
-        cdk-table
-        [dataSource]="dataSourceListPriceArticle"
-      >
-        <tr
-          class="header-table"
-          cdk-header-row
-          *cdkHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
-        <tr
-          class="row-table"
-          cdk-row
-          *cdkRowDef="let row; columns: displayedColumns"
-          [class.row-table-delete]="row.status === 'N'"
-        ></tr>
-        <ng-container cdkColumnDef="codlistprice">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Code</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.codlistprice }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="codart">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Art. Code
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.codart }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="desart">
-          <th class="min-w-80 header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Art. Description
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.desart }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="modprice">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Change Price?
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.modprice }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="moddesc">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Change Desc?
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.moddesc }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="implistprice">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            List Price
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.implistprice | number: '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="impdesctotal">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Discount
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.impdesctotal | number: '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="impsaleprice">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Sale Price
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.impsaleprice | number: '1.2-2' }}
-          </td>
-        </ng-container>
-        <!-- <ng-container cdkColumnDef="imptribtotal">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Total Tax
-          </th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.imptribtotal }}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="imptotal">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Total</th>
-          <td class="row-cell" cdk-cell *cdkCellDef="let row">
-            {{ row.imptotal }}
-          </td>
-        </ng-container> -->
-        <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
-          <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="crudListPriceArticle(row)"
-              optionBtn="edit"
-              colorBtn="sky"
+          <select
+            name="codlistprice"
+            id="codlistprice"
+            class="select-default"
+            formControlName="codlistprice"
+            [class.select-invalid]="isInputInvalid('codlistprice')"
             >
-            </app-button-operac>
-            <app-button-operac
-              *ngIf="row.status === 'Y'"
-              (click)="deleteListPriceArticle(row)"
-              optionBtn="delete"
-              colorBtn="red"
-            ></app-button-operac>
-          </td>
-        </ng-container>
-      </table>
-    </article>
-    <mat-paginator
-      (page)="byPageEvent($event)"
-      [hidePageSize]="true"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page"
-    >
-    </mat-paginator>
-  </section>
-  <section class="flex justify-end space-x-6">
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</form>
+            <option
+              [value]="listPrice?.codlistprice"
+              class="option-default"
+              selected
+              [class.option-invalid]="isInputInvalid('codlistprice')"
+              >
+              {{ listPrice?.codlistprice + ' - ' +  listPrice?.descri }}
+            </option>
+          </select>
+        </div>
+      </article>
+      <article class="col-span-1 space-y-2">
+        <div class="grid grid-cols-3">
+          <label for="codart" class="label-input-sm col-span-1">Art. {{ 'CODE' | translate }}</label>
+          <input
+            type="text"
+            placeholder="Code"
+            class="input-default col-span-2"
+            formControlName="codart"
+            />
+        </div>
+        <div class="grid grid-cols-3">
+          <label for="desart" class="label-input-sm col-span-1"
+            >Art. Descripction</label
+            >
+            <input
+              type="text"
+              placeholder="Descripction"
+              class="input-default col-span-2"
+              formControlName="desart"
+              />
+          </div>
+        </article>
+      </section>
+      <section class="flex justify-end space-x-6">
+        <app-button-standard
+          (click)="searchListPriceArticle()"
+          colorBtn="sky"
+          optionBtn="search"
+          typeBtn="button"
+          >
+          Search
+        </app-button-standard>
+        <app-button-standard
+          (click)="crudListPriceArticle(null)"
+          colorBtn="green"
+          optionBtn="add"
+          typeBtn="button"
+          >
+          New
+        </app-button-standard>
+      </section>
+      <section class="section-table">
+        <article class="container-dialog-table">
+          <table
+            class="main-dialog-table"
+            cdk-table
+            [dataSource]="dataSourceListPriceArticle"
+            >
+            <tr
+              class="header-table"
+              cdk-header-row
+              *cdkHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr
+              class="row-table"
+              cdk-row
+              *cdkRowDef="let row; columns: displayedColumns"
+              [class.row-table-delete]="row.status === 'N'"
+            ></tr>
+            <ng-container cdkColumnDef="codlistprice">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'CODE' | translate }}</th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.codlistprice }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="codart">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Art. Code
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.codart }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="desart">
+              <th class="min-w-80 header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Art. Description
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.desart }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="modprice">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Change Price?
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.modprice }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="moddesc">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Change Desc?
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.moddesc }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="implistprice">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                List Price
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.implistprice | number: '1.2-2' }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="impdesctotal">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Discount
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.impdesctotal | number: '1.2-2' }}
+              </td>
+            </ng-container>
+            <ng-container cdkColumnDef="impsaleprice">
+              <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+                Sale Price
+              </th>
+              <td class="row-cell" cdk-cell *cdkCellDef="let row">
+                {{ row.impsaleprice | number: '1.2-2' }}
+              </td>
+            </ng-container>
+            <!-- <ng-container cdkColumnDef="imptribtotal">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+              Total Tax
+            </th>
+            <td class="row-cell" cdk-cell *cdkCellDef="let row">
+              {{ row.imptribtotal }}
+            </td>
+          </ng-container>
+          <ng-container cdkColumnDef="imptotal">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Total</th>
+            <td class="row-cell" cdk-cell *cdkCellDef="let row">
+              {{ row.imptotal }}
+            </td>
+          </ng-container> -->
+          <ng-container cdkColumnDef="operac">
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
+            <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+              @if (row.status === 'Y') {
+                <app-button-operac
+                  (click)="crudListPriceArticle(row)"
+                  optionBtn="edit"
+                  colorBtn="sky"
+                  >
+                </app-button-operac>
+              }
+              @if (row.status === 'Y') {
+                <app-button-operac
+                  (click)="deleteListPriceArticle(row)"
+                  optionBtn="delete"
+                  colorBtn="red"
+                ></app-button-operac>
+              }
+            </td>
+          </ng-container>
+        </table>
+      </article>
+      <mat-paginator
+        (page)="byPageEvent($event)"
+        [hidePageSize]="true"
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page"
+        >
+      </mat-paginator>
+    </section>
+    <section class="flex justify-end space-x-6">
+      <app-button-standard
+        (click)="closeDialog()"
+        colorBtn="red"
+        optionBtn="close"
+        typeBtn="button"
+        >
+        Close
+      </app-button-standard>
+    </section>
+  </form>

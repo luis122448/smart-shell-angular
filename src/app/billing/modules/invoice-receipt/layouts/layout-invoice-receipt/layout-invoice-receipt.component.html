@@ -2,40 +2,46 @@
   <menu class="left-container">
     <app-siderbar-left></app-siderbar-left>
   </menu>
-  <div [ngSwitch]="isStatusInvoice" class="main-container">
+  <div class="main-container">
     <app-header-invoice (isNewDocument)="isNewDocument($event)" class="h-[100px]"></app-header-invoice>
     <div class="body-container">
-      <section *ngSwitchCase="'register'" class="sub-main-container">
-        <article class="h-auto w-full">
-          <app-register-facbol
-            [isNewDocument]="isNewDocumentValue"
-            [isEditDocumentValue]="isEditDocumentValue"
-            [isCalculateDocument]="isCalculateDocumentValue"
-          ></app-register-facbol>
-        </article>
-        <article class="h-auto w-full">
-          <app-detail-items-facbol
-            [isNewDocument]="isNewDocumentValue"
-            [isEditDocumentValue]="isEditDocumentValue"
-            [isCalculateDocument]="isCalculateDocumentValue"
-          ></app-detail-items-facbol>
-        </article>
-        <article class="h-auto w-full px-4">
-          <app-resume-facbol
-            [isEditDocumentValue]="isEditDocumentValue"
-            (isNewDocument)="isNewDocument($event)"
-            (isCalculateDocument)="isCalculateDocument($event)"
-          ></app-resume-facbol>
-        </article>
-      </section>
-      <section *ngSwitchCase="'search'" class="sub-main-container">
-        <article>
-          <app-search-facbol></app-search-facbol>
-        </article>
-        <article class="w-full">
-          <app-detail-search-invoice (modifyDocument)="isModifyDocument($event)"></app-detail-search-invoice>
-        </article>
-      </section>
+      @switch (isStatusInvoiceReceipt()) {
+        @case ('register') {
+          <section class="sub-main-container">
+            <article class="h-auto w-full">
+              <app-register-facbol
+                [isNewDocument]="isNewDocumentValue"
+                [isEditDocumentValue]="isEditDocumentValue"
+                [isCalculateDocument]="isCalculateDocumentValue"
+              ></app-register-facbol>
+            </article>
+            <article class="h-auto w-full">
+              <app-detail-items-facbol
+                [isNewDocument]="isNewDocumentValue"
+                [isEditDocumentValue]="isEditDocumentValue"
+                [isCalculateDocument]="isCalculateDocumentValue"
+              ></app-detail-items-facbol>
+            </article>
+            <article class="h-auto w-full px-4">
+              <app-resume-facbol
+                [isEditDocumentValue]="isEditDocumentValue"
+                (isNewDocument)="isNewDocument($event)"
+                (isCalculateDocument)="isCalculateDocument($event)"
+              ></app-resume-facbol>
+            </article>
+          </section>
+        }
+        @case ('search') {
+          <section class="sub-main-container">
+            <article>
+              <app-search-invoice-receipt></app-search-invoice-receipt>
+            </article>
+            <article class="w-full">
+              <app-search-detail-invoice-receipt (modifyDocument)="isModifyDocument($event)"></app-search-detail-invoice-receipt>
+            </article>
+          </section>
+        }
+      }
     </div>
     <app-footer class="h-[60px]"></app-footer>
   </div>

@@ -45,7 +45,7 @@
         </ng-container>
         <ng-container cdkColumnDef="observ">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Observation
+            {{ 'OBSERVATION' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.observ }}
@@ -83,7 +83,7 @@
       optionBtn="close"
       typeBtn="button"
     >
-      Close
+      {{ 'CLOSE' | translate }}
     </app-button-standard>
   </section>
   <app-button-operac

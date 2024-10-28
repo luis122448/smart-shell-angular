@@ -77,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "SmartShell:build:production"
+              "buildTarget": "SmartShell:build:production"
             },
             "development": {
-              "browserTarget": "SmartShell:build:development"
+              "buildTarget": "SmartShell:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "SmartShell:build"
+            "buildTarget": "SmartShell:build"
           }
         },
         "test": {

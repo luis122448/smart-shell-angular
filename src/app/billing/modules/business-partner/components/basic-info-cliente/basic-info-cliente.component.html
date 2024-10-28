@@ -4,286 +4,288 @@
       <div class="flex">
         <label for="codbuspar" class="label-input-sm label-required"
           >Code</label
-        >
-        <input
-          id="codbuspar"
-          type="text"
-          class="input-default"
-          formControlName="codbuspar"
-          [class.input-invalid]="isInputInvalid('codbuspar')"
-          placeholder="Code*"
-        />
-      </div>
-      <div class="flex">
-        <label for="typbuspar" class="label-input-sm label-required"
-          >Type of Business Partner</label
-        >
-        <select
-          name="typbuspar"
-          id="typbuspar"
-          class="select-default"
-          formControlName="typbuspar"
-          [class.select-invalid]="isInputInvalid('typbuspar')"
-          placeholder="Type of Business Partner*"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('typbuspar')"
           >
-            -- Choose --
-          </option>
-          <option *ngFor="let item of typeBusinessPartners" [value]="item.typbuspar">
-            {{ item.typbuspar + ' - ' +  item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="flex">
-        <label for="typidedoc" class="label-input-sm label-required"
-          >Type of Identity Document</label
-        >
-        <select
-          name="typidedoc"
-          id="typidedoc"
-          class="select-default"
-          formControlName="typidedoc"
-          [class.select-invalid]="isInputInvalid('typidedoc')"
-          placeholder="Type of Identity Document*"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('typidedoc')"
-          >
-            -- Choose --
-          </option>
-          <option value=1 class="option-default">DNI</option>
-          <option value=2 class="option-default">RUC</option>
-          <option value=3 class="option-default">Carnet de Extranjería</option>
-          <option value=4 class="option-default">Otro</option>
-        </select>
-      </div>
-      <div class="flex">
-        <label for="nroidedoc" class="label-input-sm label-required"
-          >RUC / DNI / Otro</label
-        >
-        <input
-          id="nroidedoc"
-          type="text"
-          class="input-default"
-          formControlName="nroidedoc"
-          [class.input-invalid]="isInputInvalid('nroidedoc')"
-          placeholder="RUC / DNI / Otro*"
-        />
-      </div>
-      <div class="flex">
-        <label for="busnam" class="label-input-sm label-required"
-          >Business Name</label
-        >
-        <input
-          id="busnam"
-          type="text"
-          class="input-default"
-          formControlName="busnam"
-          [class.input-invalid]="isInputInvalid('busnam')"
-          placeholder="Business Name*"
-        />
-      </div>
-      <div class="flex">
-        <label for="apepat" class="label-input-sm">Last Name</label>
-        <input
-          id="apepat"
-          type="text"
-          class="input-default"
-          formControlName="apepat"
-        />
-      </div>
-      <div class="flex">
-        <label for="apemat" class="label-input-sm">Mother's Last Name</label>
-        <input
-          id="apemat"
-          type="text"
-          class="input-default"
-          formControlName="apemat"
-        />
-      </div>
-      <div class="flex">
-        <label for="nombre" class="label-input-sm">Name</label>
-        <input
-          id="nombre"
-          type="text"
-          class="input-default"
-          formControlName="nombre"
-        />
-      </div>
-    </div>
-    <div class="space-y-4 p-4 my-auto">
-      <label for="image" class="label-input-sm">Upload Image</label>
-      <img
-        [src]="imageBusinessPartnerURL"
-        alt=""
-        width="150px"
-        height="150px"
-        class="m-auto bg-slate-100"
-      />
-      <input
-        (change)="onImageSelected($event)"
-        id="file_image"
-        type="file"
+          <input
+            id="codbuspar"
+            type="text"
+            class="input-default"
+            formControlName="codbuspar"
+            [class.input-invalid]="isInputInvalid('codbuspar')"
+            placeholder="Code*"
+            />
+        </div>
+        <div class="flex">
+          <label for="typbuspar" class="label-input-sm label-required"
+            >Type of Business Partner</label
+            >
+            <select
+              name="typbuspar"
+              id="typbuspar"
+              class="select-default"
+              formControlName="typbuspar"
+              [class.select-invalid]="isInputInvalid('typbuspar')"
+              placeholder="Type of Business Partner*"
+              >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('typbuspar')"
+                >
+                -- {{ 'CHOOSE' | translate }} --
+              </option>
+              @for (item of typeBusinessPartners; track item) {
+                <option [value]="item.typbuspar">
+                  {{ item.typbuspar + ' - ' +  item.descri }}
+                </option>
+              }
+            </select>
+          </div>
+          <div class="flex">
+            <label for="typidedoc" class="label-input-sm label-required"
+              >Type of Identity Document</label
+              >
+              <select
+                name="typidedoc"
+                id="typidedoc"
+                class="select-default"
+                formControlName="typidedoc"
+                [class.select-invalid]="isInputInvalid('typidedoc')"
+                placeholder="Type of Identity Document*"
+                >
+                <option
+                  value=""
+                  class="option-default"
+                  disabled
+                  selected
+                  hidden
+                  [class.option-invalid]="isInputInvalid('typidedoc')"
+                  >
+                  -- {{ 'CHOOSE' | translate }} --
+                </option>
+                <option value=1 class="option-default">DNI</option>
+                <option value=2 class="option-default">RUC</option>
+                <option value=3 class="option-default">Carnet de Extranjería</option>
+                <option value=4 class="option-default">Otro</option>
+              </select>
+            </div>
+            <div class="flex">
+              <label for="nroidedoc" class="label-input-sm label-required"
+                >RUC / DNI / Otro</label
+                >
+                <input
+                  id="nroidedoc"
+                  type="text"
+                  class="input-default"
+                  formControlName="nroidedoc"
+                  [class.input-invalid]="isInputInvalid('nroidedoc')"
+                  placeholder="RUC / DNI / Otro*"
+                  />
+              </div>
+              <div class="flex">
+                <label for="busnam" class="label-input-sm label-required"
+                  >Business Name</label
+                  >
+                  <input
+                    id="busnam"
+                    type="text"
+                    class="input-default"
+                    formControlName="busnam"
+                    [class.input-invalid]="isInputInvalid('busnam')"
+                    placeholder="Business Name*"
+                    />
+                </div>
+                <div class="flex">
+                  <label for="apepat" class="label-input-sm">Last Name</label>
+                  <input
+                    id="apepat"
+                    type="text"
+                    class="input-default"
+                    formControlName="apepat"
+                    />
+                </div>
+                <div class="flex">
+                  <label for="apemat" class="label-input-sm">Mother's Last Name</label>
+                  <input
+                    id="apemat"
+                    type="text"
+                    class="input-default"
+                    formControlName="apemat"
+                    />
+                </div>
+                <div class="flex">
+                  <label for="nombre" class="label-input-sm">Name</label>
+                  <input
+                    id="nombre"
+                    type="text"
+                    class="input-default"
+                    formControlName="nombre"
+                    />
+                </div>
+              </div>
+              <div class="space-y-4 p-4 my-auto">
+                <label for="image" class="label-input-sm">Upload Image</label>
+                <img
+                  [src]="imageBusinessPartnerURL"
+                  alt=""
+                  width="150px"
+                  height="150px"
+                  class="m-auto bg-slate-100"
+                  />
+                <input
+                  (change)="onImageSelected($event)"
+                  id="file_image"
+                  type="file"
         class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900
         focus:outline-none
         dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400
         file:w-[150px] file:text-white file:font-medium file:rounded file:text-sm file:px-5 file:py-2
         file:bg-gray-600 file:hover:bg-gray-700 file:focus:ring-gray-700"
-        aria-describedby="file_input_help"
-      />
-      <p class="text-inline">Solo JPG (MAX. 800x400px)</p>
-    </div>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Additional Information : </label>
-  </section>
-  <section class="grid grid-cols-2 gap-x-4">
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="poscod" class="label-input-sm label-required">Ubigeo</label>
-        <input
-          id="poscod"
-          type="text"
-          class="input-default"
-          formControlName="poscod"
-          [class.input-invalid]="isInputInvalid('poscod')"
-          placeholder="Ubigeo*"
-        />
-      </div>
-      <div class="flex">
-        <label for="addres" class="label-input-sm label-required"
-          >Address</label
-        >
-        <input
-          id="addres"
-          type="text"
-          class="input-default"
-          formControlName="addres"
-          [class.input-invalid]="isInputInvalid('addres')"
-          placeholder="Address*"
-        />
-      </div>
-      <div class="flex">
-        <label for="observ" class="label-input-sm">Observation</label>
-        <textarea
-          name=""
-          id="observ"
-          cols="30"
-          rows="10"
-          class="textarea-default"
-          formControlName="observ"
-        ></textarea>
-      </div>
-    </div>
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="codtel" class="label-input-sm">Cod. Phone</label>
-        <input
-          id="codtel"
-          type="text"
-          class="input-default"
-          formControlName="codtel"
-        />
-      </div>
-      <div class="flex">
-        <label for="telefo" class="label-input-sm">Phone</label>
-        <input
-          id="telefo"
-          type="text"
-          class="input-default"
-          formControlName="telefo"
-        />
-      </div>
-      <div class="flex">
-        <label for="commen" class="label-input-sm">Gloss</label>
-        <textarea
-          name=""
-          id="commen"
-          cols="30"
-          rows="10"
-          class="textarea-default"
-          formControlName="commen"
-        ></textarea>
-      </div>
-    </div>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Audit Information : </label>
-  </section>
-  <section class="grid grid-cols-2 gap-x-4">
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="createby" class="label-input-sm">Create by : </label>
-        <input
-          id="createby"
-          type="text"
-          class="input-default"
-          formControlName="createby"
-        />
-      </div>
-      <div class="flex">
-        <label for="createat" class="label-input-sm">Time : </label>
-        <input
-          id="createat"
-          type="text"
-          class="input-default"
-          disabled
-          [value]="formatDate(createat?.value)"
-        />
-      </div>
-    </div>
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="updateby" class="label-input-sm">Update By : </label>
-        <input
-          id="updateby"
-          type="text"
-          class="input-default"
-          formControlName="updateby"
-        />
-      </div>
-      <div class="flex">
-        <label for="updateat" class="label-input-sm">Time : </label>
-        <input
-          id="updateat"
-          type="text"
-          class="input-default"
-          disabled
-          [value]="formatDate(updateat?.value)"
-        />
-      </div>
-    </div>
-  </section>
-  <section class="flex justify-end space-x-4">
-    <app-button-standard
-      (click)="saveBusinessPartner()"
-      colorBtn="green"
-      optionBtn="save"
-      typeBtn="button"
-    >
-      Save
-    </app-button-standard>
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="back"
-      typeBtn="button"
-    >
-      Regresar
-    </app-button-standard>
-  </section>
-</form>
+                  aria-describedby="file_input_help"
+                  />
+                <p class="text-inline">Solo JPG (MAX. 800x400px)</p>
+              </div>
+            </section>
+            <section>
+              <hr class="dialog-sub-title-line" />
+              <label class="dialog-sub-title">Additional Information : </label>
+            </section>
+            <section class="grid grid-cols-2 gap-x-4">
+              <div class="space-y-2">
+                <div class="flex">
+                  <label for="poscod" class="label-input-sm label-required">Ubigeo</label>
+                  <input
+                    id="poscod"
+                    type="text"
+                    class="input-default"
+                    formControlName="poscod"
+                    [class.input-invalid]="isInputInvalid('poscod')"
+                    placeholder="Ubigeo*"
+                    />
+                </div>
+                <div class="flex">
+                  <label for="addres" class="label-input-sm label-required"
+                    >{{ 'ADDRESS' | translate }}</label
+                    >
+                    <input
+                      id="addres"
+                      type="text"
+                      class="input-default"
+                      formControlName="addres"
+                      [class.input-invalid]="isInputInvalid('addres')"
+                      placeholder="Address*"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="observ" class="label-input-sm">{{ 'OBSERVATION' | translate }}</label>
+                    <textarea
+                      name=""
+                      id="observ"
+                      cols="30"
+                      rows="10"
+                      class="textarea-default"
+                      formControlName="observ"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex">
+                    <label for="codtel" class="label-input-sm">Cod. Phone</label>
+                    <input
+                      id="codtel"
+                      type="text"
+                      class="input-default"
+                      formControlName="codtel"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="telefo" class="label-input-sm">Phone</label>
+                    <input
+                      id="telefo"
+                      type="text"
+                      class="input-default"
+                      formControlName="telefo"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="commen" class="label-input-sm">Gloss</label>
+                    <textarea
+                      name=""
+                      id="commen"
+                      cols="30"
+                      rows="10"
+                      class="textarea-default"
+                      formControlName="commen"
+                    ></textarea>
+                  </div>
+                </div>
+              </section>
+              <section>
+                <hr class="dialog-sub-title-line" />
+                <label class="dialog-sub-title">Audit Information : </label>
+              </section>
+              <section class="grid grid-cols-2 gap-x-4">
+                <div class="space-y-2">
+                  <div class="flex">
+                    <label for="createby" class="label-input-sm">Create by : </label>
+                    <input
+                      id="createby"
+                      type="text"
+                      class="input-default"
+                      formControlName="createby"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="createat" class="label-input-sm">Time : </label>
+                    <input
+                      id="createat"
+                      type="text"
+                      class="input-default"
+                      disabled
+                      [value]="formatDate(createat?.value)"
+                      />
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex">
+                    <label for="updateby" class="label-input-sm">Update By : </label>
+                    <input
+                      id="updateby"
+                      type="text"
+                      class="input-default"
+                      formControlName="updateby"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="updateat" class="label-input-sm">Time : </label>
+                    <input
+                      id="updateat"
+                      type="text"
+                      class="input-default"
+                      disabled
+                      [value]="formatDate(updateat?.value)"
+                      />
+                  </div>
+                </div>
+              </section>
+              <section class="flex justify-end space-x-4">
+                <app-button-standard
+                  (click)="saveBusinessPartner()"
+                  colorBtn="green"
+                  optionBtn="save"
+                  typeBtn="button"
+                  >
+                  Save
+                </app-button-standard>
+                <app-button-standard
+                  (click)="closeDialog()"
+                  colorBtn="red"
+                  optionBtn="back"
+                  typeBtn="button"
+                  >
+                  Regresar
+                </app-button-standard>
+              </section>
+            </form>

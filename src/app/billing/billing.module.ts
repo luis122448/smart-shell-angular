@@ -13,6 +13,7 @@ import { InvoiceReceiptModule } from "@billing-module-invoice-receipt/invoice-re
 import { InternalGuideModule } from "@billing-module-internal-guide/internal-guide.module";
 import { InventoryTakingModule } from "@billing-module-inventory-taking/inventory-taking.module";
 import { ExchangeRateModule } from "@billing-module-exchange-rate/exchange-rate.module";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ExchangeRateModule } from "@billing-module-exchange-rate/exchange-rate.
     InternalGuideModule,
     InventoryTakingModule,
     SharedBillingModule,
-    SharedModule
+    SharedModule,
+    TranslateModule,
   ],
   exports: [
   ],

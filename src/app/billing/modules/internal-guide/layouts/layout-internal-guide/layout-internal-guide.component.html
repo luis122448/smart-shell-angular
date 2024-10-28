@@ -1,1 +1,51 @@
-<p>layout-internal-guide works!</p>
+<main class="flex h-full w-full justify-center overflow-hidden">
+  <menu class="left-container">
+    <app-siderbar-left></app-siderbar-left>
+  </menu>
+  <div class="main-container">
+    <app-header-internal-guide (isNewDocument)="isNewDocument($event)" class="h-[100px]"></app-header-internal-guide>
+    <div class="body-container">
+      @switch (isStatusInternalGuide()) {
+        @case ('register') {
+          <section class="sub-main-container">
+            <article class="h-auto w-full">
+              <app-register-internal-guide
+                [isNewDocument]="isNewDocumentValue"
+                [isEditDocumentValue]="isEditDocumentValue"
+                [isCalculateDocument]="isCalculateDocumentValue"
+              ></app-register-internal-guide>
+            </article>
+            <article class="h-auto w-full">
+              <app-register-detail-internal-guide
+                [isNewDocument]="isNewDocumentValue"
+                [isEditDocumentValue]="isEditDocumentValue"
+                [isCalculateDocument]="isCalculateDocumentValue"
+              ></app-register-detail-internal-guide>
+            </article>
+            <article class="h-auto w-full px-4">
+              <app-resume-internal-guide
+                [isEditDocumentValue]="isEditDocumentValue"
+                (isNewDocument)="isNewDocument($event)"
+                (isCalculateDocument)="isCalculateDocument($event)"
+              ></app-resume-internal-guide>
+            </article>
+          </section>
+        }
+        @case ('search') {
+          <section class="sub-main-container">
+            <article>
+              <app-search-internal-guide></app-search-internal-guide>
+            </article>
+            <article class="w-full">
+              <app-search-detail-internal-guide (modifyDocument)="isModifyDocument($event)"></app-search-detail-internal-guide>
+            </article>
+          </section>
+        }
+      }
+    </div>
+    <app-footer class="h-[60px]"></app-footer>
+  </div>
+  <menu class="right-container">
+    <app-siderbar-right></app-siderbar-right>
+  </menu>
+</main>

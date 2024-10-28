@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DetailItemsInventoryTakingComponent } from '@billing-module-inventory-taking/components/detail-items-inventory-taking/detail-items-inventory-taking.component';
-import { DetailSearchInventoryTakingComponent } from '@billing-module-inventory-taking/components/detail-search-inventory-taking/detail-search-inventory-taking.component';
+import {
+  RegisterDetailInventoryTakingComponent
+} from "@billing-module-inventory-taking/components/register-detail-inventory-taking/register-detail-inventory-taking.component";
+import { SearchDetailInventoryTakingComponent } from '@billing-module-inventory-taking/components/search-detail-inventory-taking/search-detail-inventory-taking.component';
 import { ResumeInventoryTakingComponent } from '@billing-module-inventory-taking/components/resume-inventory-taking/resume-inventory-taking.component';
 import { HeaderInventoryTakingComponent } from '@billing-module-inventory-taking/components/header-inventory-taking/header-inventory-taking.component';
 import { SearchInventoryTakingComponent } from '@billing-module-inventory-taking/components/search-inventory-taking/search-inventory-taking.component';
@@ -9,11 +11,13 @@ import { RegisterInventoryTakingComponent } from '@billing-module-inventory-taki
 import { LayoutInventoryTakingComponent } from '@billing-module-inventory-taking/layouts/layout-inventory-taking/layout-inventory-taking.component';
 import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
 import { SharedModule } from '@shared/shared.module';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
-    DetailItemsInventoryTakingComponent,
-    DetailSearchInventoryTakingComponent,
+    RegisterDetailInventoryTakingComponent,
+    SearchDetailInventoryTakingComponent,
     ResumeInventoryTakingComponent,
     HeaderInventoryTakingComponent,
     SearchInventoryTakingComponent,
@@ -22,8 +26,10 @@ import { SharedModule } from '@shared/shared.module';
   ],
   imports: [
     CommonModule,
+    FontAwesomeModule,
     SharedBillingModule,
-    SharedModule
+    SharedModule,
+    TranslateModule,
   ],
   exports: [
     LayoutInventoryTakingComponent

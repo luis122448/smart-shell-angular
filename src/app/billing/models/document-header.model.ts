@@ -8,7 +8,7 @@ export interface DocumentHeader {
   registdate: Date
   codbranch: number
   codplaiss: number
-  ingsalcom: number
+  inout: number
   reacomdoc: number
   codcur: string
   exchangerate: number

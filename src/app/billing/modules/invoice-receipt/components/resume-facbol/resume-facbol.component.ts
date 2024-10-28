@@ -28,7 +28,7 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   formResumeFacBol!: FormGroup;
   dataDetailSource = DataSourceDocumentDetail.getInstance();
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
-  isStatusInvoiceRegister = false;
+  isStatusInvoiceReceiptRegister = false;
   currencies: Currency[] = [];
   currency: Currency | undefined;
 
@@ -72,12 +72,12 @@ export class ResumeFacbolComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.facbolGlobalStatusService.isStatusInvoiceRegister$.subscribe({
+    this.facbolGlobalStatusService.isStatusInvoiceReceiptRegister$.subscribe({
       next: (data) => {
-        this.isStatusInvoiceRegister = false;
+        this.isStatusInvoiceReceiptRegister = false;
       },
       error: (error) => {
-        this.isStatusInvoiceRegister = false;
+        this.isStatusInvoiceReceiptRegister = false;
       },
     });
   }

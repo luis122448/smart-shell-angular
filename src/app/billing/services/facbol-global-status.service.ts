@@ -6,37 +6,37 @@ import { BehaviorSubject } from 'rxjs'
 })
 export class FacbolGlobalStatusService {
 
-  private isStatusInvoiceRegister = new BehaviorSubject<boolean>(false)
-  private isStatusInvoiceRegisterDetail = new BehaviorSubject<boolean>(false)
-  private isStatusInvoiceSave = new BehaviorSubject<boolean>(false)
-  isStatusInvoiceRegister$ = this.isStatusInvoiceRegister.asObservable()
-  isStatusInvoiceRegisterDetail$ = this.isStatusInvoiceRegisterDetail.asObservable()
-  isStatusInvoiceSave$ = this.isStatusInvoiceSave.asObservable()
+  private isStatusInvoiceReceiptRegister = new BehaviorSubject<boolean>(false)
+  private isStatusInvoiceReceiptRegisterDetail = new BehaviorSubject<boolean>(false)
+  private isStatusInvoiceReceiptSave = new BehaviorSubject<boolean>(false)
+  isStatusInvoiceReceiptRegister$ = this.isStatusInvoiceReceiptRegister.asObservable()
+  isStatusInvoiceReceiptRegisterDetail$ = this.isStatusInvoiceReceiptRegisterDetail.asObservable()
+  isStatusInvoiceReceiptSave$ = this.isStatusInvoiceReceiptSave.asObservable()
 
   constructor(
   ) {}
 
-  setStatusInvoiceRegister(isStatus: boolean){
-    this.isStatusInvoiceRegister.next(isStatus)
+  setStatusInvoiceReceiptRegister(isStatus: boolean){
+    this.isStatusInvoiceReceiptRegister.next(isStatus)
   }
 
-  getStatusInvoiceRegister(){
-    return this.isStatusInvoiceRegister.getValue()
+  getStatusInvoiceReceiptRegister(){
+    return this.isStatusInvoiceReceiptRegister.getValue()
   }
 
-  setStatusInvoiceRegisterDetail(isStatus: boolean){
-    this.isStatusInvoiceRegisterDetail.next(isStatus)
+  setStatusInvoiceReceiptRegisterDetail(isStatus: boolean){
+    this.isStatusInvoiceReceiptRegisterDetail.next(isStatus)
   }
 
-  getStatusInvoiceRegisterDetail(){
-    return this.isStatusInvoiceRegisterDetail.getValue()
+  getStatusInvoiceReceiptRegisterDetail(){
+    return this.isStatusInvoiceReceiptRegisterDetail.getValue()
   }
 
-  setStatusInvoiceSave(isStatus: boolean){
-    this.isStatusInvoiceSave.next(isStatus)
+  setStatusInvoiceReceiptSave(isStatus: boolean){
+    this.isStatusInvoiceReceiptSave.next(isStatus)
   }
 
-  getStatusInvoiceSave(){
-    return this.isStatusInvoiceSave.getValue()
+  getStatusInvoiceReceiptSave(){
+    return this.isStatusInvoiceReceiptSave.getValue()
   }
 }

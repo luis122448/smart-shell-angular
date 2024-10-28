@@ -1,1 +1,107 @@
-<p>resume-inventory-taking works!</p>
+<section class="grid grid-cols-2 justify-items-end">
+  <div class="col-span-1"></div>
+  <div class="col-span-1">
+    <form action="#" class="flex-row space-y-1" [formGroup]="formResumeInventoryTaking">
+      <div class="flex space-x-2">
+        <label for="implistprice" class="label-input-sm text-left"
+        >List Price</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+            currency?.symbol
+          }}</span>
+        <input
+          id="implistprice"
+          type="number"
+          class="input-disabled-import"
+          formControlName="implistprice"
+          [value]="implistprice?.value | number:'1.2-2'"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="impdesctotal" class="label-input-sm text-left"
+        >Total Discount</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+            currency?.symbol
+          }}</span>
+        <input
+          id="impdesctotal"
+          type="number"
+          class="input-disabled-import"
+          formControlName="impdesctotal"
+          [value]="impdesctotal?.value | number:'1.2-2'"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="impsaleprice" class="label-input-sm text-left"
+        >Sale Price</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+            currency?.symbol
+          }}</span>
+        <input
+          id="impsaleprice"
+          type="number"
+          class="input-disabled-import"
+          formControlName="impsaleprice"
+          [value]="impsaleprice?.value | number:'1.2-2'"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="imptribtotal" class="label-input-sm text-left"
+        >Total Tax</label
+        >
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+            currency?.symbol
+          }}</span>
+        <input
+          id="imptribtotal"
+          type="number"
+          class="input-disabled-import"
+          formControlName="imptribtotal"
+          [value]="imptribtotal?.value | number:'1.2-2'"
+        />
+      </div>
+      <div class="flex space-x-2">
+        <label for="imptotal" class="label-input-sm text-left">Total</label>
+        <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
+            currency?.symbol
+          }}</span>
+        <input
+          id="imptotal"
+          type="number"
+          class="input-disabled-import"
+          formControlName="imptotal"
+          [value]="imptotal?.value | number:'1.2-2'"
+        />
+      </div>
+    </form>
+  </div>
+</section>
+<section class="grid grid-cols-2 pt-6">
+  <div class="flex justify-start space-x-4">
+    <app-button-standard
+      [disabledBtn]="isStatusInventoryTakingRegister()"
+      optionBtn="new"
+      colorBtn="sky"
+      (click)="newDocument()"
+    >New Document</app-button-standard
+    >
+  </div>
+  <div class="flex justify-end space-x-4">
+    <app-button-standard
+      [disabledBtn]="isStatusInventoryTakingRegister()"
+      optionBtn="calculate"
+      colorBtn="sky"
+      (click)="calculate()"
+    >Calculate</app-button-standard
+    >
+    <app-button-standard
+      [disabledBtn]="isStatusInventoryTakingRegister()"
+      optionBtn="save"
+      colorBtn="sky"
+      (click)="save()"
+    >Save</app-button-standard
+    >
+  </div>
+</section>

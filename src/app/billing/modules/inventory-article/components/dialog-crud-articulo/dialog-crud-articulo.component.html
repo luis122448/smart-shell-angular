@@ -1,43 +1,47 @@
 <div class="crud-container relative">
   <mat-tab-group [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faFileInvoice"></fa-icon>
+          <span class="mat-tab-label-span">Basic Information</span>
+        </div>
+      </ng-template>
+      <app-basic-info-articulo></app-basic-info-articulo>
+    </mat-tab>
+    @if (!isNewArticle) {
       <mat-tab>
-        <ng-template mat-tab-label>
-          <div class="mat-tab-label-container">
-            <fa-icon [icon]="faFileInvoice"></fa-icon>
-            <span class="mat-tab-label-span">Basic Information</span>
-          </div>
-        </ng-template>
-        <app-basic-info-articulo></app-basic-info-articulo>
-      </mat-tab>
-      <mat-tab *ngIf="!isNewArticle">
         <ng-template mat-tab-label>
           <div class="mat-tab-label-container">
             <fa-icon [icon]="faFolderOpen"></fa-icon>
             <span class="mat-tab-label-span">Article Attached</span>
           </div>
         </ng-template>
-      <app-basic-article-attached></app-basic-article-attached>
+        <app-basic-article-attached></app-basic-article-attached>
       </mat-tab>
-      <!-- <mat-tab *ngIf="!isNewArticle">
-        <ng-template mat-tab-label>
-          <div class="mat-tab-label-container">
-            <fa-icon [icon]="faShoppingBag"></fa-icon>
-            <span class="mat-tab-label-span">Ecommerce</span>
-          </div>
-        </ng-template>
-        <app-ecommerce-articulo></app-ecommerce-articulo>
-      </mat-tab> -->
-      <mat-tab *ngIf="!isNewArticle">
-        <ng-template mat-tab-label>
-          <div class="mat-tab-label-container">
-            <fa-icon [icon]="faClipboardCheck"></fa-icon>
-            <span class="mat-tab-label-span">List Price</span>
-          </div>
-        </ng-template>
-        <app-lista-precios-articulo></app-lista-precios-articulo>
-      </mat-tab>
-  </mat-tab-group>
-  <app-button-operac
+    }
+    <!-- <mat-tab *ngIf="!isNewArticle">
+    <ng-template mat-tab-label>
+      <div class="mat-tab-label-container">
+        <fa-icon [icon]="faShoppingBag"></fa-icon>
+        <span class="mat-tab-label-span">Ecommerce</span>
+      </div>
+    </ng-template>
+    <app-ecommerce-articulo></app-ecommerce-articulo>
+  </mat-tab> -->
+  @if (!isNewArticle) {
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faClipboardCheck"></fa-icon>
+          <span class="mat-tab-label-span">List Price</span>
+        </div>
+      </ng-template>
+      <app-lista-precios-articulo></app-lista-precios-articulo>
+    </mat-tab>
+  }
+</mat-tab-group>
+<app-button-operac
   optionBtn="close"
   colorBtn="red"
   class="absolute top-0 right-6 z-10"

@@ -12,6 +12,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from "@ngx-translate/core";
 @NgModule({
   declarations: [
     LoginFormComponent,
@@ -27,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     AuthRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    TranslateModule,
   ]
 })
 export class AuthModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlobalStatusService } from '@billing-services/global-status.service';
 import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
 import { DataSourceDocumentDetail, DataSourceDocumentHeader } from '@billing/data/datasource-facbol.service';
@@ -14,41 +14,18 @@ import { DocumentInvoice } from '@billing-models/document-invoice.model';
   templateUrl: './layout-invoice-receipt.component.html',
   styleUrls: ['./layout-invoice-receipt.component.scss']
 })
-export class LayoutInvoiceReceiptComponent implements OnInit{
-  isLoading =  false;
+export class LayoutInvoiceReceiptComponent{
   isEditDocumentValue : DocumentInvoice | undefined = undefined
-  isStatusInvoice : 'search' | 'register' =  'register'
+  isStatusInvoiceReceipt = this.globalStatusService.isStatusInvoiceReceipt;
   isNewDocumentValue = false
   isCalculateDocumentValue = false
-  dataDetailSource = DataSourceDocumentDetail.getInstance();
-  dataHeaderSource = DataSourceDocumentHeader.getInstance();
 
   constructor(
     private documentInvoiceService: DocumentInvoiceService,
     private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
-  ){
-    this.isStatusInvoice = this.globalStatusService.getStatusInvoice()
-    this.globalStatusService.isLoading$.subscribe(
-      {
-        next:data =>{this.isLoading = data},
-        error:error =>{this.isLoading = false}
-      })
-  }
-
-  ngOnInit(): void {
-    this.globalStatusService.isLoading$.subscribe(
-      {
-        next:data =>{this.isLoading = data},
-        error:error =>{this.isLoading = false}
-      })
-    this.globalStatusService.isStatusInvoice$.subscribe(
-      {
-        next:data =>{this.isStatusInvoice = data },
-        error:error =>{this.isStatusInvoice = 'register'}
-      })
-  }
+  ){}
 
   isNewDocument($event:boolean){
     this.isEditDocumentValue = undefined
@@ -71,7 +48,7 @@ export class LayoutInvoiceReceiptComponent implements OnInit{
             );
             this.isEditDocumentValue = data.object
             this.isNewDocumentValue = false
-            this.globalStatusService.setStatusInvoice('register')
+            this.globalStatusService.setStatusInvoiceReceipt('register')
           } else {
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',

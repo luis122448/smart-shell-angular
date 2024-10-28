@@ -73,7 +73,7 @@ export class RegisterFacbolComponent implements OnInit {
       registdate: [yesterday, [Validators.required]],
       codbranch: [1, [Validators.required]],
       codplaiss: [1, [Validators.required]],
-      ingsalcom: [1, [Validators.required]],
+      inout: [1, [Validators.required]],
       reacomdoc: [reacomdoc, [Validators.required]],
       codcur: ['PEN', [Validators.required]],
       exchangerate: [
@@ -115,7 +115,7 @@ export class RegisterFacbolComponent implements OnInit {
       .filter((data) => data.typcomdoc === 1);
     this.reasons = this.defaultValuesService
       .getLocalStorageValue('reasons')
-      .filter((data) => data.typcomdoc === 1 && data.ingsalcom === 1);
+      .filter((data) => data.typcomdoc === 1 && data.inout === 1);
     this.defaultSeries = this.series.find((data) => data.defaul === 'Y');
     this.defaultReason = this.reasons.find((data) => data.defaul === 'Y');
     this.buildForm(0,1, this.defaultSeries?.serie, this.defaultReason?.reacomdoc);
@@ -123,14 +123,14 @@ export class RegisterFacbolComponent implements OnInit {
 
   ngOnInit(): void {
     this.onTipCamChange();
-    this.facbolGlobalStatusService.isStatusInvoiceSave$.subscribe({
+    this.facbolGlobalStatusService.isStatusInvoiceReceiptSave$.subscribe({
       next: (data) => {
         if (!data) {
           this.formDocumentHeader.markAllAsTouched();
           if (!this.formDocumentHeader.valid) {
-            this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+            this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
           } else {
-            this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
+            this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(true);
           }
         }
       },
@@ -166,7 +166,7 @@ export class RegisterFacbolComponent implements OnInit {
           width: '400px',
           data: { no_required_fields : 'Y' }
         });
-        this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+        this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
         return;
       }
     }
@@ -186,7 +186,6 @@ export class RegisterFacbolComponent implements OnInit {
   }
 
   openDialogGetCli(isCode: boolean) {
-    // Validar que los campos obligatorios estén llenos
     if (
       !(
         this.formDocumentHeader.get('typcomdoc')?.value &&
@@ -198,12 +197,11 @@ export class RegisterFacbolComponent implements OnInit {
         width: '400px',
         data: {
           status: -3,
-          message: 'Tipo de Documento, Serie y Motivo son Obligatorio!',
+          message: 'Document Type, Series and Reason are Required!',
         },
       });
       return;
     }
-    // Validad minima cantidad de digitos
     if (isCode && this.formDocumentHeader.get('codbuspar')?.value.length < 3) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
@@ -235,9 +233,7 @@ export class RegisterFacbolComponent implements OnInit {
         this.formDocumentHeader.get('poscod')?.setValue(data.poscod);
         // this.formDocumentHeader.get('codlistprice')?.setValue(data.codlistprice)
         this.formDocumentHeader.get('codlistprice')?.setValue(1); // Default
-        // Asignar las Condiciones Pago
         this.changePaymentCondition(data.codbuspar);
-        // Deshabilitar todos los inputs
         this.disableHeaderForm();
       }
     });
@@ -251,7 +247,7 @@ export class RegisterFacbolComponent implements OnInit {
     this.formDocumentHeader.get('codbuspar')?.disable();
     this.formDocumentHeader.get('busnam')?.disable();
     this.formDocumentHeader.get('addres')?.disable();
-    this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+    this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
     this.dataHeaderSource.getPush(this.formDocumentHeader.getRawValue());
   }
 
@@ -267,7 +263,7 @@ export class RegisterFacbolComponent implements OnInit {
     this.formDocumentHeader.get('codbuspar')?.enable();
     this.formDocumentHeader.get('busnam')?.enable();
     this.formDocumentHeader.get('addres')?.enable();
-    this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+    this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
     this.dataHeaderSource.getPush(this.formDocumentHeader.getRawValue());
   }
 
@@ -294,7 +290,7 @@ export class RegisterFacbolComponent implements OnInit {
       .filter((data) => data.typcomdoc === typcomdoc);
     this.reasons = this.defaultValuesService
       .getLocalStorageValue('reasons')
-      .filter((data) => data.typcomdoc === typcomdoc && data.ingsalcom === 1);
+      .filter((data) => data.typcomdoc === typcomdoc && data.inout === 1);
   }
 
   onIncigvChange(event: any) {
@@ -330,7 +326,7 @@ export class RegisterFacbolComponent implements OnInit {
   }
 
   onTipCamChange() {
-    this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+    this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
     this.tipoCambioService
       .getByLike(
         this.formDocumentHeader.get('registdate')?.value,
@@ -348,7 +344,7 @@ export class RegisterFacbolComponent implements OnInit {
             this.formDocumentHeader
               .get('exchangerate')
               ?.setValue((0.0).toFixed(2));
-            this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+            this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
           } else {
             this.matSnackBar.openFromComponent(
               MatsnackbarSuccessComponent,
@@ -357,7 +353,7 @@ export class RegisterFacbolComponent implements OnInit {
             this.formDocumentHeader
               .get('exchangerate')
               ?.setValue(data.list[0].eventa);
-            this.facbolGlobalStatusService.setStatusInvoiceRegister(true);
+            this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(true);
             this.dataHeaderSource.updateData(
               'exchangerate',
               data.list[0].eventa
@@ -368,7 +364,7 @@ export class RegisterFacbolComponent implements OnInit {
           this.formDocumentHeader
             .get('exchangerate')
             ?.setValue((0.0).toFixed(2));
-          this.facbolGlobalStatusService.setStatusInvoiceRegister(false);
+          this.facbolGlobalStatusService.setStatusInvoiceReceiptRegister(false);
 
         }
       });

@@ -9,6 +9,7 @@ import { BasicArticleListPriceComponent } from '@billing-module-list-price/compo
 import { BasicImportListPriceComponent } from '@billing-module-list-price/components/basic-import-list-price/basic-import-list-price.component';
 import { ModalImportListPriceComponent } from '@billing-module-list-price/components/modal-import-list-price/modal-import-list-price.component';
 import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SharedBillingModule } from '@billing-modules/shared/shared-billing.modu
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
-    SharedBillingModule
+    SharedBillingModule,
+    TranslateModule,
   ],
   exports: [
     DialogAllListPriceComponent,

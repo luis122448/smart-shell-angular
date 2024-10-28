@@ -44,3 +44,8 @@ export const MatSnackBarMessageConfig = {
   horizontalPosition: 'center' as MatSnackBarHorizontalPosition,
   verticalPosition: 'top' as MatSnackBarVerticalPosition
 };
+
+export const DOCUMENT_INVOICE = 1
+export const DOCUMENT_RECEIPT = 3
+export const DOCUMENT_INTERNAL_GUIDE = 103
+export const DOCUMENT_INVENTORY_TAKING = 111

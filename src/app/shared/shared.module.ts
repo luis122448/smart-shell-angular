@@ -26,6 +26,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
 import { StackTechComponent } from './components/stack-tech/stack-tech.component';
 import { DialogQuestionCommentComponent } from './components/dialog-question-comment/dialog-question-comment.component';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from "@ngx-translate/core";
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -55,7 +56,8 @@ import { RouterModule } from '@angular/router';
     CdkModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    TranslateModule,
   ],
   providers: [
     HttpParams

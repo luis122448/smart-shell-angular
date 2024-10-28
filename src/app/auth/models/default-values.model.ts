@@ -1,3 +1,30 @@
+export interface MetadataModel{
+  typeCommercialDocument: TypeCommercialDocument[]
+  seller: Seller[]
+  serieCommercialDocument: Serie[]
+  reasonCommercialDocument: Reason[]
+  situationCommercialDocument: Situation[]
+  typeInventory: Inventory[]
+  warehouse: Warehouse[]
+  listPrice: ListPrice[]
+  typeBusinessPartner: TypeBusinessPartner[]
+  user: any
+}
+
+export interface TypeCommercialDocument{
+  typcomdoc: number
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
+export interface Seller{
+  codsel: string
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
 export interface Branch{
   codbranch: number
   abrevi: string
@@ -20,13 +47,6 @@ export interface Access{
   descri: string
 }
 
-export interface Seller{
-  codsel: string
-  abrevi: string
-  descri: string
-  defaul: string
-}
-
 export interface Serie{
   typcomdoc: number
   serie: string
@@ -44,14 +64,14 @@ export interface Document{
 
 export interface Reason{
   typcomdoc: number
-  ingsalcom: number
+  inout: number
   reacomdoc: number
   abrevi: string
   descri: string
   defaul: string
 }
 
-export interface Situcion{
+export interface Situation {
   typcomdoc: number
   sitcomdoc: number
   abrevi: string
@@ -73,10 +93,18 @@ export interface ListPrice{
   defaul: string
 }
 
-export interface TypeBusinessPartnerDefaultValues{
+export interface TypeBusinessPartner{
   typbuspar: number
   abrevi: string
   descri: string
   codext: string
+  defaul: string
+}
+
+export interface Warehouse {
+  typinv: number
+  codwarehouse: string
+  abrevi: string
+  descri: string
   defaul: string
 }

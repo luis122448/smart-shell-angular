@@ -9,6 +9,7 @@ import { DialogCrudClienteComponent } from '@billing-module-business-partner/pag
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SharedBillingModule } from '@billing-modules/shared/shared-billing.modu
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
-    SharedBillingModule
+    SharedBillingModule,
+    TranslateModule,
   ],
   exports: [
     BasicInfoClienteComponent,

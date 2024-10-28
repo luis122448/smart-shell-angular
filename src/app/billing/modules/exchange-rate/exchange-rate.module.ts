@@ -7,6 +7,7 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { FormsModule } from "@angular/forms";
 import { SharedModule } from "@shared/shared.module";
 import { SharedBillingModule } from "@billing-modules/shared/shared-billing.module";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedBillingModule } from "@billing-modules/shared/shared-billing.modu
     FormsModule,
     FontAwesomeModule,
     SharedModule,
-    SharedBillingModule
+    SharedBillingModule,
+    TranslateModule,
   ],
   exports: [
     BasicInfoExchangeRateComponent,

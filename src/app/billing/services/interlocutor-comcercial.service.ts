@@ -25,19 +25,9 @@ export class BusinessPartnerService {
     return this.httpCLient.get<DAOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-like`,{ params })
   }
 
-  getById(codbuspar: string): Observable<DTOBusinessPartner>{
-    return this.httpCLient.get<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
-    .pipe(catchError(
-      error => of({
-        'status':-3,
-        'message':error.message,
-        'object': null
-      })))
-  }
-
-  getByPage(typbuspar:number, codbuspar: string,busnam: string,status: boolean, pageSize: number = 10,pageIndex: number = 0){
+  getByPage(typbuspar:number, codbuspar: string, busnam: string, status: boolean, pageSize: number = 25,pageIndex: number = 0){
     let params = new HttpParams()
-    params = params.set('typbuspar',typbuspar)
+    params = params.set('typbuspar',typbuspar.toString())
     params = params.set('codbuspar',codbuspar)
     params = params.set('busnam',busnam)
     if (!status) {
@@ -46,6 +36,16 @@ export class BusinessPartnerService {
     params = params.set('size',pageSize.toString())
     params = params.set('page',pageIndex.toString())
     return this.httpCLient.get<PAGEBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/by-page`,{ params })
+  }
+
+  getById(codbuspar: string): Observable<DTOBusinessPartner>{
+    return this.httpCLient.get<DTOBusinessPartner>(`${this.API_URL}${this.PATH_BILLING}${this.PATH_BUSINESS_PARTNER}/${codbuspar}`)
+    .pipe(catchError(
+      error => of({
+        'status':-3,
+        'message':error.message,
+        'object': null
+      })))
   }
 
   postSave(data: BusinessPartner): Observable<DTOBusinessPartner>{

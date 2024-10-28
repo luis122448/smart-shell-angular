@@ -2,7 +2,7 @@
   <menu class="left-container">
     <app-siderbar-left></app-siderbar-left>
   </menu>
-  <div [ngSwitch]="isStatusConfiguration" class="main-container">
+  <div class="main-container">
     <app-header-configuration
       class="h-[100px]"
       (changeViewOnly)="changeViewOnly($event)"
@@ -10,17 +10,21 @@
       [title]="this.title"
     ></app-header-configuration>
     <div class="body-container">
-      <app-serie-commercial-document
-        (changeView)="changeView($event)"
-        *ngSwitchCase="'search'"
-      ></app-serie-commercial-document>
-      <app-crud-serie-commercial-document
-        (changeView)="changeView($event)"
-        *ngSwitchCase="'crud'"
-        [inputTypcomdoc]="this.typcomdoc"
-        [inputSerie]="this.serie"
-        [inputSave]="this.save"
-      ></app-crud-serie-commercial-document>
+      @switch (isStatusConfiguration) {
+        @case ('search') {
+          <app-serie-commercial-document
+            (changeView)="changeView($event)"
+          ></app-serie-commercial-document>
+        }
+        @case ('crud') {
+          <app-crud-serie-commercial-document
+            (changeView)="changeView($event)"
+            [inputTypcomdoc]="this.typcomdoc"
+            [inputSerie]="this.serie"
+            [inputSave]="this.save"
+          ></app-crud-serie-commercial-document>
+        }
+      }
     </div>
     <app-footer class="h-[60px]"></app-footer>
   </div>

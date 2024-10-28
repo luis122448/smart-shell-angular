@@ -114,7 +114,7 @@ export class DefaultValuesComponent {
       case 'reasons':
         return {
           typcomdoc: data.typcomdoc,
-          ingsalcom: data.ingsalcom,
+          inout: data.inout,
           reacomdoc: data.reacomdoc,
           abrevi: data.abrevi,
           descri: data.descri,

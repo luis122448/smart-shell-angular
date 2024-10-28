@@ -1,13 +1,12 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentInvoice } from '@billing-models/document-invoice.model';
-import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
-import { GlobalStatusService } from '@billing-services/global-status.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { DataSourceDocumentDetail, DataSourceDocumentHeader } from '@billing/data/datasource-facbol.service';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
+import { DocumentInventoryTakingService } from "@billing-services/document-inventory-taking.service";
 
 @Component({
   selector: 'app-layout-inventory-taking',
@@ -18,38 +17,17 @@ export class LayoutInventoryTakingComponent {
 
   isLoading =  false;
   isEditDocumentValue : DocumentInvoice | undefined = undefined
-  isStatusInvoice : 'search' | 'register' =  'register'
+  isStatusInventoryTaking = this.documentInventoryTakingService.isStatusInventoryTaking;
   isNewDocumentValue = false
   isCalculateDocumentValue = false
   dataDetailSource = DataSourceDocumentDetail.getInstance();
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
 
   constructor(
-    private documentInvoiceService: DocumentInvoiceService,
-    private globalStatusService: GlobalStatusService,
+    private documentInventoryTakingService: DocumentInventoryTakingService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,
-  ){
-    this.isStatusInvoice = this.globalStatusService.getStatusInvoice()
-    this.globalStatusService.isLoading$.subscribe(
-      {
-        next:data =>{this.isLoading = data},
-        error:error =>{this.isLoading = false}
-      })
-  }
-
-  ngOnInit(): void {
-    this.globalStatusService.isLoading$.subscribe(
-      {
-        next:data =>{this.isLoading = data},
-        error:error =>{this.isLoading = false}
-      })
-    this.globalStatusService.isStatusInvoice$.subscribe(
-      {
-        next:data =>{this.isStatusInvoice = data },
-        error:error =>{this.isStatusInvoice = 'register'}
-      })
-  }
+  ){}
 
   isNewDocument($event:boolean){
     this.isEditDocumentValue = undefined
@@ -57,7 +35,7 @@ export class LayoutInventoryTakingComponent {
   }
 
   isModifyDocument($event:number){
-    this.documentInvoiceService.getByNumint($event).subscribe({
+    this.documentInventoryTakingService.getByNumint($event).subscribe({
       next:data =>{
         if(data.status<=0){
           this.dialog.open(DialogErrorAlertComponent,{
@@ -72,7 +50,7 @@ export class LayoutInventoryTakingComponent {
             );
             this.isEditDocumentValue = data.object
             this.isNewDocumentValue = false
-            this.globalStatusService.setStatusInvoice('register')
+            this.documentInventoryTakingService.setStatusInventoryTaking('register')
           } else {
             this.dialog.open(DialogErrorAlertComponent,{
               width: '400px',

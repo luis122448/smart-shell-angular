@@ -15,9 +15,12 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ListPriceArticleService } from '@billing-services/list-price-article.service';
+import { DialogErrorAlertComponent } from "@shared/components/dialog-error-alert/dialog-error-alert.component";
+import { PageEvent } from "@angular/material/paginator";
 
 export interface DialogData {
-  name: string;
+  codart?: string;
+  desart?: string;
   codlistprice: number;
 }
 
@@ -31,10 +34,13 @@ export class DialogGetArticleComponent implements OnInit {
   dataSource = new DataSourceArticle();
   displayedColumns: string[] = ['codart', 'descri', 'codext'];
   input = new FormControl('', { nonNullable: true });
-  countRecords = 0;
   selectedRowIndex: number | null = 0;
   scrollingUp = false;
   isKeyboardNavigation = false;
+  // Page
+  totalElements = 0;
+  pageSize = 25;
+  pageIndex = 0;
 
   constructor(
     private dialogRef: DialogRef,
@@ -45,24 +51,31 @@ export class DialogGetArticleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadArticle(this.data.name);
+    this.loadArticle(this.data.codart, this.data.desart);
     this.input.valueChanges.pipe(debounceTime(300)).subscribe((data) => {
       this.dataSource.getFind(data);
     });
   }
 
-  loadArticle(name: string) {
-    this.articleService.getByName(name).subscribe({
+  loadArticle(codart: string = "%", desart: string = "%") {
+    this.articleService.getByPage(1, codart, desart, true, 25, 0).subscribe({
       next: (data) => {
-        this.dataSource.getInit(data.list);
-        this.countRecords = this.dataSource.getCount();
-        if (data.list.length == 1) {
-          this.closeDialog(data.list[0]);
+        if (data.status <= 0){
+          this.dialog.open(DialogErrorAlertComponent, {
+            width: '400px',
+            data: data,
+          });
+          this.dialogRef.close(null);
         }
+        if (data.status > 0 && data.page.content.length === 1) {
+          this.dialogRef.close(data.page.content[0]);
+        }
+        this.dataSource.getInit(data.page.content);
+        this.totalElements = data.page.totalElements;
       },
       error: (err) => {
-        this.closeDialog(null);
-      },
+        this.dialogRef.close(null);
+      }
     });
   }
 
@@ -80,6 +93,22 @@ export class DialogGetArticleComponent implements OnInit {
     }
   }
 
+  byPageEvent(e: PageEvent) {
+    console.log(e.pageIndex);
+    this.articleService
+      .getByPage(
+        -1,
+        this.data.codart ? this.data.codart : "%",
+        this.data.desart ? this.data.desart : "%",
+        true,
+        this.pageSize,
+        e.pageIndex
+      )
+      .subscribe((data) => {
+        this.dataSource.getInit(data.page.content);
+      });
+  }
+
   onMouseOver(index: number) {
     if (!this.isKeyboardNavigation) {
       this.selectedRowIndex = index;
@@ -95,7 +124,7 @@ export class DialogGetArticleComponent implements OnInit {
 
     setTimeout(() => {
       this.isKeyboardNavigation = false;
-    }, 1000); // Retraso de 1 segundo
+    }, 1000);
   }
 
   onArrowDown() {
@@ -105,7 +134,7 @@ export class DialogGetArticleComponent implements OnInit {
 
     setTimeout(() => {
       this.isKeyboardNavigation = false;
-    }, 1000); // Retraso de 1 segundo
+    }, 1000);
   }
 
   private navigateRows(direction: number) {
@@ -116,12 +145,8 @@ export class DialogGetArticleComponent implements OnInit {
         0,
         Math.min(rows.length - 1, currentRow + direction)
       );
-
-      // Scroll to the selected row
       const rowElement = rows[targetRow] as HTMLElement;
       rowElement.scrollIntoView({ behavior: 'auto', block: 'center' });
-
-      // Update selectedRowIndex
       this.selectedRowIndex = targetRow;
     }
   }

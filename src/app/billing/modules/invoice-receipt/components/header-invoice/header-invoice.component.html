@@ -1,55 +1,58 @@
 <header class="h-[50px] w-full sapce-y-6 dark:bg-slate-800 dark:text-slate-400">
   <app-header></app-header>
   <section class="h-[50px] w-full px-4 grid grid-cols-2 dark:bg-slate-800 bg-gray-300 items-center">
-    <div [ngSwitch]="isStatusInvoice" class="col-span-1 flex items-start gap-x-4">
-      <div *ngSwitchCase="'search'">
-        <app-button-standard
-          colorBtn="sky"
-          optionBtn="register"
-          (click)="onRegisterInvoice()"
-        >
-          Register
-        </app-button-standard>
+    <div class="col-span-1 flex items-start gap-x-4">
+      @switch (isStatusInvoiceReceipt()) {
+        @case ('search') {
+          <div>
+            <app-button-standard
+              colorBtn="sky"
+              optionBtn="register"
+              (click)="onRegisterInvoice()"
+              >
+              Register
+            </app-button-standard>
+          </div>
+        }
+        @case ('register') {
+          <div>
+            <app-button-standard
+              colorBtn="sky"
+              optionBtn="search"
+              (click)="onSearchInvoice()"
+              >
+              Search</app-button-standard
+              >
+            </div>
+          }
+        }
       </div>
-      <div *ngSwitchCase="'register'">
-        <app-button-standard
-          colorBtn="sky"
-          optionBtn="search"
-          (click)="onSearchInvoice()"
-        >
-          Search</app-button-standard
-        >
+      <div class="col-span-1 items-end grid grid-cols-2 gap-x-4 dark:bg-slate-800 dark:text-slate-400">
+        <div class="grid grid-cols-3 items-center">
+          <label for="codbranch" class="label-default label-required">Branch</label>
+          <select
+            name="codbranch"
+            id="codbranch"
+            class="select-default col-span-2"
+            (change)="onBranchChange($event.target)"
+            disabled
+            >
+            <option value="1">Principal</option>
+            <option value="2">Secondary</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="codplaiss" class="label-default label-required whitespace-nowrap">Place of Issue</label>
+          <select
+            name="codplaiss"
+            id="codplaiss"
+            class="select-default col-span-2"
+            (change)="onPlaceOfIssueChange($event.target)"
+            >
+            <option value="1">Ecommerce</option>
+            <option value="2">Physical Store</option>
+          </select>
+        </div>
       </div>
-      <!-- <app-default-values></app-default-values> -->
-    </div>
-    <div class="col-span-1 items-end grid grid-cols-2 gap-x-4 dark:bg-slate-800 dark:text-slate-400">
-      <div class="grid grid-cols-3 items-center">
-        <label for="codbranch" class="label-default label-required">Branch</label>
-        <select
-          name="codbranch"
-          id="codbranch"
-          class="select-default col-span-2"
-          placeholder="Branch*"
-          (change)="onBranchChange($event.target)"
-          disabled
-        >
-          <option value="1">Principal</option>
-          <option value="2">Secondary</option>
-        </select>
-      </div>
-      <div class="grid grid-cols-3 items-center">
-        <label for="codplaiss" class="label-default label-required whitespace-nowrap">Place of Issue</label>
-        <select
-          name="codplaiss"
-          id="codplaiss"
-          class="select-default col-span-2"
-          placeholder="Place of Issue*"
-          (change)="onPlaceOfIssueChange($event.target)"
-        >
-          <option value="1">Eccomerce</option>
-          <option value="2">Physical Store</option>
-        </select>
-      </div>
-    </div>
-  </section>
-</header>
+    </section>
+  </header>

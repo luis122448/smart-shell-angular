@@ -15,6 +15,7 @@ import { HeaderConfigurationComponent } from './components/header-configuration/
 import { FormatSerieCommercialDocumentComponent } from './components/format-serie-commercial-document/format-serie-commercial-document.component';
 import { CardPresentationComponent } from './components/card-presentation/card-presentation.component';
 import { CardExperienceComponent } from './components/card-experience/card-experience.component';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CardExperienceComponent } from './components/card-experience/card-exper
     CommonModule,
     ConfigurationRoutingModule,
     SharedModule,
-    SharedBillingModule
+    SharedBillingModule,
+    TranslateModule,
   ],
   providers: [
     DatePipe

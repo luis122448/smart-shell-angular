@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DefaultValuesComponent } from './components/default-values/default-values.component';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DefaultValuesComponent } from './components/default-values/default-valu
     CommonModule,
     RouterModule,
     FontAwesomeModule,
-    SharedModule
+    SharedModule,
+    TranslateModule,
   ],
   exports: [
     SiderbarLeftComponent,

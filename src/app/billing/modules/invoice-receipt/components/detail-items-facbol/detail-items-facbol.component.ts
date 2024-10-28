@@ -95,7 +95,7 @@ export class DetailItemsFacbolComponent{
             status: -3,
             message : `Document not have items` }
         });
-        this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(false);
+        this.facbolGlobalStatusService.setStatusInvoiceReceiptRegisterDetail(false);
         return;
       }
       this.detailDocument.controls.forEach((row) => {
@@ -104,13 +104,13 @@ export class DetailItemsFacbolComponent{
             width: '400px',
             data: {
               status: -3,
-              message : `Article ${row.value.codart} not Quuantity or Price` }
+              message : `Article ${row.value.codart} not Quantity or Price` }
           });
-          this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(false);
+          this.facbolGlobalStatusService.setStatusInvoiceReceiptRegisterDetail(false);
           return;
         }
       });
-      this.facbolGlobalStatusService.setStatusInvoiceRegisterDetail(true);
+      this.facbolGlobalStatusService.setStatusInvoiceReceiptRegisterDetail(true);
     }
   }
 

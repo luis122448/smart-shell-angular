@@ -26,7 +26,7 @@
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
           <div class="w-56">
-            <label for="origen" class="label-input-sm">Origin Currency</label>
+            <label for="origen" class="label-input-sm">Origin {{ 'CURRENCY' | translate }}</label>
           </div>
           <select
             id="origen"
@@ -41,7 +41,7 @@
         </div>
         <div class="grid grid-cols-3">
           <div class="w-56">
-            <label for="destin" class="label-input-sm">Destiny Currency</label>
+            <label for="destin" class="label-input-sm">Destiny {{ 'CURRENCY' | translate }}</label>
           </div>
           <select
             id="destin"
@@ -160,7 +160,7 @@
       optionBtn="close"
       [typeBtn]="'button'"
     >
-      Close
+      {{ 'CLOSE' | translate }}
     </app-button-standard>
   </section>
 </main>

@@ -4,197 +4,200 @@
       <div class="flex">
         <label for="codlistprice" class="label-input-sm label-required"
           >List Price Code</label
-        >
-        <select
-          name="codlistprice"
-          id="codlistprice"
-          class="select-default"
-          formControlName="codlistprice"
-          [class.select-invalid]="isInputInvalid('codlistprice')"
-        >
-          <option
-            *ngFor="let item of listprices"
-            [value]="item.codlistprice"
-            class="option-default"
-            selected
-            [class.option-invalid]="isInputInvalid('codlistprice')"
           >
-            {{ item.codlistprice + " - " + item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="flex">
-        <label for="abrevi" class="label-input-sm label-required"
-          >Abbreviation</label
-        >
-        <input
-          id="abrevi"
-          type="text"
-          class="input-default"
-          formControlName="abrevi"
-          [class.input-invalid]="isInputInvalid('abrevi')"
-          placeholder="Abbreviation"
-        />
-      </div>
-      <div class="flex">
-        <label for="descri" class="label-input-sm label-required"
-          >Description</label
-        >
-        <input
-          id="descri"
-          type="text"
-          class="input-default"
-          formControlName="descri"
-          [class.input-invalid]="isInputInvalid('descri')"
-          placeholder="Description"
-        />
-      </div>
-      <div class="flex">
-        <label for="codext" class="label-input-sm label-required"
-          >External Code</label
-        >
-        <input
-          id="codext"
-          type="text"
-          class="input-default"
-          formControlName="codext"
-          [class.input-invalid]="isInputInvalid('codext')"
-          placeholder="External Code"
-        />
-      </div>
-    </article>
-    <article class="h-full w-full px-8 space-y-4">
-      <div class="flex">
-        <label for="codcur" class="label-input-sm label-required"
-          >Currency</label
-        >
-        <select
-          name="codcur"
-          id="codcur"
-          class="select-default"
-          formControlName="codcur"
-          [class.select-invalid]="isInputInvalid('codcur')"
-        >
-          <option
-            value=""
-            class="option-default"
-            disabled
-            selected
-            hidden
-            [class.option-invalid]="isInputInvalid('codcur')"
-          >
-            -- Choose --
-          </option>
-          <option *ngFor="let item of currencies" [value]="item.codcur">
-            {{ item.descri }}
-          </option>
-        </select>
-      </div>
-      <div class="w-full flex justify-between">
-        <label for="inctax" class="label-input-sm label-required"
-          >Does it include taxes?</label
-        >
-        <input
-                id="inctax"
-                type="checkbox"
-                class="checkbox-default"
-                formControlName="inctax"
-        />
-      </div>
-    </article>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Additional Information : </label>
-  </section>
-  <section class="space-y-2">
-    <div class="flex">
-      <label for="observ" class="label-input-xl">Observation</label>
-      <textarea
-        name=""
-        id="observ"
-        cols="30"
-        rows="10"
-        class="textarea-default"
-        formControlName="observ"
-      ></textarea>
-    </div>
-    <div class="flex">
-      <label for="commen" class="label-input-xl">Comment</label>
-      <textarea
-        name=""
-        id="commen"
-        cols="30"
-        rows="10"
-        class="textarea-default"
-        formControlName="commen"
-      ></textarea>
-    </div>
-  </section>
-  <section>
-    <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Audit Information : </label>
-  </section>
-  <section class="grid grid-cols-2 gap-x-4">
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="createby" class="label-input-sm">Create by : </label>
-        <input
-          id="createby"
-          type="text"
-          class="input-default"
-          formControlName="createby"
-        />
-      </div>
-      <div class="flex">
-        <label for="createat" class="label-input-sm">Time : </label>
-        <input
-          id="createat"
-          type="text"
-          class="input-default"
-          disabled
-          [value]="formatDate(createat?.value)"
-        />
-      </div>
-    </div>
-    <div class="space-y-2">
-      <div class="flex">
-        <label for="updateby" class="label-input-sm">Update By : </label>
-        <input
-          id="updateby"
-          type="text"
-          class="input-default"
-          formControlName="updateby"
-        />
-      </div>
-      <div class="flex">
-        <label for="updateat" class="label-input-sm">Time : </label>
-        <input
-          id="updateat"
-          type="text"
-          class="input-default"
-          disabled
-          [value]="formatDate(updateat?.value)"
-        />
-      </div>
-    </div>
-  </section>
-  <section class="flex justify-end space-x-4">
-    <app-button-standard
-      (click)="saveListPrice()"
-      colorBtn="green"
-      optionBtn="save"
-      typeBtn="button"
-    >
-    Save
-    </app-button-standard>
-    <app-button-standard
-      (click)="closeDialog()"
-      colorBtn="red"
-      optionBtn="close"
-      typeBtn="button"
-    >
-      Close
-    </app-button-standard>
-  </section>
-</form>
+          <select
+            name="codlistprice"
+            id="codlistprice"
+            class="select-default"
+            formControlName="codlistprice"
+            [class.select-invalid]="isInputInvalid('codlistprice')"
+            >
+            @for (item of listprices; track item) {
+              <option
+                [value]="item.codlistprice"
+                class="option-default"
+                selected
+                [class.option-invalid]="isInputInvalid('codlistprice')"
+                >
+                {{ item.codlistprice + " - " + item.descri }}
+              </option>
+            }
+          </select>
+        </div>
+        <div class="flex">
+          <label for="abrevi" class="label-input-sm label-required"
+            >Abbreviation</label
+            >
+            <input
+              id="abrevi"
+              type="text"
+              class="input-default"
+              formControlName="abrevi"
+              [class.input-invalid]="isInputInvalid('abrevi')"
+              placeholder="Abbreviation"
+              />
+          </div>
+          <div class="flex">
+            <label for="descri" class="label-input-sm label-required"
+              >{{ 'DESCRIPTION' | translate }}</label
+              >
+              <input
+                id="descri"
+                type="text"
+                class="input-default"
+                formControlName="descri"
+                [class.input-invalid]="isInputInvalid('descri')"
+                placeholder="{{ 'DESCRIPTION' | translate }}"
+                />
+            </div>
+            <div class="flex">
+              <label for="codext" class="label-input-sm label-required"
+                >External Code</label
+                >
+                <input
+                  id="codext"
+                  type="text"
+                  class="input-default"
+                  formControlName="codext"
+                  [class.input-invalid]="isInputInvalid('codext')"
+                  placeholder="External Code"
+                  />
+              </div>
+            </article>
+            <article class="h-full w-full px-8 space-y-4">
+              <div class="flex">
+                <label for="codcur" class="label-input-sm label-required"
+                  >{{ 'CURRENCY' | translate }}</label
+                  >
+                  <select
+                    name="codcur"
+                    id="codcur"
+                    class="select-default"
+                    formControlName="codcur"
+                    [class.select-invalid]="isInputInvalid('codcur')"
+                    >
+                    <option
+                      value=""
+                      class="option-default"
+                      disabled
+                      selected
+                      hidden
+                      [class.option-invalid]="isInputInvalid('codcur')"
+                      >
+                      -- {{ 'CHOOSE' | translate }} --
+                    </option>
+                    @for (item of currencies; track item) {
+                      <option [value]="item.codcur">
+                        {{ item.descri }}
+                      </option>
+                    }
+                  </select>
+                </div>
+                <div class="w-full flex justify-between">
+                  <label for="inctax" class="label-input-sm label-required"
+                    >Does it include taxes?</label
+                    >
+                    <input
+                      id="inctax"
+                      type="checkbox"
+                      class="checkbox-default"
+                      formControlName="inctax"
+                      />
+                  </div>
+                </article>
+              </section>
+              <section>
+                <hr class="dialog-sub-title-line" />
+                <label class="dialog-sub-title">Additional Information : </label>
+              </section>
+              <section class="space-y-2">
+                <div class="flex">
+                  <label for="observ" class="label-input-xl">{{ 'OBSERVATION' | translate }}</label>
+                  <textarea
+                    name=""
+                    id="observ"
+                    cols="30"
+                    rows="10"
+                    class="textarea-default"
+                    formControlName="observ"
+                  ></textarea>
+                </div>
+                <div class="flex">
+                  <label for="commen" class="label-input-xl">Comment</label>
+                  <textarea
+                    name=""
+                    id="commen"
+                    cols="30"
+                    rows="10"
+                    class="textarea-default"
+                    formControlName="commen"
+                  ></textarea>
+                </div>
+              </section>
+              <section>
+                <hr class="dialog-sub-title-line" />
+                <label class="dialog-sub-title">Audit Information : </label>
+              </section>
+              <section class="grid grid-cols-2 gap-x-4">
+                <div class="space-y-2">
+                  <div class="flex">
+                    <label for="createby" class="label-input-sm">Create by : </label>
+                    <input
+                      id="createby"
+                      type="text"
+                      class="input-default"
+                      formControlName="createby"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="createat" class="label-input-sm">Time : </label>
+                    <input
+                      id="createat"
+                      type="text"
+                      class="input-default"
+                      disabled
+                      [value]="formatDate(createat?.value)"
+                      />
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex">
+                    <label for="updateby" class="label-input-sm">Update By : </label>
+                    <input
+                      id="updateby"
+                      type="text"
+                      class="input-default"
+                      formControlName="updateby"
+                      />
+                  </div>
+                  <div class="flex">
+                    <label for="updateat" class="label-input-sm">Time : </label>
+                    <input
+                      id="updateat"
+                      type="text"
+                      class="input-default"
+                      disabled
+                      [value]="formatDate(updateat?.value)"
+                      />
+                  </div>
+                </div>
+              </section>
+              <section class="flex justify-end space-x-4">
+                <app-button-standard
+                  (click)="saveListPrice()"
+                  colorBtn="green"
+                  optionBtn="save"
+                  typeBtn="button"
+                  >
+                  Save
+                </app-button-standard>
+                <app-button-standard
+                  (click)="closeDialog()"
+                  colorBtn="red"
+                  optionBtn="close"
+                  typeBtn="button"
+                  >
+                  Close
+                </app-button-standard>
+              </section>
+            </form>

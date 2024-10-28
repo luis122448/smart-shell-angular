@@ -1,15 +1,16 @@
 <section class="flex flex-row space-x-2">
-  <article
-    [ngClass]="sizeTag"
-    class="hover:scale-120 relative rounded bg-slate-300 transition-all hover:transform dark:bg-slate-100"
-    *ngFor="let item of stackTechIcons"
-  >
-    <img
-      [alt]="item.tag"
-      [src]="item.url"
-      [ngClass]="sizeIcon"
-      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      [title]="item.tag"
-    />
-  </article>
+  @for (item of stackTechIcons; track item) {
+    <article
+      [ngClass]="sizeTag"
+      class="hover:scale-120 relative rounded bg-slate-300 transition-all hover:transform dark:bg-slate-100"
+      >
+      <img
+        [alt]="item.tag"
+        [src]="item.url"
+        [ngClass]="sizeIcon"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        [title]="item.tag"
+        />
+    </article>
+  }
 </section>
