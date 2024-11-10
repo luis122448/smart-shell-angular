@@ -64,8 +64,7 @@ export class DialogErrorAlertComponent {
     } else if (data.no_required_fields) {
       this.mensaje = {
         status: -1,
-        message: MESSAGE_NO_REQUIRED_FIELDS,
-        logMessage: MESSAGE_NO_REQUIRED_FIELDS,
+        message: Array.isArray(this.data.fields) ? 'Required Fields : ' + this.data.fields.join(', ') + ' not completed': MESSAGE_NO_REQUIRED_FIELDS,
       };
     } else if (data.status && data.message) {
       this.mensaje = data;

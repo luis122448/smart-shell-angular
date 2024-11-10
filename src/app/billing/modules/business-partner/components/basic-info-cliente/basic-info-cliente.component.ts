@@ -13,7 +13,7 @@ import {
   NoJpgFormatImage,
 } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
-import { TypeBusinessPartnerDefaultValues } from 'src/app/auth/models/default-values.model';
+import { TypeBusinessPartner } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class BasicInfoClienteComponent implements OnInit {
   codbusparId: string = '';
   existeCliente = false;
   imageBusinessPartnerURL = IMAGENOUPLOAD;
-  typeBusinessPartners: TypeBusinessPartnerDefaultValues[] = [];
+  typeBusinessPartners: TypeBusinessPartner[] = [];
 
   private buildForm() {
     this.formCrudCliente = this.formBuilder.group({

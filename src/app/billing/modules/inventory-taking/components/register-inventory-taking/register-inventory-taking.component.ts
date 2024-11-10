@@ -2,7 +2,13 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { DocumentInvoice } from '@billing-models/document-invoice.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataSourceDocumentHeader } from '@billing/data/datasource-facbol.service';
-import { Currency, Reason, Serie } from '@auth/models/default-values.model';
+import {
+  Branch,
+  Currency,
+  Reason,
+  Serie,
+  Warehouse,
+} from '@auth/models/default-values.model';
 import { Dialog } from '@angular/cdk/dialog';
 import { ExchangeRateService } from '@billing-services/tipo-cambio.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,19 +36,25 @@ export class RegisterInventoryTakingComponent {
   faMagnifyingGlass = faMagnifyingGlass;
   faXmark = faXmark;
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
+  statusBuspar: 'register' | 'search' = 'register';
 
   // Obj
+  branchs: Branch[] = [];
   series: Serie[];
   currencies: Currency[];
   reasons: Reason[];
-  defaultSeries: Serie | undefined;
-  defaultReason: Reason | undefined;
+  warehouses: Warehouse[] = [];
+  selectedWarehouse: number = 1;
 
   private buildForm(
     numint: number | undefined,
-    typcomdoc: number | undefined,
+    typcomdoc: number | undefined = DOCUMENT_INVENTORY_TAKING,
     serie: string | undefined,
-    reacomdoc: number | undefined
+    reacomdoc: number | undefined,
+    codcur: string | undefined,
+    codbranch: number | undefined,
+    oriwarehouse: number | undefined = 0,
+    deswarehouse: number | undefined = 1
   ) {
     this.dataHeaderSource.delReset();
     const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
@@ -52,14 +64,16 @@ export class RegisterInventoryTakingComponent {
       numint: [numint, [Validators.required]],
       typcomdoc: [typcomdoc, [Validators.required]],
       sitcomdoc: [1, [Validators.required]],
-      serie: [serie, [Validators.required]],
+      serie: [serie ?? '', [Validators.required]],
       numdoc: [0, [Validators.required]],
       registdate: [yesterday, [Validators.required]],
-      codbranch: [1, [Validators.required]],
+      codbranch: [codbranch, [Validators.required]],
       codplaiss: [1, [Validators.required]],
+      oriwarehouse: [0, [Validators.required]],
+      deswarehouse: [deswarehouse, [Validators.required]],
       inout: [0, [Validators.required]],
       reacomdoc: [reacomdoc, [Validators.required]],
-      codcur: ['PEN', [Validators.required]],
+      codcur: [codcur, [Validators.required]],
       exchangerate: [
         { value: (0.0).toFixed(2), disabled: true },
         [
@@ -68,7 +82,7 @@ export class RegisterInventoryTakingComponent {
           Validators.min(0.01),
         ],
       ],
-      codbuspar: ['0000000000', [Validators.required]],
+      codbuspar: ['000', [Validators.required]],
       busnam: ['None', [Validators.required]],
       addres: ['None', [Validators.required]],
       poscod: ['000000', [Validators.required]],
@@ -98,17 +112,18 @@ export class RegisterInventoryTakingComponent {
       this.defaultValuesService.getLocalStorageValue('currencies');
     this.series = this.defaultValuesService
       .getLocalStorageValue('series')
-      .filter((data) => data.typcomdoc === 1);
+      .filter((data) => data.typcomdoc === DOCUMENT_INVENTORY_TAKING);
     this.reasons = this.defaultValuesService
       .getLocalStorageValue('reasons')
-      .filter((data) => data.typcomdoc === 1 && data.inout === 1);
-    this.defaultSeries = this.series.find((data) => data.defaul === 'Y');
-    this.defaultReason = this.reasons.find((data) => data.defaul === 'Y');
+      .filter((data) => data.typcomdoc === DOCUMENT_INVENTORY_TAKING && data.inout === 0);
+    this.warehouses = this.defaultValuesService.getLocalStorageValue('warehouses');
     this.buildForm(
       0,
       DOCUMENT_INVENTORY_TAKING,
-      this.defaultSeries?.serie,
-      this.defaultReason?.reacomdoc
+      this.series.find((data) => data.defaul === 'Y')?.serie,
+      this.reasons.find((data) => data.defaul === 'Y')?.reacomdoc,
+      this.currencies.find((data) => data.defaul === 'Y')?.codcur,
+      this.branchs[0]?.codbranch
     );
     if (!this.documentInventoryTakingService.isStatusInventoryTakingSave()) {
       this.formDocumentHeader.markAllAsTouched();
@@ -136,9 +151,11 @@ export class RegisterInventoryTakingComponent {
     ) {
       this.buildForm(
         0,
-        1,
-        this.defaultSeries?.serie,
-        this.defaultReason?.reacomdoc
+        DOCUMENT_INVENTORY_TAKING,
+        this.series.find((data) => data.defaul === 'Y')?.serie,
+        this.reasons.find((data) => data.defaul === 'Y')?.reacomdoc,
+        this.currencies.find((data) => data.defaul === 'Y')?.codcur,
+        this.branchs.find((data) => data.defaul === 'Y')?.codbranch
       );
       this.formDocumentHeader.markAllAsTouched();
     }
@@ -152,7 +169,11 @@ export class RegisterInventoryTakingComponent {
         dataHeaderDocument.numint,
         dataHeaderDocument.typcomdoc,
         dataHeaderDocument.serie,
-        dataHeaderDocument.reacomdoc
+        dataHeaderDocument.reacomdoc,
+        dataHeaderDocument.codcur,
+        dataHeaderDocument.codbranch,
+        dataHeaderDocument.oriwarehouse,
+        dataHeaderDocument.deswarehouse
       );
       this.dataHeaderSource.getInit(dataHeaderDocument);
       this.formDocumentHeader.patchValue({
@@ -169,9 +190,14 @@ export class RegisterInventoryTakingComponent {
       changes['isCalculateDocument'].currentValue === true
     ) {
       if (this.formDocumentHeader.invalid) {
+        const invalidFields = Object.keys(
+          this.formDocumentHeader.controls
+        ).filter(
+          (controlName) => this.formDocumentHeader.get(controlName)?.invalid
+        );
         this.dialog.open(DialogErrorAlertComponent, {
           width: '400px',
-          data: { no_required_fields: 'Y' },
+          data: { no_required_fields: 'Y', fields: invalidFields },
         });
         this.documentInventoryTakingService.setStatusInventoryTakingRegister(
           false
@@ -208,6 +234,28 @@ export class RegisterInventoryTakingComponent {
     this.reasons = this.defaultValuesService
       .getLocalStorageValue('reasons')
       .filter((data) => data.typcomdoc === typcomdoc && data.inout === 1);
+  }
+
+  changeInout(event: any) {
+    const inout: number = parseInt(event.target.value);
+    this.reasons = this.defaultValuesService
+      .getLocalStorageValue('reasons')
+      .filter(
+        (data) =>
+          data.typcomdoc === DOCUMENT_INVENTORY_TAKING && data.inout === inout
+      );
+    if (inout === 0) {
+      this.formDocumentHeader.get('oriwarehouse')?.setValue(0);
+      this.formDocumentHeader
+        .get('deswarehouse')
+        ?.setValue(this.selectedWarehouse);
+    }
+    if (inout === 1) {
+      this.formDocumentHeader
+        .get('oriwarehouse')
+        ?.setValue(this.selectedWarehouse);
+      this.formDocumentHeader.get('deswarehouse')?.setValue(0);
+    }
   }
 
   onIncigvChange(event: any) {
@@ -281,4 +329,6 @@ export class RegisterInventoryTakingComponent {
         },
       });
   }
+
+  protected readonly DOCUMENT_INVENTORY_TAKING = DOCUMENT_INVENTORY_TAKING;
 }

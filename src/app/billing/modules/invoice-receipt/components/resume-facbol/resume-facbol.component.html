@@ -4,7 +4,7 @@
     <form action="#" class="flex-row space-y-1" [formGroup]="formResumeFacBol">
       <div class="flex space-x-2">
         <label for="implistprice" class="label-input-sm text-left"
-          >List Price</label
+          >{{ 'LIST_PRICE' | translate }}</label
         >
         <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
           currency?.symbol
@@ -18,7 +18,7 @@
       </div>
       <div class="flex space-x-2">
         <label for="impdesctotal" class="label-input-sm text-left"
-          >Total Discount</label
+          >{{ 'TOTAL_DISCOUNT' | translate }}</label
         >
         <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
           currency?.symbol
@@ -32,7 +32,7 @@
       </div>
       <div class="flex space-x-2">
         <label for="impsaleprice" class="label-input-sm text-left"
-          >Sale Price</label
+          >{{ 'SALE_PRICE' | translate }}</label
         >
         <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
           currency?.symbol
@@ -46,7 +46,7 @@
       </div>
       <div class="flex space-x-2">
         <label for="imptribtotal" class="label-input-sm text-left"
-          >Total Tax</label
+          >{{ 'TOTAL_TAX' | translate }}</label
         >
         <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
           currency?.symbol
@@ -59,7 +59,7 @@
         />
       </div>
       <div class="flex space-x-2">
-        <label for="imptotal" class="label-input-sm text-left">Total</label>
+        <label for="imptotal" class="label-input-sm text-left">{{ 'TOTAL' | translate }}</label>
         <span class="text-left text-xs text-slate-800 dark:text-gray-400">{{
           currency?.symbol
         }}</span>
@@ -80,7 +80,7 @@
       optionBtn="new"
       colorBtn="sky"
       (click)="newDocument()"
-      >New Document</app-button-standard
+      >{{ 'NEW_DOCUMENT' | translate }}</app-button-standard
     >
   </div>
   <div class="flex justify-end space-x-4">
@@ -89,14 +89,14 @@
       optionBtn="calculate"
       colorBtn="sky"
       (click)="calculate()"
-      >Calculate</app-button-standard
+      >{{ 'CALCULATE' | translate }}</app-button-standard
     >
     <app-button-standard
       [disabledBtn]="isStatusInvoiceReceiptRegister"
       optionBtn="save"
       colorBtn="sky"
       (click)="save()"
-      >Save</app-button-standard
+      >{{ 'SAVE' | translate }}</app-button-standard
     >
   </div>
 </section>

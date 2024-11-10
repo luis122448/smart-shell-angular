@@ -1,30 +1,34 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { DocumentInvoice } from "@billing-models/document-invoice.model";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceDocumentDetail, DataSourceDocumentHeader } from "@billing/data/datasource-facbol.service";
-import { Currency } from "@auth/models/default-values.model";
-import { Dialog } from "@angular/cdk/dialog";
-import { GlobalStatusService } from "@billing-services/global-status.service";
-import { DefaultValuesService } from "@auth/services/default-values.service";
-import { DialogErrorAlertComponent } from "@shared/components/dialog-error-alert/dialog-error-alert.component";
-import { DocumentHeader } from "@billing-models/document-header.model";
-import { DocumentDetail } from "@billing-models/document-detail.model";
-import { DialogQuestionComponent } from "@shared/components/dialog-question/dialog-question.component";
-import { DocumentInventoryTakingService } from "@billing-services/document-inventory-taking.service";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DocumentInvoice } from '@billing-models/document-invoice.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  DataSourceDocumentDetail,
+  DataSourceDocumentHeader,
+} from '@billing/data/datasource-facbol.service';
+import { Currency } from '@auth/models/default-values.model';
+import { Dialog } from '@angular/cdk/dialog';
+import { GlobalStatusService } from '@billing-services/global-status.service';
+import { DefaultValuesService } from '@auth/services/default-values.service';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { DocumentHeader } from '@billing-models/document-header.model';
+import { DocumentDetail } from '@billing-models/document-detail.model';
+import { DialogQuestionComponent } from '@shared/components/dialog-question/dialog-question.component';
+import { DocumentInventoryTakingService } from '@billing-services/document-inventory-taking.service';
 
 @Component({
   selector: 'app-resume-inventory-taking',
   templateUrl: './resume-inventory-taking.component.html',
-  styleUrls: ['./resume-inventory-taking.component.scss']
+  styleUrls: ['./resume-inventory-taking.component.scss'],
 })
 export class ResumeInventoryTakingComponent {
-  @Input() isEditDocumentValue : DocumentInvoice | undefined = undefined
+  @Input() isEditDocumentValue: DocumentInvoice | undefined = undefined;
   @Output() isNewDocument = new EventEmitter<boolean>(false);
   @Output() isCalculateDocument = new EventEmitter<boolean>(false);
   formResumeInventoryTaking!: FormGroup;
   dataDetailSource = DataSourceDocumentDetail.getInstance();
   dataHeaderSource = DataSourceDocumentHeader.getInstance();
-  isStatusInventoryTakingRegister = this.documentInventoryTakingService.isStatusInventoryTakingRegister;
+  isStatusInventoryTakingRegister =
+    this.documentInventoryTakingService.isStatusInventoryTakingRegister;
   currencies: Currency[] = [];
   currency: Currency | undefined;
 
@@ -66,49 +70,50 @@ export class ResumeInventoryTakingComponent {
     this.currency = this.currencies.find((data) => data.defaul === 'Y');
   }
 
-  calculate() {
-    this.globalStatusService.setLoading(true);
-    this.isCalculateDocument.emit(true);
-    const dataHeader = this.dataHeaderSource.get();
-    this.currency = this.currencies.find((currency) => currency.codcur === dataHeader.codcur);
-    // Detail
-    this.dataDetailSource.putReasignNumite();
-    const dataDetail = this.dataDetailSource.getImp();
-    this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
-    this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
-    this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
-    this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
-    this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
-    this.dataHeaderSource.updateImp(dataDetail);
-    setTimeout(() => {
-      this.isCalculateDocument.emit(false);
-      this.globalStatusService.setLoading(false);
-    }, 300);
+  calculate(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.globalStatusService.setLoading(true);
+      this.isCalculateDocument.emit(true);
+      const dataHeader = this.dataHeaderSource.get();
+      this.currency = this.currencies.find(
+        (currency) => currency.codcur === dataHeader.codcur
+      );
+      // Detail
+      this.dataDetailSource.putReasignNumite();
+      const dataDetail = this.dataDetailSource.getImp();
+      this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
+      this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
+      this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
+      this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
+      this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
+      this.dataHeaderSource.updateImp(dataDetail);
+      setTimeout(() => {
+        this.isCalculateDocument.emit(false);
+        this.globalStatusService.setLoading(false);
+      }, 300);
+      if (
+        !(
+          this.documentInventoryTakingService.isStatusInventoryTakingRegister() &&
+          this.documentInventoryTakingService.isStatusInventoryTakingRegisterDetail()
+        )
+      ) {
+        resolve(true);
+      }
+    });
   }
 
-  save() {
-    this.calculate();
-    const documentInvoiceHeader = this.dataHeaderSource.get();
-    if ((documentInvoiceHeader?.imptotal ?? 0) <= 0) {
-      this.dialog.open(DialogErrorAlertComponent, {
-        width: '400px',
-        data: {
-          status: -3,
-          message:
-            'The Document amount cannot be less than or equal to ZERO, with the reason for SALE',
-        },
-      });
+  async save() {
+    const response = await this.calculate();
+    if (!response) {
       return;
     }
+    const documentInvoiceHeader = this.dataHeaderSource.get();
     const documentInvoiceDetails = this.dataDetailSource
       .get()
       .filter((data) => data.numite > 0);
     if (this.isEditDocumentValue) {
       this.updateDocument(documentInvoiceHeader, documentInvoiceDetails);
     } else {
-      documentInvoiceDetails.forEach((data) => {
-        data.numite = 0;
-      })
       this.saveDocument(documentInvoiceHeader, documentInvoiceDetails);
     }
   }
@@ -139,7 +144,7 @@ export class ResumeInventoryTakingComponent {
             });
             this.newDocument();
           }
-        }
+        },
       });
   }
 
@@ -169,7 +174,7 @@ export class ResumeInventoryTakingComponent {
             });
             this.newDocument();
           }
-        }
+        },
       });
   }
 
@@ -195,7 +200,7 @@ export class ResumeInventoryTakingComponent {
         if (data.status >= 0) {
           this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
         }
-      }
+      },
     });
   }
 
@@ -215,23 +220,18 @@ export class ResumeInventoryTakingComponent {
   }
 
   get implistprice() {
-    return this.formResumeInventoryTaking
-.get('implistprice');
+    return this.formResumeInventoryTaking.get('implistprice');
   }
   get impdesctotal() {
-    return this.formResumeInventoryTaking
-.get('impdesctotal');
+    return this.formResumeInventoryTaking.get('impdesctotal');
   }
   get impsaleprice() {
-    return this.formResumeInventoryTaking
-.get('impsaleprice');
+    return this.formResumeInventoryTaking.get('impsaleprice');
   }
   get imptribtotal() {
-    return this.formResumeInventoryTaking
-.get('imptribtotal');
+    return this.formResumeInventoryTaking.get('imptribtotal');
   }
   get imptotal() {
-    return this.formResumeInventoryTaking
-.get('imptotal');
+    return this.formResumeInventoryTaking.get('imptotal');
   }
 }

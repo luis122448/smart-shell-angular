@@ -1,6 +1,6 @@
 <header class="h-[50px] w-full sapce-y-6 dark:bg-slate-800 dark:text-slate-400">
   <app-header></app-header>
-  <section class="h-[50px] w-full px-4 grid grid-cols-2 dark:bg-slate-800 bg-gray-300 items-center">
+  <section class="h-[50px] w-full px-4 grid grid-cols-3 dark:bg-slate-800 bg-gray-300 items-center">
     <div class="col-span-1 flex items-start gap-x-4">
       @switch (isStatusInvoiceReceipt()) {
         @case ('search') {
@@ -10,7 +10,7 @@
               optionBtn="register"
               (click)="onRegisterInvoice()"
               >
-              Register
+              {{ 'REGISTER' | translate }}
             </app-button-standard>
           </div>
         }
@@ -21,15 +21,15 @@
               optionBtn="search"
               (click)="onSearchInvoice()"
               >
-              Search</app-button-standard
+              {{ 'SEARCH' | translate }}</app-button-standard
               >
             </div>
           }
         }
       </div>
-      <div class="col-span-1 items-end grid grid-cols-2 gap-x-4 dark:bg-slate-800 dark:text-slate-400">
+      <div class="col-span-2 items-end grid grid-cols-2 gap-x-4 dark:bg-slate-800 dark:text-slate-400">
         <div class="grid grid-cols-3 items-center">
-          <label for="codbranch" class="label-default label-required">Branch</label>
+          <label for="codbranch" class="label-default label-required">{{ 'BRANCH' | translate }}</label>
           <select
             name="codbranch"
             id="codbranch"
@@ -42,7 +42,7 @@
           </select>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="codplaiss" class="label-default label-required whitespace-nowrap">Place of Issue</label>
+          <label for="codplaiss" class="label-default label-required whitespace-nowrap">{{ 'PLACE_OF_ISSUE' | translate }}</label>
           <select
             name="codplaiss"
             id="codplaiss"

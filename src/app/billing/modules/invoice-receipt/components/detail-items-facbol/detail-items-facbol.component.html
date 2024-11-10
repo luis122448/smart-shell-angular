@@ -33,9 +33,9 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="codart">
-          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Article</th>
+          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'COD_ARTICLE' | translate }}</th>
           <td
-            class="w-auto px-2 py-3"
+            class="w-24 px-2 py-3"
             cdk-cell
             *cdkCellDef="let item; let i = index"
             [formGroup]="item"
@@ -44,17 +44,17 @@
               <div class="flex">
                 <input
                   type="text"
-                  placeholder="Code"
                   class="input-default"
+                  placeholder="{{ 'COD_ARTICLE' | translate }}"
                   formControlName="codart"
                   [class.input-invalid]="isInputInvalid('codart')"
-                  (keyup.enter)="openDialogGetArticle(item.value)"
+                  (keyup.enter)="openDialogGetArticleByCodart(item.value)"
                   [value]="item.value.codart"
                   />
                 <button
                   type="button"
                   class="button-icon-search"
-                  (click)="openDialogGetArticle(item.value)"
+                  (click)="openDialogGetArticleByCodart(item.value)"
                   >
                   <fa-icon
                     [icon]="faMagnifyingGlass"
@@ -65,7 +65,44 @@
               </div>
             }
             @if (item.value.numite > 0) {
-              <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).codart + ' - ' +  dataDetailSource.getNumite(item.value.numite).desart }}</span>
+              <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).codart }}</span>
+            }
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="desart">
+          <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'ARTICLE_NAME' | translate }}</th>
+          <td
+            class="w-48 px-2 py-3"
+            cdk-cell
+            *cdkCellDef="let item; let i = index"
+            [formGroup]="item"
+            >
+            @if (item.value.numite === 0) {
+              <div class="flex">
+                <input
+                  type="text"
+                  class="input-default"
+                  placeholder="{{ 'ARTICLE_NAME' | translate }}"
+                  formControlName="desart"
+                  [class.input-invalid]="isInputInvalid('desart')"
+                  (keyup.enter)="openDialogGetArticleByDesart(item.value)"
+                  [value]="item.value.desart"
+                  />
+                <button
+                  type="button"
+                  class="button-icon-search"
+                  (click)="openDialogGetArticleByDesart(item.value)"
+                  >
+                  <fa-icon
+                    [icon]="faMagnifyingGlass"
+                    class="icon-operac-button"
+                    size="sm"
+                  ></fa-icon>
+                </button>
+              </div>
+            }
+            @if (item.value.numite > 0) {
+              <span class="text-input-disabled">{{ dataDetailSource.getNumite(item.value.numite).desart }}</span>
             }
           </td>
         </ng-container>
@@ -108,7 +145,6 @@
           >
           <input
             type="number"
-            placeholder="Cantid"
             class="input-default text-right"
             formControlName="quantity"
             min="1"
@@ -129,7 +165,6 @@
           >
           <input
             type="number"
-            placeholder="{{ 'UNIT_PRICE' | translate }}"
             class="input-default text-right"
             formControlName="price"
             min=0.00
@@ -139,13 +174,13 @@
         </td>
       </ng-container>
       <ng-container cdkColumnDef="subtotal">
-        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Import</th>
+        <th class="px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'IMPORT' | translate }}</th>
         <td class="w-28 px-2 py-3" cdk-cell *cdkCellDef="let item; let i = index">
           <span class="text-input-disabled text-right">{{ dataDetailSource.getNumite(item.value.numite).implistprice | number:'1.2-2' }}</span>
         </td>
       </ng-container>
       <ng-container cdkColumnDef="operac">
-        <th class="w-20 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Ac?</th>
+        <th class="w-20 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'ACTIONS' | translate }}</th>
         <td
           class="w-20 flex justify-around px-2 py-3 items-center"
           cdk-cell

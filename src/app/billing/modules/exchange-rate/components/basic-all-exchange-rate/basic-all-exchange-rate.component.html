@@ -3,7 +3,7 @@
     <form [formGroup]="formSearchExchangeRate" class="space-y-2">
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
-          <label for="startat" class="label-input-sm">Start date</label>
+          <label for="startat" class="label-input-sm">{{ 'START_AT' | translate }}</label>
           <input
             id="startat"
             name="startat"
@@ -13,7 +13,7 @@
           />
         </div>
         <div class="grid grid-cols-3">
-          <label for="finalat" class="label-input-sm">Final date</label>
+          <label for="finalat" class="label-input-sm">{{ 'END_AT' | translate }}</label>
           <input
             id="finalat"
             name="finalat"
@@ -26,30 +26,40 @@
       <div class="grid grid-cols-2 gap-x-8">
         <div class="grid grid-cols-3">
           <div class="w-56">
-            <label for="origen" class="label-input-sm">Origin {{ 'CURRENCY' | translate }}</label>
+            <label for="origen" class="label-input-sm">{{ 'ORIGIN_CURRENCY' | translate }}</label>
           </div>
           <select
             id="origen"
             class="select-default col-span-2"
             formControlName="origen"
           >
-            <option value="PEN" class="option-default">PEN</option>
-            <option value="USD" class="option-default">USD</option>
-
-
+            @for (item of currencies; track item) {
+              <option
+                [value]="item.codcur"
+                class="option-default"
+                >
+                {{ item.descri }}
+              </option>
+            }
           </select>
         </div>
         <div class="grid grid-cols-3">
           <div class="w-56">
-            <label for="destin" class="label-input-sm">Destiny {{ 'CURRENCY' | translate }}</label>
+            <label for="destin" class="label-input-sm">{{ 'DESTINATION_CURRENCY' | translate }}</label>
           </div>
           <select
             id="destin"
             class="select-default col-span-2"
             formControlName="destin"
           >
-            <option value="PEN" class="option-default">PEN</option>
-            <option value="USD" class="option-default">USD</option>
+            @for (item of currencies; track item) {
+              <option
+                [value]="item.codcur"
+                class="option-default"
+                >
+                {{ item.descri }}
+              </option>
+            }
           </select>
         </div>
       </div>
@@ -62,7 +72,7 @@
       typeBtn="button"
       (click)="searchExchangeRate()"
     >
-      Search
+      {{ 'SEARCH' | translate }}
     </app-button-standard>
     <app-button-standard
       colorBtn="green"
@@ -70,7 +80,7 @@
       typeBtn="button"
       (click)="crudExchangeRate(null)"
     >
-      New
+      {{ 'NEW' | translate }}
     </app-button-standard>
   </section>
   <section class="section-table">
@@ -91,7 +101,7 @@
           *cdkRowDef="let row; columns: displayedColumns"
         ></tr>
         <ng-container cdkColumnDef="registdate">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Date</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'DATE' | translate }}</th>
           <td
             cdk-cell
             class="row-cell min-w-[140px] text-center"
@@ -102,7 +112,7 @@
         </ng-container>
         <ng-container cdkColumnDef="origen">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Origin Currency
+            {{ 'ORIGIN_CURRENCY' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.origen }}
@@ -110,7 +120,7 @@
         </ng-container>
         <ng-container cdkColumnDef="destin">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Destiny Currency
+            {{ 'DESTINATION_CURRENCY' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.destin }}
@@ -118,7 +128,7 @@
         </ng-container>
         <ng-container cdkColumnDef="eventa">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Sales Entity
+            {{ 'SALES_EXCHANGE_RATE' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.eventa }}
@@ -126,14 +136,14 @@
         </ng-container>
         <ng-container cdkColumnDef="ecompra">
           <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-            Purchasing Entity
+            {{ 'PURCHASE_EXCHANGE_RATE' | translate }}
           </th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ row.ecompra }}
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'ACTION' | translate }}</th>
           <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
             <app-button-operac
               optionBtn="delete"

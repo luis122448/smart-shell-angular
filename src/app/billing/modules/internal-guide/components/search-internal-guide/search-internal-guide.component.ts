@@ -1,24 +1,27 @@
 import { Component } from '@angular/core';
-import { SituationCommercialDocument } from "@billing-models/situacion-commercial-document";
-import { ReasonCommercialDocument } from "@billing-models/reason-commercial-document";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DOCUMENT_INTERNAL_GUIDE } from "@billing-utils/constants";
-import { Currency, Serie } from "@auth/models/default-values.model";
-import { DocumentInternalGuideService } from "@billing-services/document-internal-guide.service";
-import { GlobalStatusService } from "@billing-services/global-status.service";
-import { DefaultValuesService } from "@auth/services/default-values.service";
-import { Dialog } from "@angular/cdk/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { DialogErrorAlertComponent } from "@shared/components/dialog-error-alert/dialog-error-alert.component";
-import { DataSource } from "@angular/cdk/collections";
-import { SearchDocumentGeneric, SearchFilterDocumentGeneric } from "@billing-models/document-invoice.model";
-import { BehaviorSubject, Observable } from "rxjs";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { SituationCommercialDocument } from '@billing-models/situacion-commercial-document';
+import { ReasonCommercialDocument } from '@billing-models/reason-commercial-document';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DOCUMENT_INTERNAL_GUIDE } from '@billing-utils/constants';
+import { Currency, Serie } from '@auth/models/default-values.model';
+import { DocumentInternalGuideService } from '@billing-services/document-internal-guide.service';
+import { GlobalStatusService } from '@billing-services/global-status.service';
+import { DefaultValuesService } from '@auth/services/default-values.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { DataSource } from '@angular/cdk/collections';
+import {
+  SearchDocumentGeneric,
+  SearchFilterDocumentGeneric,
+} from '@billing-models/document-invoice.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-internal-guide',
   templateUrl: './search-internal-guide.component.html',
-  styleUrls: ['./search-internal-guide.component.scss']
+  styleUrls: ['./search-internal-guide.component.scss'],
 })
 export class SearchInternalGuideComponent {
   faMagnifyingGlass = faMagnifyingGlass;
@@ -28,9 +31,7 @@ export class SearchInternalGuideComponent {
   formSearchDocument!: FormGroup;
 
   private buildForm() {
-    const yesterday = new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-      .toJSON()
-      .split('T')[0];
+    const today = new Date().toJSON().split('T')[0];
     const beforeSevenDays = new Date(
       new Date().getTime() - 7 * 24 * 60 * 60 * 1000
     )
@@ -39,16 +40,17 @@ export class SearchInternalGuideComponent {
     this.formSearchDocument = this.formBuilder.group({
       typcomdoc: [DOCUMENT_INTERNAL_GUIDE, [Validators.required]],
       startat: [beforeSevenDays, [Validators.required]],
-      finalat: [yesterday, [Validators.required]],
+      finalat: [today, [Validators.required]],
       sitcomdoc: this.formBuilder.array([0]),
       reacomdoc: this.formBuilder.array([0]),
       codbranch: ['-1', []],
       codplaiss: ['-1', []],
       serie: ['-1', []],
-      codcur: ['-1', []]
+      codcur: ['-1', []],
     });
   }
-  dataSourceSearchDocument = DataSourceSearchDocumentInternalGuide.getInstance();
+  dataSourceSearchDocument =
+    DataSourceSearchDocumentInternalGuide.getInstance();
   // Default Values
   series: Serie[];
   currencies: Currency[];
@@ -160,10 +162,10 @@ export class SearchInternalGuideComponent {
       codbranch: this.codbranch?.value,
       codplaiss: this.codplaiss?.value,
       serie: this.serie?.value,
-      codcur: this.codcur?.value
+      codcur: this.codcur?.value,
     };
     this.documentInternalGuideService
-      .getPageDocument(SearchFilterDocumentGeneric,100,0)
+      .getPageDocument(SearchFilterDocumentGeneric, 100, 0)
       .subscribe({
         next: (data) => {
           if (data.status <= 0) {

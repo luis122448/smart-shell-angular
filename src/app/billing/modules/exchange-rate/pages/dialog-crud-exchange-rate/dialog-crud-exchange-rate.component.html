@@ -7,7 +7,7 @@
       <ng-template mat-tab-label>
         <div class="mat-tab-label-container">
           <fa-icon [icon]="faFileInvoice"></fa-icon>
-          <span class="mat-tab-label-span">History</span>
+          <span class="mat-tab-label-span">{{ 'HISTORY' | translate }}</span>
         </div>
       </ng-template>
       <app-basic-all-exchange-rate
@@ -19,7 +19,7 @@
       <ng-template mat-tab-label>
         <div class="mat-tab-label-container">
           <fa-icon [icon]="faFilePen"></fa-icon>
-          <span class="mat-tab-label-span">Registrer</span>
+          <span class="mat-tab-label-span">{{ 'REGISTER' | translate }}</span>
         </div>
       </ng-template>
       <app-basic-info-exchange-rate
@@ -27,15 +27,6 @@
         (onSave)="onCrud($event)"
       ></app-basic-info-exchange-rate>
     </mat-tab>
-    <!-- <mat-tab>
-      <ng-template mat-tab-label>
-        <div class="mat-tab-label-container">
-          <fa-icon [icon]="faCircleInfo"></fa-icon>
-          <span class="mat-tab-label-span">Ayuda</span>
-        </div>
-      </ng-template>
-      No Implementado!
-    </mat-tab> -->
   </mat-tab-group>
   <app-button-operac
     optionBtn="close"

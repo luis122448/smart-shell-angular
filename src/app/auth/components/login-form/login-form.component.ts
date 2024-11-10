@@ -10,15 +10,6 @@ import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { faPen, faEye, faEyeSlash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { MatsnackbarMessageComponent } from '@shared-components/matsnackbar-message/matsnackbar-message.component';
 import { DefaultValuesService } from '../../services/default-values.service';
-import { SellerService } from '@billing-services/vendedor.service';
-import { SerieCommercialDocumentService } from '@billing-services/serie-commercial-document.service';
-import { ReasonCommercialDocumentService } from '@billing-services/reason-commercial-document.service';
-import { TypeInventoryService } from '@billing-services/type-inventory.service';
-import { ListPriceService } from '@billing-services/list-price.service';
-import { TypeCommercialDocumentService } from '@billing-services/type-commercial-document.service';
-import { SituationCommercialDocumentService } from '@billing-services/situation-commercial-document.service';
-import { TypeBusinessPartnerService } from '@billing-services/type-business-partner.service';
-import { UserService } from '@billing-services/user.service';
 import { MetadataModel } from "@auth/models/default-values.model";
 
 @Component({
@@ -179,6 +170,42 @@ export class LoginFormComponent {
       });
       return;
     }
+    this.defaultValuesService.setLocalStorageValue(
+      'currencies',
+      metadata.currency.map((data) => {
+        return {
+          codcur: data.codcur,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          codext: data.codext,
+          symbol: data.symbol,
+          defaul: data.defaul,
+        };
+      })
+    );
+    // this.defaultValuesService.setLocalStorageValue(
+    //   'branches',
+    //   metadata.branch.map((data) => {
+    //     return {
+    //       codbranch: data.codbranch,
+    //       abrevi: data.abrevi,
+    //       descri: data.descri,
+    //       defaul: data.defaul,
+    //     };
+    //   })
+    // );
+    this.defaultValuesService.setLocalStorageValue(
+      'warehouses',
+        metadata.warehouse.map((data) => {
+          return {
+            typinv: data.typinv,
+            codwarehouse: data.codwarehouse,
+            abrevi: data.abrevi,
+            descri: data.descri,
+            defaul: data.defaul,
+          };
+        })
+    );
     this.defaultValuesService.setLocalStorageValue(
       'sellers',
       metadata.seller.map((data) => {

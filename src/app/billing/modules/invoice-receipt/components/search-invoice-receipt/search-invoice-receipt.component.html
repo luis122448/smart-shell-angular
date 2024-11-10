@@ -74,7 +74,7 @@
             <div class="grid grid-cols-2 items-center gap-x-4">
               <div class="grid grid-cols-3">
                 <label for="startat" class="label-default label-required"
-                  >Start At</label
+                  >{{ 'START_AT' | translate }}</label
                   >
                   <input
                     id="startat"
@@ -86,7 +86,7 @@
                 </div>
                 <div class="grid grid-cols-3">
                   <label for="finalat" class="label-default label-required"
-                    >Final At</label
+                    >{{ 'FINAL_AT' | translate }}</label
                     >
                     <input
                       id="finalat"
@@ -100,7 +100,7 @@
                 <div class="grid grid-cols-2 items-center gap-x-4">
                   <div class="grid grid-cols-3 items-center">
                     <label for="typcomdoc" class="label-default label-required"
-                      >Type Commercial Document</label
+                      >{{ 'TYPE_COMMERCIAL_DOCUMENT' | translate }}</label
                       >
                       <select
                         name="typcomdoc"
@@ -109,8 +109,10 @@
                         formControlName="typcomdoc"
                         (change)="changeTypcomdoc($event)"
                         >
-                        <option value="1" class="option-default">Invoice</option>
-                        <option value="2" class="option-default">Ticket</option>
+                        <option value="1" class="option-default">{{ 'INVOICE' | translate }}</option>
+                        <option value="3" class="option-default">{{ 'RECEIPT' | translate }}</option>
+                        <option value="3" class="option-default">{{ 'CREDIT_NOTE' | translate }}</option>
+<!--                        <option value="3" class="option-default">{{ 'DEBIT_NOTE' | translate }}</option>-->
                       </select>
                     </div>
                     <div class="grid grid-cols-3 items-center">
@@ -159,7 +161,7 @@
                     </div>
                     <div>
                       <div class="grid grid-cols-3 items-center">
-                        <label for="seller" class="label-default"> Seller</label>
+                        <label for="seller" class="label-default">{{ 'SELLER' | translate }}</label>
                         <select
                           name="seller"
                           id="seller"
@@ -183,7 +185,7 @@
                   <div class="grid grid-cols-2 items-center gap-x-4">
                     <div class="grid grid-cols-3 items-center">
                       <label for="typpaycon" class="label-default">
-                        Type Payment Condition</label
+                        {{ 'TYPE_PAYMENT_CONDITION' | translate }}</label
                         >
                         <select
                           name="typpaycon"
@@ -204,32 +206,11 @@
                         </select>
                       </div>
                       <div>
-                        <!-- <div class="grid grid-cols-3 items-center">
-                        <label for="typpaycon" class="label-default">
-                          Type Payment Condition</label
-                          >
-                          <select
-                            name="typpaycon"
-                            id="typpaycon"
-                            class="select-default col-span-2"
-                            >
-                            <option value="-1" class="option-default" selected>
-                              -- {{ 'CHOOSE' | translate }} --
-                            </option>
-                            <option
-                              *ngFor="let item of paymentConditions"
-                              [value]="item.typpaycon"
-                              class="option-default"
-                              >
-                              {{ item.descri }}
-                            </option>
-                          </select>
-                        </div> -->
                       </div>
                     </div>
                     <div class="grid grid-cols-2 items-center gap-x-4">
                       <div class="grid grid-cols-3 items-center">
-                        <label for="codbuspar" class="text-inline">Busness Partner</label>
+                        <label for="codbuspar" class="text-inline">{{ 'BUSINESS_PARTNER' | translate }}</label>
                         <div class="col-span-2 flex">
                           <input
                             name="codbuspar"
@@ -238,7 +219,7 @@
                             class="input-auto"
                             formControlName="codbuspar"
                             [class.input-invalid]="isInputInvalid('codbuspar')"
-                            placeholder="Codigo de Cliente*"
+                            placeholder="{{ 'COD_BUSINESS_PARTNER' | translate }}"
                             (keyup.enter)="openDialogGetCli()"
                             />
                           @if (!statusBuspar) {
@@ -273,12 +254,11 @@
                         <div class="col-span-2 flex">
                           <input
                             type="text"
-                            placeholder="Razon Social"
                             class="input-auto"
                             formControlName="busnam"
                             [class.input-invalid]="isInputInvalid('busnam')"
                             (keyup.enter)="openDialogGetCli()"
-                            placeholder="Razon Social*"
+                            placeholder="{{ 'BUSINESS_NAME' | translate }}"
                             />
                           @if (!statusBuspar) {
                             <button

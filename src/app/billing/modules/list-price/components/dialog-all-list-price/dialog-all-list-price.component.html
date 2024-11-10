@@ -60,7 +60,7 @@
             </td>
           </ng-container>
           <ng-container cdkColumnDef="operac">
-            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action?</th>
+            <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'ACTION' | translate }}?</th>
             <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
               @if (row.status === 'Y') {
                 <app-button-operac

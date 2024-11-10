@@ -74,14 +74,14 @@
             colorBtn="sky"
             optionBtn="search"
             typeBtn="button"
-            >Search</app-button-standard
+            >{{'SEARCH' | translate }}</app-button-standard
             >
             <app-button-standard
               (click)="crudBusinessPartner(null)"
               colorBtn="green"
               optionBtn="new"
               typeBtn="button"
-              >New</app-button-standard
+              >{{'NEW' | translate }}</app-button-standard
               >
             </div>
           </section>
@@ -107,20 +107,20 @@
                 </ng-container>
                 <ng-container cdkColumnDef="busnam">
                   <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-                    Business Name
+                    {{'BUSINESS NAME' | translate }}
                   </th>
                   <td class="row-cell" cdk-cell *cdkCellDef="let row">
                     {{ row.busnam }}
                   </td>
                 </ng-container>
                 <ng-container cdkColumnDef="nroidedoc">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>RUC/DNI</th>
+                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'NATIONAL_ID_NUMBER' | translate }}</th>
                   <td class="row-cell" cdk-cell *cdkCellDef="let row">
                     {{ row.nroidedoc }}
                   </td>
                 </ng-container>
                 <ng-container cdkColumnDef="operac">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Action</th>
+                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'ACTION' | translate }}</th>
                   <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
                     @if (row.status === 'Y') {
                       <app-button-operac
@@ -173,7 +173,7 @@
               optionBtn="close"
               typeBtn="button"
               >
-              Close
+              {{ 'CLOSE' | translate }}
             </app-button-standard>
           </section>
         </main>

@@ -4,7 +4,9 @@
       <section class="flex-col space-y-2">
         <div class="dense-3 grid grid-cols-3 items-center">
           <label for="typcomdoc" class="text-inline label-required"
-          >Type Document</label
+          >{{
+            "TYPE_DOCUMENT" | translate
+          }}</label
           >
           <select
             name="typcomdoc"
@@ -14,10 +16,9 @@
             [class.select-invalid]="isInputInvalid('typcomdoc')"
             (change)="changeTypcomdoc($event)"
           >
-            <option [value]="1" selected class="option-default">
-              Invoice
+            <option [value]="DOCUMENT_INVENTORY_TAKING" selected class="option-default">
+              {{ 'INVENTORY_TAKING' | translate }}
             </option>
-            <option [value]="2" class="option-default">Ticket</option>
           </select>
         </div>
         <div class="grid grid-cols-3 items-center">
@@ -51,7 +52,9 @@
         </div>
         <div class="grid grid-cols-3 items-center">
           <label for="reacomdoc" class="text-inline label-required"
-          >Reason</label
+          >{{
+            "REASON" | translate
+          }}</label
           >
           <select
             name="reacomdoc"
@@ -80,6 +83,34 @@
             }
           </select>
         </div>
+                  <div class="dense-3 grid grid-cols-3 items-center">
+            <label for="deswarehouse" class="text-inline label-required">{{
+              "WAREHOUSE" | translate
+            }}</label>
+            <select
+              name="deswarehouse"
+              id="deswarehouse"
+              class="select-default col-span-2"
+              formControlName="deswarehouse"
+              [class.select-invalid]="isInputInvalid('deswarehouse')"
+            >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('deswarehouse')"
+              >
+                -- {{ "CHOOSE" | translate }} --
+              </option>
+              @for (item of warehouses; track item) {
+              <option [value]="item.codwarehouse" class="option-default">
+                {{ item.descri }}
+              </option>
+              }
+            </select>
+          </div>
       </section>
       <section class="flex-col space-y-2">
         <div class="grid grid-cols-3 items-center">
@@ -107,11 +138,14 @@
               formControlName="codcur"
               (change)="onCodcurChange($event)"
             >
-              <option class="option-default" value="PEN">PEN</option>
-              <option class="option-default" value="USD">USD</option>
+            @for (item of currencies; track item) {
+              <option [value]="item.codcur" class="option-default">
+                {{ item.abrevi }}
+              </option>
+              }
             </select>
             <label for="incigv" class="text-inline label-required pl-6"
-            >Igv?</label
+            >{{ "TAX" | translate }}</label
             >
             <select
               name="incigv"
@@ -120,8 +154,8 @@
               formControlName="incigv"
               (change)="onIncigvChange($event)"
             >
-              <option class="option-default" value="1">Yes</option>
-              <option class="option-default" value="0">No</option>
+            <option class="option-default" value="1">{{ 'YES' | translate }}</option>
+            <option class="option-default" value="0">{{ 'NO' | translate }}</option>
             </select>
           </div>
         </div>
@@ -140,7 +174,9 @@
               placeholder="Tip Cambio*"
             />
             <label for="tasigv" class="text-inline label-required pl-6"
-            >Igv</label
+            >{{
+              "TAX" | translate
+            }}</label
             >
             <input
               type="text"

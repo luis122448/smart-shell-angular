@@ -62,7 +62,7 @@
             </ng-container>
             <ng-container cdkColumnDef="updateby">
               <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-                Update By
+                {{ 'UPDATE BY' | translate }}
               </th>
               <td class="row-cell w-[10px]" cdk-cell *cdkCellDef="let row">
                 {{ row.updateby }}

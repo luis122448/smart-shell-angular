@@ -60,8 +60,8 @@ export class SearchInvoiceReceiptComponent implements OnInit {
       codcur: ['-1', []],
       codsel: ['-1', []],
       typpaycon: ['-1', []],
-      codbuspar: ['-1', []],
-      busnam: ['-1', []],
+      codbuspar: ['', []],
+      busnam: ['', []],
     });
   }
   dataSourceSearchDocument = DataSourceSearchDocumentGeneric.getInstance();

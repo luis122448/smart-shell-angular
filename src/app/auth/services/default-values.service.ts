@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Access, Branch, Currency, Document, Inventory, Reason, Seller, Serie, Situcion } from '../models/default-values.model';
+import { Access, Branch, Currency, Document, Inventory, Reason, Seller, Serie, Situation, TypeBusinessPartner } from '../models/default-values.model';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -9,24 +9,6 @@ export class DefaultValuesService {
 
   public dark: boolean = true
   public accesses: Access[] = []
-  public currencies: Currency[] = [
-    {
-      codcur: 'PEN',
-      abrevi: 'PEN',
-      descri: 'NUEVO SOL',
-      codext: '1',
-      symbol: 'S/.',
-      defaul: 'Y'
-    },
-    {
-      codcur: 'USD',
-      abrevi: 'USD',
-      descri: 'DOLLAR',
-      codext: '2',
-      symbol: '$.',
-      defaul: 'N'
-    }
-  ]
   public branches: Branch[] = [
     {
       codbranch: 1,
@@ -44,20 +26,18 @@ export class DefaultValuesService {
   public sellers: Seller[] = []
   public series: Serie[] = []
   public reasons: Reason[] = []
-  public situations: Situcion[] = []
+  public situations: Situation[] = []
   public inventories: Inventory[] = []
   public documents: Document[] = []
+  public typeBusinessPartners: TypeBusinessPartner[] = []
 
   constructor(
     private cookieService: CookieService
   ) {
-    // Setear el tema oscuro si es que existe la cookie
     this.dark = this.cookieService.get('dark') === 'true' ? true : false
     this.setCookie('dark',this.dark.toString())
 
-    // Setear valores por defecto si no existen en el local storage
     this.setLocalStorageValue('branches', this.branches)
-    this.setLocalStorageValue('currencies', this.currencies)
   }
 
   public getCookieValue(key: string): any[] {

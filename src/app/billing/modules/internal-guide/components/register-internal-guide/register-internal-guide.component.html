@@ -3,9 +3,9 @@
     <div class="items-container">
       <section class="flex-col space-y-2">
         <div class="dense-3 grid grid-cols-3 items-center">
-          <label for="typcomdoc" class="text-inline label-required"
-          >{{ 'TYPE_DOCUMENT' | translate }}</label
-          >
+          <label for="typcomdoc" class="text-inline label-required">{{
+            "TYPE_DOCUMENT" | translate
+          }}</label>
           <select
             name="typcomdoc"
             id="typcomdoc"
@@ -14,13 +14,19 @@
             [class.select-invalid]="isInputInvalid('typcomdoc')"
             (change)="changeTypcomdoc($event)"
           >
-            <option [value]="DOCUMENT_INTERNAL_GUIDE" selected class="option-default">
-              {{ 'INTERNAL_GUIDE' | translate }}
+            <option
+              [value]="DOCUMENT_INTERNAL_GUIDE"
+              selected
+              class="option-default"
+            >
+              {{ "INTERNAL_GUIDE" | translate }}
             </option>
           </select>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="serie" class="text-inline label-required">{{ 'SERIE' | translate }}</label>
+          <label for="serie" class="text-inline label-required">{{
+            "SERIE" | translate
+          }}</label>
           <select
             name="serie"
             id="serie"
@@ -36,46 +42,39 @@
               hidden
               [class.option-invalid]="isInputInvalid('serie')"
             >
-              -- {{ 'CHOOSE' | translate }} --
+              -- {{ "CHOOSE" | translate }} --
             </option>
             @for (item of series; track item) {
-              <option
-                [value]="item.serie"
-                class="option-default"
-              >
-                {{ item.serie + " - " + item.descri }}
-              </option>
+            <option [value]="item.serie" class="option-default">
+              {{ item.serie + " - " + item.descri }}
+            </option>
             }
           </select>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="reacomdoc" class="text-inline label-required"
-          >{{ "INOUT" | translate }}</label
-          >
+          <label for="inout" class="text-inline label-required">{{
+            "INOUT" | translate
+          }}</label>
           <select
             name="inout"
             id="inout"
             class="select-default col-span-2"
             formControlName="inout"
             [class.select-invalid]="isInputInvalid('inout')"
+            (change)="changeInout($event)"
           >
-            <option
-              [value]="0"
-              class="option-default"
-              selected>
+            <option [value]="0" class="option-default">
               {{ "In" }}
             </option>
-            <option
-              [value]="1"
-              class="option-default">
+            <option [value]="1" class="option-default">
               {{ "Out" }}
             </option>
           </select>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="reacomdoc" class="text-inline label-required"
-          >{{ 'REASON' | translate }}</label
-          >
+          <label for="reacomdoc" class="text-inline label-required">{{
+            "REASON" | translate
+          }}</label>
           <select
             name="reacomdoc"
             id="reacomdoc"
@@ -91,104 +90,91 @@
               hidden
               [class.option-invalid]="isInputInvalid('reacomdoc')"
             >
-              -- {{ 'CHOOSE' | translate }} --
+              -- {{ "CHOOSE" | translate }} --
             </option>
             @for (item of reasons; track item) {
-              <option
-                [value]="item.reacomdoc"
-                class="option-default"
-              >
-                {{ item.descri }}
-              </option>
+            <option [value]="item.reacomdoc" class="option-default">
+              {{ item.descri }}
+            </option>
             }
           </select>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="codbuspar" class="text-inline label-required"
-          >{{ 'CUSTOMER' | translate }}</label
-          >
+          <label for="codbuspar" class="text-inline label-required">{{
+            "COD_CUSTOMER" | translate
+          }}</label>
           <div class="col-span-2 flex">
             <input
               id="codbuspar"
               type="text"
-              placeholder="{{ 'COD_BUSINESS_PARTNER' | translate }}"
+              placeholder="{{ 'COD_CUSTOMER' | translate }}"
               class="input-default"
               formControlName="codbuspar"
               [class.input-invalid]="isInputInvalid('codbuspar')"
               (keyup.enter)="openDialogGetCli(true)"
             />
             @if (statusBuspar == 'search') {
-              <button
-                type="button"
-                class="button-icon-search"
-                (click)="openDialogGetCli(true)"
-              >
-                <fa-icon
-                  [icon]="faMagnifyingGlass"
-                  class="icon-operac-button"
-                  size="sm"
-                ></fa-icon>
-              </button>
-            }
-            @if (statusBuspar == 'register') {
-              <button
-                type="button"
-                class="button-icon-search"
-                (click)="cleanBuspar()"
-              >
-                <fa-icon
-                  [icon]="faXmark"
-                  class="icon-operac-button"
-                  size="sm"
-                ></fa-icon>
-              </button>
+            <button
+              type="button"
+              class="button-icon-search"
+              (click)="openDialogGetCli(true)"
+            >
+              <fa-icon
+                [icon]="faMagnifyingGlass"
+                class="icon-operac-button"
+                size="sm"
+              ></fa-icon>
+            </button>
+            } @if (statusBuspar == 'register') {
+            <button
+              type="button"
+              class="button-icon-search"
+              (click)="cleanBuspar()"
+            >
+              <fa-icon
+                [icon]="faXmark"
+                class="icon-operac-button"
+                size="sm"
+              ></fa-icon>
+            </button>
             }
           </div>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="busnam" class="text-inline label-required">{{ 'BUSINESS_NAME' | translate }}</label>
+          <label for="busnam" class="text-inline label-required">{{
+            "CUSTOMER_NAME" | translate
+          }}</label>
           <div class="col-span-2 flex">
             <input
               id="busnam"
               type="text"
-              placeholder="{{ 'BUSINESS_NAME' | translate }}"
+              placeholder="{{ 'CUSTOMER_NAME' | translate }}"
               class="input-default"
               formControlName="busnam"
               [class.input-invalid]="isInputInvalid('busnam')"
               (keyup.enter)="openDialogGetCli(false)"
             />
             @if (!statusBuspar) {
-              <button
-                type="button"
-                class="button-icon-search"
-                (click)="openDialogGetCli(false)"
-              >
-                <fa-icon
-                  [icon]="faMagnifyingGlass"
-                  class="icon-operac-button"
-                  size="sm"
-                ></fa-icon>
-              </button>
+            <button
+              type="button"
+              class="button-icon-search"
+              (click)="openDialogGetCli(false)"
+            >
+              <fa-icon
+                [icon]="faMagnifyingGlass"
+                class="icon-operac-button"
+                size="sm"
+              ></fa-icon>
+            </button>
             }
           </div>
         </div>
-<!--        <div class="grid grid-cols-3 items-center">-->
-<!--          <label class="text-inline label-required">{{ 'ADDRESS' | translate }}</label>-->
-<!--          <textarea-->
-<!--            formControlName="addres"-->
-<!--            class="textarea-default col-span-2"-->
-<!--            cols="60"-->
-<!--            rows="20"-->
-<!--            placeholder="Commercial Address or Tax Address"-->
-<!--            [class.input-invalid]="isInputInvalid('addres')"-->
-<!--          ></textarea>-->
-<!--        </div>-->
       </section>
       <section class="flex-col space-y-2">
         <div class="grid grid-cols-3 items-center">
-          <label for="registdate" class="text-inline label-required"
-          >{{ 'DATE_OF_ISSUE' | translate }}</label
-          >
+          <label for="registdate" class="text-inline label-required">{{
+            "DATE_OF_ISSUE" | translate
+          }}</label>
           <input
             id="registdate"
             name="registdate"
@@ -198,10 +184,70 @@
             (input)="onFemisiChange($event)"
           />
         </div>
+        @if (this.formDocumentHeader.get('inout')?.value == 1) {
+          <div class="dense-3 grid grid-cols-3 items-center">
+            <label for="oriwarehouse" class="text-inline label-required">{{
+              "WAREHOUSE" | translate
+            }}</label>
+            <select
+              name="oriwarehouse"
+              id="oriwarehouse"
+              class="select-default col-span-2"
+              formControlName="oriwarehouse"
+              [class.select-invalid]="isInputInvalid('oriwarehouse')"
+            >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('oriwarehouse')"
+              >
+                -- {{ "CHOOSE" | translate }} --
+              </option>
+              @for (item of warehouses; track item) {
+              <option [value]="item.codwarehouse" class="option-default">
+                {{ item.descri }}
+              </option>
+              }
+            </select>
+          </div>
+        }
+        @if ( this.formDocumentHeader.get('inout')?.value == 0) {
+          <div class="dense-3 grid grid-cols-3 items-center">
+            <label for="deswarehouse" class="text-inline label-required">{{
+              "WAREHOUSE" | translate
+            }}</label>
+            <select
+              name="deswarehouse"
+              id="deswarehouse"
+              class="select-default col-span-2"
+              formControlName="deswarehouse"
+              [class.select-invalid]="isInputInvalid('deswarehouse')"
+            >
+              <option
+                value=""
+                class="option-default"
+                disabled
+                selected
+                hidden
+                [class.option-invalid]="isInputInvalid('deswarehouse')"
+              >
+                -- {{ "CHOOSE" | translate }} --
+              </option>
+              @for (item of warehouses; track item) {
+              <option [value]="item.codwarehouse" class="option-default">
+                {{ item.descri }}
+              </option>
+              }
+            </select>
+          </div>
+        }
         <div class="grid grid-cols-3 items-center">
-          <label for="codcur" class="text-inline label-required"
-          >{{ 'CURRENCY' | translate }}</label
-          >
+          <label for="codcur" class="text-inline label-required">{{
+            "CURRENCY" | translate
+          }}</label>
           <div class="col-span-2 grid grid-cols-3">
             <select
               name="codcur"
@@ -210,11 +256,14 @@
               formControlName="codcur"
               (change)="onCodcurChange($event)"
             >
-              <option class="option-default" value="PEN">PEN</option>
-              <option class="option-default" value="USD">USD</option>
+              @for (item of currencies; track item) {
+              <option [value]="item.codcur" class="option-default">
+                {{ item.abrevi }}
+              </option>
+              }
             </select>
             <label for="incigv" class="text-inline label-required pl-6"
-            >Igv?</label
+              >{{ "TAX" | translate }}?</label
             >
             <select
               name="incigv"
@@ -223,15 +272,15 @@
               formControlName="incigv"
               (change)="onIncigvChange($event)"
             >
-              <option class="option-default" value="1">Yes</option>
-              <option class="option-default" value="0">No</option>
+              <option class="option-default" value="1">{{ 'YES' | translate }}</option>
+              <option class="option-default" value="0">{{ 'NO' | translate }}</option>
             </select>
           </div>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="exchangerate" class="text-inline label-required"
-          >{{ 'EXCHANGE_RATE' | translate}}</label
-          >
+          <label for="exchangerate" class="text-inline label-required">{{
+            "EXCHANGE_RATE" | translate
+          }}</label>
           <div class="col-span-2 grid grid-cols-3">
             <input
               type="text"
@@ -242,9 +291,9 @@
               [class.input-invalid]="isInputInvalid('exchangerate')"
               placeholder="Tip Cambio*"
             />
-            <label for="tasigv" class="text-inline label-required pl-6"
-            >Igv</label
-            >
+            <label for="tasigv" class="text-inline label-required pl-6">{{
+              "TAX" | translate
+            }}</label>
             <input
               type="text"
               class="input-default"
@@ -257,7 +306,9 @@
           </div>
         </div>
         <div class="grid grid-cols-3 items-center">
-          <label for="observ" class="text-inline">{{ 'OBSERVATION' | translate }}</label>
+          <label for="observ" class="text-inline">{{
+            "OBSERVATION" | translate
+          }}</label>
           <textarea
             id="observ"
             name="observ"

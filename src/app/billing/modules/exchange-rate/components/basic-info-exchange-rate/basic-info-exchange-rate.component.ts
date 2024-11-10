@@ -2,6 +2,8 @@ import { Dialog } from '@angular/cdk/dialog';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Currency } from '@auth/models/default-values.model';
+import { DefaultValuesService } from '@auth/services/default-values.service';
 import { ExchangeRateService } from '@billing-services/tipo-cambio.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
@@ -17,16 +19,17 @@ export class BasicInfoExchangeRateComponent {
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onSave = new EventEmitter<boolean>();
   formCrudExchangeRate!: FormGroup;
+  currencies: Currency[] = [];
 
-  private buildForm() {
+  private buildForm(codcur: string | undefined) {
     // const today = new Date().toJSON().split('T')[0];
     const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
       .toJSON()
       .split('T')[0];
     this.formCrudExchangeRate = this.formBuilder.group({
       registdate: [yesterday, [Validators.required]],
-      origen: ['PEN', [Validators.required]],
-      destin: ['USD', [Validators.required]],
+      origen: [codcur, [Validators.required]],
+      destin: ['', [Validators.required]],
       fventa: [
         (0.0).toFixed(2),
         [
@@ -76,10 +79,12 @@ export class BasicInfoExchangeRateComponent {
   constructor(
     private formBuilder: FormBuilder,
     private tipoCambioService: ExchangeRateService,
+    private defaulrValuesService: DefaultValuesService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar
   ) {
-    this.buildForm();
+    this.currencies = this.defaulrValuesService.getLocalStorageValue('currencies');
+    this.buildForm(this.currencies.find((currency) => currency.defaul === 'Y')?.codcur);
   }
 
   isInputInvalid(fieldName: string): boolean {

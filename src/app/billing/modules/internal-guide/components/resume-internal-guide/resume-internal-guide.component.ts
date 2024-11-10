@@ -66,50 +66,45 @@ export class ResumeInternalGuideComponent {
     this.currency = this.currencies.find((data) => data.defaul === 'Y');
   }
 
-  calculate() {
-    this.globalStatusService.setLoading(true);
-    this.isCalculateDocument.emit(true);
-    const dataHeader = this.dataHeaderSource.get();
-    this.currency = this.currencies.find((currency) => currency.codcur === dataHeader.codcur);
-    // Detail
-    this.dataDetailSource.putReasignNumite();
-    const dataDetail = this.dataDetailSource.getImp();
-    this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
-    this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
-    this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
-    this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
-    this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
-    this.dataHeaderSource.updateImp(dataDetail);
-    setTimeout(() => {
-      this.isCalculateDocument.emit(false);
-      this.globalStatusService.setLoading(false);
-    }, 300);
+  calculate(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.globalStatusService.setLoading(true);
+      this.isCalculateDocument.emit(true);
+      const dataHeader = this.dataHeaderSource.get();
+      this.currency = this.currencies.find((currency) => currency.codcur === dataHeader.codcur);
+      // Detail
+      this.dataDetailSource.putReasignNumite();
+      const dataDetail = this.dataDetailSource.getImp();
+      this.implistprice?.setValue(dataDetail.implistprice?.toFixed(2));
+      this.impdesctotal?.setValue(dataDetail.impdesctotal?.toFixed(2));
+      this.impsaleprice?.setValue(dataDetail.impsaleprice?.toFixed(2));
+      this.imptribtotal?.setValue(dataDetail.imptribtotal?.toFixed(2));
+      this.imptotal?.setValue(dataDetail.imptotal?.toFixed(2));
+      this.dataHeaderSource.updateImp(dataDetail);
+      setTimeout(() => {
+        this.isCalculateDocument.emit(false);
+        this.globalStatusService.setLoading(false);
+      }, 300);
+      if (!(this.documentInternalGuideService.isStatusInternalGuideRegister() && this.documentInternalGuideService.isStatusInternalGuideModify())) {
+        resolve(false);
+      }
+      resolve(true);
+    });
   }
 
-  save() {
-    this.calculate();
-    const documentInvoiceHeader = this.dataHeaderSource.get();
-    if ((documentInvoiceHeader?.imptotal ?? 0) <= 0) {
-      this.dialog.open(DialogErrorAlertComponent, {
-        width: '400px',
-        data: {
-          status: -3,
-          message:
-            'The Document amount cannot be less than or equal to ZERO, with the reason for SALE',
-        },
-      });
+  async save() {
+    const response = await this.calculate();
+    if (!response) {
       return;
     }
+    const documentInvoiceHeader = this.dataHeaderSource.get();
     const documentInvoiceDetails = this.dataDetailSource
       .get()
       .filter((data) => data.numite > 0);
     if (this.isEditDocumentValue) {
       this.updateDocument(documentInvoiceHeader, documentInvoiceDetails);
     } else {
-      documentInvoiceDetails.forEach((data) => {
-        data.numite = 0;
-      })
-      this.saveDocument(documentInvoiceHeader, documentInvoiceDetails);
+      this.saveDocument(documentInvoiceHeader, documentInvoiceDetails)
     }
   }
 

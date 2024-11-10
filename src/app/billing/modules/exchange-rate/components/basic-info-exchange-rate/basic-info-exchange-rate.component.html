@@ -1,18 +1,18 @@
 <form [formGroup]="formCrudExchangeRate" class="sub-dialog-container">
   <section class="grid grid-cols-3 gap-x-6">
-    <label class="dialog-sub-title col-span-1">Import by : </label>
+    <label class="dialog-sub-title col-span-1">{{ 'IMPORT_BY' | translate }} : </label>
     <app-button-import-sunat class="col-span-1" (click)="importSunat()" typeBtn="button">
     </app-button-import-sunat>
     <app-button-import-sbs class="col-span-1"  (click)="importSunat()" typeBtn="button"></app-button-import-sbs>
   </section>
   <section>
     <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Basic Information : </label>
+    <label class="dialog-sub-title">{{ 'BASIC_INFORMATION' | translate }} : </label>
   </section>
   <section class="space-y-4">
     <div class="grid grid-cols-2 gap-x-8">
       <label for="registdate" class="label-input-sm label-required"
-        >Registed Date</label
+        >{{ 'REGISTED DATE' | translate }}</label
       >
       <input
         id="registdate"
@@ -27,22 +27,34 @@
       <div>
         <div class="flex">
           <label for="origen" class="label-input-xl label-required"
-            >Origin Currency</label
+            >{{ 'ORIGIN_CURRENCY' | translate }}</label
           >
           <select id="origen" class="input-default" formControlName="origen">
-            <option value="PEN">PEN</option>
-            <option value="USD">USD</option>
+            @for (item of currencies; track item) {
+              <option
+                [value]="item.codcur"
+                class="option-default"
+                >
+                {{ item.descri }}
+              </option>
+            }
           </select>
         </div>
       </div>
       <div>
         <div class="flex">
           <label for="destin" class="label-input-xl label-required"
-            >Destiny Currency</label
+            >{{ 'DESTINATION_CURRENCY' | translate }}</label
           >
           <select id="destin" class="input-default" formControlName="destin">
-            <option value="PEN">PEN</option>
-            <option value="USD">USD</option>
+            @for (item of currencies; track item) {
+              <option
+                [value]="item.codcur"
+                class="option-default"
+                >
+                {{ item.descri }}
+              </option>
+            }
           </select>
         </div>
       </div>
@@ -51,7 +63,7 @@
   <section class="grid grid-cols-3 gap-x-12">
     <article class="grid grid-rows-2 gap-y-2">
       <div class="flex flex-col space-y-1">
-        <label for="fventa" class="label-input-sm label-required">Selling Factor</label>
+        <label for="fventa" class="label-input-sm label-required">{{ 'SELLING_FACTOR' | translate }}</label>
         <input
           id="fventa"
           type="number"
@@ -63,7 +75,7 @@
         />
       </div>
       <div class="flex flex-col space-y-1">
-        <label for="fcompra" class="label-input-sm label-required">Buying Factor</label>
+        <label for="fcompra" class="label-input-sm label-required">{{ 'BUYING_FACTOR' | translate }}</label>
         <input
           id="fcompra"
           type="number"
@@ -77,7 +89,7 @@
     </article>
     <article class="grid grid-rows-2 gap-y-2">
       <div class="flex flex-col space-y-1">
-        <label for="cventa" class="label-input-sm">Accounting Sales</label>
+        <label for="cventa" class="label-input-sm">{{ 'ACCOUNTING_SALES' | translate }}</label>
         <input
           id="cventa"
           type="number"
@@ -88,7 +100,7 @@
         />
       </div>
       <div class="flex flex-col space-y-1">
-        <label for="ccompra" class="label-input-sm">Accounting Purchase</label>
+        <label for="ccompra" class="label-input-sm">{{ 'ACCOUNTING_PURCHASE' | translate}}</label>
         <input
           id="ccompra"
           type="number"
@@ -101,7 +113,7 @@
     </article>
     <article class="grid grid-rows-2 gap-y-2">
       <div class="flex flex-col space-y-1">
-        <label for="eventa" class="label-input-sm label-required">Sales Entity</label>
+        <label for="eventa" class="label-input-sm label-required">{{ 'SALES_ENTITY' | translate }}</label>
         <input
           id="eventa"
           type="number"
@@ -113,7 +125,7 @@
         />
       </div>
       <div class="flex flex-col space-y-1">
-        <label for="ecompra" class="label-input-sm label-required">Purchasing Entity</label>
+        <label for="ecompra" class="label-input-sm label-required">{{ 'PURCHASING_ENTITY' | translate }}</label>
         <input
           id="ecompra"
           type="number"
@@ -128,12 +140,12 @@
   </section>
   <section>
     <hr class="dialog-sub-title-line" />
-    <label class="dialog-sub-title">Audit Information : </label>
+    <label class="dialog-sub-title">{{ 'AUDIT_INFORMATION' | translate }} : </label>
   </section>
   <section class="grid grid-cols-2 gap-x-4">
     <div class="space-y-2">
       <div class="flex">
-        <label for="createby" class="label-input-sm">Create by : </label>
+        <label for="createby" class="label-input-sm">{{ 'CREATE_BY' | translate }} : </label>
         <input
           id="createby"
           type="text"
@@ -142,7 +154,7 @@
         />
       </div>
       <div class="flex">
-        <label for="createat" class="label-input-sm">Time : </label>
+        <label for="createat" class="label-input-sm">{{ 'TIME' | translate }} : </label>
         <input
           id="createat"
           type="text"
@@ -154,7 +166,7 @@
     </div>
     <div class="space-y-2">
       <div class="flex">
-        <label for="updateby" class="label-input-sm">Update By : </label>
+        <label for="updateby" class="label-input-sm">{{ 'UPDATE_BY' | translate }} : </label>
         <input
           id="updateby"
           type="text"
@@ -163,7 +175,7 @@
         />
       </div>
       <div class="flex">
-        <label for="updateat" class="label-input-sm">Time : </label>
+        <label for="updateat" class="label-input-sm">{{ 'TIME' | translate }} : </label>
         <input
           id="updateat"
           type="text"
@@ -181,7 +193,7 @@
       optionBtn="save"
       [typeBtn]="'button'"
     >
-      Save
+      {{ 'SAVE' | translate }}
     </app-button-standard>
     <app-button-standard
       (click)="closeDialog()"

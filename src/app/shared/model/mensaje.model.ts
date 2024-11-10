@@ -8,7 +8,8 @@ export interface Mensaje{
   only_one_criterion? : string
   no_data_found?: String
   no_file_selected?: String
-  no_required_fields?: String
+  no_required_fields?: String,
+  fields?: String[]
 }
 
 export interface APIErrorMessage{

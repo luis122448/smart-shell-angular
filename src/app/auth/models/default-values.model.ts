@@ -1,4 +1,6 @@
 export interface MetadataModel{
+  currency: Currency[]
+  // branch: Branch[]
   typeCommercialDocument: TypeCommercialDocument[]
   seller: Seller[]
   serieCommercialDocument: Serie[]
@@ -104,6 +106,22 @@ export interface TypeBusinessPartner{
 export interface Warehouse {
   typinv: number
   codwarehouse: string
+  abrevi: string
+  descri: string
+  defaul: string
+}
+
+export interface Currency {
+  codcur: string
+  abrevi: string
+  descri: string
+  codext: string
+  symbol: string
+  defaul: string
+}
+
+export interface Branch {
+  codbranch: number
   abrevi: string
   descri: string
   defaul: string

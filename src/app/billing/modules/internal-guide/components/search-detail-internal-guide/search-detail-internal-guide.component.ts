@@ -1,34 +1,35 @@
-import { Component, EventEmitter, Output } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
-import { Dialog } from "@angular/cdk/dialog";
-import { DatePipe } from "@angular/common";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { DocumentInternalGuideService } from "@billing-services/document-internal-guide.service";
-import { DocumentTransactionService } from "@billing-services/document-transaction.service";
-import { Clipboard } from "@angular/cdk/clipboard";
-import { DialogErrorAlertComponent } from "@shared/components/dialog-error-alert/dialog-error-alert.component";
-import { MatsnackbarSuccessComponent } from "@shared/components/matsnackbar-success/matsnackbar-success.component";
-import { MatSnackBarSuccessConfig } from "@billing-utils/constants";
+import { Component, EventEmitter, Output } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { Dialog } from '@angular/cdk/dialog';
+import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DocumentInternalGuideService } from '@billing-services/document-internal-guide.service';
+import { DocumentTransactionService } from '@billing-services/document-transaction.service';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
+import { MatsnackbarSuccessComponent } from '@shared/components/matsnackbar-success/matsnackbar-success.component';
+import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
+import { DialogAllDocumentTransactionComponent } from '@billing-components/dialog-all-document-transaction/dialog-all-document-transaction.component';
+import { SearchDocumentGeneric } from '@billing-models/document-invoice.model';
+import { DialogQuestionComment } from '@billing-module-invoice-receipt/components/search-detail-invoice-receipt/search-detail-invoice-receipt.component';
+import { DialogQuestionCommentComponent } from '@shared/components/dialog-question-comment/dialog-question-comment.component';
+import { MyDate } from '@billing-utils/date';
 import {
-  DialogAllDocumentTransactionComponent
-} from "@billing-components/dialog-all-document-transaction/dialog-all-document-transaction.component";
-import { SearchDocumentGeneric } from "@billing-models/document-invoice.model";
-import {
-  DialogQuestionComment
-} from "@billing-module-invoice-receipt/components/search-detail-invoice-receipt/search-detail-invoice-receipt.component";
-import {
-  DialogQuestionCommentComponent
-} from "@shared/components/dialog-question-comment/dialog-question-comment.component";
-import { MyDate } from "@billing-utils/date";
-import { faBan, faBuildingColumns, faEnvelope, faPrint, faRectangleList, faFilePen, faList, faXmark } from "@fortawesome/free-solid-svg-icons";
-import {
-  DataSourceSearchDocumentInternalGuide
-} from "@billing-module-internal-guide/components/search-internal-guide/search-internal-guide.component";
+  faBan,
+  faBuildingColumns,
+  faEnvelope,
+  faPrint,
+  faRectangleList,
+  faFilePen,
+  faList,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
+import { DataSourceSearchDocumentInternalGuide } from '@billing-module-internal-guide/components/search-internal-guide/search-internal-guide.component';
 
 @Component({
   selector: 'app-search-detail-internal-guide',
   templateUrl: './search-detail-internal-guide.component.html',
-  styleUrls: ['./search-detail-internal-guide.component.scss']
+  styleUrls: ['./search-detail-internal-guide.component.scss'],
 })
 export class SearchDetailInternalGuideComponent {
   @Output() pageEvent = new EventEmitter<PageEvent>();
@@ -60,7 +61,8 @@ export class SearchDetailInternalGuideComponent {
     'impsaleprice',
     'imptotal',
   ];
-  dataSourceSearchDocument = DataSourceSearchDocumentInternalGuide.getInstance();
+  dataSourceSearchDocument =
+    DataSourceSearchDocumentInternalGuide.getInstance();
 
   constructor(
     private dialog: Dialog,
@@ -76,7 +78,7 @@ export class SearchDetailInternalGuideComponent {
   }
 
   onOpenOverlay(numint: number) {
-    this.dataSourceSearchDocument.onChangeOpen(numint,true);
+    this.dataSourceSearchDocument.onChangeOpen(numint, true);
   }
 
   onPrint(numint: number) {
@@ -93,14 +95,14 @@ export class SearchDetailInternalGuideComponent {
             MatSnackBarSuccessConfig
           );
           this.openArchive(data.bytes, data.format); // PDF ( BASE64 )
-          this.dataSourceSearchDocument.onChangeOpen(numint,false);
+          this.dataSourceSearchDocument.onChangeOpen(numint, false);
         }
       },
     });
   }
 
   onEdit(numint: number) {
-    this.dataSourceSearchDocument.onChangeOpen(numint,false);
+    this.dataSourceSearchDocument.onChangeOpen(numint, false);
     this.modifyDocument.emit(numint);
   }
 
@@ -136,7 +138,7 @@ export class SearchDetailInternalGuideComponent {
         }
       },
       complete: () => {
-        this.dataSourceSearchDocument.onChangeOpen(numint,false);
+        this.dataSourceSearchDocument.onChangeOpen(numint, false);
       },
     });
   }
@@ -154,11 +156,15 @@ export class SearchDetailInternalGuideComponent {
             MatsnackbarSuccessComponent,
             MatSnackBarSuccessConfig
           );
-          this.dataSourceSearchDocument.onChangeSituacion(numint, 2,'In Kardex');
+          this.dataSourceSearchDocument.onChangeSituacion(
+            numint,
+            2,
+            'In Kardex'
+          );
         }
       },
       complete: () => {
-        this.dataSourceSearchDocument.onChangeOpen(numint,false);
+        this.dataSourceSearchDocument.onChangeOpen(numint, false);
       },
     });
   }
@@ -190,20 +196,24 @@ export class SearchDetailInternalGuideComponent {
                   MatsnackbarSuccessComponent,
                   MatSnackBarSuccessConfig
                 );
-                this.dataSourceSearchDocument.onChangeSituacion(numint, 4,'Canceled');
-                this.dataSourceSearchDocument.onChangeOpen(numint,false);
+                this.dataSourceSearchDocument.onChangeSituacion(
+                  numint,
+                  4,
+                  'Canceled'
+                );
+                this.dataSourceSearchDocument.onChangeOpen(numint, false);
               }
-            }
+            },
           });
       }
     });
   }
 
   onClose(numint: number) {
-    this.dataSourceSearchDocument.onChangeOpen(numint,false);
+    this.dataSourceSearchDocument.onChangeOpen(numint, false);
   }
 
-  copyToClipboard(value: string){
+  copyToClipboard(value: string) {
     this.clipboard.copy(value);
   }
 

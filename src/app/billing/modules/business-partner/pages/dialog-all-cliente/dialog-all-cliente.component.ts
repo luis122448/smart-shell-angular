@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatsnackbarSuccessComponent } from '@shared-components/matsnackbar-success/matsnackbar-success.component';
 import { DialogDeleteQuestionComponent } from '@shared-components/dialog-delete-question/dialog-delete-question.component';
 import { PageEvent } from '@angular/material/paginator';
-import { TypeBusinessPartnerDefaultValues } from 'src/app/auth/models/default-values.model';
+import { TypeBusinessPartner } from 'src/app/auth/models/default-values.model';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class DialogAllClienteComponent {
   pageSize = 10;
   pageIndex = 0;
   // LocalStorage
-  typeBusinessPartners: TypeBusinessPartnerDefaultValues[] = [];
+  typeBusinessPartners: TypeBusinessPartner[] = [];
   // Formulario - Search
   private buildForm(typbuspar: number = 1) {
     this.formSearchCliente = this.formBuilder.group(
