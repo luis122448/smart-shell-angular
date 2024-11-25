@@ -97,8 +97,9 @@ export class ResumeInventoryTakingComponent {
           this.documentInventoryTakingService.isStatusInventoryTakingRegisterDetail()
         )
       ) {
-        resolve(true);
+        resolve(false);
       }
+      resolve(true);
     });
   }
 

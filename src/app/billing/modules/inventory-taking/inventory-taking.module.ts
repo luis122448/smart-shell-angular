@@ -9,7 +9,7 @@ import { HeaderInventoryTakingComponent } from '@billing-module-inventory-taking
 import { SearchInventoryTakingComponent } from '@billing-module-inventory-taking/components/search-inventory-taking/search-inventory-taking.component';
 import { RegisterInventoryTakingComponent } from '@billing-module-inventory-taking/components/register-inventory-taking/register-inventory-taking.component';
 import { LayoutInventoryTakingComponent } from '@billing-module-inventory-taking/layouts/layout-inventory-taking/layout-inventory-taking.component';
-import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { SharedBillingModule } from '@billing-modules/shared-billing/shared-billing.module';
 import { SharedModule } from '@shared/shared.module';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { TranslateModule } from "@ngx-translate/core";

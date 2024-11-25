@@ -3,31 +3,31 @@
     <app-siderbar-left></app-siderbar-left>
   </menu>
   <div class="main-container">
-    <app-header-invoice (isNewDocument)="isNewDocument($event)" class="h-[100px]"></app-header-invoice>
+    <app-header-invoice-receipt (isNewDocument)="isNewDocument($event)" class="h-[100px]"></app-header-invoice-receipt>
     <div class="body-container">
       @switch (isStatusInvoiceReceipt()) {
         @case ('register') {
           <section class="sub-main-container">
             <article class="h-auto w-full">
-              <app-register-facbol
+              <app-register-invoice-receipt
                 [isNewDocument]="isNewDocumentValue"
                 [isEditDocumentValue]="isEditDocumentValue"
                 [isCalculateDocument]="isCalculateDocumentValue"
-              ></app-register-facbol>
+              ></app-register-invoice-receipt>
             </article>
             <article class="h-auto w-full">
-              <app-detail-items-facbol
+              <app-register-detail-invoice-receipt
                 [isNewDocument]="isNewDocumentValue"
                 [isEditDocumentValue]="isEditDocumentValue"
                 [isCalculateDocument]="isCalculateDocumentValue"
-              ></app-detail-items-facbol>
+              ></app-register-detail-invoice-receipt>
             </article>
             <article class="h-auto w-full px-4">
-              <app-resume-facbol
+              <app-resume-invoice-receipt
                 [isEditDocumentValue]="isEditDocumentValue"
                 (isNewDocument)="isNewDocument($event)"
                 (isCalculateDocument)="isCalculateDocument($event)"
-              ></app-resume-facbol>
+              ></app-resume-invoice-receipt>
             </article>
           </section>
         }

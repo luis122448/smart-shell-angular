@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { BillingRoutingModule } from './billing-routing.module';
-import { SharedBillingModule } from './modules/shared/shared-billing.module';
+import { SharedBillingModule } from './modules/shared-billing/shared-billing.module';
 import { SharedModule } from "@shared/shared.module";
 import { BusinessPartnerModule } from './modules/business-partner/business-partner.module';
 import { InventoryArticleModule } from './modules/inventory-article/inventory-article.module';

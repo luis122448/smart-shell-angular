@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutConfigurationComponent } from './layout/layout-configuration/layout-configuration.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
-import { LayoutSerieCommercialDocumentComponent } from './layout/layout-serie-commercial-document/layout-serie-commercial-document.component';
+import { LayoutSerieCommercialDocumentComponent } from './modules/serie-comercial-document/pages/layout-serie-commercial-document/layout-serie-commercial-document.component';
 import { LayoutCreditsComponent } from './layout/layout-credits/layout-credits.component';
 
 

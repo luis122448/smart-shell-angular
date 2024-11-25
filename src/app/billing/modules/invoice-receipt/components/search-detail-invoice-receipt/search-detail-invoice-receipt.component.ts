@@ -3,11 +3,11 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
+import { DocumentInvoiceReceiptService } from '@billing-services/document-invoice-receipt.service';
 import { DocumentTransactionService } from '@billing-services/document-transaction.service';
 import { MatSnackBarSuccessConfig } from '@billing-utils/constants';
 import { MyDate } from '@billing-utils/date';
-import { DataSourceSearchDocumentGeneric } from '@billing/modules/invoice-receipt/components/search-invoice-receipt/search-invoice-receipt.component';
+import { DataSourceSearchDocumentGeneric } from '@billing-module-invoice-receipt/components/search-invoice-receipt/search-invoice-receipt.component';
 import {
   faBan,
   faBuildingColumns,
@@ -73,7 +73,7 @@ export class SearchDetailInvoiceReceiptComponent {
     private dialog: Dialog,
     private datePipe: DatePipe,
     private matSnackBar: MatSnackBar,
-    private documentInvoiceService: DocumentInvoiceService,
+    private documentInvoiceService: DocumentInvoiceReceiptService,
     private globalStatusService: GlobalStatusService,
     private documentTransactionService: DocumentTransactionService,
     private clipboard: Clipboard

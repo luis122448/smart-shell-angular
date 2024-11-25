@@ -1,0 +1,29 @@
+<main class="relative h-full w-full flex items-center justify-center">
+  <section class="absolute z-0 h-full w-full">
+    <img
+      loading="lazy"
+      class="h-full w-full object-cover"
+      src="../../../../assets/images/background/backgroundLogin.jpeg"
+      alt="logo"
+    />
+  </section>
+  <section
+    class="default-container space-y-8 z-10 w-[360px] justify-around rounded-md px-6 py-12 md:w-[280px] bg-white shadow-md"
+  >
+    <article>
+      <h1
+        class="text-center text-3xl font-extrabold leading-normal tracking-tight dark:text-gray-200 sm:text-4xl"
+      >
+        {{ company.appellation }}
+      </h1>
+      <h3
+        class="text-center text-3xl font-extrabold leading-normal tracking-tight dark:text-gray-200 sm:text-xl"
+      >
+        <span class="text-sky-900 dark:text-sky-700">{{ company.addres }}</span>
+      </h3>
+    </article>
+    <article>
+      <app-branch-form></app-branch-form>
+    </article>
+  </section>
+</main>

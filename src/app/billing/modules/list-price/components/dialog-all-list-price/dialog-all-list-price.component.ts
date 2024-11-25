@@ -20,6 +20,7 @@ export class DialogAllListPriceComponent implements OnInit {
   dataSourceListPrice = new DataSourceListPrice();
   displayedColumns: string[] = ['codlistprice', 'descri', 'codext', 'operac'];
   totalElements = 0;
+  pageSize = 25;
 
   constructor(
     private listPriceService: ListPriceService,

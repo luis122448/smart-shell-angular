@@ -22,7 +22,7 @@
           [class.row-table-delete]="row.status === 'N'"
         ></tr>
         <ng-container cdkColumnDef="codlistprice">
-          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>List Price</th>
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'LIST_PRICE' | translate }}</th>
           <td class="row-cell" cdk-cell *cdkCellDef="let row">
             {{ getListPrice(row.codlistprice) }}
           </td>
@@ -198,7 +198,7 @@
           </section>
           <section>
             <hr class="dialog-sub-title-line" />
-            <label class="dialog-sub-title">Additional Information : </label>
+            <label class="dialog-sub-title">{{ 'AUDIT_INFORMATION' | translate }}</label>
           </section>
           <section class="space-y-2">
             <article class="grid grid-cols-5 gap-x-4">
@@ -281,7 +281,7 @@
                     </section>
                     <section>
                       <hr class="dialog-sub-title-line" />
-                      <label class="dialog-sub-title">{{ 'AUDIT INFORMATION' | translate }} : </label>
+                      <label class="dialog-sub-title">{{ 'AUDIT INFORMATION' | translate }}</label>
                     </section>
                     <section class="grid grid-cols-2 gap-x-4">
                       <div class="space-y-2">

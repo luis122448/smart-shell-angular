@@ -1,0 +1,325 @@
+<section class="h-auto w-full pt-6">
+  <form [formGroup]="formDocumentHeader">
+    <div class="items-container">
+      <section class="flex-col space-y-2">
+        <div class="dense-3 grid grid-cols-3 items-center">
+          <label for="typcomdoc" class="text-inline label-required">{{
+            "TYPE_DOCUMENT" | translate
+          }}</label>
+          <select
+            name="typcomdoc"
+            class="select-default col-span-2"
+            formControlName="typcomdoc"
+            [class.select-invalid]="isInputInvalid('typcomdoc')"
+            (change)="changeTypcomdoc($event)"
+          >
+            <option value="1" class="option-default">
+              {{ "INVOICE" | translate }}
+            </option>
+            <option value="3" class="option-default">
+              {{ "RECEIPT" | translate }}
+            </option>
+            <option value="3" class="option-default">
+              {{ "CREDIT_NOTE" | translate }}
+            </option>
+          </select>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="serie" class="text-inline label-required">{{
+            "SERIE" | translate
+          }}</label>
+          <select
+            name="serie"
+            id="serie"
+            class="select-default col-span-2"
+            formControlName="serie"
+            [class.select-invalid]="isInputInvalid('serie')"
+          >
+            <option
+              value=""
+              class="option-default"
+              disabled
+              selected
+              hidden
+              [class.option-invalid]="isInputInvalid('serie')"
+            >
+              -- {{ "CHOOSE" | translate }} --
+            </option>
+            @for (item of series; track item) {
+            <option [value]="item.serie" class="option-default">
+              {{ item.serie + " - " + item.descri }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="reacomdoc" class="text-inline label-required">{{
+            "REASON" | translate
+          }}</label>
+          <select
+            name="reacomdoc"
+            id="reacomdoc"
+            class="select-default col-span-2"
+            formControlName="reacomdoc"
+            [class.select-invalid]="isInputInvalid('reacomdoc')"
+          >
+            <option
+              value=""
+              class="option-default"
+              disabled
+              selected
+              hidden
+              [class.option-invalid]="isInputInvalid('reacomdoc')"
+            >
+              -- {{ "CHOOSE" | translate }} --
+            </option>
+            @for (item of reasons; track item) {
+            <option [value]="item.reacomdoc" class="option-default">
+              {{ item.descri }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="codbuspar" class="text-inline label-required">{{
+            "CUSTOMER" | translate
+          }}</label>
+          <div class="col-span-2 flex">
+            <input
+              id="codbuspar"
+              type="text"
+              placeholder="{{ 'COD_BUSINESS_PARTNER' | translate }}"
+              class="input-default"
+              formControlName="codbuspar"
+              [class.input-invalid]="isInputInvalid('codbuspar')"
+              (keyup.enter)="openDialogGetCli(true)"
+            />
+            @if (statusBuspar == 'search') {
+            <button
+              type="button"
+              class="button-icon-search"
+              (click)="openDialogGetCli(true)"
+            >
+              <fa-icon
+                [icon]="faMagnifyingGlass"
+                class="icon-operac-button"
+                size="sm"
+              ></fa-icon>
+            </button>
+            } @if (statusBuspar == 'register') {
+            <button
+              type="button"
+              class="button-icon-search"
+              (click)="cleanBuspar()"
+            >
+              <fa-icon
+                [icon]="faXmark"
+                class="icon-operac-button"
+                size="sm"
+              ></fa-icon>
+            </button>
+            }
+          </div>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="busnam" class="text-inline label-required">{{
+            "BUSINESS_NAME" | translate
+          }}</label>
+          <div class="col-span-2 flex">
+            <input
+              id="busnam"
+              type="text"
+              placeholder="{{ 'BUSINESS_NAME' | translate }}"
+              class="input-default"
+              formControlName="busnam"
+              [class.input-invalid]="isInputInvalid('busnam')"
+              (keyup.enter)="openDialogGetCli(false)"
+            />
+            @if (!statusBuspar) {
+            <button
+              type="button"
+              class="button-icon-search"
+              (click)="openDialogGetCli(false)"
+            >
+              <fa-icon
+                [icon]="faMagnifyingGlass"
+                class="icon-operac-button"
+                size="sm"
+              ></fa-icon>
+            </button>
+            }
+          </div>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label class="text-inline label-required">{{
+            "ADDRESS" | translate
+          }}</label>
+          <textarea
+            formControlName="addres"
+            class="textarea-default col-span-2"
+            cols="60"
+            rows="20"
+            placeholder="{{ 'COMMERCIAL_ADDRESS' | translate }}"
+            [class.input-invalid]="isInputInvalid('addres')"
+          ></textarea>
+        </div>
+      </section>
+      <section class="flex-col space-y-2">
+        <div class="grid grid-cols-3 items-center">
+          <label for="registdate" class="text-inline label-required">{{
+            "DATE_OF_ISSUE" | translate
+          }}</label>
+          <input
+            id="registdate"
+            name="registdate"
+            type="date"
+            class="input-auto col-span-2"
+            formControlName="registdate"
+            (input)="onFemisiChange($event)"
+          />
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="codcur" class="text-inline label-required">{{
+            "CURRENCY" | translate
+          }}</label>
+          <div class="col-span-2 grid grid-cols-3">
+            <select
+              name="codcur"
+              id="codcur"
+              class="select-default"
+              formControlName="codcur"
+              (change)="onCodcurChange($event)"
+            >
+            @for (item of currencies; track item) {
+            <option [value]="item.codcur" class="option-default">
+              {{ item.abrevi }}
+            </option>
+            }
+            </select>
+            <label for="incigv" class="text-inline label-required pl-6"
+              >{{ "TAX" | translate }}?</label
+            >
+            <select
+              name="incigv"
+              id="incigv"
+              class="select-default"
+              formControlName="incigv"
+              (change)="onIncigvChange($event)"
+            >
+            <option class="option-default" value="1">{{ 'YES' | translate }}</option>
+            <option class="option-default" value="0">{{ 'NO' | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="exchangerate" class="text-inline label-required">{{
+            "EXCHANGE_RATE" | translate
+          }}</label>
+          <div class="col-span-2 grid grid-cols-3">
+            <input
+              type="text"
+              class="input-default"
+              name="exchangerate"
+              id="exchangerate"
+              formControlName="exchangerate"
+              [class.input-invalid]="isInputInvalid('exchangerate')"
+            />
+            <label for="tasigv" class="text-inline label-required pl-6">{{
+              "TAX" | translate
+            }}</label>
+            <input
+              type="text"
+              class="input-default"
+              name="tasigv"
+              id="tasigv"
+              formControlName="tasigv"
+              [class.input-invalid]="isInputInvalid('tasigv')"
+              placeholder="Tas Igv*"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="codsel" class="text-inline label-required">{{
+            "SELLER" | translate
+          }}</label>
+          <select
+            name="codsel"
+            id="codsel"
+            class="select-default col-span-2"
+            formControlName="codsel"
+            [class.select-invalid]="isInputInvalid('codsel')"
+            (change)="onCodselChange($event)"
+          >
+            <option
+              value=""
+              class="option-default"
+              disabled
+              selected
+              hidden
+              [class.option-invalid]="isInputInvalid('codsel')"
+            >
+              -- {{ "CHOOSE" | translate }} --
+            </option>
+            @for (item of sellers; track item) {
+            <option [value]="item.codsel" class="option-default">
+              {{ item.descri }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="typcomdoc" class="text-inline label-required">{{
+            "PAYMENT_CONDITION" | translate
+          }}</label>
+          <select
+            name="typcomdoc"
+            id="typcomdoc"
+            class="select-default col-span-2"
+            formControlName="typpaycon"
+            [class.select-invalid]="isInputInvalid('typpaycon')"
+            (change)="onTyppayconChange($event)"
+          >
+            <option
+              value=""
+              class="option-default"
+              disabled
+              selected
+              hidden
+              [class.option-invalid]="isInputInvalid('typpaycon')"
+            >
+              -- {{ "CHOOSE" | translate }} --
+            </option>
+            @for (item of tipoConPag; track item) {
+            <option [value]="item.typpaycon" class="option-default">
+              {{ item.typpaycon + " - " + item.destyppaycon }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="refere" class="text-inline">{{
+            "REFERENCE" | translate
+          }}</label>
+          <input
+            name="refere"
+            type="text"
+            class="input-default col-span-2"
+            placeholder="{{ 'REFERENCE' | translate }}"
+            formControlName="refere"
+          />
+        </div>
+        <div class="grid grid-cols-3 items-center">
+          <label for="observ" class="text-inline">{{
+            "OBSERVATION" | translate
+          }}</label>
+          <textarea
+            name="observ"
+            class="input-default col-span-2"
+            placeholder="{{ 'OBSERVATION' | translate }}"
+            formControlName="observ"
+          ></textarea>
+        </div>
+      </section>
+    </div>
+  </form>
+</section>

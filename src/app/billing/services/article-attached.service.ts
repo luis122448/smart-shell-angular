@@ -19,7 +19,7 @@ export class ArticleAttachedService {
   getByAll(codart: string){
     let params = new HttpParams()
     params = params.set('codart',codart)
-    return this.httpCLient.get<DAOArticleAttached>(`${this.API_URL}${this.PATH_BILLING}/article-attached/by-all`, { params })
+    return this.httpCLient.get<DAOArticleAttached>(`${this.API_URL}${this.PATH_BILLING}/article-attached/by-codart`, { params })
   }
 
   getById(codart: string, typspe: number){

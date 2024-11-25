@@ -13,6 +13,9 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from "@ngx-translate/core";
+import { BranchFormComponent } from './components/branch-form/branch-form.component';
+import { BranchComponent } from './pages/branch/branch.component';
+
 @NgModule({
   declarations: [
     LoginFormComponent,
@@ -22,7 +25,9 @@ import { TranslateModule } from "@ngx-translate/core";
     LoginComponent,
     RecoveryComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    BranchFormComponent,
+    BranchComponent
   ],
   imports: [
     CommonModule,

@@ -8,7 +8,7 @@ import { DialogAllClienteComponent } from '@billing-module-business-partner/page
 import { DialogCrudClienteComponent } from '@billing-module-business-partner/pages/dialog-crud-cliente/dialog-crud-cliente.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { SharedBillingModule } from '@billing-modules/shared-billing/shared-billing.module';
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({

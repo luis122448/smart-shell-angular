@@ -143,15 +143,8 @@ export class RegisterDetailInternalGuideComponent implements OnChanges{
     this.dataDetailSource.getDelete(row.numite);
   }
 
-  openDialogGetArticle(item: DocumentDetail, isCode: boolean) {
-    if (item.codart && item.codart.length < 3 && isCode) {
-      this.dialog.open(DialogErrorAlertComponent, {
-        width: '400px',
-        data: { minimum_length:3 }
-      })
-      return;
-    }
-    if (item.desart && item.desart.length < 3 && !isCode) {
+  openDialogGetArticleByCodart(item: DocumentDetail) {
+    if (item.codart.length < 3) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
         data: { minimum_length:3 }
@@ -165,11 +158,51 @@ export class RegisterDetailInternalGuideComponent implements OnChanges{
       {
         data: {
           codart: this.detailDocument.value[0]?.codart ?? '%',
+          codlistprice: this.codlistprice,
+        },
+      }
+    );
+    item.codart = '';
+    dialogRefArticle.closed.subscribe((data) => {
+      if (data) {
+        const nextNumite: number = this.dataDetailSource.getLastNumite() + 1;
+        this.addItem({
+          numite: nextNumite,
+          typinv: data.typinv,
+          desinv: data.desinv,
+          codart: data.codart,
+          desart: data.descri,
+          etiqueta: 0,
+          quantity: 1,
+          stock: data.stock ?? 0,
+          price: parseFloat(data.price?.toFixed(2) ?? '0.00'),
+          moddesc: data.moddesc ?? 'N',
+          modprice: data.modprice ?? 'N'
+        });
+      }
+    });
+  }
+
+  openDialogGetArticleByDesart(item: DocumentDetail) {
+    if (item.desart && item.desart.length < 3) {
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { minimum_length:3 }
+      })
+      return;
+    }
+    const dataHeader = this.dataHeaderSource.get();
+    this.codlistprice = dataHeader.codlistprice ?? 1;
+    const dialogRefArticle = this.dialog.open<Article>(
+      DialogGetArticleComponent,
+      {
+        data: {
           desart: this.detailDocument.value[0]?.desart ?? '%',
           codlistprice: this.codlistprice,
         },
       }
     );
+    item.codart = '';
     dialogRefArticle.closed.subscribe((data) => {
       if (data) {
         const nextNumite: number = this.dataDetailSource.getLastNumite() + 1;

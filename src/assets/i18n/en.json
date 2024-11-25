@@ -32,7 +32,7 @@
   "TOTAL_TAX": "Total Tax",
   "TOTAL": "Total",
 
-  "NEW_DOCUMENT": "New Document",
+  "NEW_DOCUMENT": "{{ 'NEW_DOCUMENT' | translate }}",
   "CALCULATE": "Calculate",
   "SAVE": "Save",
   "HISTORY": "History",
@@ -93,6 +93,12 @@
   "CREDIT_NOTE": "Credit Note",
   "DEBIT_NOTE": "Debit Note",
   "INVENTORY_TAKING": "Inventory Taking",
-  "INTERNAL_GUIDE": "Internal Guide"
+  "INTERNAL_GUIDE": "Internal Guide",
 
+  "COMPANY_IS_REQUIRED": "Company is required",
+  "CODE_USER_IS_REQUIRED": "Code User is required",
+  "SPECIFY_YOUR_PASSWORD": "Specify your Password",
+  "VERIFICATION_CODE_IS_REQUIRED": "Verification Code is Required",
+  "LOGIN": "Login",
+  "SELECTED_BRANCH": "Selected Branch"
 }

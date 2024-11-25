@@ -8,36 +8,12 @@ import { CookieService } from 'ngx-cookie-service';
 export class DefaultValuesService {
 
   public dark: boolean = true
-  public accesses: Access[] = []
-  public branches: Branch[] = [
-    {
-      codbranch: 1,
-      abrevi: '01',
-      descri: 'Primary',
-      defaul: 'Y'
-    },
-    {
-      codbranch: 2,
-      abrevi: '02',
-      descri: 'Secundary',
-      defaul: 'N'
-    }
-  ]
-  public sellers: Seller[] = []
-  public series: Serie[] = []
-  public reasons: Reason[] = []
-  public situations: Situation[] = []
-  public inventories: Inventory[] = []
-  public documents: Document[] = []
-  public typeBusinessPartners: TypeBusinessPartner[] = []
 
   constructor(
     private cookieService: CookieService
   ) {
     this.dark = this.cookieService.get('dark') === 'true' ? true : false
     this.setCookie('dark',this.dark.toString())
-
-    this.setLocalStorageValue('branches', this.branches)
   }
 
   public getCookieValue(key: string): any[] {

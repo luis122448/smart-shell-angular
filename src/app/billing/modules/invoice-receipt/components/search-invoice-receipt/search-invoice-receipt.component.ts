@@ -16,7 +16,7 @@ import { ReasonCommercialDocument } from '@billing-models/reason-commercial-docu
 import { BusinessPartner } from '@billing-models/business-partner.model';
 import { DialogGetClienteComponent } from '@billing-module-business-partner/pages/dialog-get-cliente/dialog-get-cliente.component';
 import { TypePaymentCondition } from '@billing-models/type-payment-condition.model';
-import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
+import { DocumentInvoiceReceiptService } from '@billing-services/document-invoice-receipt.service';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { DefaultValuesService } from 'src/app/auth/services/default-values.service';
 import {
@@ -73,7 +73,7 @@ export class SearchInvoiceReceiptComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private typePaymentConditionService: TypePaymentConditionService,
-    private documentInvoiceService: DocumentInvoiceService,
+    private documentInvoiceService: DocumentInvoiceReceiptService,
     private globalStatusService: GlobalStatusService,
     private defaultValuesService: DefaultValuesService,
     private dialog: Dialog,

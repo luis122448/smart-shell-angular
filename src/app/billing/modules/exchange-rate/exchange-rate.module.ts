@@ -6,7 +6,7 @@ import { DialogCrudExchangeRateComponent } from '@billing-module-exchange-rate/p
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { FormsModule } from "@angular/forms";
 import { SharedModule } from "@shared/shared.module";
-import { SharedBillingModule } from "@billing-modules/shared/shared-billing.module";
+import { SharedBillingModule } from "@billing-modules/shared-billing/shared-billing.module";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({

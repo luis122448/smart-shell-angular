@@ -220,7 +220,7 @@ body {
 
 .icon-operac-button {
   @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-200
-  dark:text-slate-100;
+dark:text-slate-100;
 }
 
 .icon-operac {
@@ -229,7 +229,7 @@ body {
 }
 
 .icon-operac-inverse {
-  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-100
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-200
   dark:text-slate-800;
 }
 

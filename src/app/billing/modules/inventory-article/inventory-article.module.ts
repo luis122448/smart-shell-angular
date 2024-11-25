@@ -14,7 +14,7 @@ import { DialogImportArticleComponent } from '@billing-module-inventory-article/
 import { BasicImportArticleComponent } from '@billing-module-inventory-article/components/basic-import-article/basic-import-article.component';
 import { ListPriceModule } from '@billing-module-list-price/list-price.module';
 import { BasicArticleAttachedComponent } from '@billing-module-inventory-article/components/basic-article-attached/basic-article-attached.component';
-import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { SharedBillingModule } from '@billing-modules/shared-billing/shared-billing.module';
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({

@@ -184,6 +184,7 @@ export class RegisterInternalGuideComponent implements OnInit, OnChanges {
       changes['isCalculateDocument'].currentValue === true
     ) {
       if (this.formDocumentHeader.invalid) {
+        this.formDocumentHeader.markAllAsTouched();
         const invalidFields = Object.keys(this.formDocumentHeader.controls).filter(
           (controlName) => this.formDocumentHeader.get(controlName)?.invalid
         );

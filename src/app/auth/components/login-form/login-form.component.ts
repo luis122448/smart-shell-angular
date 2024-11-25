@@ -27,7 +27,6 @@ export class LoginFormComponent {
   faAddressCard = faAddressCard;
   showPassword = false;
   LoginIn = true;
-  // Verrify Code
   verificationCode: string[] = new Array(6);
 
   private buildForm() {
@@ -74,9 +73,14 @@ export class LoginFormComponent {
   doLogin() {
     if (this.fromAuthLogin.invalid) {
       this.fromAuthLogin.markAllAsTouched();
+      const invalidFields = Object.keys(this.fromAuthLogin.controls).filter(
+        (controlName) => this.fromAuthLogin.get(controlName)?.invalid
+      );
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { no_required_fields: 'Y' },
+        data: { no_required_fields: 'Y',
+          fields: invalidFields
+         },
       });
       return;
     }
@@ -101,7 +105,7 @@ export class LoginFormComponent {
             });
           } else {
             await this.onUploadDefaultValues(data.metadata);
-            this.router.navigate(['/billing']);
+            this.router.navigate(['/branch']);
           }
         }
       });
@@ -111,9 +115,14 @@ export class LoginFormComponent {
     this.verifycode?.setValue(this.verificationCode.join(''));
     if (this.formVerifyCode.invalid) {
       this.fromAuthLogin.markAllAsTouched();
+      const invalidFields = Object.keys(this.fromAuthLogin.controls).filter(
+        (controlName) => this.fromAuthLogin.get(controlName)?.invalid
+      );
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
-        data: { no_required_fields: 'Y' },
+        data: { no_required_fields: 'Y',
+          fields: invalidFields
+         },
       });
       return;
     }
@@ -128,7 +137,7 @@ export class LoginFormComponent {
             });
           } else {
             await this.onUploadDefaultValues(data.metadata);
-            this.router.navigate(['/billing']);
+            this.router.navigate(['/branch']);
             this.matSnackBar.openFromComponent(
               MatsnackbarSuccessComponent,
               MatSnackBarSuccessConfig
@@ -139,11 +148,8 @@ export class LoginFormComponent {
   }
 
   public onCodeInputChange(index: number, event: any): void {
-    const value = event.target.value;
-
-    // Si se ingresó un valor y no es el último campo de entrada, pasa automáticamente al siguiente campo
+    const value = event.target.value
     if (value && index < this.verificationCode.length - 1) {
-      // const nextInput = document.getElementById(`code-${index + 1}`) as HTMLInputElement;
       const nextInput = event.target.nextElementSibling as HTMLInputElement;
       if (nextInput) {
         nextInput.focus();
@@ -170,6 +176,8 @@ export class LoginFormComponent {
       });
       return;
     }
+    this.defaultValuesService.setLocalStorageValue('company', [metadata.company]);
+    this.defaultValuesService.setLocalStorageValue('user', [metadata.user]);
     this.defaultValuesService.setLocalStorageValue(
       'currencies',
       metadata.currency.map((data) => {
@@ -183,17 +191,18 @@ export class LoginFormComponent {
         };
       })
     );
-    // this.defaultValuesService.setLocalStorageValue(
-    //   'branches',
-    //   metadata.branch.map((data) => {
-    //     return {
-    //       codbranch: data.codbranch,
-    //       abrevi: data.abrevi,
-    //       descri: data.descri,
-    //       defaul: data.defaul,
-    //     };
-    //   })
-    // );
+    this.defaultValuesService.setLocalStorageValue(
+      'branches',
+      metadata.branch.map((data) => {
+        return {
+          codbranch: data.codbranch,
+          abrevi: data.abrevi,
+          descri: data.descri,
+          defaul: data.defaul,
+          codwarehouse: data.codwarehouse,
+        };
+      })
+    );
     this.defaultValuesService.setLocalStorageValue(
       'warehouses',
         metadata.warehouse.map((data) => {

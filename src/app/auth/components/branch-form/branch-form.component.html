@@ -1,0 +1,40 @@
+<form
+  class="flex w-full flex-col items-center justify-around space-y-6"
+  [formGroup]="fromBranchLogin"
+>
+  <label for="codbranch" class="text-inline label-required">{{
+    "SELECTED_BRANCH" | translate
+  }}</label>
+  <select
+    id="codbranch"
+    formControlName="codbranch"
+    [class.select-invalid]="isInputInvalid('codbranch')"
+    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+  >
+    <option
+      value="0"
+      class="option-default"
+      disabled
+      selected
+      hidden
+      [class.option-invalid]="isInputInvalid('codbranch')"
+    >
+      -- {{ "CHOOSE" | translate }} --
+    </option>
+    @for (item of branches; track item) {
+    <option [value]="item.codbranch" class="option-default">
+      {{ item.descri }}
+    </option>
+    }
+  </select>
+  <section class="flex justify-center">
+    <app-button-standard
+      typeBtn="button"
+      colorBtn="sky"
+      (click)="selectedBranch()"
+      optionBtn="go"
+    >
+      {{ "GO" | translate }}</app-button-standard
+    >
+  </section>
+</form>

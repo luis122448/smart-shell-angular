@@ -1,6 +1,6 @@
 export interface MetadataModel{
   currency: Currency[]
-  // branch: Branch[]
+  branch: Branch[]
   typeCommercialDocument: TypeCommercialDocument[]
   seller: Seller[]
   serieCommercialDocument: Serie[]
@@ -10,7 +10,38 @@ export interface MetadataModel{
   warehouse: Warehouse[]
   listPrice: ListPrice[]
   typeBusinessPartner: TypeBusinessPartner[]
-  user: any
+  user: User,
+  company: Company,
+}
+
+export interface User{
+  coduser: string
+  role: string
+  apepat: string
+  apemat: string
+  nombre: string
+  addres: string
+  poscod: string
+  phone: string
+  email: string
+  registdate: string
+  expiredate: string
+  image: string
+  gloss: string
+}
+
+export interface Company{
+  company: string
+  appellation: string
+  addres: string
+  poscod: string
+  image: string
+  icon: string
+  logo: string
+  background: string
+  gloss: string
+  commen: string
+  observ: string
 }
 
 export interface TypeCommercialDocument{
@@ -32,6 +63,7 @@ export interface Branch{
   abrevi: string
   descri: string
   defaul: string
+  codwarehouse: number
 }
 
 export interface Currency{

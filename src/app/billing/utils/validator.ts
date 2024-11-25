@@ -4,6 +4,10 @@ import { map } from 'rxjs/operators';
 
 export class MyValidators{
 
+  static NotZeroValidator(control: AbstractControl): ValidationErrors | null {
+    return control.value === 0 ? { NotZeroValidator: true } : null
+  }
+
   static NotNullValidatorTwo(input1: string, input2: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const c_input1 = control.get(input1)?.value

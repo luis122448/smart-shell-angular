@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { GlobalStatusService } from '@billing-services/global-status.service';
-import { DocumentInvoiceService } from '@billing-services/document-invoice.service';
-import { DataSourceDocumentDetail, DataSourceDocumentHeader } from '@billing/data/datasource-facbol.service';
+import { DocumentInvoiceReceiptService } from '@billing-services/document-invoice-receipt.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogErrorAlertComponent } from '@shared/components/dialog-error-alert/dialog-error-alert.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,7 +20,7 @@ export class LayoutInvoiceReceiptComponent{
   isCalculateDocumentValue = false
 
   constructor(
-    private documentInvoiceService: DocumentInvoiceService,
+    private documentInvoiceService: DocumentInvoiceReceiptService,
     private globalStatusService: GlobalStatusService,
     private dialog: Dialog,
     private matSnackBar: MatSnackBar,

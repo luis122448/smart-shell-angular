@@ -1,0 +1,35 @@
+<div class="configuration-container">
+  <mat-tab-group
+    [selectedIndex]="selectedTab.value"
+    (selectedIndexChange)="selectedTab.setValue($event)"
+  >
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faFileInvoice"></fa-icon>
+          <span class="mat-tab-label-span">{{ 'BASIC_CONFIGURATION' | translate }}</span>
+        </div>
+      </ng-template>
+      <app-basic-serie-commercial-document
+        [inputTypcomdoc]="this.inputTypcomdoc"
+        [inputTypformat]="this.inputTypformat"
+        [inputSerie]="this.inputSerie"
+        [inputSave]="this.isStatusConfigurationSave"
+      ></app-basic-serie-commercial-document>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-container">
+          <fa-icon [icon]="faIndent"></fa-icon>
+          <span class="mat-tab-label-span">{{ 'FORMAT_CONFIGURATION' | translate }}</span>
+        </div>
+      </ng-template>
+      <app-format-serie-commercial-document
+        [inputTypcomdoc]="this.inputTypcomdoc"
+        [inputSerie]="this.inputSerie"
+        [inputSave]="this.isStatusConfigurationSave"
+        (changeTypeFormatCommercialDocument)="onChangetypformat($event)">
+      </app-format-serie-commercial-document>
+    </mat-tab>
+  </mat-tab-group>
+</div>

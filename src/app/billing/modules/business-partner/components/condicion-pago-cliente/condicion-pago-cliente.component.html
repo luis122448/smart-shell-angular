@@ -43,7 +43,7 @@
         [class.row-table-delete]="row.status === 'N'"
       ></tr>
       <!-- <ng-container cdkColumnDef="typpaycon">
-      <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Codigo</th>
+      <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'CODE' | translate }}</th>
       <td class="row-cell" cdk-cell *cdkCellDef="let row">
         {{ row.typpaycon }}
       </td>
@@ -85,7 +85,7 @@
     </td>
   </ng-container>
   <ng-container cdkColumnDef="operac">
-    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>Accion</th>
+    <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'ACTION' | translate }}</th>
     <td class="row-operac-cell max-w-[20px]" cdk-cell *cdkCellDef="let row">
       <app-button-operac
         (click)="deleteTypePaymentCondition(row)"

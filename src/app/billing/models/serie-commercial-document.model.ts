@@ -20,7 +20,7 @@ export interface SerieCommercialDocument {
 }
 
 export interface ChangeSerieCommercialDocument{
-  view: 'search' | 'crud'
+  view: 'search' | 'register' | 'new'
   typcomdoc: number
   serie: string
 }

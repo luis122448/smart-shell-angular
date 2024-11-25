@@ -18,9 +18,8 @@ export class ArticleSpecificationService {
   getByAll(typinv: number){
     let params = new HttpParams()
     params = params.set('typinv',typinv.toString())
-    return this.httpCLient.get<DAOArticleSpecification>(`${this.API_URL}${this.PATH_BILLING}/article-specification/by-all`, { params })
+    return this.httpCLient.get<DAOArticleSpecification>(`${this.API_URL}${this.PATH_BILLING}/article-specification/by-typinv`, { params })
   }
-
 
 }
 

@@ -1,179 +1,179 @@
 <main class="dialog-container">
   <section>
-    <h1 class="dialog-title">{{ 'BUSINESS_NAME' | translate }}</h1>
+    <h1 class="dialog-title">{{ "BUSINESS_NAME" | translate }}</h1>
+  </section>
+  <section>
     <form [formGroup]="formSearchCliente">
       <div class="divide-line space-y-2">
         <div class="grid grid-cols-5 gap-x-8">
           <div class="col-span-3 flex">
             <div class="w-48">
-              <label for="typbuspar" class="label-input-sm"
-                >{{ 'INTERLOCUTOR_TYPE' | translate }}</label
-                >
-              </div>
-              <select
-                name="typbuspar"
-                id="typbuspar"
-                formControlName="typbuspar"
-                class="select-default"
-                >
-
-                @for (item of typeBusinessPartners; track item) {
-                  <option [value]="item.typbuspar">
-                    {{ item.typbuspar + ' - ' +  item.descri }}
-                  </option>
-                }
-              </select>
+              <label for="typbuspar" class="label-input-sm">{{
+                "INTERLOCUTOR_TYPE" | translate
+              }}</label>
             </div>
-            <div class="col-span-2 flex items-center justify-center space-x-4">
-              <label for="status" class="label-input-xs">{{ 'INC_INACTIVE?' | translate }}</label>
-              <input
-                id="status"
-                type="checkbox"
-                class="checkbox-default"
-                formControlName="status"
-                />
-            </div>
-          </div>
-          <div class="space-y-2 pt-2">
-            <div class="flex justify-start">
-              <label for="codbuspar" class="label-input-sm">{{ 'CODE' | translate }}</label>
-              <input
-                id="codbuspar"
-                type="text"
-                class="input-default"
-                formControlName="codbuspar"
-                />
-            </div>
-            <div class="flex justify-start">
-              <label for="busnam" class="label-input-sm">{{ 'BUSINESS_NAME' | translate }}</label>
-              <input
-                id="busnam"
-                type="text"
-                class="input-default"
-                formControlName="busnam"
-                />
-            </div>
-            <app-alert-standard
-            [class.invisible]="
-              !(
-                codbuspar?.touched &&
-                busnam?.touched &&
-                formSearchCliente.hasError('NotNullValidatorTwo')
-              )
-            "
-              >You must use at least one of these filters for the search, consider a minimum length of 5 characters</app-alert-standard
-              >
-            </div>
-          </div>
-        </form>
-      </section>
-      <section>
-        <div class="flex justify-end space-x-4">
-          <app-button-standard
-            (click)="searchBusinessPartner()"
-            colorBtn="sky"
-            optionBtn="search"
-            typeBtn="button"
-            >{{'SEARCH' | translate }}</app-button-standard
+            <select
+              name="typbuspar"
+              id="typbuspar"
+              formControlName="typbuspar"
+              class="select-default"
             >
-            <app-button-standard
-              (click)="crudBusinessPartner(null)"
-              colorBtn="green"
-              optionBtn="new"
-              typeBtn="button"
-              >{{'NEW' | translate }}</app-button-standard
-              >
-            </div>
-          </section>
-          <section class="section-table">
-            <article class="container-dialog-table">
-              <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
-                <tr
-                  class="header-table"
-                  cdk-header-row
-                  *cdkHeaderRowDef="displayedColumns; sticky: true"
-                ></tr>
-                <tr
-                  class="row-table"
-                  cdk-row
-                  *cdkRowDef="let row; columns: displayedColumns"
-                  [class.row-table-delete]="row.status === 'N'"
-                ></tr>
-                <ng-container cdkColumnDef="codbuspar">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'CODE' | translate }}</th>
-                  <td class="row-cell" cdk-cell *cdkCellDef="let row">
-                    {{ row.codbuspar }}
-                  </td>
-                </ng-container>
-                <ng-container cdkColumnDef="busnam">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
-                    {{'BUSINESS NAME' | translate }}
-                  </th>
-                  <td class="row-cell" cdk-cell *cdkCellDef="let row">
-                    {{ row.busnam }}
-                  </td>
-                </ng-container>
-                <ng-container cdkColumnDef="nroidedoc">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'NATIONAL_ID_NUMBER' | translate }}</th>
-                  <td class="row-cell" cdk-cell *cdkCellDef="let row">
-                    {{ row.nroidedoc }}
-                  </td>
-                </ng-container>
-                <ng-container cdkColumnDef="operac">
-                  <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>{{ 'ACTION' | translate }}</th>
-                  <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
-                    @if (row.status === 'Y') {
-                      <app-button-operac
-                        (click)="crudBusinessPartner(row)"
-                        optionBtn="edit"
-                        colorBtn="sky"
-                        >
-                      </app-button-operac>
-                    }
-                    @if (row.status === 'Y') {
-                      <app-button-operac
-                        (click)="cleanBusinessPartner(row)"
-                        optionBtn="clean"
-                        colorBtn="sky"
-                        >
-                      </app-button-operac>
-                    }
-                    @if (row.status === 'Y') {
-                      <app-button-operac
-                        (click)="deleteBusinessPartner(row)"
-                        optionBtn="delete"
-                        colorBtn="red"
-                      ></app-button-operac>
-                    }
-                    @if (row.status === 'N') {
-                      <app-button-operac
-                        (click)="undeleteBusinessPartner(row)"
-                        optionBtn="undelete"
-                        colorBtn="yellow"
-                      ></app-button-operac>
-                    }
-                  </td>
-                </ng-container>
-              </table>
-            </article>
-            <mat-paginator
-              (page)="byPageEvent($event)"
-              [hidePageSize]="true"
-              [length]="totalElements"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page"
-              >
-            </mat-paginator>
-          </section>
-          <section class="flex justify-end">
-            <app-button-standard
-              (click)="closeDialog(null)"
+              @for (item of typeBusinessPartners; track item) {
+              <option [value]="item.typbuspar">
+                {{ item.typbuspar + " - " + item.descri }}
+              </option>
+              }
+            </select>
+          </div>
+          <div class="col-span-2 flex items-center justify-center space-x-4">
+            <label for="status" class="label-input-xs">{{
+              "INC_INACTIVE?" | translate
+            }}</label>
+            <input
+              id="status"
+              type="checkbox"
+              class="checkbox-default"
+              formControlName="status"
+            />
+          </div>
+        </div>
+        <div class="space-y-2 pt-2">
+          <div class="flex justify-start">
+            <label for="codbuspar" class="label-input-sm">{{
+              "CODE" | translate
+            }}</label>
+            <input
+              id="codbuspar"
+              type="text"
+              class="input-default"
+              formControlName="codbuspar"
+            />
+          </div>
+          <div class="flex justify-start">
+            <label for="busnam" class="label-input-sm">{{
+              "BUSINESS_NAME" | translate
+            }}</label>
+            <input
+              id="busnam"
+              type="text"
+              class="input-default"
+              formControlName="busnam"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+  <section>
+    <div class="flex justify-end space-x-4">
+      <app-button-standard
+        (click)="searchBusinessPartner()"
+        colorBtn="sky"
+        optionBtn="search"
+        typeBtn="button"
+        >{{ "SEARCH" | translate }}</app-button-standard
+      >
+      <app-button-standard
+        (click)="crudBusinessPartner(null)"
+        colorBtn="green"
+        optionBtn="new"
+        typeBtn="button"
+        >{{ "NEW" | translate }}</app-button-standard
+      >
+    </div>
+  </section>
+  <section class="section-table">
+    <article class="container-dialog-table">
+      <table class="main-dialog-table" cdk-table [dataSource]="dataSource">
+        <tr
+          class="header-table"
+          cdk-header-row
+          *cdkHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          class="row-table"
+          cdk-row
+          *cdkRowDef="let row; columns: displayedColumns"
+          [class.row-table-delete]="row.status === 'N'"
+        ></tr>
+        <ng-container cdkColumnDef="codbuspar">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            {{ "CODE" | translate }}
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.codbuspar }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="busnam">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            {{ "BUSINESS NAME" | translate }}
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.busnam }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="nroidedoc">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            {{ "NATIONAL_ID_NUMBER" | translate }}
+          </th>
+          <td class="row-cell" cdk-cell *cdkCellDef="let row">
+            {{ row.nroidedoc }}
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="operac">
+          <th class="header-cell" cdk-header-cell *cdkHeaderCellDef>
+            {{ "ACTION" | translate }}
+          </th>
+          <td class="row-operac-cell" cdk-cell *cdkCellDef="let row">
+            @if (row.status === 'Y') {
+            <app-button-operac
+              (click)="crudBusinessPartner(row)"
+              optionBtn="edit"
+              colorBtn="sky"
+            >
+            </app-button-operac>
+            } @if (row.status === 'Y') {
+            <app-button-operac
+              (click)="cleanBusinessPartner(row)"
+              optionBtn="clean"
+              colorBtn="sky"
+            >
+            </app-button-operac>
+            } @if (row.status === 'Y') {
+            <app-button-operac
+              (click)="deleteBusinessPartner(row)"
+              optionBtn="delete"
               colorBtn="red"
-              optionBtn="close"
-              typeBtn="button"
-              >
-              {{ 'CLOSE' | translate }}
-            </app-button-standard>
-          </section>
-        </main>
+            ></app-button-operac>
+            } @if (row.status === 'N') {
+            <app-button-operac
+              (click)="undeleteBusinessPartner(row)"
+              optionBtn="undelete"
+              colorBtn="yellow"
+            ></app-button-operac>
+            }
+          </td>
+        </ng-container>
+      </table>
+    </article>
+    <mat-paginator
+      (page)="byPageEvent($event)"
+      [hidePageSize]="true"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </section>
+  <section class="flex justify-end">
+    <app-button-standard
+      (click)="closeDialog(null)"
+      colorBtn="red"
+      optionBtn="close"
+      typeBtn="button"
+    >
+      {{ "CLOSE" | translate }}
+    </app-button-standard>
+  </section>
+</main>

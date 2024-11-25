@@ -47,7 +47,7 @@ export class ListPriceArticleService {
   getByLike(codart: string){
     let params = new HttpParams()
     params = params.set('codart',codart)
-    return this.httpCLient.get<ApiResponseList<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-like`, { params })
+    return this.httpCLient.get<ApiResponseList<ListPriceArticle>>(`${this.API_URL}${this.PATH_BILLING}/list-price-article/by-codart`, { params })
   }
 
   getById(codlistprice: number, codart: string){

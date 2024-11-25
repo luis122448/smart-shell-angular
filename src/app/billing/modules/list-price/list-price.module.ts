@@ -8,7 +8,7 @@ import { BasicInfoListPriceComponent } from '@billing-module-list-price/componen
 import { BasicArticleListPriceComponent } from '@billing-module-list-price/components/basic-article-list-price/basic-article-list-price.component';
 import { BasicImportListPriceComponent } from '@billing-module-list-price/components/basic-import-list-price/basic-import-list-price.component';
 import { ModalImportListPriceComponent } from '@billing-module-list-price/components/modal-import-list-price/modal-import-list-price.component';
-import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { SharedBillingModule } from '@billing-modules/shared-billing/shared-billing.module';
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({

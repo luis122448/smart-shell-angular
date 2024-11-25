@@ -10,7 +10,7 @@ import { ResumeInternalGuideComponent } from '@billing-module-internal-guide/com
 import { SearchInternalGuideComponent } from '@billing-module-internal-guide/components/search-internal-guide/search-internal-guide.component';
 import { RegisterInternalGuideComponent } from '@billing-module-internal-guide/components/register-internal-guide/register-internal-guide.component';
 import { LayoutInternalGuideComponent } from '@billing-module-internal-guide/layouts/layout-internal-guide/layout-internal-guide.component';
-import { SharedBillingModule } from '@billing-modules/shared/shared-billing.module';
+import { SharedBillingModule } from '@billing-modules/shared-billing/shared-billing.module';
 import { SharedModule } from '@shared/shared.module';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import {

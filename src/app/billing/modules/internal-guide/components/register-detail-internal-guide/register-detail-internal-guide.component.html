@@ -13,7 +13,7 @@
           *cdkRowDef="let row; columns: displayedColumns; let i = index"
         ></tr>
         <ng-container cdkColumnDef="numite">
-          <th class="w-8 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Item</th>
+          <th class="w-8 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'ITEM' | translate }}</th>
           <td
             cdk-cell
             class="w-8 px-2 py-3"
@@ -23,7 +23,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="typinv">
-          <th class="w-16 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>T Inv.</th>
+          <th class="w-16 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'T_IN' | translate }}</th>
           <td
             cdk-cell
             class="w-16 px-2 py-3"
@@ -44,17 +44,17 @@
               <div class="flex">
                 <input
                   type="text"
-                  placeholder="{{ 'COD_ARTICLE' | translate }}"
                   class="input-default"
+                  placeholder="{{ 'COD_ARTICLE' | translate }}"
                   formControlName="codart"
                   [class.input-invalid]="isInputInvalid('codart')"
-                  (keyup.enter)="openDialogGetArticle(item.value, true)"
+                  (keyup.enter)="openDialogGetArticleByCodart(item.value)"
                   [value]="item.value.codart"
                 />
                 <button
                   type="button"
                   class="button-icon-search"
-                  (click)="openDialogGetArticle(item.value, true)"
+                  (click)="openDialogGetArticleByCodart(item.value)"
                 >
                   <fa-icon
                     [icon]="faMagnifyingGlass"
@@ -85,13 +85,13 @@
                   class="input-default"
                   formControlName="desart"
                   [class.input-invalid]="isInputInvalid('desart')"
-                  (keyup.enter)="openDialogGetArticle(item.value, false)"
+                  (keyup.enter)="openDialogGetArticleByDesart(item.value)"
                   [value]="item.value.desart"
                 />
                 <button
                   type="button"
                   class="button-icon-search"
-                  (click)="openDialogGetArticle(item.value, false)"
+                  (click)="openDialogGetArticleByDesart(item.value)"
                 >
                   <fa-icon
                     [icon]="faMagnifyingGlass"
@@ -153,7 +153,7 @@
           </td>
         </ng-container>
         <ng-container cdkColumnDef="operac">
-          <th class="w-20 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>Ac?</th>
+          <th class="w-20 px-2 py-3" cdk-header-cell *cdkHeaderCellDef>{{ 'AC' | translate }}</th>
           <td
             class="w-20 flex justify-around px-2 py-3 items-center"
             cdk-cell

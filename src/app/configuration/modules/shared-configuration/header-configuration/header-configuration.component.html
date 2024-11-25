@@ -1,0 +1,55 @@
+<header
+  class="sapce-y-6 h-[120px] w-full dark:bg-slate-800 dark:text-slate-400"
+>
+  <app-header></app-header>
+  <section
+    class="grid h-[50px] w-full grid-cols-2 bg-gray-300 px-4 dark:bg-slate-800 dark:text-slate-400"
+  >
+    <section class="dialog-title my-auto">{{ this.title }}</section>
+    <section class="my-auto flex justify-end space-x-6">
+      @switch (isStatusConfiguration()) {
+        @case ('search') {
+            <app-button-standard
+            (click)="onNew()"
+            colorBtn="sky"
+            optionBtn="save"
+            typeBtn="button"
+            >{{ "NEW" | translate }}</app-button-standard
+          >
+        }
+        @case ('register') {
+          <app-button-standard
+            (click)="onSave()"
+            colorBtn="green"
+            optionBtn="save"
+            typeBtn="button"
+            >{{ "SAVE" | translate }}</app-button-standard
+          >
+          <app-button-standard
+            (click)="onLeave()"
+            colorBtn="red"
+            optionBtn="close"
+            typeBtn="button"
+            >{{ "CLOSE" | translate }}</app-button-standard
+          >
+        }
+        @case ('new') {
+          <app-button-standard
+            (click)="onSave()"
+            colorBtn="green"
+            optionBtn="save"
+            typeBtn="button"
+            >{{ "SAVE" | translate }}</app-button-standard
+          >
+          <app-button-standard
+            (click)="onLeave()"
+            colorBtn="red"
+            optionBtn="close"
+            typeBtn="button"
+            >{{ "CLOSE" | translate }}</app-button-standard
+          >
+        }
+      }
+    </section>
+  </section>
+</header>

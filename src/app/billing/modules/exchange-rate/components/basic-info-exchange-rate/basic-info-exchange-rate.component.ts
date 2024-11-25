@@ -22,12 +22,12 @@ export class BasicInfoExchangeRateComponent {
   currencies: Currency[] = [];
 
   private buildForm(codcur: string | undefined) {
-    // const today = new Date().toJSON().split('T')[0];
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-      .toJSON()
-      .split('T')[0];
+    const today = new Date().toJSON().split('T')[0];
+    // const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+    //   .toJSON()
+    //   .split('T')[0];
     this.formCrudExchangeRate = this.formBuilder.group({
-      registdate: [yesterday, [Validators.required]],
+      registdate: [today, [Validators.required]],
       origen: [codcur, [Validators.required]],
       destin: ['', [Validators.required]],
       fventa: [

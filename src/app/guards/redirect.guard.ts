@@ -15,9 +15,9 @@ constructor(
 
   canActivate(): boolean {
     const isValidToken =  this.tokenService.isValidRefreshToken()
-    if (isValidToken) {
-      this.router.navigate(['/billing'])
-    }
+    // if (isValidToken) {
+    //   this.router.navigate(['/billing'])
+    // }
     return true
   }
 

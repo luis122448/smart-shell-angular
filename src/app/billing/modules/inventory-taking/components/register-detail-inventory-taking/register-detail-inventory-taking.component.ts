@@ -27,7 +27,7 @@ export class RegisterDetailInventoryTakingComponent implements OnChanges{
   dataDetailSource = DataSourceDocumentDetail.getInstance();
   dataDetail = new BehaviorSubject<FormGroup[]>([]);
 
-  displayedColumns: string[] = ['numite', 'typinv','codart','quantity','price','subtotal','operac'];
+  displayedColumns: string[] = ['numite', 'typinv','codart','desart','quantity','price','subtotal','operac'];
   faMagnifyingGlass = faMagnifyingGlass;
   faPenToSquare = faPenToSquare;
   faXmark = faXmark;
@@ -44,6 +44,7 @@ export class RegisterDetailInventoryTakingComponent implements OnChanges{
       numite: [{ value: 0, disabled: false }, [Validators.required]],
       typinv: [{ value: '', disabled: false }, [Validators.required]],
       codart: [{ value: '', disabled: false }, [Validators.required]],
+      desart: [{ value: '', disabled: false }, []],
       etiqueta: [{ value: '', disabled: true }, []],
       quantity: [{ value: 0, disabled: true }, [Validators.required]],
       price: [{ value: 0.00.toFixed(2), disabled: true }, [Validators.required]],
@@ -142,7 +143,7 @@ export class RegisterDetailInventoryTakingComponent implements OnChanges{
     this.dataDetailSource.getDelete(row.numite);
   }
 
-  openDialogGetArticle(item: DocumentDetail) {
+  openDialogGetArticleByCodart(item: DocumentDetail) {
     if (item.codart.length < 3) {
       this.dialog.open(DialogErrorAlertComponent, {
         width: '400px',
@@ -156,7 +157,47 @@ export class RegisterDetailInventoryTakingComponent implements OnChanges{
       DialogGetArticleComponent,
       {
         data: {
-          name: this.detailDocument.value[0]?.codart ?? '%',
+          codart: this.detailDocument.value[0]?.codart ?? '%',
+          codlistprice: this.codlistprice,
+        },
+      }
+    );
+    item.codart = '';
+    dialogRefArticle.closed.subscribe((data) => {
+      if (data) {
+        const nextNumite: number = this.dataDetailSource.getLastNumite() + 1;
+        this.addItem({
+          numite: nextNumite,
+          typinv: data.typinv,
+          desinv: data.desinv,
+          codart: data.codart,
+          desart: data.descri,
+          etiqueta: 0,
+          quantity: 1,
+          stock: data.stock ?? 0,
+          price: parseFloat(data.price?.toFixed(2) ?? '0.00'),
+          moddesc: data.moddesc ?? 'N',
+          modprice: data.modprice ?? 'N'
+        });
+      }
+    });
+  }
+
+  openDialogGetArticleByDesart(item: DocumentDetail) {
+    if (item.desart && item.desart.length < 3) {
+      this.dialog.open(DialogErrorAlertComponent, {
+        width: '400px',
+        data: { minimum_length:3 }
+      })
+      return;
+    }
+    const dataHeader = this.dataHeaderSource.get();
+    this.codlistprice = dataHeader.codlistprice ?? 1;
+    const dialogRefArticle = this.dialog.open<Article>(
+      DialogGetArticleComponent,
+      {
+        data: {
+          desart: this.detailDocument.value[0]?.desart ?? '%',
           codlistprice: this.codlistprice,
         },
       }
