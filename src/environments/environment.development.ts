@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:8080/app-project',
+  API_URL: '/backend-api',
   PATH_BILLING: '/billing',
   PATH_INVENTORY: "/inventory",
   PATH_DOCUMENT: "/document",
