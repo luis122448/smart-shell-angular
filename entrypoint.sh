@@ -2,6 +2,7 @@
 set -e
 
 # Health check logic (uses variables from .env)
+API_URL=$(echo "${API_URL}" | sed 's|/$||g')
 HEALTH_CHECK_URL=$(echo "${HEALTH_CHECK_URL}" | sed 's|/$||g')
 
 echo "Performing health check on: ${HEALTH_CHECK_URL}"
