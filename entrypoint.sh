@@ -1,13 +1,6 @@
 #!/bin/sh
 set -e
 
-# If NGINX_DEBUG is set to "1", enable debug logging.
-if [ "$NGINX_DEBUG" = "true" ]; then
-    echo "Debug mode enabled. Modifying nginx.conf for debug logging..."
-    # Replace the default error_log directive with a debug one.
-    sed -i 's|error_log /var/log/nginx/error.log notice;|error_log /var/log/nginx/error.log debug;|' /etc/nginx/nginx.conf
-fi
-
 # Health check logic (uses variables from .env)
 HEALTH_CHECK_URL=$(echo "${HEALTH_CHECK_URL}" | sed 's|/$||g')
 

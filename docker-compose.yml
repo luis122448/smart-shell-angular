@@ -9,7 +9,6 @@ services:
     environment:
       API_URL: $API_URL
       HEALTH_CHECK_URL: $HEALTH_CHECK_URL
-      NGINX_DEBUG: $NGINX_DEBUG
     ports:
       - "${SMART_SHELL_ANGULAR_PORT}:80"
     networks:
