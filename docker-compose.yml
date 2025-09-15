@@ -1,11 +1,11 @@
 services:
   app:
     container_name: smart-shell-angular
-    env_file:
-      - ./.env
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - ./.env
     environment:
       API_URL: $API_URL
       HEALTH_CHECK_URL: $HEALTH_CHECK_URL
