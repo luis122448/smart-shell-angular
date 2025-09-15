@@ -20,9 +20,9 @@ spec:
         - containerPort: 80
         env:
         - name: API_URL
-          value: "https://smart-shell.luis122448.dev/app-project"
+          value: "/app-project"
         - name: HEALTH_CHECK_URL
-          value: "https://smart-shell.luis122448.dev/app-project/backend-api/actuator/health/liveness"
+          value: "/app-project/actuator/health/liveness"
         - name: NGINX_DEBUG
           value: "false"
         resources:
