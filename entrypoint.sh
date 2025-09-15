@@ -9,7 +9,7 @@ if [ "$NGINX_DEBUG" = "true" ]; then
 fi
 
 # Health check logic (uses variables from .env)
-HEALTH_CHECK_URL=$(echo "${API_URL}" | sed 's|/$||g')$(echo "${HEALTH_CHECK_PATH}")
+HEALTH_CHECK_URL=$(echo "${HEALTH_CHECK_URL}" | sed 's|/$||g')
 
 echo "Performing health check on: ${HEALTH_CHECK_URL}"
 

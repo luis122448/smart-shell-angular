@@ -21,10 +21,11 @@ spec:
         env:
         - name: API_URL
           value: "/app-project"
-        - name: HEALTH_CHECK_URL
-          value: "/app-project/actuator/health/liveness"
         - name: NGINX_DEBUG
           value: "false"
+        # URL for the internal startup health check. Uses the K8s service name.
+        - name: HEALTH_CHECK_URL
+          value: "http://spring-boot-service.smart-shell-production:8080/app-project/actuator/health/liveness"
         resources:
           requests:
             cpu: "100m"
