@@ -6,14 +6,12 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - host: "smart-shell.luis122448.com"
       http:
         paths:
-          # Route traffic for the frontend
           - path: /
             pathType: Prefix
             backend:
@@ -21,15 +19,6 @@ spec:
                 name: angular-service
                 port:
                   number: 80
-          # Route traffic for the backend API
-          - path: /app-project(/|$) (.*)
-            pathType: ImplementationSpecific # Correct pathType for regex
-            backend:
-              service:
-                # Change to your actual backend service name and port
-                name: spring-boot-service
-                port:
-                  number: 8080
   tls:
     - hosts:
         - "smart-shell.luis122448.com"

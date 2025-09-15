@@ -20,7 +20,7 @@ spec:
         - containerPort: 80
         env:
         - name: API_URL
-          value: "/app-project"
+          value: "http://springboot-service.smart-shell-production:8080/app-project"
         - name: NGINX_DEBUG
           value: "false"
         # URL for the internal startup health check. Uses the K8s service name.

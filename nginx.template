@@ -8,7 +8,7 @@ server {
       try_files $uri $uri/ /index.html;
     }
 
-    location /backend-api/ {
+    location /app-project/ {
       proxy_pass ${API_URL}/;
 
       proxy_set_header Host $host;
